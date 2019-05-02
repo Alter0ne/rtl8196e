@@ -1,0 +1,1197 @@
+Package: community-profiles
+Version: 2
+Depends: libc, freifunk-common
+Source: feeds/luci/contrib/package/community-profiles
+Section: luci
+Architecture: realtek
+Installed-Size: 5281
+Filename: community-profiles_2_realtek.ipk
+Size: 5828
+MD5Sum: 1b4d27e05634ab3061fb52bab873a3e9
+SHA256sum: 2b1313c6cd320bc894fb4775fff84f1899ba34f88146666c3d1a8213fe94b595
+Description:  These community profiles set defaults for various free network/freifunk communities and are used by wizards like ffwizard and meshwizard.
+
+Package: freifunk-common
+Version: 1
+Depends: libc
+Source: feeds/luci/contrib/package/freifunk-common
+Section: luci
+Architecture: realtek
+Installed-Size: 2958
+Filename: freifunk-common_1_realtek.ipk
+Size: 3536
+MD5Sum: 79e8cb240572ce074b8c1a7af0be3225
+SHA256sum: 1bc1396df2c693644275b50558c99ba211fcf5cb1effc21f29121565837cd717
+Description:  Common files and scripts that are needed to run free wireless mesh networks.
+
+Package: freifunk-firewall
+Version: 3
+Depends: libc, firewall
+Source: feeds/luci/contrib/package/freifunk-firewall
+Section: luci
+Architecture: realtek
+Installed-Size: 1154
+Filename: freifunk-firewall_3_realtek.ipk
+Size: 1889
+MD5Sum: d1e9ad10d6c5b7fa6f90dd2a9b5463d5
+SHA256sum: 40e894ec15ccb9a89fa9183ffbf18d80f986b7d1cd33bb00b9dfd842016e2ef4
+Description:  Various firewall extensions for Freifunk. Includes NAT fixes and advanced settings.
+
+Package: freifunk-gwcheck
+Version: 4
+Depends: libc, firewall, ip, iptables-mod-ipopt, olsrd-mod-dyn-gw-plain
+Source: feeds/luci/contrib/package/freifunk-gwcheck
+Section: luci
+Architecture: realtek
+Installed-Size: 2011
+Filename: freifunk-gwcheck_4_realtek.ipk
+Size: 2695
+MD5Sum: f66827df5c0d2dd6e2ea924d21d1cf90
+SHA256sum: 4ff1db18600fe0ecce6d5c39dbdb51c50ed6fabe9fc10768cd29351db81624f6
+Description:  This script periodically checks if internet is available via your own gateway. If it detects that it is broken, then the defaultroute is removed from the main table and temporarilly placed in table gw-check until your internet works again. Config file is /etc/config/freifunk-gwcheck.
+
+Package: freifunk-mapupdate
+Version: 1
+Depends: libc, olsrd-mod-nameservice
+Source: feeds/luci/contrib/package/freifunk-mapupdate
+Section: luci
+Architecture: realtek
+Installed-Size: 1285
+Filename: freifunk-mapupdate_1_realtek.ipk
+Size: 1916
+MD5Sum: f8437a23929595ad6edc2960bc22ff1b
+SHA256sum: bb0df0fcc5a57ca9e84cf354d831c68fcd5a600b760bd6c72ef4d5d02f468f72
+Description:  This script updates the freifunkmap (also known as the global map, see http://map.berlin.freifunk.net) every hour. Config file is /etc/config/freifunk-mapupdate.
+
+Package: freifunk-p2pblock
+Version: 3
+Depends: libc, iptables-mod-filter, iptables-mod-ipp2p, l7-protocols, iptables-mod-conntrack-extra
+Source: feeds/luci/contrib/package/freifunk-p2pblock
+Section: luci
+Architecture: realtek
+Installed-Size: 1316
+Filename: freifunk-p2pblock_3_realtek.ipk
+Size: 1957
+MD5Sum: 869f64aa491963167818531e9532db01
+SHA256sum: 1b20e995f5f2e8d911d5f1a191062ebe0267f3920136d77963a229641658a6d5
+Description:  Simple Addon for Freifunk which use iptables layer7-, ipp2p- and recent-modules 
+ to block p2p/filesharing traffic
+
+Package: freifunk-policyrouting
+Version: 6
+Depends: libc, ip
+Source: feeds/luci/contrib/package/freifunk-policyrouting
+Section: luci
+Architecture: realtek
+Installed-Size: 2283
+Filename: freifunk-policyrouting_6_realtek.ipk
+Size: 2979
+MD5Sum: 7c328b855d364fb23216b90b80b0fb1f
+SHA256sum: b5d87c19dcaeceac32457b039943c9e64e3d707ca79883435c1fdfdb0f36f4ae
+Description:  Allows you to send your own traffic via your own default gateway while sending traffic received from the mesh to a gateway in the mesh.
+
+Package: freifunk-watchdog
+Version: 8
+Depends: libc, libuci
+Source: feeds/luci/contrib/package/freifunk-watchdog
+Section: luci
+Architecture: realtek
+Installed-Size: 5536
+Filename: freifunk-watchdog_8_realtek.ipk
+Size: 6162
+MD5Sum: 9d4fc456fc31829db6164a1c7a546ed9
+SHA256sum: 1d4ef864a27a9bd7410bf6285d288f56c0fe0481a401d17af81f254ad4efa40b
+Description:  A watchdog daemon that monitors wireless interfaces to ensure the correct bssid and channel.
+ The process will initiate a wireless restart as soon as it detects a bssid or channel mismatch.
+
+Package: luci-app-ahcp
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, ahcpd
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20105
+Filename: luci-app-ahcp_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 20735
+MD5Sum: 6a9a943246e2e29391d6d5c04be67603
+SHA256sum: e360f9d46953989834a5b5b93417fe3dc03507912345e60166f113cd9024905d
+Description:  LuCI Support for AHCPd
+
+Package: luci-app-commands
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 15430
+Filename: luci-app-commands_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 16010
+MD5Sum: 1ef7d305f5abca9505bd37ce1baebef1
+SHA256sum: d4d17826db07ad0632e07feb74cf6bec161aca9cd83c3bf377d1059686a02306
+Description:  LuCI Shell Command Module
+
+Package: luci-app-ddns
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, ddns-scripts
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 11284
+Filename: luci-app-ddns_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 11891
+MD5Sum: a1a09212c3982351cd823240697b85a9
+SHA256sum: 0b6e9e127e3309fc5d1197030328ea0d2d980d0f0632c738b8b602df0d09c028
+Description:  Dynamic DNS configuration module
+
+Package: luci-app-diag-core
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 5674
+Filename: luci-app-diag-core_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 6273
+MD5Sum: b2767e6c08d0423d67871b5069a5e083
+SHA256sum: 9ed23f087645c10da6b8f914f902f7d2b8993fbf6541c1b322b8aed2d78d17e2
+Description:  LuCI Diagnostics Tools (Core)
+
+Package: luci-app-diag-devinfo
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-diag-core, smap, netdiscover, mac-to-devinfo, httping, smap-to-devinfo, netdiscover-to-devinfo
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 27851
+Filename: luci-app-diag-devinfo_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 28543
+MD5Sum: b6f8275cb30b5f83d4b75db11f6e4ae7
+SHA256sum: 591cbbb52bf75602f79077b1b96c6f41b05ebd94a42086b8a300e7ecde3bac03
+Description:  LuCI Diagnostics Tools (Device Info)
+
+Package: luci-app-firewall
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, firewall
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 63053
+Filename: luci-app-firewall_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 63716
+MD5Sum: a888b4e2d2c8851f320bf499ed7ce0fd
+SHA256sum: f77095a68effce20711d81014e832e6a2f1f6b3b753835175ed365baea94e48f
+Description:  Firewall and Portforwarding application
+
+Package: luci-app-freifunk-diagnostics
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2440
+Filename: luci-app-freifunk-diagnostics_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 3179
+MD5Sum: 02ba8ecd4cede4cfed40f8224e922a7f
+SHA256sum: b7cdd26c97036867c1d0adfe14485d55616196de50b78fa716efabe713ab69a2
+Description:  Tools for network diagnosis like traceroute and ping
+
+Package: luci-app-freifunk-policyrouting
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, freifunk-policyrouting
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 7358
+Filename: luci-app-freifunk-policyrouting_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7994
+MD5Sum: 52b261cfeee1326c26a052179763cbff
+SHA256sum: 8a39815d26a41cf9beeb3f59ea0638645b52589a75f90d09bfee0a0097308ec3
+Description:  Policy routing for mesh traffic
+
+Package: luci-app-freifunk-widgets
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-mod-freifunk
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 4533
+Filename: luci-app-freifunk-widgets_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 5148
+MD5Sum: 925e321200fb82d20ff96cea68350537
+SHA256sum: 07bd765f293f035fcf488b76902c7cd089e748ef7df8c5bb03484915bb894381
+Description:  Widgets for the Freifunk index page
+
+Package: luci-app-hd-idle
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, hd-idle
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6213
+Filename: luci-app-hd-idle_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 6996
+MD5Sum: 2695e66bf0ebee9118f5983893ea830a
+SHA256sum: 773825b6e1ada346acb282429bd232b304c877078ceabf8451ea40c3ee478969
+Description:  Hard Disk Idle Spin-Down module
+
+Package: luci-app-ltqtapi
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 1921
+Filename: luci-app-ltqtapi_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 2513
+MD5Sum: 0303a073e0be29f7fdf858ba340d35a2
+SHA256sum: 1e1b386287d47f7e253fec7e73056c7e280330fb059d9520fad18e029aa62f41
+Description:  Lantiq voip
+
+Package: luci-app-meshwizard
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, meshwizard
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 15244
+Filename: luci-app-meshwizard_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 15955
+MD5Sum: f4b898ba539f56863974610a020c4636
+SHA256sum: 7999a47da02040c3e725248bd3b445a349de704c6cb291f48ab48b501db610be
+Description:  Shellscript based wizard to setup mesh networks
+
+Package: luci-app-minidlna
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, minidlna
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20560
+Filename: luci-app-minidlna_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 21182
+MD5Sum: 8af770f6df7e35cdbb09b51859c31cf2
+SHA256sum: 3fd72b8df4fb60f45a5de43f4ad7af2a6b5be7aad18f17785921613ca10ffc3a
+Description:  LuCI Support for miniDLNA
+
+Package: luci-app-multiwan
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-firewall, multiwan
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 15115
+Filename: luci-app-multiwan_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 15740
+MD5Sum: f5517a7d7249709ac33735df704def4b
+SHA256sum: d37544ff02ce40110b8fac90212cb11f0ea9d2acdca80cc1aa9290efec6b0e7c
+Description:  LuCI Support for the OpenWrt MultiWAN agent
+
+Package: luci-app-ntpc
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, ntpclient
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 7726
+Filename: luci-app-ntpc_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 8360
+MD5Sum: 40d3c4462d8f31c281d7fdc622a3781d
+SHA256sum: 2357a91e5e89d14cf8485408f254299a267e872415fbb07a205cfcce7fcdab61
+Description:  NTP time synchronisation configuration module
+
+Package: luci-app-olsr-services
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-olsr, olsrd, olsrd-mod-nameservice
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2302
+Filename: luci-app-olsr-services_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 2931
+MD5Sum: 6b39f8fb185c2aa1ba2a2d7d18efb5aa
+SHA256sum: 24a7dbed1646d498dd3ad131477aec199f3488c45591141e57302f6ad4a031c7
+Description:  Show services announced with the nameservice plugin
+
+Package: luci-app-olsr-viz
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-olsr, olsrd, olsrd-mod-txtinfo
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 11483
+Filename: luci-app-olsr-viz_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 12085
+MD5Sum: c38be356ea265bdbe682ad1c234d8a2e
+SHA256sum: 23edb829542e9acb695628b23f59bfb0b4a51e84d3869302e4a314287de00c64
+Description:  OLSR Visualisation
+
+Package: luci-app-olsr
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, olsrd, olsrd-mod-jsoninfo, luci-lib-luaneightbl
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 64617
+Filename: luci-app-olsr_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 65235
+MD5Sum: 23f9a50d238916c01b9b15f36e8e381a
+SHA256sum: 54361e46814d1d37c3a0970c2b79d0cd99fc73cc228fa98b2d5f8aaba8147764
+Description:  OLSR configuration and status module
+
+Package: luci-app-p2pblock
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-firewall, freifunk-p2pblock
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6415
+Filename: luci-app-p2pblock_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7217
+MD5Sum: 09b33f43ab8f765dc9154beccca93be1
+SHA256sum: 98d1a4759b680168b5a6ac79162115fe63dfaac527039dda3071f3d1bb5b0663
+Description:  LuCI Support for the Freifunk P2P-Block addon
+
+Package: luci-app-p910nd
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, p910nd
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6667
+Filename: luci-app-p910nd_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7438
+MD5Sum: 7d3981ab07e2b4477e0ff44e40f35486
+SHA256sum: c62f2d8596a2e71de32925eeb21276c4275eeba4ef50549802e80b15ef34ceaf
+Description:  p910nd - Printer server module
+
+Package: luci-app-polipo
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, polipo
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 23428
+Filename: luci-app-polipo_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 24170
+MD5Sum: c1830ab6cd8a4d85701c242bc24171b2
+SHA256sum: 815ebc82a4089ba1378e547a656dc2a38f8ebecc54a25aee7ca9493391e652de
+Description:  LuCI Support for the Polipo Proxy
+
+Package: luci-app-qos
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, qos-scripts
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 10828
+Filename: luci-app-qos_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 11432
+MD5Sum: cf0a7c4e661685ad2ebabd3b9e43443f
+SHA256sum: a26e11414e4a450c7b37c15f664c67126257cd55ecf13f03a50f556e7a93e405
+Description:  Quality of Service configuration module
+
+Package: luci-app-radvd
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, radvd
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 30726
+Filename: luci-app-radvd_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 31505
+MD5Sum: 7cd95d54d1f52aee16d6a7657bc4feef
+SHA256sum: c28152b5f48c34be36d93847b9283679bd9a0908f193ec4579fe02242ade6592
+Description:  LuCI Support for Radvd
+
+Package: luci-app-samba
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, samba36-server
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 12392
+Filename: luci-app-samba_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 13039
+MD5Sum: 637123ea56437729f05cf3334948cd75
+SHA256sum: 88550771fd000a6af9346f8cc484afb2e171399effdfbda1d1c373e39b5f6af0
+Description:  Network Shares - Samba SMB/CIFS module
+
+Package: luci-app-siitwizard
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, kmod-siit
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 3894
+Filename: luci-app-siitwizard_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 4527
+MD5Sum: 979d0d07bca729a4d1b7d97204cef530
+SHA256sum: f82c64c46b802a816d4082dad97353bd2b7176c513ff3d4dbaf1eb9ec554e62c
+Description:  SIIT IPv4-over-IPv6 configuration wizard
+
+Package: luci-app-splash
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-lib-nixio, tc, kmod-sched, iptables-mod-nat-extra, iptables-mod-ipopt
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 42319
+Filename: luci-app-splash_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 43235
+MD5Sum: c9a2438b9f1415eb7bfc600f76518bf2
+SHA256sum: 92be2ffb1cf8ca1c155eabbbd360ae46b223c40e844804b4ab8f825492f54c0a
+Description:  Freifunk DHCP-Splash application
+
+Package: luci-app-statistics
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, collectd, rrdtool1, collectd-mod-rrdtool, collectd-mod-iwinfo, collectd-mod-interface, collectd-mod-load, collectd-mod-network
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 98763
+Filename: luci-app-statistics_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 99719
+MD5Sum: d81b2df828f512fd358a5949ed2a5404
+SHA256sum: c7a855eb4637085bab3180c6589935d6236b4fc3b702e0a4dc835e9f2984aa4a
+Description:  LuCI Statistics Application
+
+Package: luci-app-tinyproxy
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, tinyproxy
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 25727
+Filename: luci-app-tinyproxy_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 26317
+MD5Sum: cca1bdf2536c91df5ca8a9985ad98230
+SHA256sum: dbf73da04c125ea91da8733ba335e3655fe1bda964aa0c863fdfc2fa2bba2372
+Description:  Tinyproxy - HTTP(S)-Proxy configuration
+
+Package: luci-app-transmission
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, transmission-daemon
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 27006
+Filename: luci-app-transmission_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 27602
+MD5Sum: e93f86eeb7ebc76cde6f880d7b49205b
+SHA256sum: e30cf1414a92d199750361831726f3b6b3e04407072a6f50a2a594fcb146fad8
+Description:  LuCI Support for Transmission
+
+Package: luci-app-upnp
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, miniupnpd
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20076
+Filename: luci-app-upnp_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 20713
+MD5Sum: 8d784523f4b16388ea52a9e868375b62
+SHA256sum: bc083a35d990f135fa6734a12fa113b986b5f34a9acaa14ac4052b0697c9facf
+Description:  Universal Plug & Play configuration module
+
+Package: luci-app-ushare
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, ushare
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 7012
+Filename: luci-app-ushare_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7788
+MD5Sum: 48f30bde9ee8699201b851ee5ea3657d
+SHA256sum: d006c4e11094fc969895ff8b9c80054a03352a45b96ba8236f18722d17713bcb
+Description:  uShare - UPnP A/V & DLNA Media Server
+
+Package: luci-app-vnstat
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, vnstat, vnstati
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 9612
+Filename: luci-app-vnstat_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 10352
+MD5Sum: c2d106a7d730852d683790ccfd9bdb90
+SHA256sum: fe3a1f5cc41b98a3c259917a909827a25e00b809cfd13f490301fecf5b95075b
+Description:  LuCI Support for VnStat
+
+Package: luci-app-voice-core
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2170
+Filename: luci-app-voice-core_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 2742
+MD5Sum: a56bc860ff88172429ae91ac0758125b
+SHA256sum: de92d1576a78fb38479ce527f662bfbdd2d1c6944c1e38f29633c7d26778abb2
+Description:  LuCI Voice Software (Core)
+
+Package: luci-app-voice-diag
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-app-diag-devinfo
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 4605
+Filename: luci-app-voice-diag_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 5216
+MD5Sum: e0737429f2c0122b6332f69ac6a20ed1
+SHA256sum: 58b54844146117e444f591b34bfeb76c8f8aec36f7e794beea87a361d5c028c6
+Description:  LuCI Voice Software (Diagnostics)
+
+Package: luci-app-watchcat
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, watchcat
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 9325
+Filename: luci-app-watchcat_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 10119
+MD5Sum: 4e596a74179bcfb8a0a7ffb2afb49eb8
+SHA256sum: 954aa16a75489331c0069f7578ce28b753392a49c16d1b746480215f308117ca
+Description:  LuCI Support for Watchcat
+
+Package: luci-app-wol
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, etherwake
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 8890
+Filename: luci-app-wol_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 9517
+MD5Sum: 552821e7ac832a2769b1ba14b2daa85c
+SHA256sum: 3c725afb8a62956b53674f258d48ab3fbd5507eb8741ed0c37411e655011a934
+Description:  LuCI Support for Wake-on-LAN
+
+Package: luci-app-wshaper
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, wshaper
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 7359
+Filename: luci-app-wshaper_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 8108
+MD5Sum: 38c02187ac5efee1fa193a0d7a32aae1
+SHA256sum: 986d8181ff609971db0cbf6abb926f6e950a941d1bc50dc049210c395f132388
+Description:  LuCI Support for wshaper
+
+Package: luci-base
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, lua, libuci-lua, libubus-lua
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 141721
+Filename: luci-base_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 142503
+MD5Sum: 2a5304bc42f3bdd32a87647a587fbdeb
+SHA256sum: 1f6591f1566691e779fc79898ab4d36bd79d0f725290ce963a02397aedf48bcd
+Description:  LuCI core libraries
+
+Package: luci-i18n-catalan
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 16446
+Filename: luci-i18n-catalan_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 17146
+MD5Sum: 94886df7ab0e5456e012b17774655550
+SHA256sum: 0e46d1a35f74e34dd8cd0769f0a072cf0a7e2c71299a581c48abfa8c5d1b2187
+Description:  Catalan (by Eduard Duran)
+
+Package: luci-i18n-chinese
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 19578
+Filename: luci-i18n-chinese_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 20343
+MD5Sum: 23f94a3dad84e3e1d387570a95b00b14
+SHA256sum: 21a36dd11c2e66b2f3c189fa3547a39e8d5055149557813b2cda911e64f7994a
+Description:  Chinese (by Chinese Translators)
+
+Package: luci-i18n-english
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 782
+Filename: luci-i18n-english_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 1492
+MD5Sum: cbf369808d22304e2ea1e7dc102688ba
+SHA256sum: b77e4e00debf8e64ed91e5bf767aae092efb406d85ec223276b7d471274df7a1
+Description:  English
+
+Package: luci-i18n-french
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 21249
+Filename: luci-i18n-french_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 22003
+MD5Sum: 61cc61951e4751699c6d9a4abcbd8a86
+SHA256sum: 1c42030d740af8310150e3cbb79973282b37a77f877ff189be9344de8c7089b9
+Description:  French (by Florian Fainelli)
+
+Package: luci-i18n-german
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20501
+Filename: luci-i18n-german_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 21226
+MD5Sum: ac703dbb7d1597304ba64f54821d8dab
+SHA256sum: eb3c3a56f01f27cf55880c5f58ccaffe8d832bc40ba1fb9d75b8d86853240f40
+Description:  German
+
+Package: luci-i18n-greek
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 17481
+Filename: luci-i18n-greek_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 18255
+MD5Sum: a537319207e92366a4fe9b0b21fa4a65
+SHA256sum: 0c4bff3616a97ce88b4154b13667feca819a6663fd6cdf8451dee9902fc08a6c
+Description:  Greek (by Vasilis Tsiligiannis)
+
+Package: luci-i18n-hebrew
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6995
+Filename: luci-i18n-hebrew_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7747
+MD5Sum: 0215fd2a7615e0c0f12e6cbc723b36e6
+SHA256sum: 3d3a8c2ca958c39e51581e4005165a69ac28b5cebf259b85c990b324ed74c922
+Description:  Hebrew
+
+Package: luci-i18n-hungarian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 21914
+Filename: luci-i18n-hungarian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 22650
+MD5Sum: 76f63adb56e64816d872ee7cfe64aec1
+SHA256sum: 2e18e79332e759b97b6c55ba9310f8b064ea967accbf2c9b4de202d545c66a8e
+Description:  Hungarian
+
+Package: luci-i18n-italian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 16844
+Filename: luci-i18n-italian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 17558
+MD5Sum: 0a3d7c28c3fa499d3727d44eb0aa870f
+SHA256sum: bb4828ef19c33ea0de81fe38dd6132563e2793c5b23da3c927fa3f0945e12ca7
+Description:  Italian (by Matteo Croce)
+
+Package: luci-i18n-japanese
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20562
+Filename: luci-i18n-japanese_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 21289
+MD5Sum: 1c816d55e898926f1a94e0421135199f
+SHA256sum: b4f60594b2b2e2aa770326d006a5219748cac87a3b30253435d213dec58e2528
+Description:  Japanese (by Tsukasa Hamano)
+
+Package: luci-i18n-malay
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 7528
+Filename: luci-i18n-malay_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 8176
+MD5Sum: 7214dfaba159520ca0f14195dcbc99e5
+SHA256sum: 04d3bf1f541a4bce2b1262df96861c840044b90726152340e83ae87f4e6273db
+Description:  Malay (by Teow Wai Chet)
+
+Package: luci-i18n-norwegian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 20474
+Filename: luci-i18n-norwegian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 21204
+MD5Sum: 41c0e9fc30fe845945acba36e86a5a24
+SHA256sum: 1a0c296ecd44ba14d4dfc25d8176877414c2b7de952124e2f6bbeb5c633e0cc0
+Description:  Norwegian (by Lars Hardy)
+
+Package: luci-i18n-polish
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 21735
+Filename: luci-i18n-polish_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 22466
+MD5Sum: f1934eb3fc8875fb8df792e89494fce5
+SHA256sum: 182d83e463cd9b00f4f418ddfa74e606a39f35ea6fc7100c1d6bcd91f66653ec
+Description:  Polish
+
+Package: luci-i18n-portuguese-brazilian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 21740
+Filename: luci-i18n-portuguese-brazilian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 22511
+MD5Sum: 436585e8732560155c2e1589cb6dd597
+SHA256sum: eaeb883a94c6e41ec351f4ee6be815892b6e401a0e6e04f835c9db9015ae9e23
+Description:  Portuguese (Brazilian) (by Carlos Cesario)
+
+Package: luci-i18n-portuguese
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 18861
+Filename: luci-i18n-portuguese_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 19572
+MD5Sum: 1293767df5259b3390a09fa982c9f78e
+SHA256sum: d8654dd0b93644fe50050f1de55668d2f08495ac7e6b84b0aef805888ae12921
+Description:  Portuguese (by Jose Monteiro)
+
+Package: luci-i18n-romanian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 10556
+Filename: luci-i18n-romanian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 11266
+MD5Sum: 4b58cea2ea00f1f092804d1c62a2fc2b
+SHA256sum: 3a4d11af15b3b7becb625ee714bdd53201713a88f2eaf482581787bf7f4696c7
+Description:  Romanian
+
+Package: luci-i18n-russian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 24456
+Filename: luci-i18n-russian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 25193
+MD5Sum: cd99953534eade8ddd30aacb9707ac6d
+SHA256sum: d51dc55a10cfcfa7420959585272298534e32c328873599de5aa079b5cac977e
+Description:  Russian (by Skryabin Dmitry)
+
+Package: luci-i18n-spanish
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 21069
+Filename: luci-i18n-spanish_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 21708
+MD5Sum: fdfea79be202312258814413068b4413
+SHA256sum: 5319617d8967bc76a9b8b6daf4c50a0041036159146807f2b9e410c34cc42293
+Description:  Spanish (by Guillermo Javier Nardoni)
+
+Package: luci-i18n-ukrainian
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 24947
+Filename: luci-i18n-ukrainian_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 25675
+MD5Sum: be6021a959bd4cd4c07fe7ac4a3350dd
+SHA256sum: 029ed547ee87cc7a57957e67604e46441785548046f9f85a5353aa8a19d7c3f6
+Description:  Ukrainian
+
+Package: luci-i18n-vietnamese
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6578
+Filename: luci-i18n-vietnamese_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7296
+MD5Sum: ed4287466e7e0f3b2223bc72f50d2780
+SHA256sum: e8344612cac32b84c50291e8af291530b9eadf80ebe23140fa42308ee22182ca
+Description:  Vietnamese (by Hong Phuc Dang)
+
+Package: luci-lib-httpclient
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base, luci-base, luci-lib-nixio
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 4921
+Filename: luci-lib-httpclient_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 5504
+MD5Sum: dde4015f432c7a5f484d18e238dbfd4c
+SHA256sum: f585ff9ecad81f76995d2fe38670c08fbe3259312fa360ec95ee6d0e2987e5a1
+Description:  HTTP(S) client library
+
+Package: luci-lib-json
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 4062
+Filename: luci-lib-json_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 4665
+MD5Sum: 73b3b21dd2db37483e3947b62b116290
+SHA256sum: 6122838866ad79361bf2f0586863be7c82b96e1cbd52fb7e3122b6dc90d29322
+Description:  LuCI JSON library
+
+Package: luci-lib-luaneightbl
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2330
+Filename: luci-lib-luaneightbl_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 2944
+MD5Sum: 0f9ce9ad7a5480687354d9dac6ee8b43
+SHA256sum: 0f17d199227e5eb2c220bf3a9259f46cb6896c1668490923f73396296e929a09
+Description:  neightbl - Lua lib for IPv6 neighbors
+
+Package: luci-lib-nixio
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 29528
+Filename: luci-lib-nixio_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 29893
+MD5Sum: d2e384ee9fc62685a3e968fcda124555
+SHA256sum: 18275041b7777c6abe0b37a381edff6ffce5e1d74d49bf31052f0a1b05911411
+Description:  NIXIO POSIX library
+
+Package: luci-lib-px5g
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base, luci-lib-nixio
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 29085
+Filename: luci-lib-px5g_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 29707
+MD5Sum: bed7396aac9d298c8381b16fbb109489
+SHA256sum: a84cab51263615469be7154a4fc8be6eaab9ad0df0bc8e25802a2d623785e0c0
+Description:  RSA/X.509 Key Generator (required for LuCId SSL support)
+
+Package: luci-mod-admin-full
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 67796
+Filename: luci-mod-admin-full_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 68418
+MD5Sum: 79945cf09b2f39e966fff536e3734d9e
+SHA256sum: 30d99fc2610372d5c7efbf7a24cf2030612f25ccaa65ae37ecc7fc6b473e16bf
+Description:  LuCI Administration - full-featured for full control
+
+Package: luci-mod-failsafe
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 4164
+Filename: luci-mod-failsafe_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 4741
+MD5Sum: ebcf378dc96bbeb2dcebd3bba7b764af
+SHA256sum: ae38d4d1eb2bdafad379597f1c653d3e0bd20cb748efe927bbc2a1f3984eaa31
+Description:  LuCI Fail-Safe - Fail-Safe sysupgrade module
+
+Package: luci-mod-freifunk-community
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, iptables-mod-nat-extra, iptables-mod-ipopt, luci-app-splash, luci-i18n-german, olsrd, olsrd-mod-dyn-gw-plain, olsrd-mod-jsoninfo, olsrd-mod-nameservice, olsrd-mod-watchdog, kmod-tun, ip, freifunk-watchdog, luci-app-olsr, luci-app-olsr-services, freifunk-gwcheck, freifunk-mapupdate
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 188
+Filename: luci-mod-freifunk-community_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 906
+MD5Sum: 4a556c97e05c5ca78b486e6c21558924
+SHA256sum: 54490fc18979741052f8936285b9fdb161477b5bf66c5e0c5ef7b224f748fb1b
+Description:  Freifunk Community Meta-Package
+
+Package: luci-mod-freifunk
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-mod-admin-full, luci-lib-json, freifunk-firewall, freifunk-common
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 51566
+Filename: luci-mod-freifunk_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 52334
+MD5Sum: 96175a554d78d057cfef4eddaac4e5da
+SHA256sum: 869e46ca960661dc11e26294281abeb713bd472b4ded43d1f77862fd65f2660f
+Description:  LuCI Freifunk module
+
+Package: luci-mod-rpc
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-lib-json
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2663
+Filename: luci-mod-rpc_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 3267
+MD5Sum: b32519dc54f1a706df8088e12f86b72d
+SHA256sum: fd857ed207f201c526d32b612befe986a0b90783ae7f36e96c3dc4af9a1408f3
+Description:  LuCI RPC - JSON-RPC API
+
+Package: luci-proto-3g
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, comgt
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 1847
+Filename: luci-proto-3g_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 2423
+MD5Sum: c4fbb06e3b8ac69d77012d975867c2f8
+SHA256sum: 6cedf30a649ae9762e768fae09db621423c9fb69fe6314dae7bd9cdc522c02cf
+Description:  Support for 3G
+
+Package: luci-proto-ipv6
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 3453
+Filename: luci-proto-ipv6_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 4072
+MD5Sum: a8a26efb7536a3961f4ccffbbb4e4e65
+SHA256sum: 4fb3d86c93006d9b1721c4c513abdebdfd68eded7d8959711b53cf7f26d26376
+Description:  Support for DHCPv6/6in4/6to4/6rd/DS-Lite
+
+Package: luci-proto-ppp
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 2999
+Filename: luci-proto-ppp_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 3608
+MD5Sum: 0e58c6b6ef34ea74f2bfc17d14db8f37
+SHA256sum: 9ed289060f7ef320bfb39b48a1e4d5552d172c7a45aac06aeeebe759239f4f03
+Description:  Support for PPP/PPPoE/PPPoA/PPtP
+
+Package: luci-ssl
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci, libustream-polarssl, px5g
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 105
+Filename: luci-ssl_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 713
+MD5Sum: f19d05715d23379ef3d6212fbeb5d665
+SHA256sum: de65a627dd77b106010935567def01a43a5c818df638a7c266767b5301e776a2
+Description:  Standard OpenWrt set with HTTPS support
+
+Package: luci-theme-bootstrap
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 12945
+Filename: luci-theme-bootstrap_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 13652
+MD5Sum: 272ba05fdf5ad7921f21089d139fa016
+SHA256sum: 3a3d58a62188a1e0530f225c5c393dd1299e0627d89ee6696ff411f7b710c776
+Description:  Bootstrap Theme (default)
+
+Package: luci-theme-freifunk-bno
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: Stefan Pirwitz <stefan-at-freifunk-bno-dot-de>
+Architecture: realtek
+Installed-Size: 15522
+Filename: luci-theme-freifunk-bno_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 16216
+MD5Sum: 0c271057ceffc5dfbb6654b8c81dda8c
+SHA256sum: 7de6767d1bd1449762402f996fbb94f45fb12a883c367de89df7f8bdd742b522
+Description:  Freifunk Berlin Nordost Theme
+
+Package: luci-theme-freifunk-generic
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci-addons
+Section: luci
+Maintainer: Manuel Munz <freifunk-at-somakoma-dot-de>
+Architecture: realtek
+Installed-Size: 13149
+Filename: luci-theme-freifunk-generic_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 13878
+MD5Sum: 58e371aff2d9085a55766ecf56066033
+SHA256sum: 1c4fda303c66d19ddc765b86341729210eba90e1d68610eaf0204b5b3cded0f7
+Description:  Freifunk Generic Theme
+
+Package: luci-theme-openwrt
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 6976
+Filename: luci-theme-openwrt_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 7731
+MD5Sum: 01087068bce8bc396de6ffaa27cf4066
+SHA256sum: 52d78ce57f5f6c9821788733070fd33fd2b3d3373e04c6e68342be42c95ac607
+Description:  OpenWrt.org
+
+Package: luci
+Version: 0.12+git-16.038.38474-0d510b2-1
+Depends: libc, uhttpd, uhttpd-mod-ubus, luci-mod-admin-full, luci-theme-bootstrap, luci-app-firewall, luci-proto-ppp, libiwinfo-lua, luci-lib-nixio
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: realtek
+Installed-Size: 105
+Filename: luci_0.12+git-16.038.38474-0d510b2-1_realtek.ipk
+Size: 789
+MD5Sum: d3abc07714ed526bd058b18ebbd020f6
+SHA256sum: d05e17e21cdee9306c3688de168da905b8ceba1dcc7d3024d37b92129642d7dc
+Description:  Standard OpenWrt set including full admin with ppp support and the default OpenWrt theme
+
+Package: meshwizard
+Version: 0.1.0
+Depends: libc, firewall
+Source: feeds/luci/contrib/package/meshwizard
+Section: luci
+Architecture: realtek
+Installed-Size: 12695
+Filename: meshwizard_0.1.0_realtek.ipk
+Size: 13245
+MD5Sum: 97c87637ec35442a32f320584f140998
+SHA256sum: c91a12566cf74c8c2d29d8a2c85a9d8e1613144d306bf99dcd7e3655da3f6015
+Description:  A shellscript based wizard to simplify the setup of a typical mesh node (e.g. for Freifunk.net)
+
