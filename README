@@ -31,9 +31,9 @@ option overlay_root /overlay
 src/gz barrier_breaker_base https://github.com/Alter0ne/rtl8196e/packages/base
 src/gz barrier_breaker_telephony https://github.com/Alter0ne/rtl8196e/packages/telephony
 src/gz barrier_breaker_packages https://github.com/Alter0ne/rtl8196e/packages/packages
-src/gz barrier_breaker_routing /https://github.com/Alter0ne/rtl8196e/packages/routing
+src/gz barrier_breaker_routing https://github.com/Alter0ne/rtl8196e/packages/routing
 src/gz barrier_breaker_luci https://github.com/Alter0ne/rtl8196e/packages/luci
-src/gz barrier_breaker_management /https://github.com/Alter0ne/rtl8196e/packages/management
+src/gz barrier_breaker_management https://github.com/Alter0ne/rtl8196e/packages/management
 # src/gz barrier_breaker_oldpackages https://github.com/Alter0ne/rtl8196e/packages/oldpackages
 
 3. Save it.
