@@ -1,0 +1,42 @@
+Original Realtek Openwrt sources: https://sourceforge.net/projects/rtl819x/files/
+Dl Folder contains sources for compiling additional packages.
+
+Warning! USB port still not working on rtl8196e. It has different kernel implementation through DWC_OTG. Not such as rtl819xd.
+
+INSTALLING
+
+1. Change IP address PC to 192.168.1.5 netmask 255.255.255.0
+2. Turn off router.
+3. Hold the reset button and turn the router power, wait about 10 seconds (must change the nature of the router blinking LED), and release the reset button.
+4. Open TFTP client.
+5. Set IP 192.168.1.6 and Port 69.
+6. Choose openwrt-realtek-rtl8196e-AP-fw.bin file.
+7. Click “Send” button.
+8. Wait few minutes.
+9. Return IP settings PC to default.
+10. Visit http://192.168.1.1, set a password on the root and connect through SSH (eg via Putty).
+11. Run:
+    firstboot
+    Y
+    reboot -f
+
+CONFIGURATION
+1. Go to .../admin/system/packages/ipkg
+2. Input:
+
+dest root /
+dest ram /tmp
+lists_dir ext /var/opkg-lists
+option overlay_root /overlay
+src/gz barrier_breaker_base https://github.com/Alter0ne/rtl8196e/packages/base
+src/gz barrier_breaker_telephony https://github.com/Alter0ne/rtl8196e/packages/telephony
+src/gz barrier_breaker_packages https://github.com/Alter0ne/rtl8196e/packages/packages
+src/gz barrier_breaker_routing /https://github.com/Alter0ne/rtl8196e/packages/routing
+src/gz barrier_breaker_luci https://github.com/Alter0ne/rtl8196e/packages/luci
+src/gz barrier_breaker_management /https://github.com/Alter0ne/rtl8196e/packages/management
+# src/gz barrier_breaker_oldpackages https://github.com/Alter0ne/rtl8196e/packages/oldpackages
+
+3. Save it.
+4. Install prefer packages.
+5. ???
+6. Profit!
