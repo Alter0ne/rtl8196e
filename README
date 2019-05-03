@@ -1,7 +1,9 @@
 Original Realtek Openwrt sources: https://sourceforge.net/projects/rtl819x/files/
 Dl Folder contains sources for compiling additional packages.
 
-Warning! USB port still not working on rtl8196e. It has different kernel implementation through DWC_OTG. Not such as rtl819xd.
+UPDATE: I get fully working USB!
+I patched the kernel config on .../target/linux/realtek/rtl8196e/config-3.10
+Yes, you can setup extroot, dlna and other useful OpenWRT features right now.
 
 INSTALLING
 
