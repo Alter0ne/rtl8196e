@@ -2352,11 +2352,11 @@ Source: feeds/packages/utils/cryptodev-linux
 Section: kernel
 Maintainer: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@gmail.com>
 Architecture: realtek
-Installed-Size: 20437
+Installed-Size: 20438
 Filename: kmod-cryptodev_3.10.49+1.6-realtek-1_realtek.ipk
-Size: 21018
-MD5Sum: 47cb6a78d6584d11da6626c79a4e9da1
-SHA256sum: 10714f846ae3dabc192f981aa6e8da23529488692f149d1cca8363f29886d7c1
+Size: 21024
+MD5Sum: 7234ae6cd5ad5a8f84a266740010f504
+SHA256sum: 593b381a7ebc5c25d5d8fc230a6451ebb092044a0002ddc6ede81431311d04d4
 Description:  This is a driver for that allows to use the Linux kernel supported
  hardware ciphers by user-space applications.
 

@@ -106,11 +106,11 @@ Source: feeds/routing/batmand
 Section: net
 Maintainer: Marek Lindner <lindner_marek@yahoo.de>
 Architecture: realtek
-Installed-Size: 37040
+Installed-Size: 37032
 Filename: batmand_r1439-2_realtek.ipk
-Size: 37483
-MD5Sum: 002775ed1bd63f43894348e37ceeffc1
-SHA256sum: 5dc9d8d839eec56cbb97e39da60f108de66f26eb85f9a3fad03ab78e7e04af53
+Size: 37482
+MD5Sum: 9619254154811d6d18b138c6fc2cec85
+SHA256sum: f08de2b10e9f9659562458818e4ef3e65717fffeed7e91769ac223b81ebe0556
 Description:  B.A.T.M.A.N. layer 3 routing daemon
 
 Package: bcp38
@@ -306,11 +306,11 @@ Source: feeds/routing/batman-adv
 Section: kernel
 Maintainer: Marek Lindner <mareklindner@neomailbox.ch>
 Architecture: realtek
-Installed-Size: 84319
+Installed-Size: 84317
 Filename: kmod-batman-adv_3.10.49+2014.2.0-1_realtek.ipk
-Size: 84782
-MD5Sum: 42f7c5724b0b61bfb5777bd9a2da7d54
-SHA256sum: 4f55c5aef8702410c3bcbbef533a3f6a2a68e5cafd4c24d2d044b9515650d33a
+Size: 84798
+MD5Sum: 1bcc9b52c1708643de49043d7c5f274d
+SHA256sum: 80cb6e8e5bb1a0882233fdaaa6e7412cdaf4a2e0877aa3ea01f28ddf9e18f3a0
 Description:  B.A.T.M.A.N. advanced is a kernel module which allows to
  build layer 2 mesh networks. This package builds
  version 2014.2.0 of the kernel module.
@@ -322,11 +322,11 @@ Source: feeds/routing/nat46
 Section: kernel
 Maintainer: Steven Barth <cyrus@openwrt.org>
 Architecture: realtek
-Installed-Size: 16119
+Installed-Size: 16118
 Filename: kmod-nat46_3.10.49+1-1_realtek.ipk
-Size: 16738
-MD5Sum: c6e20d5930b94c7893dcbe6f47fd8d8b
-SHA256sum: 7b933f59ee061e0da0ba15bbda8088e59cfd284710d73cc8a2c34d2705f744e5
+Size: 16732
+MD5Sum: 3febf799254306b0806ff71551398d45
+SHA256sum: 7e5344955598cfab2644da413039f0876701ce77b1694f76c5b88d3d97b7e70a
 Description:  Stateless NAT46 translation kernel module
 
 Package: luci-app-bcp38
@@ -364,11 +364,11 @@ Source: feeds/routing/nat46
 Section: net
 Maintainer: Steven Barth <cyrus@openwrt.org>
 Architecture: realtek
-Installed-Size: 106
+Installed-Size: 105
 Filename: map-t_1_realtek.ipk
-Size: 645
-MD5Sum: 4354c3d30248bf009942af444009cd47
-SHA256sum: 046e89ed7c64b03e48dd02b177415789e1909c3412c291396eca87778231904b
+Size: 643
+MD5Sum: f79fc0f2f1226611c1649268300da062
+SHA256sum: 6162aa457b68977b03c63a3f9fb3c92e5b1a45185a1615a98bcc6e20b0def46f
 Description:  MAP-T configuration support
 
 Package: minimalist-pcproxy
@@ -972,10 +972,10 @@ Source: feeds/routing/batmand
 Section: net
 Maintainer: Marek Lindner <lindner_marek@yahoo.de>
 Architecture: realtek
-Installed-Size: 10014
+Installed-Size: 10012
 Filename: vis_r1439-2_realtek.ipk
-Size: 10621
-MD5Sum: 3f82abec17a42261e73f185cc03368b1
-SHA256sum: 0caca9f2f5e027193c79efc7f328af81cbcd30e163b13db66232a55c692601b2
+Size: 10616
+MD5Sum: d3d278701e981fcded96d5a1ef871584
+SHA256sum: 66c2b43959bf37c046e8fb35049d647ffac80b7e90892f71bc03d61554bcf6e7
 Description:  visualization server for B.A.T.M.A.N. layer 3
 
