@@ -13,7 +13,7 @@ COMPILATION
    ${([^ \t=:+{}]+)}/ to $\{([^ \t=:+{}]+)}/
 5. Run "make" or "make V=99" again.
 
-6. To build a single package: "make package/Your_Package"
+6. To build a single package: "make package/<Your_Package>/compile"
 
 INSTALLING
 
