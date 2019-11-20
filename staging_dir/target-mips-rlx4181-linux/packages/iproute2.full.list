@@ -1,0 +1,7 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libnetlink.a
+./usr/include
+./usr/include/libnetlink.h

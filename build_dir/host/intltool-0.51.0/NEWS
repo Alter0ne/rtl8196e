@@ -1,0 +1,58 @@
+intltool 0.50.2
+===============
+
+intltool 0.50.2 is another minor release improving backwards compatibility.
+Only one bug is fixed in this release:
+
+ * Use --no-translations only if intltool >= 0.50 is available (#903340).
+   Patch contributed by Hib Eris (https://launchpad.net/~hiberis).
+
+intltool 0.50.1
+===============
+
+intltool 0.50.1 is a minor release with the following improvements:
+
+ * Support AM_SILENT_RULES (#402516).
+   Patch contributed by Hib Eris (https://launchpad.net/~hiberis).
+
+ * Improve support for extracting messages from GSettings files (#922685).
+   Patch contributed by Ryan Lortie (https://launchpad.net/~desrt).
+
+ * Support attribute tag extraction for Glade/GtkBuilder files (#923841).
+   Patch contributed by Ryan Lortie (https://launchpad.net/~desrt).
+
+ * Start including a ChangeLog in tarballs and provide a NEWS file (#924386).
+   This introduces a soft dependency on "bzr": it's only required for
+   maintainers who wish to regenerate a ChangeLog file from the bzr checkout.
+
+ * Fix quoting of XGETTEXT variable when setting MSGMERGE and GENPOT
+   in Makefile (#900738).
+   Patch contributed by Matthias Klose (https://launchpad.net/~doko).
+
+
+intltool 0.50.0
+===============
+
+intltool 0.50.0 is a major bug fix release.
+
+Among the fixes, the following stand out:
+
+ * Bug #580526
+   Finally, support for gsettings gschema.xml files is merged in, which
+   should enable maintainers to get a slightly simpler build setup
+   (i.e. no need to use NOMERGE rule anymore, and you can have intltool
+   directly extract translations from .gschema.xml files).
+
+ * Bug #790574:
+   Let xgettext extract Scheme strings out, and add support for
+   `intltool-update -m` to find files with marked strings.
+
+ * Bug #806006:
+   Improve handling of quotes in `intltool-update -m` so you get less
+   (no?) warnings about mismatched quotes, and Python processing doesn't
+   get messed up with docstrings and similar.
+
+ * Bug #520986:
+   One for the translators—messages are extracted in the order they appear
+   in original files now, thus allowing translators to infer more of the
+   context from the ordering.

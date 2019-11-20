@@ -1,0 +1,15 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libvorbisidec.so.1.0.3
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/vorbisidec.pc
+./usr/lib/libvorbisidec.so
+./usr/lib/libvorbisidec.a
+./usr/lib/libvorbisidec.so.1
+./usr/include
+./usr/include/tremor
+./usr/include/tremor/ivorbisfile.h
+./usr/include/tremor/ivorbiscodec.h
+./usr/include/tremor/config_types.h

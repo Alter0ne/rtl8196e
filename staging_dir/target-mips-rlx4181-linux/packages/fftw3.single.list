@@ -1,0 +1,16 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libfftw3f_threads.a
+./usr/lib/libfftw3f.so
+./usr/lib/libfftw3f.so.3
+./usr/lib/libfftw3f_threads.so.3
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/fftw3f.pc
+./usr/lib/libfftw3f_threads.so
+./usr/lib/libfftw3f_threads.so.3.5.8
+./usr/lib/libfftw3f.a
+./usr/lib/libfftw3f.so.3.5.8
+./usr/include
+./usr/include/fftw3.h

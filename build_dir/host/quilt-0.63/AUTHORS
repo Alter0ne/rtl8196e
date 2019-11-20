@@ -1,0 +1,42 @@
+Quilt started as a series of scripts written by Andrew Morton
+(patch-scripts).  Based on Andrew's ideas, Andreas Gruenbacher
+completely rewrote the scripts, with the help of several other
+contributors (see below).
+
+Please report bugs to the quilt-dev mailing list,
+
+    <http://mail.nongnu.org/mailman/listinfo/quilt-dev>.
+
+
+Quilt
+=====
+
+Andreas Gruenbacher <agruen@suse.de>
+    Clean up, reorganize, speedups, documentation.
+    Package up as RPM.
+
+Gerd Knorr <kraxel@suse.de>
+    Contributed spec2series (which is inspect now).
+
+Martin Quinson (martin.quinson#debian.org)
+    Several little patches and improvements.
+    Internationalization.
+    Debian packaging.
+
+Peter Braam <braam@clusterfs.com>
+Tom Wang <wangdi@clusterfs.com>
+    Fix pop logic if series file changes.
+
+
+Pre-quilt (patch-scripts)
+=========================
+
+Andrew Morton <akpm@digeo.com>
+    Collection of scripts for patch management (patch-scripts).
+
+Stephen Cameron <steve.cameron@hp.com>
+    Contributed pstatus.
+
+Matt Reppert <arashi@arashi.yi.org>
+Jeremy Fitzhardinge <jeremy@digeo.com>
+    Contributions to Andrew's scripts.

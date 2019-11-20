@@ -1,0 +1,104 @@
+<!--
+ * Asterisk GUI - Apply new uimages via upload/http/ftp urls
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ * 
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ * All Rights Reserved.
+ *
+-->
+<html>
+<head>
+	<title>Update Appliance Firmware</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Update Appliance Firmware
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div style='display:none;' class='nocf' id='nocf'> You need a&nbsp;&nbsp;<b>CompactFlash&reg;</b>&nbsp;&nbsp;to use this feature </div>
+
+	<table id='mainDiv' style='display:none;' align=center width='95%'>
+	<TR>
+		<TD><div class='lite_Heading'> Update Appliance Firmware </div></TD>
+	</TR>
+	<tr>
+		<td align=center style='padding-top:30px;'>
+			<span id='span_current_fwversion'></span>
+			<span id='check_forNewFirmwareVersions_button' style='display:none' class='guiButton' onclick='check_forNewFirmwareVersions()'> Check for new Firmware versions </span>
+			<div id="UpdatePolycomFirmware" style="display:none"><A href='update_phonefirmware.html'>Update Polycom firmware</A></div>
+		</td>
+	</tr>
+	<tr>
+	<td align=left>
+		<BR>
+		<fieldset>
+		<legend><B>&nbsp;Download image from a :&nbsp;</B></legend>
+		<LABEL FOR="updatetype_http">
+			<input type=radio id="updatetype_http" name="updatetype" value="HTTP" onchange="switch_httptftp('h');"> HTTP URL
+		</LABEL>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<LABEL FOR="updatetype_tftp">
+			<input type=radio id="updatetype_tftp" name="updatetype" value="TFTP" onchange="switch_httptftp('t');"> TFTP Server
+		</LABEL>
+
+		<table>
+		<tr>
+			<td>	<table>
+					<tr id="tr_1">
+						<td align=right>HTTP URL :</td>
+						<td> <input id="httpurl" size=35> </td>
+					</tr>
+					<tr id="tr_2">
+						<td align=right>TFTP Server :</td>
+						<td><input id="tftpurl" size=35></td>
+					</tr>
+					<tr id="tr_3">
+						<td align=right>File Name :</td>
+						<td><input id="tftp_filename" size=25></td>
+					</tr>
+				</table>
+			</td>
+			<td valign=top>
+				<input type="button" id="Update_Image" onclick="call_flashupdate();" value="Go">
+			</td>
+		</tr>
+		</table>
+		</fieldset>
+	</td>
+	</tr>
+	<tr>
+	<td align=center id="tdupload">
+		<BR>
+		<fieldset>
+			<legend><B>&nbsp;Upload a new image :&nbsp;</B></legend>
+		<IFRAME src="upload2.html" id="uploadiframe" width="480" height="100" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+		</fieldset>
+		<span id="fstatus"></span>
+	</td>
+	</tr>
+
+	<tr  id="overlayUpload_TR" style='display:none'>
+	<td align=center>
+		<BR>
+		<fieldset>
+			<legend><B>&nbsp;Upload a overlay file :&nbsp;</B></legend>
+			<IFRAME id="uploadOVERLAY_iframe" width="480" height="100" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+		</fieldset>
+	</td>
+	</tr>
+
+	</table>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/flashupdate.js"></script>
+</body>
+</html>

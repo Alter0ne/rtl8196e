@@ -1,0 +1,68 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Upload a custom voice menu prompt
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Upload Voice Menu Prompt</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#nocf {
+			font-size: 13pt;
+			border:1px solid;
+			padding : 10;
+			margin-left : 15;
+			margin-right : 15;
+			margin-top : 25;
+			text-align: center;
+		}
+
+		#thispageContent{
+			font-size: 10pt;
+			padding : 5;
+			margin-left : 15;
+			margin-top : 15;
+		}
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		&nbsp;Upload a custom Voice Menu Prompt
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div style='display:none;' id='nocf'> You need a&nbsp;&nbsp;<b>CompactFlash&reg;</b>&nbsp;&nbsp;to use this feature </div>
+
+	<div class='top_buttons'>
+		<span class='guiButton' id='BACKBUTTON' style='margin-left:200px;'> &#171 Back to 'List of Custom Voice Menu Prompts' </span>
+	</div>
+
+
+	<fieldset  style="font-size : 13px; width: 745px" id='uploadForm_container'>
+		<legend><B>&nbsp;Choose voice prompt to upload :&nbsp;</B></legend>
+		<IFRAME src="upload_form.html" id="uploadiframe" width="480" height="100" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+	</fieldset>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/menuprompts_upload.js"></script>
+</body>
+</html>

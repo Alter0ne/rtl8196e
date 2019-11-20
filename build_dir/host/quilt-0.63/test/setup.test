@@ -1,0 +1,123 @@
+$ mkdir dir
+
+$ echo 1 > dir/foo.orig
+$ echo 2 > dir/foo
+$ diff -u dir/foo.orig dir/foo > foo.diff
+$ diff -u dir/foo.orig dir/foo > revert.diff
+$ diff -u dir/foo.orig dir/foo > again.diff
+$ mv dir/foo.orig dir/foo
+$ tar cf - dir | gzip > dir.tar.gz
+$ mkdir dir/patches
+$ echo crap > dir/patches/foo.diff
+$ tar cf - dir | gzip > dir_with_patches.tar.gz
+$ rm -rf dir
+
+$ cat > series
+< # Source: dir.tar.gz
+< # Patchdir: dir
+< #
+< foo.diff -p1
+< revert.diff -p1 -R
+< again.diff
+$ quilt setup series
+> Unpacking archive dir.tar.gz
+$ cd dir
+$ ls -l patches series | sed -e 's:.* -> ::'
+> ..
+> ../series
+$ quilt push -qa
+> Applying patch patches/foo.diff
+> Applying patch patches/revert.diff
+> Applying patch patches/again.diff
+> Now at patch patches/again.diff
+$ cd ..
+$ rm -rf dir
+$ quilt setup -d other series
+> Unpacking archive dir.tar.gz
+$ cd other/dir
+$ ls -l patches series | sed -e 's:.* -> ::'
+> ../..
+> ../../series
+$ quilt push -qa
+> Applying patch patches/foo.diff
+> Applying patch patches/revert.diff
+> Applying patch patches/again.diff
+> Now at patch patches/again.diff
+$ cd ../..
+$ rm -rf other
+$ mkdir dir1
+$ mv series dir1
+$ cd dir1
+$ quilt setup -d ../other series
+> File dir.tar.gz not found
+$ quilt setup --sourcedir .. -d ../other series
+> Unpacking archive ../dir.tar.gz
+$ cd ../other/dir
+$ ls -l patches series | sed -e 's:.* -> ::'
+> ../..
+> ../../dir1/series
+$ quilt push -qa
+> Applying patch patches/foo.diff
+> Applying patch patches/revert.diff
+> Applying patch patches/again.diff
+> Now at patch patches/again.diff
+$ cd ../..
+$ rm -rf "dir"
+
+# Now test the cases where the directory already exists, or the tarball
+# contains a patches directory
+$ cat > series_with_patches
+< # Source: dir_with_patches.tar.gz
+< # Patchdir: dir
+< #
+< foo.diff
+$ mkdir dir
+$ quilt setup series_with_patches
+> Directory dir exists
+$ rmdir dir
+$ quilt setup series_with_patches
+> Unpacking archive dir_with_patches.tar.gz
+> Directory dir/patches exists
+> Trying alternative patches and series names...
+$ cd dir
+$ ls -l quilt_patches quilt_series | sed -e 's:.* -> ::'
+> ..
+> ../series_with_patches
+$ quilt push -qa
+> Applying patch quilt_patches/foo.diff
+> Now at patch quilt_patches/foo.diff
+$ cd ..
+$ rm -rf "dir"
+
+# Now a basic test with space in dir name
+$ mkdir "space [dir]"
+$ echo 1 > "space [dir]/foo.orig"
+$ echo 2 > "space [dir]/foo"
+# Recent versions of GNU diff will quote such file names, but old versions
+# of GNU patch do not support that, so strip the quotes
+$ diff -u "space [dir]/foo.orig" "space [dir]/foo" | sed -e 's:"::g' > foo.diff
+$ cp foo.diff revert.diff
+$ cp foo.diff again.diff
+$ mv "space [dir]/foo.orig" "space [dir]/foo"
+$ tar cf - "space [dir]" | gzip > "space [dir].tar.gz"
+$ rm -rf "space [dir]"
+$ cat > series
+< # Source: space [dir].tar.gz
+< # Patchdir: space [dir]
+< #
+< foo.diff -p1
+< revert.diff -p1 -R
+< again.diff
+$ quilt setup series
+> Unpacking archive space [dir].tar.gz
+$ cd space\ [dir]
+$ ls -l patches series | sed -e 's:.* -> ::'
+> ..
+> ../series
+$ quilt push -qa
+> Applying patch patches/foo.diff
+> Applying patch patches/revert.diff
+> Applying patch patches/again.diff
+> Now at patch patches/again.diff
+$ cd ..
+$ rm -rf "space [dir]"

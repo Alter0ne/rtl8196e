@@ -1,0 +1,10 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libfko.so.2
+./usr/lib/libfko.so
+./usr/lib/libfko.a
+./usr/lib/libfko.so.2.0.2
+./usr/include
+./usr/include/fko.h

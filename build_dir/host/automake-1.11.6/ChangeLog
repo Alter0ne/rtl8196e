@@ -1,0 +1,2452 @@
+2012-07-09  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	release: bug-fixing stable release 1.11.6
+
+	Fixes security vulnerability CVE-2012-3386.
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.6.
+	* m4/amversion.m4: Likewise (auto-updated by "./bootstrap").
+
+2012-07-09  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	distcheck: never make part of $(distdir) world-writable
+
+	This fixes a locally-exploitable security vulnerability (CVE-2012-3386).
+	Cherry-picked from: v1.12.1-105-gbab7065.
+
+	In the 'distcheck' rule, we used to make the just-extracted (from
+	the distribution tarball) $(distdir) directory and all its files and
+	subdirectories read-only; then, in order to create the '_inst' and
+	'_build' subdirectories in there (used by the rest of the recipe) we
+	made the top-level $(distdir) *world-writable* for an instant (the
+	time to create those two directories) before making it read-only
+	again.
+
+	Making that directory world-writable (albeit only briefly) introduced a
+	locally exploitable race condition for those who run "make distcheck" with
+	a non-restrictive umask (e.g., 022) in a directory that is accessible by
+	others.  A successful exploit would result in arbitrary code execution
+	with the privileges of the user running "make distcheck" -- game over.
+	Jim Meyering wrote a proof-of-concept script showing that such exploit is
+	easily implemented.
+
+	This issue is similar to the CVE-2009-4029 vulnerability:
+	<http://lists.gnu.org/archive/html/automake/2009-12/msg00012.html>
+
+	* lib/am/distdir.am (distcheck): Don't make $(distdir) world-writable,
+	not even for an instant; make it user-writable instead, which is enough.
+	* NEWS: Update.
+
+	Helped-By: Jim Meyering <jim@meyering.net>
+
+2012-04-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	release: stable maintenance release 1.11.5
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.5.
+	* m4/amversion.m4 (AM_AUTOMAKE_VERSION): Likewise (autoupdated
+	by ./bootstrap).
+
+2012-04-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  install: shell parameter expansions can be used in directory names
+
+2012-04-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'fix-pr11232' into maint
+
+	* fix-pr11232:
+	  install: shell parameter expansions can be used in directory names
+
+2012-04-13  Dmitry V. Levin  <ldv@altlinux.org>
+
+	install: shell parameter expansions can be used in directory names
+
+	Fixes automake bug#11232.
+
+	GNU automake used to support shell parameter expansion and command
+	substitutions in installation directories, but that was inadvertently
+	broken by commit v1.11-759-g368f1c4 "install: don't create empty dirs
+	when an empty 'foo_PRIMARY' is used" of 18-03-2012, where shell quoting
+	of generated MKDIR_P command was changed from double to single quotes
+	in 3 places, while some 21 other places still use double quotes for
+	generated MKDIR_P commands.
+
+	* lib/am/data.am: Use double quotes for generated "mkdir -p" commands.
+	* lib/am/libs.am: Likewise.
+	* lib/am/ltlib.am: Likewise.
+
+2012-04-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	news: document fixes for bug#11222 and bug#11229
+
+	* NEWS (Bugs fixed in 1.11.5): New, documenting the fixes.
+
+2012-04-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  vala: fix distcheck with c/vala mixed projects
+	  vala: fix vapi files handling
+	  vala: test vapi files handling (still failing)
+
+2012-04-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branches 'vala-fix-pr11222' and 'vala-fix-pr11229' into maint
+
+	* vala-fix-pr11222:
+	  vala: fix vapi files handling
+	  vala: test vapi files handling (still failing)
+
+	* vala-fix-pr11229:
+	  vala: fix distcheck with c/vala mixed projects
+
+2012-04-12  Marc-Antoine Perennou  <Marc-Antoine@Perennou.com>  (tiny change)
+
+	vala: fix distcheck with c/vala mixed projects
+
+	Fixes automake bug#11229.
+
+	* automake.in (lang_vala_finish_target): Return early if the
+	current '_SOURCES' variable does not contain any '.vala' nor
+	'.vapi' source.  Otherwise, the vala compiler will be called
+	without arguments, causing an error.
+	* tests/vala-mix.test: Enhance to catch the fixed bug.
+
+2012-04-12  Marc-Antoine Perennou  <Marc-Antoine@Perennou.com>  (tiny change)
+
+	vala: fix vapi files handling
+
+	Fixes automake bug#11222.
+
+	Issue introduced in commit 'v1.11-696-g51f61df' of 27-02-2012,
+	"vala: fix 'valac' calls for projects with mixed Vala/C", which
+	fixed automake bug#10894.
+
+	* automake.in (lang_vala_finish_target): Also recognize '.vapi'
+	as an extension for vala input files.
+	* tests/list-of-tests.mk (XFAIL_TESTS): Remove 'vala-vapi.test'.
+
+2012-04-12  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+	    Marc-Antoine Perennou  <Marc-Antoine@Perennou.com>
+
+	vala: test vapi files handling (still failing)
+
+	Exposes automake bug#11222.
+
+	* tests/vala-vapi.test: New test, still failing.
+	* tests/list-of-tests.mk (handwritten_TESTS): Add it.
+	(XFAIL_TESTS): Likewise.
+	* THANKS: Update.
+
+2012-04-02  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	release: stable maintenance release 1.11.4
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.4.
+	* NEWS: Likewise.
+	* m4/amversion.m4 (AM_AUTOMAKE_VERSION): Likewise (autoupdated
+	by ./bootstrap).
+
+2012-03-31  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  docs: deprecate 'cygnus' mode, help the transition
+
+2012-03-31  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	docs: deprecate 'cygnus' mode, help the transition
+
+	Support for "Cygnus-style" trees (so far enabled by the 'cygnus'
+	option) will be deprecated in one release of the next major series
+	(1.12.x) and removed in the next major release after that (1.13).
+	Better to start warning about this in the manual.
+
+	* docs/automake.texi: Warn about the oncoming deprecation of the
+	'cygnus' mode.  Suggest some idioms that can be used to retain some
+	effects of the 'cygnus' option.
+	* THANKS: Update.
+
+	From a suggestion by Joseph S. Myers in automake bug#11034.
+
+2012-03-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  cosmetics: don't make the generated Config.pm executable
+	  maint: reduce use of recursion in automake build system
+
+2012-03-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cosmetics: don't make the generated Config.pm executable
+
+	* lib/Makefile.am (Automake/Config.pm): Don't make this executable,
+	there's not need for it to be (it's a perl module, not a script).
+
+2012-03-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: reduce use of recursion in automake build system
+
+	Recursive make-based build systems tend to be slower, more fragile
+	and less faithful than "flat" ones.  See Peter Miller's article
+	"Recursive Make Considered Harmful" for more a more in-depth
+	discussion:
+
+	  <http://miller.emu.id.au/pmiller/books/rmch/>
+
+	While in the case of automake this isn't a big problem (given the
+	small size of its build systems), it still creates occasional
+	glitches and annoyances.  So, with this change, we start making
+	less use of make recursion in the Automake's own build system
+	(future changes will reduce it even more).
+
+	* lib/am/Makefile.am, lib/Automake/Makefile.am:  Removed, their
+	content merged ...
+	* lib/Makefile.am: ... here, with required adjustments.
+	* configure.ac (AC_CONFIG_FILES): Update.
+
+2012-03-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* NEWS: Minor tweakings and reorderings of the new entries.
+
+2012-03-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	depcomp: support tcc (Tiny C Compiler)
+
+	This change fixes automake bug#11007.
+
+	Since git commit 0c928da9 of 21-06-2010, "tcc: Draft suppoprt for
+	-MD/-MF options" (sic, with typo in summary line), tcc has supported
+	automatic dependency generation with a command-line interface
+	similar to what old (pre-8.0) Intel compilers did.  This caused
+	Automake-generated code for automatic dependency tracking to
+	recognize tcc dependency style as "icc".  However, the format of
+	the dependency files generated by tcc is apparently different enough
+	from that of icc to cause spurious failures in the post-processing
+	operated by our 'depcomp' script on such files.
+
+	The failure was exposed with the development version of tcc 0.9.26
+	(as installed with debian package "tcc 0.9.26~git20120104.83d") by
+	test case 'depcomp-auto.tap' (available only in the master branch).
+
+	* lib/depcomp (icc): Cater to tcc as well.  Update comments
+	accordingly.
+	* NEWS: Update.
+
+2012-03-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: workaround for automatic linker determination and conditionals
+
+	See automake bug#11089.
+
+	Automake is not very smart in automatically determining the command
+	to be used to link a program whose source files' languages are
+	conditionally defined.  For example, an input like:
+
+	  if HAVE_CXX
+	  foo_SOURCES = more.c++
+	  else
+	  foo_SOURCES = less.c
+	  endif
+
+	will cause the build rules for 'foo' to *unconditionally* use the
+	C++ compiler for linking, even when the 'HAVE_CXX' conditional
+	evaluates to false (which might mean that no C++ compiler is
+	available).
+
+	This behaviour is not really correct, but it's easy enough to work
+	around, and it's only relevant for fringe use cases (at best).  So
+	let's just test that the workaround really works.
+
+	* tests/link_cond.test: New test.
+	* tests/list-of-tests.mk: Add it.
+	* THANKS: Update.
+
+2012-03-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	info: allow user to inhibit pruning of '${infodir}/dir'
+
+	This should have ideally been part of commit 'v1.11-519-g1ec1668'
+	of 23-11-2011 "info: allow user to inhibit creation/update of
+	'${infodir}/dir'".  Well, better late than never.
+
+	* lib/am/texinfos.am (uninstall-info-am): Don't look anymore at the
+	output of "install-info --version" to decide whether to use it to
+	update the '${infodir}/dir' or not; instead, honour the environment
+	variable 'AM_UPDATE_INFO_DIR'.  To avoid code duplication with ...
+	(install-info-am): ... the recipe of this target, move common code
+	out to ...
+	(am__can_run_installinfo): ... this new internal variable.
+	* tests/install-info-dir.test: Enhance.
+	* doc/automake.texi (Texinfo): Update.
+	* NEWS: Likewise.
+
+2012-03-26  Bruno Haible  <bruno@clisp.org>
+	    Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala tests: fix spurious failures with older valac (<= 0.7.2)
+
+	See automake bug#11093.
+
+	The Vala compiler before the 0.7.3 release does not support the
+	'--profile' option.  But some of our tests were relying on it, so
+	skip those tests if the detected Vala compiler is too old.
+
+	* tests/vala-vpath.test, tests/vala-mix.test, tests/vala-mix2.test
+	(configure.in): Require vala version >= 0.7.3 in AM_PROG_VALAC call.
+
+2012-03-26  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix a timestamp issue, and other minor buglets
+
+	Cherry picked from commit v1.11-1988-g82616f0 of 21-02-2012.
+
+	Reported by Panther Martin in automake bug#10848.  See also
+	automake bug#11093.
+
+	* tests/conffile-leading-dot.test: Add a proper '$sleep' invocation,
+	to avoid spurious failures on fast systems without sub-second
+	timestamp resolutions.  Add other minor related and unrelated
+	improvements and fixlets since we are at it.
+
+2012-03-26  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failure with older autoconf
+
+	Cherry picked from commit v1.11-1950-gba5a89b of 16-02-2012.
+
+	* tests/conffile-leading-dot.test: Relax grepping of 'config.status'
+	stderr, to cater for older autoconf.  Issue revealed by a failure
+	with autoconf 2.63 on Cygwin 1.5.25. See also automake bug#11093.
+
+2012-03-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: post-release version bump
+
+	* configure.ac, NEWS, m4/amversion.m4: Bump version to 1.11.3c,
+	as per HACKING suggestion.
+
+2012-03-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Beta release 1.11.3b (will become 1.11.4)
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.3b.
+	* NEWS: Likewise.
+	* m4/amversion.m4: Likewise (autoupdated by ./bootstrap).
+
+2012-03-24  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  build: remove duplicated entries in $(TESTS)
+
+2012-03-24  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	build: remove duplicated entries in $(TESTS)
+
+	* tests/list-of-tests.mk (handwritten_TESTS): Remove duplicated
+	entries for test cases 'extra-portability*.test'.
+
+2012-03-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  maint: move definition of XFAIL_TESTS near TESTS
+
+2012-03-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: move definition of XFAIL_TESTS near TESTS
+
+	The $(TESTS) variable is defined in file 'tests/list-of-tests.mk',
+	while the $(XFAIL_TESTS) variable is defined in 'tests/Makefile.am'.
+	This means that when a new xfailing test is to be added, two files
+	must be touched; this is suboptimal and slightly confusing.
+
+	* tests/Makefile.am (XFAIL_TESTS): Definition moved ...
+	* tests/list-of-tests.mk: ... here.
+
+2012-03-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  install-mans: avoid spurious failure with NetBSD make
+
+2012-03-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	install-mans: avoid spurious failure with NetBSD make
+
+	* lib/am/mans.am: After the changes introduced by previous commit
+	v1.11-759-g368f1c4, some manpage installation recipes started to
+	fail spuriously on NetBSD 5.1 make.  Apparently, the system make
+	there eats backslashes used to escape whitespace characters in the
+	relevant recipes.  Revert to slightly slower but safer idioms that
+	avoid the need of such escaping.
+
+2012-03-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	news: fix botched merges, some cleanups
+
+2012-03-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  install: don't create empty dirs when an empty 'foo_PRIMARY' is used
+
+2012-03-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	install: don't create empty dirs when an empty 'foo_PRIMARY' is used
+
+	Fixes automake bug#11030 and bug#10997.
+
+	An empty declaration of "foo_PRIMARY" in a Makefile.am used to
+	cause the generated install rules to create the directory $(foodir)
+	anyway, even if nothing was to be installed there.
+
+	While this could be seen as a convenient way to create a $(foodir)
+	directory upon "make install" (respecting $(DESTDIR) settings and
+	such), it also caused problems with conditionals; for example, an
+	input of:
+
+	  if FALSE
+	  pgkdata_DATA = something
+	  endif
+
+	caused the generated install rules to unconditionally create the
+	$(pkgdatadir) directory (see automake bug#10997).
+
+	Also, a user wanting to create an empty directory upon installation
+	can easily do so with a custom install hook, as in:
+
+	  installdirs-local:
+	          $(MKDIR_P) $(DESTDIR)$(foodir)
+	  install-data-hook: installdirs-local
+
+	On the other hand, the old behavior of "always create $(foodir),
+	even if 'foo_PRIMARY' is empty" was harder and more tricky to
+	override.
+
+	Thus, from now on, an empty declaration of "foo_PRIMARY" will not
+	cause the directory $(foodir) to be created upon "make install"
+	anymore.
+
+	* lib/am/data.am, lib/am/java.am, lib/am/libs.am, lib/am/lisp.am,
+	lib/am/ltlib.am, lib/am/mans.am, lib/am/progs.am, lib/am/python.am,
+	lib/am/scripts.am, lib/am/texinfos.am: Adjust install rules to avoid
+	creating an installation directory if no files are actually to be
+	installed there.
+	* tests/instdir-empty.test: Remove, it was testing a semantic
+	opposite to the one we now want and implement.
+	* tests/instdir-no-empty.test: New test, check the new semantic.
+	* tests/instdir-cond.test: Enhance.  Move the still-failing part
+	of the test ...
+	* tests/instdir-cond2.test: ... here.
+	* tests/list-of-tests.mk, tests/Makefile.am (XFAIL_TESTS): Update.
+	* tests/java3.test: Adjust to avoid spurious failures.
+	* HACKING, NEWS, THANKS: Update.
+
+2012-03-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  aclocal: remove a couple of useless imports
+	  aclocal: create local directory where to install m4 files
+
+2012-03-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	aclocal: remove a couple of useless imports
+
+	* aclocal.in (File::stat, Cwd): Remove these imports, they are not
+	really required.
+
+2012-03-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	aclocal: create local directory where to install m4 files
+
+	Fixes automake bug#8168 and bug#10816.
+
+	A call like "aclocal -I m4 --install" used to fail if the 'm4'
+	directory wasn't pre-existing.  This could be particularly
+	annoying when running in a checked-out version from a VCS like
+	git, which doesn't allow empty directories to be tracked.
+
+	* aclocal.in (File::Path): New import.
+	(scan_m4_dirs): Don't die if the first directory of type FT_USER
+	doesn't exist and the '--install' option was given; that directory
+	will be created later ...
+	(install_file): ... here.  Change signature of this function: now
+	it takes as second argument the destination directory rather than
+	the destination file.  Crate the destination directory if it
+	doesn't already exist.  In verbose mode, tell what is being copied
+	where.
+	(write_aclocal): Update to the changes in 'install_file'.
+	* NEWS, THANKS: Update.
+	* tests/aclocal-install-fail.test: New test.
+	* tests/aclocal-install-mkdir.test: Likewise.
+	* tests/aclocal-no-install-no-mkdir.test: Likewise.
+	* tests/aclocal-verbose-install.test: Likewise.
+	* tests/list-of-tests.mk: Add them.
+
+2012-03-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  python: avoid failures due to $(am__py_compile) being undefined
+	  python: expose automake bug#10995
+	  tests: avoid spurious failures in get-sysconf.test
+	  scripts: bump the depcomp scriptversion
+	  sync: some auxiliary files synced from upstream
+	  coverage: an empty foo_PRIMARY should create directory $(foodir)
+	  coverage: make sure am__py_compile is defined when needed
+	  coverage: expose automake bug#10997
+
+2012-03-15  Steven Drake  <sbd@NetBSD.org>  (tiny change)
+
+	python: avoid failures due to $(am__py_compile) being undefined
+
+	Fixes automake bug#10995, introduced in commit v1.11-372-gb46debf.
+
+	* lib/am/python.am: Move the definition of 'am__py_compile' to
+	ensure it is always emitted in the output Makefile.in.  Previously,
+	this wouldn't have happened if the input Makefile.am contained a
+	'noinst_PYTHON' declaration before a 'python_PYTHON' one.
+	* tests/Makefile.am (XFAIL_TESTS): Remove 'python-pr10995.test' and
+	'python.test'.
+	* NEWS: Update.
+
+2012-03-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	python: expose automake bug#10995
+
+	* tests/python.test: Expose the bug in grepping tests.
+	* tests/python-noinst.test: New functional test to expose the
+	bug.
+	* tests/list-of-tests.mk: Add it.
+	* tests/Makefile.am (XFAIL_TESTS): Add the new test and the
+	extended one.
+	* THANKS: Update.
+
+2012-03-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: avoid spurious failures in get-sysconf.test
+
+	This change fixes the last bit of automake bug#10866.
+
+	* tests/get-sysconf.test: When Homebrew spawns a build, even if
+	from a project's VCS, it stages the files in a new temporary
+	directory, instead of building directly from a VCS checkout.
+	This behaviour was causing a spurious failure in this test, which
+	expected to find either a ChangeLog file or a .git directory in
+	the source directory (the former happening when the test was run
+	from a distribution tarball, the latter when it was run from a
+	git checkout).  The Homebrew issue shows that these expectations
+	are not truly warranted, so relax the test to just give a warning,
+	not a failure, in case they do not hold.  Since we are at it, fix
+	an unrelated weakness in the displaying of the git log, which
+	could have failed when the builddir was not a subdirectory of the
+	srcdir.
+
+2012-03-12  Peter Rosin  <peda@lysator.liu.se>
+
+	scripts: bump the depcomp scriptversion
+
+	* lib/depcomp (scriptversion): Bump, to account for recent changes.
+
+2012-03-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	sync: some auxiliary files synced from upstream
+
+	* lib/texinfo.tex: Synced from upstream, by "make fetch".
+	* lib/config.guess: Likewise.
+	* lib/config.sub: Likewise.
+	* lib/gnupload: Likewise.
+
+2012-03-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	coverage: an empty foo_PRIMARY should create directory $(foodir)
+
+	For example, a Makefile.am containing the definition:
+
+	  pkgdata_DATA =
+
+	should cause the 'install' rule of the generated Makefile.in to
+	create the '$(pkgdatadir)' directory (respecting any DESTDIR
+	setting as well).
+
+	Suggestion by Peter Breitenlohner in automake bug#10997.
+
+2012-03-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	coverage: make sure am__py_compile is defined when needed
+
+	See automake bug#10995.
+
+	* tests/python.test: Also make sure 'am__py_compile' is defined
+	correctly in the generated Makefile.in.
+
+2012-03-12  Daiki Ueno  <ueno@unixuser.org>  (tiny change)
+
+	coverage: expose automake bug#10997
+
+	* tests/instdir-cond.test: New test.
+	* tests/list-of-tests.mk: Add it.
+	* tests/Makefile.am (XFAIL_TESTS): Likewise.
+
+2012-03-11  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  coverage: expose automake bug#10975
+	  getopt: relax version requirement for perl
+
+2012-03-09  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	coverage: expose automake bug#10975
+
+	* tests/dist-pr10975.test: New test.
+	* tests/list-of-tests.mk: Add it.
+	* tests/Makefile.am (XFAIL_TESTS): Likewise.
+
+2012-03-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	getopt: relax version requirement for perl
+
+	* lib/Automake/Getopt.pm: Require perl 5.6.0, not 5.6.2: the former
+	is enough.  See also commit 'v1.11-2054-g7df05a0' on master (dated
+	04-03-2012).
+
+2012-03-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  cosmetics: fix repeated changelog entry heading
+
+2012-03-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cosmetics: fix repeated changelog entry heading
+
+2012-03-07  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'maint' into branch-1.11
+
+2012-03-07  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'msvc' into maint
+
+	This merge remedies the confusing situation that some changes
+	destined for both the master branch and the release branch (a.k.a.
+	branch-1.11) currently needs to be made on the non-obvious msvc
+	branch and not on the more natural maint branch.  This has caused
+	a seemingly endless string of less than optimal commits.
+
+	The reason for the confusion stems from the fact that the changes made
+	on the msvc branch became too radical and was considered only suitable
+	for the master branch, and was thus written in a form suitable for
+	master and then merged there.  Later, the msvc branch was merged
+	directly into branch-1.11, in order to rush the new features to the
+	market and to keep the released scripts (lib/ar-lib, lib/compile and
+	lib/depcomp) consistent with those on the master branch.  However,
+	some changes had to be made to the features added by the msvc branch
+	in order for them to fit the requirements of branch-1.11, notably that
+	the warnings issued in the extra-portability class cannot be enabled
+	by -Wall in the 1.11.x maintenance releases.
+
+	In retrospect, it would have been better to not merge msvc directly
+	into branch-1.11, but instead do it via the maint branch (followed up
+	with a dummy merge from maint into master) the moment it was decided
+	that the msvc changes should make it into branch-1.11.
+
+	All in all, this merge is going to affect neither the master branch
+	nor branch-1.11, since it is followed up with dummy merges masking all
+	changes.  The merge is made to maintain the sanity of the poor
+	developers, who wishes to once again have a working maint branch.
+
+	Discussion about merging the msvc branch into branch-1.11:
+	http://lists.gnu.org/archive/html/automake/2011-10/msg00030.html
+
+	Discussion about why this merge hasn't happened before:
+	http://lists.gnu.org/archive/html/automake/2011-12/msg00051.html
+
+	Extra edits below.
+
+	* lib/Automake/ChannelDefs.pm: Use the version from branch-1.11.
+	* tests/ar-lib3.test: Likewise.
+	* tests/ar-lib4.test: Likewise.
+	* tests/extra-portability.test: Likewise.
+	* tests/extra-portability2.test: Likewise.
+	* tests/extradep.test: Likewise.
+	* tests/extradep2.test: Likewise.
+	* tests/list-of-tests.mk: Likewise.
+	* HACKING: Backport the version from branch-1.11 while at it (as the
+	change on branch-1.11 is also present on master via an unrelated
+	commit), even though this change has nothing to do with the changes
+	on the msvc branch.
+
+2012-03-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'msvc' into branch-1.11 (dummy merge)
+
+2012-03-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into msvc
+
+	* maint:
+	  news: describe recently-fixed bug in vala support
+	  depcomp: add support for IBM xlc/xlC compilers
+
+2012-03-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  news: describe recently-fixed bug in vala support
+
+2012-03-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	news: describe recently-fixed bug in vala support
+
+	* NEWS (Long-standing bugs): Document fix for bug#10894, fixed
+	by commit 'v1.11-696-g51f61df' of 27-02-2012.
+
+2012-03-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  depcomp: add support for IBM xlc/xlC compilers
+
+2012-03-06  Michael Hofmannm  <hofma@googlemail.com>  (tiny change)
+
+	depcomp: add support for IBM xlc/xlC compilers
+
+	* lib/depcomp (xlc): New depmode.
+	* NEWS, THANKS: Update.
+
+2012-03-06  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'msvc' into branch-1.11
+
+	* msvc:
+	  scripts: support -I <dir> -L <dir> and -l <lib> for cl in compile
+
+2012-03-06  Peter Rosin  <peda@lysator.liu.se>
+
+	scripts: support -I <dir> -L <dir> and -l <lib> for cl in compile
+
+	POSIX mandates that the compiler accepts a space between the -I,
+	-l and -L options and their respective arguments.  See
+	http://pubs.opengroup.org/onlinepubs/000095399/utilities/c99.html
+
+	* lib/compile (func_cl_dashl): New function with factored out code
+	for implementing the -l option for the cl wrapper.
+	(func_cl_dashL): New function with factored out code implementing
+	the -L option for the cl wrapper.
+	(func_cl_wrapper): Use func_cl_dashl to implement both -l <lib>
+	and -l<lib>, and func_cl_dashL to implement both -L <dir> and
+	-L<dir>.  Also add support for -I <dir>.
+	(scriptversion): Update.
+	* tests/compile3.test: Test both with and without a space between
+	-I, -l and -L and their respective arguments.
+	* tests/compile5.test: Likewise.
+	* tests/compile6.test: Likewise.
+	* tests/compile3.test: Likewise.
+	* NEWS: Update.
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'msvc' into branch-1.11
+
+	* msvc:
+	  news: add entry about recent 'ar-lib' changes
+	  scripts: recognize the "q", "s" and "S" actions/modifiers in ar-lib
+	  vala: fix 'valac' calls for projects with mixed Vala/C
+	  vala: expose automake bug#10894
+	  dryrun: $(am__dry_run) not confused by metachars in $(MAKEFLAGS)
+	  update-copyright: don't touch files synced from external packages
+	  fixup: distribute 'lib/update-copyright'
+	  maint: add a rule to use gnulib's update-copyright
+	  fixup: do not tickle makefile-deps.test with the make_dryrun code
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	news: add entry about recent 'ar-lib' changes
+
+	* NEWS: Add information about recent 'ar-lib' changes.
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'fix-vala-test-for-branch-1.11' into branch-1.11
+
+	* fix-vala-test-for-branch-1.11:
+	  tests: fix (harmless) botched merge
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	tests: fix (harmless) botched merge
+
+	Commit v1.11.2-114-g693557c of 2012-01-16 (Merge branch 'maint'
+	into branch-1.11) reordered the macro calls so that AM_PROG_AR
+	ended up after AC_PROG_LIBTOOL, which is not allowed.  This
+	error went by undetected since AC_PROG_LIBTOOL was redefined,
+	but that also removed the ordering requirement making the error
+	benign.
+
+	* tests/vala.test: Put AM_PROG_AR before AC_PROG_LIBTOOL.
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	scripts: recognize the "q", "s" and "S" actions/modifiers in ar-lib
+
+	* lib/ar-lib: Implement the "q" (quick) action as a synonym
+	for "r" (replace).  Ignore "s" (symbol index) and "S" (no symbol
+	index) when used as modifiers and "s" when used as a command,
+	there is simply no way for Microsoft lib to not update the
+	symbol table index in the archive.
+	(scriptversion): Update.
+	* tests/ar-lib.test: Check the added behavior.  Also add checks
+	for the recently added "u" (update) and "v" (verbose) modifiers.
+
+2012-03-02  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'maint' into msvc
+
+2012-02-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: fix 'valac' calls for projects with mixed Vala/C
+
+	Fixes automake bug#10894.
+
+	* automake.in (lang_vala_finish_target): Strip non-vala files
+	from the dependencies of vala stamps, and from the invocation
+	of valac compiler.  Related refactorings.
+	* tests/Makefile.am (XFAIL_TESTS): Remove 'vala-mix2.test'.
+
+2012-02-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: expose automake bug#10894
+
+	* tests/vala-mix2.test: New test.
+	* tests/list-of-tests.mk: Add it.
+	* tests/Makefile.am (XFAIL_TESTS): Likewise.
+	* THANKS: Update.
+
+2012-02-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	dryrun: $(am__dry_run) not confused by metachars in $(MAKEFLAGS)
+
+	* lib/am/header-vars.am (am__make_dryrun): Be smarter and more
+	correct in handling shell metacharacters in $(MAKEFLAGS).
+
+2012-02-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	update-copyright: don't touch files synced from external packages
+
+	* Makefile.am (update-copyright): Do not update copyright years of
+	files synced from external packages, as given by the '$(FETCHFILES)'
+	variable.  Silence the recipe since we are at it.
+
+2012-02-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	fixup: distribute 'lib/update-copyright'
+
+	While the 'update-copyright' script shouldn't be needed by final
+	users, that's not a good reason to keep it out by the distribution,
+	as doing so might be unhelpful toward occasional but curious users
+	interested in peeking into the automake build system.
+
+	* lib/Makefile.am (EXTRA_DIST): Distribute 'update-copyright'.
+
+2012-02-14  Jim Meyering  <meyering@redhat.com>
+
+	maint: add a rule to use gnulib's update-copyright
+
+	* lib/update-copyright: New file, from gnulib.
+	* Makefile.am (FETCHFILES): Add update-copyright to the list.
+	(fetch): Fetch it.
+	(update-copyright): New rule.
+
+2012-02-14  Peter Rosin  <peda@lysator.liu.se>
+
+	fixup: do not tickle makefile-deps.test with the make_dryrun code
+
+	* lib/am/header-vars.am (am__make_dryrun): Avoid code matching
+	'^ *:' in the Makefile, as that tickles makefile-deps.test.
+
+2012-02-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  gitattributes: custom merge driver for ChangeLog not needed anymore
+	  gitattributes: use "union" merge driver for NEWS
+	  tests: fix a timestamp-related spurious failures
+	  dryrun: fix regression with '$(am__make_dryrun)'
+	  test defs: function 'is_newest' now works also with directories
+	  refactor: new variable telling whether make is running in "dry mode"
+	  tests: do not clobber the modified CC
+	  tests: put AM_PROG_CC_C_O before AC_OUTPUT to help losing compilers
+
+2012-02-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	gitattributes: custom merge driver for ChangeLog not needed anymore
+
+	* .gitattributes: We don't maintain a version-controlled ChangeLog
+	file anymore, so we have no need to specify a custom merge driver
+	for it anymore.  Update accordingly.
+
+2012-02-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	gitattributes: use "union" merge driver for NEWS
+
+	This should help in reducing the spurious merge conflicts for the
+	NEWS file, which have already caused a great deal of confusion and
+	wasted time.
+
+	Suggestion by Eric Blake:
+	http://lists.gnu.org/archive/html/automake-patches/2012-02/msg00119.html
+
+	* .gitattributes (NEWS): Use the "union" merge driver.
+
+2012-02-09  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'dryrun-fix' into maint
+
+	* dryrun-fix:
+	  dryrun: fix regression with '$(am__make_dryrun)'
+
+2012-02-08  Peter Rosin  <peda@lysator.liu.se>
+
+	Merge branch 'msvc' into branch-1.11
+
+	* msvc:
+	  depcomp: try to prevent whitespace regressions
+	  depcomp: recognize tabs as whitespace in the dashmstdout mode
+	  depcomp: quote 'like this', not `like this'
+
+2012-02-08  Peter Rosin  <peda@lysator.liu.se>
+
+	depcomp: try to prevent whitespace regressions
+
+	Suggested by Stefano Lattarini.
+
+	* lib/depcomp: Add $tab and $nl variables and use them
+	throughout.
+
+2012-02-08  Peter Rosin  <peda@lysator.liu.se>
+
+	depcomp: recognize tabs as whitespace in the dashmstdout mode
+
+	Commit Release-1-7-2b-2-gf03ceab "Cope with DOS filenames in
+	dependencies." inadvertedly converted tabs into spaces.
+
+	* lib/depcomp (dashmstdout): Add a tab character to all sets
+	matching whitespace.
+
+2012-02-08  Peter Rosin  <peda@lysator.liu.se>
+
+	depcomp: quote 'like this', not `like this'
+
+	Cherry-picked from recent changes from master.
+
+	* lib/depcomp: Quote 'like this', not `like this'.
+
+2012-02-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix a timestamp-related spurious failures
+
+	Fixes automake bug#10737.  Report from Larry Daniel.
+	See also automake bug#8365 and commit 'v1.11-329-gd4df619' of
+	30-03-2011, "tests: fix timestamp-related failures".
+
+	* tests/aclocal5.test: Sleep before modifying m4 files that should
+	trigger remake rules.  This fixes an hard-to-hit timestamp-related
+	race condition.
+	* THANKS: Update.
+
+2012-02-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	dryrun: fix regression with '$(am__make_dryrun)'
+
+	In commit v1.11-683-gda0964e of 05-02-2012, we introduced a new
+	variable '$(am__make_dryrun)' that could be used in recipes to
+	determine whether make is running in dry mode (e.g., as with
+	"make -n").  Unfortunately, the idiom we used fails to take into
+	account the case in which $(MAKEFLAGS) contains one or more variable
+	definitions whose value is a whitespace-separated list; for example,
+	if we invoke make as:
+
+	  make check TESTS="n1.test n2.test"
+
+	then the better make implementations out there (at least modern
+	GNU make and BSD make) will export MAKEFLAGS to the following
+	value:
+
+	  TESTS=n1.test\ n2.test
+
+	So a shell loop like the one we used in $(am__make_dryrun):
+
+	  for flag in $$MAKEFLAGS; do ...
+
+	won't behave as expected: the shell word-splitting rules will break
+	up the entry for TESTS into the two distinct entries "TESTS=n1.test\"
+	and "n2.test", and this second entry will goad our $(am__make_dryrun)
+	code into thinking that make is performing a dry run!
+
+	So now we simply loop over the expanded value of $(MAKEFLAGS).
+	This solves the regression, but alas, is more brittle in case the
+	users passes on the command line a macro value containing unbalanced
+	" or ' quotes, or shell metacharacters like, say, '`' or '('.  This
+	should almost never happen though, so we don't worry about it now;
+	we will revisit the issue only when and if we receive bug reports in
+	this area.
+
+	* lib/am/header-vars.am (am__make_dryrun): Fix.
+	* tests/make-dryrun.test: New test.
+	* tests/list-of-tests.mk: Add it.
+
+2012-02-05  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	test defs: function 'is_newest' now works also with directories
+
+	Reported by Jim Meyering against automake master (see bug#9147) and
+	by Adam Sampson against automake 1.11.3 (see bug#10730).
+
+	* tests/defs (is_newest): Call 'find' with the '-prune' option,
+	so that it won't descend in the directories (which could cause
+	spurious results).
+	* THANKS: Update.
+
+	Backported from commit v1.11-914-gb6a40fa (originally on master).
+
+2012-02-05  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	refactor: new variable telling whether make is running in "dry mode"
+
+	We define a new variable '$(am__make_dryrun)', that can be used
+	in recipes to determine whether make is running in "dry mode" (as
+	with "make -n") or not.  This is useful in rules that invoke make
+	recursively, and are thus executed also with "make -n" -- either
+	because they are declared as dependencies to '.MAKE' (NetBSD make)
+	or because their recipes contain the "$(MAKE)" string (GNU and
+	Solaris make).
+
+	* lib/am/header-vars.am (am__make_dryrun): New variable.
+	* lib/am/check.am (check-TESTS recheck): Use it, and simplify
+	recipe accordingly.
+	* lib/am/distdir.am (distdir): Likewise.
+	* lib/am/lisp.am ($(am__ELCFILES)): Likewise.
+
+2012-02-02  Peter Rosin  <peda@lysator.liu.se>
+
+	tests: do not clobber the modified CC
+
+	If CC is originally a losing compiler, AM_PROG_CC_C_O will
+	modify CC.  "$MAKE -e" will then clobber this modified CC
+	and reintroduce the raw losing compiler causing the test
+	to fail, as subdir-objects is in effect.
+
+	tests/check8.test: Drop -e from the $MAKE invocation, since
+	AM_COLOR_TESTS is not specified in the Makefile and -e is
+	therefore not needed.
+
+2012-02-01  Peter Rosin  <peda@lysator.liu.se>
+
+	tests: put AM_PROG_CC_C_O before AC_OUTPUT to help losing compilers
+
+	When AM_PROG_CC_C_O is after AC_OUTPUT, the compile script
+	is not used even if needed, causing testsuite fails if
+	libtool is not used.
+
+	* tests/depcomp8a.test: Uncomment the AM_PROG_CC_C_O macro
+	in its correct location, as indicated...
+	(configure.in): ...with this comment.
+	* tests/depcomp8b.test: Sync with tests/depcomp8a.test.
+
+2012-02-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: post-release version bump
+
+	* configure.ac, NEWS, m4/amversion.m4: Bump version to 1.11.3a,
+	as per HACKING suggestion.
+
+2012-02-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	release: stable release 1.11.3
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.3.
+	* NEWS: Likewise.
+	* m4/amversion.m4 (AM_AUTOMAKE_VERSION): Likewise.
+	* doc/automake.texi (Release Statistics): Update, as suggested
+	by "make release-stats".
+
+2012-02-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  cleanup: remove unused .am file
+
+2012-02-01  Peter Rosin  <peda@lysator.liu.se>
+
+	tests: add AM_PROG_AR to help losing archivers
+
+	Without AM_PROG_AR, using Microsoft lib as the archiver causes
+	testsuite failures.
+
+	* tests/extradep.test (configure.in): Add AM_PROG_AR.
+	* tests/extradep2.test (configure.in): Likewise.
+
+2012-01-31  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cleanup: remove unused .am file
+
+	* lib/am/comp-vars.am: Remove.  This file has stopped being useful
+	since commit 'Release-1-4d-206-g3334f9a' of 09-04-2001, and should
+	have been removed back then.  But apparently only its contents were
+	removed, leaving the file empty but still present in the repository.
+	Or maybe this situation is  the consequence of a minor blunder in
+	the conversion from CVS to Git; either way, this is not a big deal.
+
+2012-01-31  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branches 'msvc' and 'maint' into branch-1.11
+
+	* msvc:
+	  ar-lib: ignore the verbose modifier instead of erroring out
+	  scripts: cherry-pick recent changes from master
+
+	* maint:
+	  tests: do not assume the object file extension is .o
+
+2012-01-30  Peter Rosin  <peda@lysator.liu.se>
+
+	ar-lib: ignore the verbose modifier instead of erroring out
+
+	* lib/ar-lib: A number of tests uses the v modifier when listing
+	the archive content, ignore it to make them pass.
+
+2012-01-30  Peter Rosin  <peda@lysator.liu.se>
+
+	scripts: cherry-pick recent changes from master
+
+	* lib/ar-lib: prefer the term "Windows" over "Win32" and quote
+	'like this', not `like this'.
+	* lib/compile: Likewise.
+
+2012-01-30  Peter Rosin  <peda@lysator.liu.se>
+
+	tests: do not assume the object file extension is .o
+
+	* tests/specflg7.test: Dig out the object file extension from the
+	OBJEXT makefile variable.
+	* tests/substref.test: Likewise.
+	* tests/specflg8.test: Likewise.  Also check that the false-true
+	object is created instead of checking the true-true object twice.
+	* tests/suffix8.test: Add a chain rule for the case where the
+	object file extension is .obj.
+
+2012-01-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  tests: avoid spurious failure of 'transform2.test' on Cygwin
+	  tests: avoid spurious failure of deleted-am.test with FreeBSD make
+	  tests: avoid possibly undeserved PASS from check8.test
+	  warnings: more precise category and message for one warning
+	  release: revamp rules to tag and upload the releases
+	  amversion: add missing dependency
+	  hacking: update advice w.r.t. synced files
+	  hacking: don't reference ChangeLog anymore
+
+2012-01-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: avoid spurious failure of 'transform2.test' on Cygwin
+
+	On newer Cygwin versions (at least 1.7.x), the 'transform2.test'
+	test has been failing spuriously; the gist is the following:
+	some *purposefully* rigged install rules there try something
+	like:
+
+	  install bla.exe .../inst/bin/foo.exe
+	  install script.sh .../inst/bin/foo
+
+	and the second install command fails (trying to overwrite the
+	'.../inst/bin/foo.exe' file, likely due to overly aggressive
+	appending of '.exe' suffix when copying/renaming Windows
+	executables).  Since this is a Cygwin issue rather than an
+	Automake one (and since the use case we are testing is a really
+	corner-case anyway, making it unworthy to attempt to work
+	around it in automake proper), we simply hack the test case
+	to avoid the failure.
+
+	Analysis by Peter Rosin and Ralf Wildenhues.
+
+	References:
+	<http://lists.gnu.org/archive/html/automake-patches/2010-08/msg00153.html>
+	<http://thread.gmane.org/gmane.os.cygwin/119380>
+
+	* tests/transform2.test: Skip the affected part of the test
+	if the described Cygwin behaviour is detected.
+
+2012-01-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: avoid spurious failure of deleted-am.test with FreeBSD make
+
+	* tests/deleted-am.test: Sleep between the removal of the included
+	'.am' fragments and the subsequent "make" calls, to ensure that the
+	remake rules kick in.  This is required to avoid racy spurious
+	failures (~ 60% of the time) with FreeBSD make.
+
+2012-01-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: avoid possibly undeserved PASS from check8.test
+
+	* tests/check8.test: Strengthen grepping of "make check" output
+	where we know no problem with VPATH rewrites can take place.  This
+	has the advantage of ensuring that we won't match also "sub/bar"
+	when looking for "bar" during the uncolorized tests.
+
+	Suggestion by Peter Rosin.
+
+2012-01-27  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	warnings: more precise category and message for one warning
+
+	If automake detected an usage like "AC_CONFIG_FILES([./Makefile])"
+	in configure.ac, it warned that such an usage was unportable to
+	non-GNU make implementations.  But the truth is actually worse:
+	that is actually *unportable to GNU make* itself, since it breaks
+	the automatic remake rules in subtle ways.
+
+	So we now reveal this breakage in a new test case, and enhance
+	the warning by giving it a more precise and correct wording, and
+	by moving it from the category 'portability' to the category
+	'unsupported'.
+
+	* automake.in (scan_autoconf_config_files): Improve the warning.
+	* tests/conffile-leading-dot.test: New test.
+	* tests/list-of-tests.mk: Add it.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	release: revamp rules to tag and upload the releases
+
+	The older Makefile rules used to create and tag the releases were
+	based on an approach we now consider flawed: they over-mechanized
+	some delicate operations that are better performed manually *and*
+	double-checked by a developer, and at the same time they did not
+	run enough safety checks.
+
+	* Makefile.am (GIT, version_rx, stable_version_rx, beta_version_rx,
+	match_version, git_must_have_clean_workdir, determine_release_type):
+	New variables.
+	(git-release, git-dist): Remove, they are superseded by ...
+	(git-tag-release, git-upload-release): ... these new targets.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	amversion: add missing dependency
+
+	* m4/Makefile.am ($(top_srcdir)/m4/amversion.m4): Depend on
+	configure.ac, since the value of $(VERSION) can change every
+	time configure.ac is updated.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	hacking: update advice w.r.t. synced files
+
+	* HACKING: Update and improve advices and explanations about files
+	in the automake repository that are now owned by automake, but
+	mirrored from other upstreams.  Also, don't list these files
+	explicitly, rather point the reader to the $(FETCHFILES) variable
+	in Makefile.am.
+	* Makefile.am (FETCHFILES): Don't state that "there should be a
+	lot more here", as this is not true anymore today.  Only 'COPYING'
+	must be synced by hand.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	hacking: don't reference ChangeLog anymore
+
+	* HACKING: Don't reference the ChangeLog file anymore, since that
+	is now generated from the git commit messages, not maintained by
+	hand.  So remove advice that is obsolete, and speak about "git
+	commit message" instead of "ChangeLog entry" for advice that is
+	still relevant.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: post-release version bump (to 1.11.2c)
+
+	* configure.ac, NEWS, m4/amversion.m4: Bump version to 1.11.2c,
+	as per HACKING suggestions.
+
+2012-01-25  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Beta release 1.11.2b (will become 1.11.3)
+
+	* configure.ac (AC_INIT): Bump version number to 1.11.2b.
+	* NEWS: Likewise.
+	* doc/automake.texi (Release Statistics): Update, as suggested
+	by "make release-stats".
+
+2012-01-23  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  tests: fix spurious failure due to autom4te caching
+	  vala: fix name of temporary file used in vala rules
+	  vala tests: add missing 'valac' requirement, and other minor fixlets
+	  news: fix grammaro
+
+2012-01-22  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failure due to autom4te caching
+
+	* tests/lzma.test: Remove stale autom4te.cache directories, to
+	prevent racy, spurious failures (using 'aclocal --force' was
+	not enough, since the cache was still picked up by the following
+	automake call).
+
+2012-01-22  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: fix name of temporary file used in vala rules
+
+	Unquoted `@' characters in a "..." string in the automake script
+	were causing slightly wrong rules to be emitted in the generated
+	Makefile.in; i.e., rules like:
+
+	  rm -f $@ && echo stamp > $10t
+
+	instead of the expected:
+
+	  rm -f $@ && echo stamp > $@-t
+
+	* automake.in (lang_vala_finish_target): Fix that.
+	* tests/vala.test: Enhance.
+
+2012-01-22  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala tests: add missing 'valac' requirement, and other minor fixlets
+
+	See also automake bug#10575.
+
+	* tests/vala-mix.test ($required): Add 'valac'; this will avoid
+	spurious failures on systems lacking a Vala compiler.
+	Add some explicative comments for a couple of non-obvious make
+	calls.
+	Make grepping of "make -n" slightly stricter, to avoid potential
+	false positives.
+
+2012-01-22  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	news: fix grammaro
+
+	* NEWS (Miscellaneous changes): Fix grammaro: s/don't/doesn't/.
+
+	Reported by Jim Meyering.
+
+2012-01-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  fixup: distribute 'contrib/multilib/multi.m4'
+	  multilib: deprecate, will be moved to contrib
+	  fixlet: flags for Fortran77 compiler are in FFLAGS, not F77FLAGS
+	  cosmetics: fix a botched comment in a maintainer check
+	  cmdline parsing: move into a dedicated perl module
+
+2012-01-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	fixup: distribute 'contrib/multilib/multi.m4'
+
+	This fix up a blunder in commit v1.11-665-gc5df21e of 2012-01-17,
+	"multilib: deprecate, will be moved to contrib".
+
+	* contrib/Makefile.am (EXTRA_DIST): Add 'multilib/multi.m4'.
+
+2012-01-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	multilib: deprecate, will be moved to contrib
+
+	As of 2012-01-17, according to Google codesarch, almost no active
+	package is using the 'multilib' feature offered by automake.
+
+	The only major exception seems to be GCC...  But on a closer look,
+	it become clear that GCC basically carries its own version of
+	multilib support.  In fact, Automake syncs its 'config-ml.in' and
+	'symlink-tree' scripts from GCC; and the GCC repository contains a
+	version of the 'multi.m4' file that is *more* updated than the one
+	in the automake repository (the former having being modified the
+	last time in 2008, the latter only in 2006).
+
+	The 'multilib' feature was anyway hardly documented at all, only
+	being briefly cited in the manual as an "obscure feature", "still
+	experimental", that was only for users "familiar with multilibs"
+	and which "can debug problems they might encounter".  We expect
+	such users to be motivated and knowledgeable enough to make the
+	minor adjustments required to start using the contrib version of
+	multilib, if they really need to.
+
+	* NEWS (Future backward incompatibility): Update.
+	* doc/automake.texi: Deprecate multilib support.  State that it
+	will be removed from automake core in the next major release.
+	* m4/multi.m4 (AM_ENABLE_MULTILIB): Deprecate.  If called, now
+	gives a proper warning in the 'obsolete' category (while still
+	retaining its former behaviour for the rest).
+	* tests/multilib.test: Update.
+	* contrib/multilib/multi.m4: New, verbatim copy of the earlier
+	version of multi.m4, without the new deprecation warning.
+	* Makefile.am (fetch): Don't sync the 'config-ml.in' file nor
+	the 'symlink-tree' script from GCC SVN repository anymore.
+	(FETCHFILES): Adjust.
+	(WGET_GCC): Remove, it's not needed anymore.
+
+2012-01-21  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	fixlet: flags for Fortran77 compiler are in FFLAGS, not F77FLAGS
+
+	This change fixes automake bug#10555.
+
+	Note that the bug was a minor one, since it didn't affect the
+	compilation rules generated by automake, but only only the "hints"
+	printed by automake in some error messages (e.g., "The usual way
+	to define `FFLAGS' is to add AC_PROG_F77 to configure.ac").
+
+	* lib/Automake/Variable.pm (%_ac_macro_for_var): The code generated
+	by AC_PROG_F77 uses FFLAGS, not F77FLAGS, as the variable where to
+	look for switches for the Fortran 77 compiler: adjust accordingly.
+
+2012-01-19  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cosmetics: fix a botched comment in a maintainer check
+
+	* Makefile.am (sc_tests_make_without_am_makeflags): Adjust
+	botched description of this check.
+
+2012-01-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cmdline parsing: move into a dedicated perl module
+
+	With this change, we delegate most of the automake and aclocal code
+	for command-line options parsing to a new module "Automake::Getopt".
+	This allows better code sharing between automake and aclocal, and
+	also with Autoconf, which will sync the new module from us.  See
+	also autoconf commit 'v2.68-120-gf4be358' (2012-01-17, "getopt: new
+	Autom4te::Getopt module"), and this mailing list discussion:
+	<http://lists.gnu.org/archive/html/autoconf-patches/2012-01/msg00033.html>
+
+	This change might interact with the behaviour described in automake
+	bug#7434; for example, starting from now, "automake -Wfoo --version"
+	will cause automake to emit diagnostic like "unknown warning
+	category 'foo'" before actually printing the version number and
+	exiting.  This is not a big deal in practice, and the code sharing
+	and simplifications introduced by this patch is certainly worth it.
+	Still, we should revisited the issue in the future.
+
+	* lib/Automake/Getopt.pm: New module, basically a slightly-edited
+	copy of the 'lib/Autom4te/Getopt.pm' file from the autoconf devel
+	repository (commit v2.68-120-gf4be358).  It defines and exports ...
+	(parse_options): ... this new function.
+	* automake.in (parse_arguments): Use the new function.
+	* aclocal.in (parse_arguments): Likewise.
+	* lib/Automake/Makefile.am (dist_perllib_DATA): Add the new file.
+	* tests/getopt.test: Remove.
+	* tests/list-of-tests.mk: Update.
+
+2012-01-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  cosmetics: move CheckListOfTests.am into tests/
+	  tests: move all under the same hierarchy ('tests/' directory)
+	  gitlog-to-changelog: update from upstream
+	  changelog: don't cluster multiple entries under the same "date line"
+	  fixup: contrib: really integrate in automake build system
+	  contrib: new, a directory for non-mainstream functionalities
+
+2012-01-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	cosmetics: move CheckListOfTests.am into tests/
+
+	After the previous change 'v1.11-660-gfbeda3d', the makefile
+	fragment 'CheckListOfTests.am' is used only by the Makefile.am
+	in 'tests'; so keeping them two nearer makes sense.  It also help
+	in reducing potential confusion, since (after that same change)
+	the whole Automake testsuite is expected to be (and remain)
+	contained into the 'tests' subdirectory.
+
+	* CheckListOfTests.am: Move ...
+	* tests/CheckListOfTests.am: ... to this.
+	* tests/Makefile.am (include): Adjust.
+
+2012-01-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: move all under the same hierarchy ('tests/' directory)
+
+	This simplifies the organization of the Automake source tree and
+	reduces the (lamentably high) number of Makefiles in the Automake
+	build system by one.  It also makes the maintainer check that
+	verifies the consistency of list of tests more self-contained and
+	simpler.  Finally, it might be a first step forward the transition
+	to a non-recursive build system for automake (if we ever decide to
+	go down that road fully some day).
+
+	* lib/Automake/tests: All the '*.pl' tests in here moved ...
+	* tests/pm: ... into this new directory.
+	* lib/Automake/tests/Makefile.am: Remove, its meaningful
+	contents moved ...
+	* tests/Makefile.am: ... here, with obvious adjustments.
+	(test_subdirs): New variable, for the sake of the recipe
+	of 'maintainer-check-list-of-tests'.
+	* CheckListOfTests (maintainer-check-list-of-tests): Enhance
+	its recipe to make it able to deal with test script residing
+	in subdirectories.
+	* Makefile.am (maintainer-check-list-of-tests): Simplified.
+	(TEST_SUBDIRS): Remove, no more needed.
+	* tests/list-of-tests.mk (perl_TESTS): New variable, lists
+	the '.pl' tests just moved into 'tests/pm'.
+	(handwritten_TESTS): Add the contents of '$(perl_TESTS)'.
+	* lib/Automake/Makefile.am (SUBDIRS): Remove.
+	* configure.ac (AC_CONFIG_FILES): Update.
+	* .gitignore: Adjust.
+
+2012-01-18  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	gitlog-to-changelog: update from upstream
+
+	* lib/gitlog-to-changelog: Update from gnulib upstream.  The only
+	changes should be cosmetic and/or minor fixlets.
+
+2012-01-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	changelog: don't cluster multiple entries under the same "date line"
+
+	* lib/gitlog-to-changelog: Synced from gnulib.  The new version
+	has a new option '--no-cluster', that disables clustering of
+	adjacent commit messages under the same "date line".
+	* Makefile.am (gitlog_to_changelog_options): Add '--no-cluster'.
+	Also add a proper '--format' specification to ensure we have a
+	blank line between the summary line and the commit message body.
+
+2012-01-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	fixup: contrib: really integrate in automake build system
+
+	* configure.ac (AC_CONFIG_FILES): Add 'contrib/Makefile'.
+	* Makefile.am (SUBDIRS): Add 'contrib'.
+
+2012-01-17  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	contrib: new, a directory for non-mainstream functionalities
+
+	This new 'contrib' hierarchy will be a good place were to move
+	implementation/support for obsolescent features we are not yet
+	ready to remove completely, or were to leave experimental or
+	third-party features to cook before their eventual inclusion in
+	the automake core.
+
+	* contrib: New directory.
+	* contrib/README: New file.
+	* contrib/Makefile.am: New file.
+	(EXTRA_DIST): Distribute README.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  recheck: fix interaction with "make -n"
+	  vala: avoid potential useless remakes (minor bugfix)
+	  vala: enhance tests
+	  recheck: behave better with non-GNU make
+	  check: separate .log -> .html conversion from core testsuite harness
+	  docs: deprecate .log -> .html conversion by parallel-tests
+	  tests: list some forgotten test cases in $(TESTS)
+	  maintcheck: consistency of list of test scripts
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'check-html-deprecate' into maint
+
+	* check-html-deprecate:
+	  recheck: fix interaction with "make -n"
+	  recheck: behave better with non-GNU make
+	  check: separate .log -> .html conversion from core testsuite harness
+	  docs: deprecate .log -> .html conversion by parallel-tests
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	recheck: fix interaction with "make -n"
+
+	* lib/am/check.am (recheck): Ensure the recipe does not erroneously
+	remove '.log' files when running under "make -n".  For the sake of
+	NetBSD make, this also means that ...
+	(.MAKE): ... this cannot depend on 'recheck' anymore.
+	* tests/parallel-tests-dryrun.test: New test.
+	* tests/list-of-tests.mk: Add it.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: avoid potential useless remakes (minor bugfix)
+
+	* automake.in (lang_vala_finish_target): Ensure the timestamp file
+	from which the C files generated from Vala sources depend on gets
+	created with a modification time that is truly older than those of
+	said generated C files.  This prevents make from attempting useless
+	rebuilds (which were bound to happen deterministically on systems
+	with sub-second timestamp resolutions).  It is worth noting that,
+	luckily, those useless rebuild ended up being a no-op, since the
+	Vala compiler is careful not to update the timestamp of an output
+	file if its content has not changed from the previous version.
+	Still, the useless rebuilds messed up "make -q" and "make -n"
+	invocations, and were technically incorrect (despite being, as
+	noted, inoffensive in practice).
+
+	Problem revealed by failure of tests vala-mix.test and vala5.test
+	on a fast Solaris 10 system whose filesystem had a sub-second
+	timestamp resolution.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: enhance tests
+
+	* tests/vala.test: Extend test.  Throw in some cosmetic and
+	consistency changes since we are at it.
+	* tests/vala5.test: Avoid uselessly requiring libtool.  Ensure a
+	failure happens in case VALAFLAGS are not supported as expected.
+	Extend test in some ways.  Throw in some cosmetic and consistency
+	changes since we are at it.
+	* tests/vala-mix.test: New test.
+	* tests/list-of-tests.mk: Add it.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	recheck: behave better with non-GNU make
+
+	* automake.in (handle_tests): Also substitute '%CHECK_DEPS%' with
+	the value of the '@check' array, containing the list of early
+	test dependencies like '$(check_SCRIPTS)', $(check_PROGRAMS)',
+	etc.
+	* lib/am/check.am (recheck): Explicitly depend on '%CHECK_DEPS%'.
+	(check, recheck): Unify the implementation of their recipes, with
+	different code paths taken depending on the name of the target.
+	This makes the implementation of "recheck" less brittle in the
+	process (especially when non-GNU make and AM_MAKEFLAGS overriding
+	are involved).
+	* lib/am/check-html.am (check-html, recheck-html): Likewise.
+	* tests/check.test: Adjust to avoid spurious failure.
+	* tests/parallel-tests2.test: Improve coverage.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	check: separate .log -> .html conversion from core testsuite harness
+
+	That feature is to be deprecated in the 1.11.x series, and removed
+	from the automake core in the 1.12 release, where it will instead
+	be offered in a semi-independent extra '*.am' fragment.  So let's
+	start better separating the .log -> .html conversion from the "core
+	code" of the parallel-tests harness.
+
+	Reference:
+	  <http://lists.gnu.org/archive/html/automake/2012-01/msg00005.html>
+
+	* lib/am/check.am (.log.html, check-html, recheck-html): Move these
+	targets ...
+	* automake.in (handle_tests): ... and the initialization of the
+	TEST_SUITE_HTML variable and the cleaning of the $(TEST_SUITE_HTML)
+	file ...
+	* lib/am/check-html.am: ... in this new file, with related (minor)
+	refactorings, enhancements and simplifications.
+	* lib/am/check.am (.MAKE. PHONY, AM_RECURSIVE_TARGETS): Adjust.
+	* lib/am/Makefile.am (dist_am_DATA): Add 'check-html.am'.
+	* tests/parallel-tests2.test: Improve coverage.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	docs: deprecate .log -> .html conversion by parallel-tests
+
+	That feature is to be deprecated in the 1.11.x series, and
+	removed in the 1.12 release.
+
+	Reference:
+	  <http://lists.gnu.org/archive/html/automake/2012-01/msg00005.html>
+
+	* doc/automake.texi (Simple Tests using parallel-tests): Deprecate
+	the '.log' -> '.html' conversion and the targets 'check-html' and
+	'recheck-html'.  Related rewording and reformatting.
+	* NEWS (Future backward-incompatibilities): Update.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: list some forgotten test cases in $(TESTS)
+
+	This way, they will be properly executed by "make check", and
+	properly distributed.  Our previous commit 'v1.11-647-g27f1a1c'
+	is already paying its dividends!
+
+	* tests/list-of-tests.mk (handwritten_TESTS): Add check12.test,
+	dist-missing-included-m4.test, dist-missing-am.test, and
+	dist-missing-m4.test.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maintcheck: consistency of list of test scripts
+
+	This is basically a backport of commit 'v1.11-358-g7b6ab07'
+	and its follow-ups.  The possibility of easily checking that
+	the list of test scripts listed in a Makefile equals that of
+	the tests on the filesystem has proved itself so useful that
+	it's worth taking the annoyance of backporting it to maint.
+
+	* CheckListOfTests.am: New file, backported from master (commit
+	'v1.11-1736-g083a75b') with minor adjustments.
+	(maintainer-check-list-of-tests): New target, check for consistency
+	between the list of tests defined in the including Makefile and the
+	list of tests on the filesystem.
+	(clean-maintcheck-testslist-tmp): New rule, to clean up temporary
+	files that might be left around by the rules associated with the
+	previous target.
+	(clean-local): Depend on it.
+	* lib/Automake/tests/Makefile.am: Include `CheckListOfTests.am'.
+	* tests/Makefile.am: Likewise.
+	* Makefile.am (maintainer-check-list-of-test): New target,
+	calling recursively into `tests/' and `lib/Automake/tests/',
+	using ...
+	(TEST_SUBDIRS): ... this new variable.
+	(maintainer-check): Added dependency from the new target
+	`maintainer-check-list-of-tests'.
+
+2012-01-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  build: explicitly declare some targets as .PHONY
+	  maint: remove obsolete/broken maintainer targets
+	  build: improve silencing of automake build system
+	  tests: move list of tests in its own Makefile fragment
+	  build: silence automake build system
+
+	+ Extra edits:
+
+	* tests/list-of-tests.mk: Add tests present in branch-1.11 but
+	not in maint (e.g., 'extra-portability.test', 'ar-lib.test',
+	etc.).
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	build: explicitly declare some targets as .PHONY
+
+	* Makefile.am (fetch, git-dist, git-release, maintainer-check):
+	Declare as ".PHONY".
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: remove obsolete/broken maintainer targets
+
+	* Makefile.am (git-diff): Remove.  First, we don't distribute diffs
+	between an automake version and the next one anyway, so this target
+	is pointless.   Moreover, its recipe has been broken for quite a
+	long time now, always generating an empty diff due to the spurious
+	'$(PACKAGE)' argument that was passed to the "git diff" invocation.
+	(path-check): Remove.  The 'pathchk' program running in this check
+	complains about any file with name longer than 14 characters, which
+	is a ridiculously low limit for today standards.  Also, we already
+	had several test scripts (no less than 195!) that were exceeding
+	that limit, and nobody ever complained (not even on MinGW/MSYS nor
+	Cygwin).
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	build: improve silencing of automake build system
+
+	In this change, we continue the silencing of the automake build
+	system that has been started in commit v1.11-642-g17542c3, but
+	which has been left incomplete there for an (absent-mindness)
+	mistake.
+
+	* Makefile.am (INSTALL): Silence the recipe.
+	(automake, aclocal): Likewise, and improve them a little since
+	we are at it.
+	* lib/Automake/Makefile.am (Config.pm): Likewise.
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: move list of tests in its own Makefile fragment
+
+	This change will make it easier to merge maint into master, which
+	has a similar Makefile setup in the testsuite.
+
+	* tests/Makefile.am (include): Inclusion of ...
+	* tests/list-of-tests.mk: ... this new file.
+	* tests/Makefile.am (TESTS): Move most of its content into,
+	and redefine in function of, ...
+	* tests/list-of-tests.mk (handwritten_TESTS): ... this new
+	variable.
+	* tests/gen-parallel-tests: Update.
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	build: silence automake build system
+
+	* configure.ac (AM_SILENT_RULES): Invoke with "yes" as a parameter,
+	to activate silent rules by default.
+	* NEWS: Update.
+	* Makefile.am (sc_perl_syntax): Silence its recipe unconditionally,
+	similarly to what is done for other syntax checks.
+	(release-stats): Be silent by default *but not unconditionally*,
+	thanks to the use of $(AM_V_GEN).
+	(path-check, git-diff): Be silent by default, thanks to the use
+	of $(AM_V_GEN).
+	* m4/Makefile.am ($(top_srcdir)/m4/amversion.m4): Likewise.
+	* doc/Makefile.am ($(srcdir)/amhello-1.0.tar.gz): Likewise.
+	* tests/Makefile.am ($(srcdir)/parallel-tests.am): Likewise.
+	($(parallel_tests)): Likewise.
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  gnupload: moved to gnulib
+	  sync: gitlog-to-changelog from gnulib upstream
+	  test defs: backport optimized 'using_gmake' implementation
+	  tests: unify some tests on "make -n", reducing duplication
+	  vala: use "$(am__cd) $(srcdir)", not "cd $(srcdir)"
+	  dist: avoid $(distdir) removal failure on MSYS/MinGW
+	  tests: fix spurious failure of 'get-sysconf.test'
+	  coverage: expose automake bug#10470 (distcheck-related)
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	gnupload: moved to gnulib
+
+	Since the gnupload script is not required by automake-generated
+	code (be it configure or Makefile content), and is not specifically
+	tied to automake in any way, it is better to have its master copy
+	installed in the gnulib repository, as is already done for similar
+	generally-useful, maintainer-oriented scripts.  We can them sync it
+	from there.
+
+	See also gnulib commit v0.0-6822-gf8b7120, and:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-01/msg00222.html>
+
+	* Makefile.am (FETCHFILES): Added 'gnupload'.
+	(fetch): Also sync 'gnupload' from the gnulib repository.
+	* lib/gnupload: Synced from gnulib.
+	* NEWS: Update.
+
+2012-01-15  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	sync: gitlog-to-changelog from gnulib upstream
+
+	* lib/gitlog-to-changelog: Synced from upstream, by "make fetch".
+
+2012-01-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	test defs: backport optimized 'using_gmake' implementation
+
+	* tests/defs.in (using_gmake): Backport optimized, result-caching
+	implementation from master.
+
+2012-01-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: unify some tests on "make -n", reducing duplication
+
+	* tests/maken2.test: Merge into ...
+	* tests/maken.test: ... this test, to avoid unnecessary code
+	duplication.  Make checks depending on GNU make conditional to
+	the actual presence of GNU make.
+	* tests/maken4.test: Similarly, merge into ...
+	* tests/maken3.test: ... this test.
+	* tests/Makefile.am (TESTS): Remove maken2.test and maken4.test.
+
+2012-01-14  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: use "$(am__cd) $(srcdir)", not "cd $(srcdir)"
+
+	* automake.in (lang_vala_finish_target): In the generated rules,
+	use '$(am__cd)', not bare 'cd', to chdir into $(scdir).  Issue
+	revealed by the maintainer check 'sc_cd_relative_dir'.
+
+2012-01-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'fix-pr10470' into maint
+
+	* fix-pr10470:
+	  dist: avoid $(distdir) removal failure on MSYS/MinGW
+	  coverage: expose automake bug#10470 (distcheck-related)
+
+2012-01-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	dist: avoid $(distdir) removal failure on MSYS/MinGW
+
+	This change fixes automake bug#10470.
+
+	On MSYS (1.0.17) it is not possible to remove a directory that is
+	in use, and this, together with timing issues, could cause spurious
+	failures in the cleanup code of the "distcheck" recipe.  In fact,
+	it should be noted that assuming a directory can be removed while
+	it the CWD of a running process is a POSIX violation:
+
+	  "If the directory is the root directory or the current working
+	   directory of any process, it is unspecified whether the function
+	   succeeds, or whether it shall fail and set errno to [EBUSY]."
+
+	* lib/am/distdir.am (am__remove_distdir): If rm fails, sleep some
+	seconds and retry, to give potential "pending" processes some time
+	to exit and "release" the directory.
+	* tests/Makefile.am (XFAIL_TESTS): Remove 'distcheck-pr10470.test'.
+
+	Report and suggestions by Peter Rosin and Eric Blake.
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failure of 'get-sysconf.test'
+
+	* tests/get-sysconf.test: Do not assume that a ChangeLog file exists
+	in $(srcdir): now that the ChangeLog is autogenerated and not under
+	version control anymore, this is not necessary true.  Instead, if we
+	are running from a git checkout, use "git log" to get information on
+	the version of the automake snapshot being tested (and fall back on
+	extracting the first ChangeLog entry otherwise).
+
+	Reported by Jim Meyering in automake bug#10418.
+
+	Cherry picked from commit v1.11-1675-g104f302.
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	coverage: expose automake bug#10470 (distcheck-related)
+
+	* tests/distcheck-pr10470.test: New test.
+	* tests/Makefile.am (TESTS, XFAIL_TESTS): Add it.
+
+	Report and suggestions by Peter Rosin and Eric Blake.
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  tests: make 'aclocal-install-absdir.test' executable
+	  tests: require GNU make in 'vala-vapth.test'
+	  vala: fix VPATH builds
+	  tests: fix some bugs in the vala-vpath test
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'msvc' into branch-1.11
+
+	* msvc:
+	  tests: add missing dependency for some 'ar-lib*.test' tests
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: make 'aclocal-install-absdir.test' executable
+
+	* tests/aclocal-install-absdir.test: Make it executable.
+
+2012-01-12  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: add missing dependency for some 'ar-lib*.test' tests
+
+	This change fixes spurious failures of the tests ar-lib4.test,
+	ar-lib6a.test and ar-lib6b.test.
+
+	* tests/Makefile.am (ar-lib4.log): Depend explicitly on the
+	`libtool-macros.log' file.
+	(ar-lib6a.log, ar-lib6b.log): Likewise.
+
+2012-01-08  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	news: fix typo
+
+	* NEWS (New in 1.11.2): Fix typo.
+
+2012-01-08  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: require GNU make in 'vala-vapth.test'
+
+	* vala-vpath.test ($required): Add the "GNUmake" requirement, since
+	rules generated by vala support are expected to work with GNU make
+	only.
+
+2012-01-08  Ryan Lortie  <desrt@desrt.ca>  (tiny change)
+	    Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	vala: fix VPATH builds
+
+	This change fixes automake bug#9859.
+
+	* automake.in (lang_vala_finish_target): Create the stamp file
+	'${derived}_vala.stamp' in $(srcdir), not in $(builddir).
+	Also, don't try to chdir to the $(srcdir) to trigger the rebuild
+	rules, since that is just wrong in a VPATH setup.
+	* tests/vala-vpath.test, tests/vala2.test: Extend to catch more
+	possible VPATH issues.
+	* tests/Makefile.am (XFAIL_TESTS): Remove 'vala-vpath.test'.
+	* NEWS, THANKS: Update.
+
+2012-01-08  Ryan Lortie  <desrt@desrt.ca>  (tiny change)
+
+	tests: fix some bugs in the vala-vpath test
+
+	* tests/vala-vpath.test: There are (trivial) problems in this
+	testcase that would cause the build to fail even if the core
+	issue were resolved.  Fix those.
+
+2012-01-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  dist: do not wrap calls to 'tar' with the 'missing' script
+	  fixup: previous commit v1.11-627-g1e0aedc
+	  tests: fix spurious failures due to autom4te caching
+	  parallel-tests: avoid issue with overly long lines in sed input
+	  sync: auxiliary files from upstream synced
+	  sync: fix syncing of 'gitlog-to-changelog' script
+	  maintcheck: avoid false positive in sc_tests_plain_make
+
+2012-01-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	dist: do not wrap calls to 'tar' with the 'missing' script
+
+	The `missing' script is meant to allow non-developers to build a
+	package in the face of slightly-skewed timestamps (as might happen
+	e.g. when the package is obtained from a VCS checkout rather than
+	from a distribution tarball).  It is *not* the business of the
+	`missing' script to try to provide wrappers for all the maintainer
+	tools (in this case, to tool being a decent tar program).  Such
+	wrapping of `tar' was not only inappropriate, but it was also
+	preventing the legitimate overriding (at make runtime) of the
+	`tar' program used in the creation of the distribution tarballs.
+
+	See also automake bug#9822.
+
+	* lib/missing: Don't try to specially wrap `tar' invocations
+	anymore.
+	* m4/tar.m4 (_AM_PROG_TAR): In the definitions of the `AMTAR'
+	variable, do not wrap the `tar' invocation with the `missing'
+	script anymore.  Instead, allow the user to override the intended
+	tar program at make runtime, by defining the `TAR' environment
+	variable.
+	[$1 == v7]: Similarly for the definitions of the `am__tar' and
+	`am__untar' variables.  Since we are at it, don't make them depend
+	anymore on the definition of the obsolescent `AMTAR' variable.
+	* NEWS: Update.
+	* tests/missing-tar.test: Remove, it's obsolete.
+	* tests/tar-override.test: New test.
+	* tests/Makefile.am (TESTS): Update.
+
+	Reported by Akim Demaille.
+
+2012-01-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	fixup: previous commit v1.11-627-g1e0aedc
+
+	* tests/acloca18.test: Do not remove an aclocal.m4 file that is
+	needed by a later autoconf invocation.
+
+2012-01-06  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failures due to autom4te caching
+
+	* tests/aclocal9.test: Call aclocal and autoconf with the `--force'
+	option.
+	* tests/acloca10.test: Sleep between re-runs of aclocal and autoconf.
+	* tests/acloca18.test: Explicitly remove also the configure script
+	and the aclocal.m4 before re-invoking aclocal and autoconf.
+
+2012-01-05  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	parallel-tests: avoid issue with overly long lines in sed input
+
+	See automake bug#10437:
+	  <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=10437>
+	and coreutils bug#10427:
+	  <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=10427#8>
+
+	* lib/am/check.am (recheck, recheck-html): In order to strip
+	trailing whitespace from the definition of the `$list' variable,
+	we used to invoke sed in a way that could cause it to get passed
+	overly long input lines, causing spurious failures.  So rework
+	the logic of the recipe to avoid any sed invocation, relying on
+	simpler shell idioms instead.
+	(check-TESTS): Reorganize the recipe to be more similar to the
+	one of `recheck', for consistency and simplicity.
+	* NEWS: Update.
+
+	Report and analysis by Paul Eggert.
+
+2012-01-04  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	sync: auxiliary files from upstream synced
+
+	* lib/texinfo.tex: Synced from upstream, by "make fetch".
+	* lib/gitlog-to-changelog: Likewise.
+	* lib/config.guess: Likewise.
+	* lib/config.sub: Likewise.
+
+2012-01-04  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	sync: fix syncing of 'gitlog-to-changelog' script
+
+	* Makefile.am (FETCHFILES): Also list 'gitlog-to-changelog'.
+
+2012-01-04  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maintcheck: avoid false positive in sc_tests_plain_make
+
+	* Makefile.am (sc_tests_plain_make): Ensure to only match full
+	`make' words.  Avoid false positive in `silent-nested-vars.test'.
+
+2012-01-03  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  install: pkglibexec_SCRIPTS is a valid prefix/primary combination
+	  coverage: expose automake bug#10128
+	  progs, libs: implement EXTRA_foo_DEPENDENCIES
+	  tests: fix spurious failures in 'pr300*.test'
+
+2012-01-03  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	install: pkglibexec_SCRIPTS is a valid prefix/primary combination
+
+	It makes little sense for `libexec_SCRIPTS' to be accepted as valid
+	while `pkglibexec_SCRIPTS' is not.  So fix this inconsistency by
+	explicitly allowing `pkglibexec_SCRIPTS' as well.  It is worth
+	noting that the inconsistency has been there for a long time,
+	but only the quite recent commit `v1.11-373-g9ca6326' "Warnings
+	about primary/prefix mismatch fixed and extended" has made it
+	noisy enough to be noticed.
+
+	* automake.in (handle_scripts): Also list `pkglibexec' among the
+	prefixes valid for the `SCRIPTS' primary.
+	* doc/automake.texi (Scripts): Likewise.
+	* tests/primary-prefix-valid-couples.test: Update.
+	* THANKS: Likewise.
+	* NEWS: Likewise.
+
+	Reported by Dennis Schridde on the automake list:
+	<http://lists.gnu.org/archive/html/automake/2012-01/msg00002.html>
+
+2012-01-03  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	coverage: expose automake bug#10128
+
+	* tests/objext-pr10128.test: New test, still expected to fail.
+	* tests/Makefile.am (TESTS, XFAIL_TESTS): Add it.
+
+2012-01-03  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	progs, libs: implement EXTRA_foo_DEPENDENCIES
+
+	Backported from commit `v1.11-377-g6edafbb'.
+
+	The feature implemented by that change is quite unobtrusive, so
+	adding it to a maintenance release is acceptable.  Also, there
+	have been requests from real-world users for this feature since
+	it has been implemented in master; see automake bug#9320:
+	 <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=9320>
+	and this short discussion on the automake list:
+	 <http://lists.gnu.org/archive/html/automake/2010-11/msg00099.html>
+	It would be a pity to make such users wait even more (until
+	Automake 1.12 is out) before they could start using this feature.
+	Thus we backport it, so that it will appear in the next maintenance
+	version of automake (1.11.3).
+
+	* automake.in (handle_programs, handle_libraries)
+	(handle_ltlibraries): Mark EXTRA_*_DEPENDENCIES as recognized.
+	* doc/automake.texi (Linking, Program and Library Variables)
+	(LIBOBJS): Document EXTRA_*_DEPENDENCIES.
+	* lib/am/library.am (%LIBRARY%): Also depend on
+	$(EXTRA_%XLIBRARY%_DEPENDENCIES).
+	* lib/am/ltlibrary.am (%LTLIBRARY%): Also depend on
+	(%XLTLIBRARY%_DEPENDENCIES).
+	* lib/am/program.am (%PROGRAM%%EXEEXT%): Also depend on
+	$(EXTRA_%XPROGRAM%_DEPENDENCIES).
+	* tests/extradep.test, tests/extradep2.test: New tests.
+	* tests/Makefile.am (TESTS): Update.
+	* NEWS: Update.
+
+2012-01-03  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failures in 'pr300*.test'
+
+	This change fixes automake bug#10426.
+
+	* tests/pr300-lib.test: Call configure with an explicit '--libdir'
+	option, to avoid spurious failures due to users possibly overriding
+	'${libdir}' in ther config.site files.
+	* tests/pr300-ltlib.test: Likewise.
+
+	Reported by Bruno Haible.
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'msvc' into branch-1.11
+
+	* msvc:
+	  tests: fix spurious failure due to autom4te caching
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failure due to autom4te caching
+
+	* tests/ar-lib3.test: Remove stale autom4te.cache directory, to
+	prevent racy, spurious failures.
+
+	Reported by Jim Meyering in automake bug#10418.
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into msvc
+
+	* maint:
+	  tests: make 'lzip.test' executable
+	  dist: obsolete support for lzma (superseded by xz and lzip)
+	  test defs: more granular overriding of the make program
+	  docs: fix a couple broken anchors
+	  dist: add support for lzip compression
+	  docs: fix paragraph names for automake and aclocal invocations
+	  tests: fix spurious failure due to autom4te caching
+	  fix: last entry in ChangeLog
+	  tests: tweak tests on silent-rules for makes without nested vars
+	  silent-rules: fallback for makes without nested vars
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into branch-1.11
+
+	* maint:
+	  tests: make 'lzip.test' executable
+	  dist: obsolete support for lzma (superseded by xz and lzip)
+	  test defs: more granular overriding of the make program
+	  docs: fix a couple broken anchors
+	  dist: add support for lzip compression
+	  docs: fix paragraph names for automake and aclocal invocations
+	  tests: fix spurious failure due to autom4te caching
+	  maint: autogenerate ChangeLog
+	  fix: last entry in ChangeLog
+	  tests: tweak tests on silent-rules for makes without nested vars
+	  silent-rules: fallback for makes without nested vars
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: make 'lzip.test' executable
+
+	* tests/lzip.test: Make it executable.
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'deprecate-lzma' into maint
+
+	* deprecate-lzma:
+	  dist: obsolete support for lzma (superseded by xz and lzip)
+
+2012-01-01  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	dist: obsolete support for lzma (superseded by xz and lzip)
+
+	The lzma utilities are today superseded by the xz utilities; in
+	fact, the official site at <http://tukaani.org/lzma/> reads:
+
+	  ``LZMA Utils are legacy data compression software with high
+	    compression ratio.  LZMA Utils are no longer developed, ...
+	    Users of LZMA Utils should move to XZ Utils.''
+
+	and the existing automake manual (as of 1.11.2) already says:
+
+	  ``dist-xz
+	    Generate an 'xz' tar archive of the distribution. xz archives
+	    are frequently smaller than bzip2-compressed archives. The 'xz'
+	    format will soon (early 2009) displace the 'lzma' format''
+
+	Also, the `dist-lzma' target still suffers of never-solved bugs,
+	due to the too-high compression ratio its uses by default, which
+	might cause an unacceptable memory consumption when one tries to
+	compress or, worse, decompress the created tarballs; see also:
+
+	  <http://lists.gnu.org/archive/html/automake/2011-12/msg00025.html>
+	  <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=9658>
+
+	* NEWS: Update.
+	* doc/automake.texi (Dist, Options): State that `dist-lzma' will
+	go away in the next major automake version.
+	* lib/Automake/Options.pm (_process_option_list): Deprecate
+	`dist-lzma'.
+	* tests/lzma.test: Update.
+
+2011-12-31  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'dist-lzip' into maint
+
+	* dist-lzip:
+	  dist: add support for lzip compression
+
+2011-12-30  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	test defs: more granular overriding of the make program
+
+	Before this change, the only way the user could override the make
+	program used in the automake test cases was to override the $MAKE
+	variable in the environment.  This had the annoying side effect of
+	requiring that, whenever a non-default make program was to be used
+	in the test cases, that same make program had to be used to drive
+	the execution of the automake testsuite; otherwise, the recursive
+	make invocations could pick up $MAKE from the environment, and use
+	that instead of re-executing with the correct make.
+
+	So, for example, if one wanted to try how Solaris /usr/ccs/bin/make
+	behaved in the automake test cases, he couldn't run the testsuite
+	in parallel mode, because that make lacks support for concurrent
+	execution of recipes; on fast machines, this easily meant a 4x or
+	higher slow-down.
+
+	Once the problem is clear, the solution is pretty simple: allow
+	the use of another variable, besides $MAKE, to override the make
+	program to be used in the test cases.
+
+	See also commit `v1.11-1318-g3ceeef4', that introduced a more
+	general version of this change to the master branch.
+
+	* tests/defs.in: Allow the make implementation to be used by the
+	test cases to be overridden by the `$AM_TESTSUITE_MAKE' variable,
+	in preference to the `$MAKE' variable.
+
+2011-12-30  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	docs: fix a couple broken anchors
+
+	* doc/automake.texi: In previous commit v1.11-605-g5f71f2b (related
+	to automake bug#8071), we had renamed the chapters about aclocal
+	and automake invocation, and added anchors to the old names as not
+	to break hyperlinks to our on-line manual.  Unfortunately, these
+	anchors had been erroneously placed *before* the relevant `@node'
+	commands, instead that just after, so that they ended up pointing
+	to the wrong chapters.  Fix this.  Since we are at it, tweak the
+	wording of the comments to the anchors to better match that used
+	in the autoconf manual.
+
+	Report and suggestion by Eric Blake.
+
+2011-12-30  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	dist: add support for lzip compression
+
+	* NEWS: Update.
+	* automake.in (handle_dist): Recognize dist-lzip.
+	(make_paragraphs): Map LZIP to dist-lzip.
+	* doc/automake.texi (Dist, Options): Describe dist-lzip.
+	* lib/Automake/Options.pm (_process_option_list): Recognize
+	`dist-lzip'.
+	* lib/am/distdir.am (dist-lzip): New target.
+	(DIST_ARCHIVES) [?LZIP?]: Add `dist-lzip'.
+	(dist, dist-all) [?LZIP?]: Add command to create an lzip-compressed
+	tarball.
+	(distcheck): Handle lzip-compressed tarballs just like the others.
+	* tests/lzip.test: New test.
+	* tests/Makefile.am (TESTS): Add it.
+
+2011-12-30  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge remote-tracking branch 'silent-fixes' into maint
+
+	* origin/silent-fixes:
+	  fix: last entry in ChangeLog
+	  tests: tweak tests on silent-rules for makes without nested vars
+	  silent-rules: fallback for makes without nested vars
+
+2011-12-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	docs: fix paragraph names for automake and aclocal invocations
+
+	All the other autotools entitle their invocation nodes
+	"autofoo Invocation", whereas automake used to call its
+	"Invoking Automake" and "Invoking aclocal".  So let's
+	try to be more consistent.
+
+	This change is related to automake bug#8071.
+
+	Suggestion by Reuben Thomas and Eric Blake.
+
+	* doc/automake.texi (Invoking Automake): Node renamed ...
+	(automake Invocation): ... to this.
+	(Invoking aclocal): Node renamed ...
+	(aclocal Invocation): ... to this.
+	Add proper @anchor directives to avoid breaking existing web
+	hyperlinks still using the old names of the renamed nodes.
+
+2011-12-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests: fix spurious failure due to autom4te caching
+
+	* tests/acloca18.test: Remove stale autom4te.cache directories, to
+	prevent racy, spurious failures.
+	* tests/python11.test: Likewise.  Fix a typo in comments since we
+	are at it.
+
+2011-12-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into msvc
+
+	* maint:
+	  maint: autogenerate ChangeLog
+
+2011-12-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	Merge branch 'maint' into silent-fixes
+
+	* maint:
+	  maint: autogenerate ChangeLog
+	  fix: last ChangeLog entry
+	  tests: drop unnecessary requirement in 'subpkg.test'
+	  gitlog-to-changelog: new auxiliary script, synced from gnulib
+	  docs: "aclocal --install -I /abs/dir" actually copies files
+	  docs: fix node names for automake and aclocal invocations
+
+2011-12-28  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint: autogenerate ChangeLog
+
+	Following the practice set by various other GNU projects, we start
+	to automatically generate the ChangeLog file from the git commit
+	messages.  This will avoid duplication (as the ChangeLog entries
+	were always inserted both in the git commit message and in the
+	version-controlled ChangeLog file), and potential problems with
+	spurious merge conflicts (which, although greatly mitigated by
+	Bruno Haible's `git-merge-changelog' helper program, have never
+	been completely solved).
+
+	* ChangeLog: Moved ...
+	* ChangeLog.11:... to this.
+	* Makefile.am (EXTRA_DIST): Add it.
+	(gitlog_to_changelog_command, gitlog_to_changelog_options): New
+	variables.
+	(ChangeLog, am--changelog-regen-hook): New targets.
+	* .gitignore: Add ChangeLog.

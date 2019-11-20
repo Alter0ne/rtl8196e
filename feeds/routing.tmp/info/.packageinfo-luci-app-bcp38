@@ -1,0 +1,18 @@
+Source-Makefile: feeds/routing/luci-app-bcp38/Makefile
+Package: luci-app-bcp38
+Submenu: 3. Applications
+Version: 2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lua luci-base +bcp38
+Menu-Depends: 
+Provides: 
+Section: luci
+Category: LuCI
+Title: BCP38 LuCI interface
+Maintainer: Toke Høiland-Jørgensen <toke@toke.dk>
+Source: 
+Type: ipkg
+Description: 	Control BCP38 subnet blocking
+Toke Høiland-Jørgensen <toke@toke.dk>
+@@
+
+

@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: librpcsecgss
+Description: Library that implements rpcsec_gss interface.
+Requires: libgssapi
+Version: 0.14
+Libs: -L${exec_prefix}/lib -lrpcsecgss
+Cflags: -I${prefix}/include/rpcsecgss
+

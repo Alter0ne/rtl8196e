@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/python-influxdb/Makefile
+Package: python3-influxdb
+Submenu: Python
+Version: 5.2.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-requests +python3-pytz +python3-six +python3-dateutil
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-influxdb
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: influxdb-5.2.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Python client for InfluxDB
+https://github.com/influxdb/influxdb-python
+Karel Kočí <cynerd@email.cz>
+@@
+
+Package: python3-influxdb-src
+Submenu: Python
+Version: 5.2.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-influxdb (sources)
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: influxdb-5.2.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Python client for InfluxDB.
+    (Contains the Python3 sources for this package).
+https://github.com/influxdb/influxdb-python
+Karel Kočí <cynerd@email.cz>
+@@
+
+

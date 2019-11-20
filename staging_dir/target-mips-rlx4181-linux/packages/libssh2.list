@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libssh2.so.1
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libssh2.pc
+./usr/lib/libssh2.so.1.0.1
+./usr/lib/libssh2.so
+./usr/include
+./usr/include/libssh2_publickey.h
+./usr/include/libssh2_sftp.h
+./usr/include/libssh2.h

@@ -1,0 +1,44 @@
+Bahamut Hook Module System [2003-10-13]
+
+First released in Bahamut 1.4.36, the hook module system permits outside modules
+to be 'hooked' into bahamut without having to modify the core source tree. 
+This is to allow other groups to write code to benefit IRCD that serve
+specific functions. As an example, some groups write modules to block
+common trojan / drone patterns.
+
+Once a module has been built, hooking it into the system is fairly simple.
+The components that are used, are:
+
+1. A modules/ directory where the shared modules themselves are stored
+
+To enable the hook module system, you must issue --enable-hook-modules
+at configuration time. Example:
+
+./configure --enable-hook-modules
+
+(As of bahamut 1.8, this is implicitely assumed.)
+
+---
+
+1. modules/ directory
+
+This directory stores the shared modules that you wish to hook into bahamut.
+The modules/ directory is found in the same directory as your server 
+configuration files (eg: bahamut-release/modules)
+
+---
+
+USER COMMANDS TO CONTROL MODULES
+
+There are a few new commands to control modules. They are all accessed
+by using /quote module <command>.
+
+	/quote module LIST	List all modules loaded in memory
+    /quote module HOOKS List where modules are hooked into ircd
+	/quote module LOAD <name>	Load a module into memory
+	/quote module UNLOAD <name>	Unload a module from memory
+
+To use the above commands, you must be an IRC Operator at the time
+of issuing the command (umode +o).  To issue LOAD/UNLOAD commands, you must be
+a Server Adminstrator (umode +A)
+

@@ -1,0 +1,10 @@
+prefix=/home/alter0ne/rtk_openwrt_sdk/staging_dir/host
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+
+doctooldir=${datadir}/mm-common/doctool
+
+Name: mm-common-util
+Description: mm-common's doctool build utilities for the GNOME C++ bindings.
+Version: 0.9.6
+URL: http://www.gtkmm.org/

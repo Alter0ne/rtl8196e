@@ -1,0 +1,100 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Configuration for 'Manage music-on-hold classes and files' 
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Manage MOH page</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#soundFilesTable {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#soundFilesTable tr.frow { background: #6b79a5; color: #CED7EF; }
+		#soundFilesTable tr.frow td{ font-weight:bold; }
+		#soundFilesTable tr td{ padding : 3px; }
+		#soundFilesTable tr.even { background: #DFDFDF; }
+		#soundFilesTable tr.odd{ background: #FFFFFF; }
+		#soundFilesTable tr.even:hover, #soundFilesTable tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+
+	<div class="iframeTitleBar">
+		&nbsp;Manage 'Music-on-Hold' Classes - &nbsp;
+		<select id='moh_classes'></select>
+		<span class='guiButtonNew' id='mohclass_addButton' onclick='manage_moh.show_AddMohClass_form();'> New MOH class </span>
+		<span class='guiButtonDelete' id='mohclass_deleteButton' onclick='manage_moh.delete_MohClass();'  style='display:none;'> Delete </span>&nbsp;&nbsp;
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+
+	</div>
+
+	<div class='lite_Heading'> Manage 'Music On Hold' Classes</div>
+
+	<div id='label_selectedClass' style=" text-align: center; padding: 10px;margin-top:10px; font-size: 13px; width: 800px;">
+		Select a MOH class name to manage the files in that class. <BR>
+		You can create a new class by clicking on the 'New MOH class' button.
+	</div>
+
+	<div style='display:none;' id='nocf'> You need a&nbsp;&nbsp;<b>CompactFlash&reg;</b>&nbsp;&nbsp;to use this feature </div>
+
+	<div id='thispageContent' style='display:none;'>
+		<fieldset style="padding: 10px; font-size: 13px; width: 745px" id='uploadForm_container'>
+			<legend><B>&nbsp;Upload an 8 KHz Mono Music file :&nbsp;</B></legend>
+		</fieldset>
+
+		<div style='padding: 4px; width:800px; text-align:center;'><B>&nbsp;List of Sound Files&nbsp;</B></div>
+		<div id="soundFiles_div" style="height:300px; width:800px; overflow:auto; padding:0px 0px 0px 0px; ">
+			<table id="soundFilesTable" cellpadding=2 cellspacing=1 border=0 align=center width=720></table>
+		</div>
+	</div>
+
+	<div id="div_newMOH_Class" style="display:none; position:absolute; z-index:1005; background-color : #C1D7EC; padding : 6px 6px 6px 10px;">
+		<table>
+		<tr>	<td colspan=2 align=center><B>Create New MOH Class</B></td>
+		</tr>
+		<tr>	<td>Name :</td>
+			<td>	<input id="New_mohClass_name" size=20 class="input9"  field_name='MOH Class Name'  validation='alphanumeric' required='yes'>&nbsp; 
+				<input type="button" value="Add" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="manage_moh.add_MohClass();">&nbsp;
+				<input type="button" value="Cancel" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="$('#div_newMOH_Class').hide();"><BR>
+			</td>
+		</tr>
+		<tr>	<td></td>
+			<td>&nbsp;(Ex: mymohclass)</td>
+		</tr>
+		</table>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/mohfiles.js"></script>
+</body>
+</html>

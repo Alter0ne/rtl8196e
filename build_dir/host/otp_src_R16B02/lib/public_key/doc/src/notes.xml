@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE chapter SYSTEM "chapter.dtd">
+
+<chapter>
+  <header>
+    <copyright>
+      <year>2008</year>
+      <year>2013</year>
+      <holder>Ericsson AB, All Rights Reserved</holder>
+    </copyright>
+    <legalnotice>
+  The contents of this file are subject to the Erlang Public License,
+  Version 1.1, (the "License"); you may not use this file except in
+  compliance with the License. You should have received a copy of the
+  Erlang Public License along with this software. If not, it can be
+  retrieved online at http://www.erlang.org/.
+
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+  the License for the specific language governing rights and limitations
+  under the License.
+
+  The Initial Developer of the Original Code is Ericsson AB.
+    </legalnotice>
+    
+    <title>public_key Release Notes</title>
+    <prepared>Ingela Anderton Andin</prepared>
+    <responsible>Ingela Anderton Andin</responsible>
+    <docno></docno>
+    <approved></approved>
+    <checked></checked>
+    <date>2008-01-22</date>
+    <rev>A</rev>
+    <file>notes.xml</file>
+  </header>
+
+<section><title>Public_Key 0.20</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Extend PKCS-7 to support SCEP (Simple Certificate
+	    Enrollment Protocol).</p>
+          <p>
+	    Own Id: OTP-10874</p>
+        </item>
+        <item>
+          <p>
+	    public_key:pem_entry_decode/2 now handles AES-128-CBC
+	    ciphered keys. Thanks to Simon Cornish.</p>
+          <p>
+	    Own Id: OTP-11281</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.19</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Add support for ISO oids 1.3.14.3.2.29 and 1.3.14.3.2.27
+	    that are somtimes used instead of the PKCS defined oids
+	    1.2.840.113549.1.1.5 and 1.2.840.10040.4.3. Add function
+	    pkix_sign_types:/1 that translates oids to to algorithm
+	    atoms ex:</p>
+          <p>
+	    > public_key:pkix_sign_types({1,3,14,3,2,29}). {sha,rsa}</p>
+          <p>
+	    Own Id: OTP-10873</p>
+        </item>
+        <item>
+          <p>
+	    Integrate elliptic curve contribution from Andreas
+	    Schultz </p>
+          <p>
+	    In order to be able to support elliptic curve cipher
+	    suites in SSL/TLS, additions to handle elliptic curve
+	    infrastructure has been added to public_key and crypto.</p>
+          <p>
+	    This also has resulted in a rewrite of the crypto API to
+	    gain consistency and remove unnecessary overhead. All OTP
+	    applications using crypto has been updated to use the new
+	    API.</p>
+          <p>
+	    Impact: Elliptic curve cryptography (ECC) offers
+	    equivalent security with smaller key sizes than other
+	    public key algorithms. Smaller key sizes result in
+	    savings for power, memory, bandwidth, and computational
+	    cost that make ECC especially attractive for constrained
+	    environments.</p>
+          <p>
+	    Own Id: OTP-11009</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.18</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+	    Fix subjectPublicKeyInfo type comment in public_key.
+	    Thanks to Ryosuke Nakai.</p>
+          <p>
+	    Own Id: OTP-10670</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    public_key now supports CRL validation and documents the
+	    function public_key:pkix_path_validation/3</p>
+          <p>
+	    Own Id: OTP-7045</p>
+        </item>
+        <item>
+	    <p> Some examples overflowing the width of PDF pages have
+	    been corrected. </p>
+          <p>
+	    Own Id: OTP-10665</p>
+        </item>
+        <item>
+          <p>
+	    Fixed typo's in public_key spec.</p>
+          <p>
+	    Own Id: OTP-10723</p>
+        </item>
+        <item>
+          <p>
+	    Corrected PKCS-10 documentation and added some PKCS-9
+	    support that is fairly commonly used by PKCS-10. Full
+	    support for PKCS-9 will be added later.</p>
+          <p>
+	    Own Id: OTP-10767</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.17</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+	    ssh_decode now handles comments, at the end of the line,
+	    containing withe spaces correctly</p>
+          <p>
+	    Own Id: OTP-9361</p>
+        </item>
+        <item>
+          <p>
+	    Add missing references to sha224 and sha384</p>
+          <p>
+	    Own Id: OTP-9362 Aux Id: seq12116 </p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    public_key now supports PKCS-10 and includes exprimental
+	    support for PKCS-7</p>
+          <p>
+	    Own Id: OTP-10509 Aux Id: kunagi-291 [202] </p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.16</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Add crypto and public_key support for the hash functions
+	    SHA224, SHA256, SHA384 and SHA512 and also hmac and
+	    rsa_sign/verify support using these hash functions.
+	    Thanks to Andreas Schultz for making a prototype.</p>
+          <p>
+	    Own Id: OTP-9908</p>
+        </item>
+        <item>
+          <p>
+	    Optimize RSA private key handling in <c>crypto</c> and
+	    <c>public_key</c>.</p>
+          <p>
+	    Own Id: OTP-10065</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.15</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Changed ssh implementation to use the public_key
+	    application for all public key handling. This is also a
+	    first step for enabling a callback API for supplying
+	    public keys and handling keys protected with password
+	    phrases. </p>
+          <p>
+	    Additionally the test suites where improved so that they
+	    do not copy the users keys to test server directories as
+	    this is a security liability. Also ipv6 and file access
+	    issues found in the process has been fixed.</p>
+          <p>
+	    This change also solves OTP-7677 and OTP-7235</p>
+          <p>
+	    This changes also involves some updates to public_keys
+	    ssh-functions.</p>
+          <p>
+	    Own Id: OTP-9911</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.14</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    public_key, ssl and crypto now supports PKCS-8</p>
+          <p>
+	    Own Id: OTP-9312</p>
+        </item>
+        <item>
+          <p>
+	    The asn1 decoder/encoder now uses a runtime nif from the
+	    asn1 application if it is available.</p>
+          <p>
+	    Own Id: OTP-9414</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.13</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+	    replace "a ssl" with "an ssl" reindent
+	    pkix_path_validation/3 Trivial documentation fixes
+	    (Thanks to Christian von Roques )</p>
+          <p>
+	    Own Id: OTP-9464</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.12</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    The public_key application now supports encode/decode of
+	    ssh public-key files.</p>
+          <p>
+	    Own Id: OTP-9144</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.11</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Allows the public_key module to decode and encode RSA and
+	    DSA keys encoded using the SubjectPublicKeyInfo format.
+	    When pem_entry_encode is called on an RSA or DSA public
+	    key type, the key is wrapped in the SubjectPublicKeyInfo
+	    format.</p>
+          <p>
+	    Own Id: OTP-9061</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.10</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Improved dialyzer specs.</p>
+          <p>
+	    Own Id: OTP-8964</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.9</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Updated ssl to ignore CA certs that violate the asn1-spec
+	    for a certificate, and updated public key asn1 spec to
+	    handle inherited DSS-params.</p>
+          <p>
+	    Own Id: OTP-7884</p>
+        </item>
+        <item>
+          <p>
+	    Changed ssl implementation to retain backwards
+	    compatibility for old option {verify, 0} that shall be
+	    equivalent to {verify, verify_none}, also separate the
+	    cases unknown ca and selfsigned peer cert, and restored
+	    return value of deprecated function
+	    public_key:pem_to_der/1.</p>
+          <p>
+	    Own Id: OTP-8858</p>
+        </item>
+        <item>
+          <p>
+	    Better handling of v1 and v2 certificates. V1 and v2
+	    certificates does not have any extensions so then
+	    validate_extensions should just accept that there are
+	    none and not end up in missing_basic_constraints clause.</p>
+          <p>
+	    Own Id: OTP-8867</p>
+        </item>
+        <item>
+          <p>
+	    Changed the verify fun so that it differentiate between
+	    the peer certificate and CA certificates by using
+	    valid_peer or valid as the second argument to the verify
+	    fun. It may not always be trivial or even possible to
+	    know when the peer certificate is reached otherwise.</p>
+          <p>
+	    *** POTENTIAL INCOMPATIBILITY ***</p>
+          <p>
+	    Own Id: OTP-8873</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.8</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+	    Handling of unknown CA certificates was changed in ssl
+	    and public_key to work as intended.</p>
+          <p>
+	    Own Id: OTP-8788</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    Revise the public_key API - Cleaned up and documented the
+	    public_key API to make it useful for general use, also
+	    changed ssl to use the new API.</p>
+          <p>
+	    Own Id: OTP-8722</p>
+        </item>
+        <item>
+          <p>
+	    Added the functionality so that the verification fun will
+	    be called when a certificate is considered valid by the
+	    path validation to allow access to each certificate in
+	    the path to the user application. Also try to verify
+	    subject-AltName, if unable to verify it let the
+	    application verify it.</p>
+          <p>
+	    Own Id: OTP-8825</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.7</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+            Certificates without any extensions could not be handled
+            by public_key.</p>
+          <p>
+            Own Id: OTP-8626</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+            Code cleanup and minor bugfixes.</p>
+          <p>
+            Own Id: OTP-8649</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Public_Key 0.6</title>
+
+<section><title>Improvements and New Features</title>
+<list>
+  <item>
+    <p>
+      Support for Diffie-Hellman. ssl-3.11 requires
+    public_key-0.6.</p>
+    <p>
+    Own Id: OTP-7046</p>
+  </item>
+  <item>
+    <p>
+    Moved extended key usage test for ssl values to ssl.</p>
+    <p>
+    Own Id: OTP-8553 Aux Id: seq11541, OTP-8554 </p>
+  </item>
+</list>
+</section>
+
+</section>
+
+<section><title>Public_Key 0.5</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	  <p>Added <c>public_key:pkix_transform/2</c> to enable
+            ssl to send CA list during Certificate Request.</p> 
+	  <p><c>NOTE</c>: SSL (new_ssl) requires public_key-0.5.
+	    ssl usage.</p>
+          <p>Own Id: OTP-8372</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+  <section><title>Public_Key 0.4</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+            The documentation is now built with open source tools
+            (xsltproc and fop) that exists on most platforms. One
+            visible change is that the frames are removed.</p>
+          <p>
+            Own Id: OTP-8250</p>
+        </item>
+      </list>
+    </section>
+
+  </section>
+
+  <section><title>Public_Key 0.3</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+          <p>
+            Unknown attributes in certificates are left encoded
+            instead of crashing. Patch by Will "wglozer" thanks.</p>
+          <p>
+            Own Id: OTP-8100</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+            Allow public_key:pem_to_der/[1,2] to take a binary as
+            argument in addition to a filename. Patch by Geoff Cant,
+            thanks.</p>
+          <p>
+            Own Id: OTP-8142</p>
+        </item>
+      </list>
+    </section>
+
+  </section>
+
+<section><title>Public_Key 0.2</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+            X509 certificate handling has been extended and improved
+            as a result of more extensive testing of both the ssl
+            and public_key application. Even more extensions of the
+            certificate handling is yet to be implemented.</p>
+          <p>
+            Own Id: OTP-7860</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+  
+<section><title>Public_Key 0.1</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+            First version.</p>
+          <p>
+            Own Id: OTP-7637</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+  
+</chapter>
+

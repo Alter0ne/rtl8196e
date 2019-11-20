@@ -1,0 +1,318 @@
+#!/usr/bin/perl -w
+
+# Copyright (c) 2007, 2008 Andreas Gruenbacher.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions, and the following disclaimer,
+#    without modification, immediately at the beginning of the file.
+# 2. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+#
+# Alternatively, this software may be distributed under the terms of the
+# GNU Public License ("GPL").
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+
+#
+# Possible improvements:
+#
+# - distinguish stdout and stderr output
+# - resume at a specific line
+#
+
+#
+# Command line parameters:
+#
+# -l N		Stop the test after line N
+# -q		Quiet mode: buffer the output while processing and print the
+#		result at the end; on success, only the summary is printed
+# -v		Verbose mode: print the output of successful commands (by
+#		default the output is only printed for failed commands)
+#
+
+use strict;
+use FileHandle;
+use Getopt::Std;
+use POSIX qw(isatty setuid getcwd);
+use Text::ParseWords;
+use vars qw($opt_l $opt_q $opt_v %output $OK $FAILED $tests $failed);
+
+$opt_l = ~0;  # a really huge number
+getopts('l:qv');
+
+$OK = "ok";
+$FAILED = "failed";
+if (isatty(fileno(STDOUT))) {
+	$OK = "\033[32m" . $OK . "\033[m";
+	$FAILED = "\033[31m\033[1m" . $FAILED . "\033[m";
+}
+$tests = $failed = 0;
+
+my $prog;
+my ($in, $out) = ([], []);
+my $prog_line = 0;
+my $last_status = 0;
+my $lineno;
+my $width = ($ENV{COLUMNS} || 80) >> 1;
+my $origdir = getcwd;
+my $workdir = "d.$$";
+
+sub print_header($)
+{
+	if ($opt_q) {
+		$output{header} = $_[0];
+	} else {
+		print $_[0];
+	}
+}
+
+sub print_body($)
+{
+	if ($opt_q) {
+		$output{body} .= $_[0];
+	} else {
+		print $_[0];
+	}
+}
+
+sub print_footer($)
+{
+	if ($opt_q) {
+		$output{footer} .= $_[0];
+	} else {
+		print $_[0];
+	}
+}
+
+sub flush_output()
+{
+	return unless $opt_q;
+
+	print $output{header} || "",
+	      $failed ? $output{body} : "",
+	      $output{footer} || "";
+}
+
+# Substitute %{VAR} with environment variables
+sub substitute_vars($)
+{
+	my ($line) = @_;
+	$line =~ s[%{(\w+)}][defined $ENV{$1} ? $ENV{$1} : ""]eg;
+	return $line;
+}
+
+sub exec_test($$) {
+	my ($raw_prog, $in) = @_;
+	local (*IN, *IN_DUP, *IN2, *OUT_DUP, *OUT, *OUT2);
+	my $prog = [ shellwords($raw_prog) ];
+	my $needs_shell;
+
+	if ($prog->[0] eq "umask") {
+		umask oct $prog->[1];
+		return 0, [];
+	} elsif ($prog->[0] eq "cd") {
+		if (!chdir $prog->[1]) {
+			return 1, [ "chdir: $prog->[1]: $!\n" ];
+		}
+		$ENV{PWD} = getcwd;
+		return 0, [];
+	} elsif ($prog->[0] eq "export") {
+		my ($name, $value) = split /=/, $prog->[1];
+		$ENV{$name} = $value;
+		return 0, [];
+	} elsif ($prog->[0] eq "unset") {
+		delete $ENV{$prog->[1]};
+		return 0, [];
+	}
+
+	$needs_shell = ($raw_prog =~ /[][|&<>;`\$*?]/);
+
+	pipe *IN2, *OUT
+		or die "Can't create pipe for reading: $!";
+	open *IN_DUP, "<&STDIN"
+		or *IN_DUP = undef;
+	open *STDIN, "<&IN2"
+		or die "Can't duplicate pipe for reading: $!";
+	close *IN2;
+
+	open *OUT_DUP, ">&STDOUT"
+		or die "Can't duplicate STDOUT: $!";
+	pipe *IN, *OUT2
+		or die "Can't create pipe for writing: $!";
+	open *STDOUT, ">&OUT2"
+		or die "Can't duplicate pipe for writing: $!";
+	close *OUT2;
+
+	*STDOUT->autoflush();
+	*OUT->autoflush();
+
+	if (fork()) {
+		# Server
+		if (*IN_DUP) {
+			open *STDIN, "<&IN_DUP"
+				or die "Can't duplicate STDIN: $!";
+			close *IN_DUP
+				or die "Can't close STDIN duplicate: $!";
+		}
+		open *STDOUT, ">&OUT_DUP"
+			or die "Can't duplicate STDOUT: $!";
+		close *OUT_DUP
+			or die "Can't close STDOUT duplicate: $!";
+
+		foreach my $line (@$in) {
+			#print "> $line";
+			print OUT $line;
+		}
+		close *OUT
+			or die "Can't close pipe for writing: $!";
+
+		my $result = [];
+		while (<IN>) {
+			#print "< $_";
+			if ($needs_shell) {
+				s#^/bin/sh: line \d+: ##;
+			}
+			push @$result, $_;
+		}
+		wait();
+		return $? >> 8, $result;
+	} else {
+		# Client
+		$< = $>;
+		close IN
+			or die "Can't close read end for input pipe: $!";
+		close OUT
+			or die "Can't close write end for output pipe: $!";
+		close OUT_DUP
+			or die "Can't close STDOUT duplicate: $!";
+		local *ERR_DUP;
+		open ERR_DUP, ">&STDERR"
+			or die "Can't duplicate STDERR: $!";
+		open STDERR, ">&STDOUT"
+			or die "Can't join STDOUT and STDERR: $!";
+
+		if ($needs_shell) {
+			exec ('/bin/sh', '-c', $raw_prog);
+		} else {
+			exec @$prog;
+		}
+		print STDERR $prog->[0], ": $!\n";
+		exit;
+	}
+}
+
+sub process_test($$$$) {
+	my ($prog, $prog_line, $in, $out) = @_;
+
+	print_body "[$prog_line] \$ $prog -- ";
+	my ($exec_status, $result) = exec_test($prog, $in);
+	my @good = ();
+	my $good = 1;
+	my $nmax = (@$out > @$result) ? @$out : @$result;
+	for (my $n = 0; $n < $nmax; $n++) {
+		my $use_re = defined($out->[$n]) && ($out->[$n] =~ s/^~ //);
+
+		if (!defined($out->[$n]) || !defined($result->[$n]) ||
+		    (!$use_re && $result->[$n] ne $out->[$n]) ||
+		    ( $use_re && $result->[$n] !~ /^$out->[$n]/)) {
+			push @good, ($use_re ? '!~' : '!=');
+			$good = 0;
+		} else {
+			push @good, ($use_re ? '=~' : '==');
+		}
+	}
+	$tests++;
+	$failed++ unless $good;
+	print_body(($good ? $OK : $FAILED)."\n");
+	if (!$good || $opt_v) {
+		for (my $n = 0; $n < $nmax; $n++) {
+			my $l = defined($out->[$n]) ? $out->[$n] : "~";
+			chomp $l;
+			my $r = defined($result->[$n]) ? $result->[$n] : "~";
+			chomp $r;
+			print_body sprintf("%-" . ($width - 3) . "s %s %s\n",
+					   $r, $good[$n], $l);
+		}
+	}
+
+	return $exec_status;
+}
+
+# Create a dedicated working directory
+mkdir $workdir or die;
+chdir $workdir or die;
+$ENV{PWD} = getcwd;
+
+if (defined $ARGV[0]) {
+	open(SOURCE, "$origdir/$ARGV[0]");
+	print_header "[$ARGV[0]]\n";
+} else {
+	*SOURCE = *STDIN;
+}
+
+while (defined(my $line = <SOURCE>)) {
+	$lineno++;
+
+	# Collect input and output for the previous command
+	if ($line =~ s/^\s*< ?//) {
+		push @$in, substitute_vars($line);
+		next;
+	}
+	if ($line =~ s/^\s*> ?//) {
+		push @$out, substitute_vars($line);
+		next;
+	}
+
+	# We have all input and output, we can execute the command
+	if (defined $prog) {
+		$last_status = process_test($prog, $prog_line, $in, $out);
+		$prog = undef;
+		last if $prog_line >= $opt_l;
+	}
+
+	# Parse the next command
+	if ($line =~ s/^\s*\$ ?//) {
+		# Substitute %{?} with the last command's status
+		$line =~ s[%{\?}][$last_status]eg;
+
+		chomp($prog = substitute_vars($line));
+		$prog_line = $lineno;
+		$in = [];
+		$out = [];
+	}
+}
+# Execute last command if needed
+process_test($prog, $prog_line, $in, $out) if defined $prog;
+
+close(SOURCE);
+
+# Clean up the mess
+chdir $origdir or die;
+system "rm -rf $workdir";
+
+my $status = sprintf("%d commands (%d passed, %d failed)",
+	$tests, $tests - $failed, $failed);
+if (isatty(fileno(STDOUT))) {
+	if ($failed) {
+		$status = "\033[31m\033[1m" . $status . "\033[m";
+	} else {
+		$status = "\033[32m" . $status . "\033[m";
+	}
+}
+print_footer "$status\n";
+flush_output;
+exit $failed ? 1 : 0;

@@ -1,0 +1,77 @@
+.TH cgi_register_parse_cb 3 "12 July 2007" "ClearSilver" "cgi/cgi.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgi_register_parse_cb  - Register a parse callback
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgi.h>
+.Se
+.Ss
+NEOERR *cgi_register_parse_cb(CGI *cgi, const char *method, const char *ctype,
+                              void *rock, CGI_PARSE_CB parse_cb);
+
+.Se
+
+.SH ARGUMENTS
+cgi - a CGI struct
+.br
+method - the HTTP method you want to handle, or * for all
+.br
+ctype - the HTTP Content-Type you want to handle, or * for all
+.br
+rock - opaque data that we'll pass to your call back
+
+.SH DESCRIPTION
+The ClearSilver CGI Kit has built-in functionality to handle 
+the following methods:
+GET -> doesn't have any data except query string, which
+is processed for all methods
+POST w/ application/x-www-form-urlencoded
+POST w/ multipart/form-data
+processed as RFC2388 data into files and HDF (see
+cgi_filehandle())
+PUT (any type)
+The entire data chunk is stored as a file, with meta
+data in HDF (similar to single files in RFC2388). 
+The data is accessible via cgi_filehandle with NULL
+for name.
+To handle other methods/content types, you have to
+register your own parse function.  This isn't necessary
+if you aren't expecting any data, and technically HTTP
+only allows data on PUT/POST requests (and presumably
+user defined methods).  In particular, if you want to
+implement XML-RPC or SOAP, you'll have to register a
+callback here to grab the XML data chunk.  Usually
+you'll want to register POST w/ application/xml or POST
+w/ text/xml (you either need to register both or
+register POST w/ * and check the ctype yourself,
+remember to nerr_raise(CGIParseNotHandled) if you aren't
+handling the POST).
+In general, your callback should:
+Find out how much data is available:
+l = hdf_get_value (cgi->hdf, "CGI.ContentLength", NULL); 
+len = atoi(l);
+And read/handle all of the data using cgiwrap_read.
+See the builtin handlers for how this is done.  Note
+that cgiwrap_read is not guarunteed to return all of
+the data you request (just like fread(3)) since it
+might be reading of a socket.  Sorry.
+You should be careful when reading the data to watch
+for short reads (ie, end of file) and cases where the
+client sends you data ad infinitum.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cgi_debug_init "(3), "cgi_parse "(3), "cgi_destroy "(3), "cgi_js_escape "(3), "cgi_html_escape_strfunc "(3), "cgi_register_strfuncs "(3), "cgi_output "(3), "parse_rfc2388 "(3), "cgi_url_validate "(3), "open_upload "(3), "cgi_cs_init "(3), "cgi_url_escape_more "(3), "cgi_html_strip_strfunc "(3), "cgi_neo_error "(3), "cgi_redirect "(3), "cgi_filehandle "(3), "cgi_register_parse_cb "(3), "cgi_url_escape "(3), "cgi_init "(3), "cgi_redirect_uri "(3), "cgi_cookie_clear "(3), "cgi_url_unescape "(3), "cgi_vredirect "(3), "cgi_display "(3), "cgi_html_ws_strip "(3), "cgi_error "(3), "cgi_cookie_set "(3), "cgi_text_html_strfunc "(3), "cgi_cookie_authority

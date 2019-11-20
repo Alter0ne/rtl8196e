@@ -1,0 +1,36 @@
+.TH dictDestroy 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictDestroy  - destroy dictionary.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+void dictDestroy(dictCtx dict);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to destroy
+
+.SH DESCRIPTION
+Release all resources used by <dict>.
+
+MT-Level: Safe for unique <dict>.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

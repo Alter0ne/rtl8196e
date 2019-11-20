@@ -1,0 +1,36 @@
+.TH cgiwrap_writef 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_writef  - a wrapper for printf
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+NEOERR *cgiwrap_writef (const char *fmt, ...)
+                        ATTRIBUTE_PRINTF(1,2);
+
+.Se
+
+.SH ARGUMENTS
+fmt - standard printf fmt string and args
+
+.SH DESCRIPTION
+cgiwrap_writef is the formatted output command that
+replaces printf or fprintf(stdout) in a standard CGI
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

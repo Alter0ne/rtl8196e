@@ -1,0 +1,63 @@
+	$ mkdir patches
+
+	$ echo a > test.txt
+	$ echo d > test3.txt
+
+	$ cat > patches/ab.diff
+	< --- a/test.txt
+	< +++ b/test.txt
+	< @@ -1 +1 @@
+	< -a
+	< +b
+	< --- /dev/null
+	< +++ b/test2.txt
+	< @@ -0,0 +1 @@
+	< +c
+	< --- a/test3.txt
+	< +++ /dev/null
+	< @@ -1 +0,0 @@
+	< -d
+
+	$ echo "ab.diff" > patches/series
+
+	$ quilt push -q
+	> Applying patch patches/ab.diff
+	> Now at patch patches/ab.diff
+
+	$ quilt diff -p ab --no-index
+	> --- a/test.txt
+	> +++ b/test.txt
+	> @@ -1 +1 @@
+	> -a
+	> +b
+	> --- /dev/null
+	> +++ b/test2.txt
+	> @@ -0,0 +1 @@
+	> +c
+	> --- a/test3.txt
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -d
+
+	$ rm -f patches/ab.diff
+	$ quilt refresh -p ab --no-index
+	> Refreshed patch patches/ab.diff
+
+	$ cat patches/ab.diff
+	> --- a/test.txt
+	> +++ b/test.txt
+	> @@ -1 +1 @@
+	> -a
+	> +b
+	> --- /dev/null
+	> +++ b/test2.txt
+	> @@ -0,0 +1 @@
+	> +c
+	> --- a/test3.txt
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -d
+
+	$ quilt pop -qR
+	> Removing patch patches/ab.diff
+	> No patches applied

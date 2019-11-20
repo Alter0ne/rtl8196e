@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libroxml
+Version: 2.3.0
+Description: light and powerful XML parser
+URL: http://www.libroxml.net
+Libs: -L${libdir} -lroxml
+Cflags: -I${includedir}

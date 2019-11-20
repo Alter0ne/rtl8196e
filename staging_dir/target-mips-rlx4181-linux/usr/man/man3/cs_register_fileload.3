@@ -1,0 +1,47 @@
+.TH cs_register_fileload 3 "12 July 2007" "ClearSilver" "cs/cs.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cs_register_fileload  - register a fileload function
+.SH SYNOPSIS
+.Ss
+#include <cs/cs.h>
+.Se
+.Ss
+void cs_register_fileload(CSPARSE *parse, void *ctx, CSFILELOAD fileload);
+
+.Se
+
+.SH ARGUMENTS
+parse - a pointer to an initialized CSPARSE structure
+.br
+ctx - pointer that is passed to the CSFILELOAD function when called
+.br
+fileload - a CSFILELOAD function
+
+.SH DESCRIPTION
+cs_register_fileload registers a fileload function that 
+overrides the built-in function.  The built-in function
+uses hdf_search_path and ne_file_load (based on stat/open/read)
+to find and load the file on every template render.
+You can override this function if you wish to provide
+other template search functions, or load the template
+from an in-memory cache, etc.
+This fileload function will be used by cs_parse, including
+
+include: commands in the template.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cs_dump "(3), "cs_destroy "(3), "cs_render "(3), "cs_register_esc_strfunc "(3), "cs_arg_parsev "(3), "cs_register_fileload "(3), "cs_init "(3), "cs_register_strfunc "(3), "cs_arg_parse "(3), "cs_parse_string "(3), "cs_parse_file "(3), "= "(3), "cs_register_function

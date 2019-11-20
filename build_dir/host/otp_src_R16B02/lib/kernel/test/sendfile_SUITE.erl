@@ -1,0 +1,407 @@
+%%
+%% %CopyrightBegin%
+%%
+%% Copyright Ericsson AB 2011-2012. All Rights Reserved.
+%%
+%% The contents of this file are subject to the Erlang Public License,
+%% Version 1.1, (the "License"); you may not use this file except in
+%% compliance with the License. You should have received a copy of the
+%% Erlang Public License along with this software. If not, it can be
+%% retrieved online at http://www.erlang.org/.
+%%
+%% Software distributed under the License is distributed on an "AS IS"
+%% basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+%% the License for the specific language governing rights and limitations
+%% under the License.
+%%
+%% %CopyrightEnd%
+%%
+
+-module(sendfile_SUITE).
+
+-include_lib("common_test/include/ct.hrl").
+-include_lib("kernel/include/file.hrl").
+
+-compile(export_all).
+
+all() ->
+    [t_sendfile_small
+     ,t_sendfile_big_all
+     ,t_sendfile_big_size
+     ,t_sendfile_many_small
+     ,t_sendfile_partial
+     ,t_sendfile_offset
+     ,t_sendfile_sendafter
+     ,t_sendfile_recvafter
+     ,t_sendfile_sendduring
+     ,t_sendfile_recvduring
+     ,t_sendfile_closeduring
+     ,t_sendfile_crashduring
+    ].
+
+init_per_suite(Config) ->
+    case {os:type(),os:version()} of
+	{{unix,sunos}, {5,8,_}} ->
+	    {skip, "Solaris 8 not supported for now"};
+	_ ->
+	    Priv = ?config(priv_dir, Config),
+	    SFilename = filename:join(Priv, "sendfile_small.html"),
+	    {ok, DS} = file:open(SFilename,[write,raw]),
+	    file:write(DS,"yo baby yo"),
+	    file:sync(DS),
+	    file:close(DS),
+	    BFilename = filename:join(Priv, "sendfile_big.html"),
+	    {ok, DB} = file:open(BFilename,[write,raw]),
+	    [file:write(DB,[<<0:(10*8*1024*1024)>>]) || _I <- lists:seq(1,51)],
+	    file:sync(DB),
+	    file:close(DB),
+	    [{small_file, SFilename},
+	     {file_opts,[raw,binary]},
+	     {big_file, BFilename}|Config]
+    end.
+
+end_per_suite(Config) ->
+    file:delete(proplists:get_value(big_file, Config)).
+
+init_per_testcase(TC,Config) when TC == t_sendfile_recvduring;
+				  TC == t_sendfile_sendduring ->
+    Filename = proplists:get_value(small_file, Config),
+
+    Send = fun(Sock) ->
+		   {_Size, Data} = sendfile_file_info(Filename),
+		   {ok,D} = file:open(Filename, [raw,binary,read]),
+		   prim_file:sendfile(D, Sock, 0, 0, 0,
+				      [],[],false,false,false),
+		   Data
+	   end,
+
+    %% Check if sendfile is supported on this platform
+    case catch sendfile_send(Send) of
+	ok ->
+	    Config;
+	Error ->
+	    ct:log("Error: ~p",[Error]),
+	    {skip,"Not supported"}
+    end;
+init_per_testcase(_Tc,Config) ->
+    Config.
+
+
+t_sendfile_small(Config) when is_list(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+
+    Send = fun(Sock) ->
+		   {Size, Data} = sendfile_file_info(Filename),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   Data
+	   end,
+
+    ok = sendfile_send(Send).
+
+t_sendfile_many_small(Config) when is_list(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+    FileOpts = proplists:get_value(file_opts, Config, []),
+
+    error_logger:add_report_handler(?MODULE,[self()]),
+
+    Send = fun(Sock) ->
+		   {Size,_} = sendfile_file_info(Filename),
+		   N = 10000,
+		   {ok,D} = file:open(Filename,[read|FileOpts]),
+		   [begin
+			{ok,Size} = file:sendfile(D,Sock,0,0,[])
+		    end || _I <- lists:seq(1,N)],
+		   file:close(D),
+		   Size*N
+	   end,
+
+    ok = sendfile_send({127,0,0,1}, Send, 0),
+
+    receive
+	{stolen,Reason} ->
+	    exit(Reason)
+    after 200 ->
+	    ok
+    end.
+
+
+t_sendfile_big_all(Config) when is_list(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+
+    Send = fun(Sock) ->
+		   {ok, #file_info{size = Size}} =
+		       file:read_file_info(Filename),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   Size
+	   end,
+
+    ok = sendfile_send({127,0,0,1}, Send, 0).
+
+t_sendfile_big_size(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+    FileOpts = proplists:get_value(file_opts, Config, []),
+
+    SendAll = fun(Sock) ->
+		      {ok, #file_info{size = Size}} =
+			  file:read_file_info(Filename),
+		      {ok,D} = file:open(Filename,[read|FileOpts]),
+		      {ok, Size} = file:sendfile(D, Sock,0,Size,[]),
+		      Size
+	      end,
+
+    ok = sendfile_send({127,0,0,1}, SendAll, 0).
+
+t_sendfile_partial(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+    FileOpts = proplists:get_value(file_opts, Config, []),
+
+    SendSingle = fun(Sock) ->
+			 {_Size, <<Data:5/binary,_/binary>>} =
+			     sendfile_file_info(Filename),
+			 {ok,D} = file:open(Filename,[read|FileOpts]),
+			 {ok,5} = file:sendfile(D,Sock,0,5,[]),
+			 file:close(D),
+			 Data
+		 end,
+    ok = sendfile_send(SendSingle),
+
+    {_Size, <<FData:5/binary,SData:3/binary,_/binary>>} =
+	sendfile_file_info(Filename),
+    {ok,D} = file:open(Filename,[read|FileOpts]),
+    {ok, <<FData/binary>>} = file:read(D,5),
+    FSend = fun(Sock) ->
+		    {ok,5} = file:sendfile(D,Sock,0,5,[]),
+		    FData
+	    end,
+
+    ok = sendfile_send(FSend),
+
+    SSend = fun(Sock) ->
+		    {ok,3} = file:sendfile(D,Sock,5,3,[]),
+		    SData
+	    end,
+
+    ok = sendfile_send(SSend),
+
+    {ok, <<SData/binary>>} = file:read(D,3),
+
+    file:close(D).
+
+t_sendfile_offset(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+    FileOpts = proplists:get_value(file_opts, Config, []),
+
+    Send = fun(Sock) ->
+		   {_Size, <<_:5/binary,Data:3/binary,_/binary>> = AllData} =
+		       sendfile_file_info(Filename),
+		   {ok,D} = file:open(Filename,[read|FileOpts]),
+		   {ok,3} = file:sendfile(D,Sock,5,3,[]),
+		   {ok, AllData} = file:read(D,100),
+		   file:close(D),
+		   Data
+	   end,
+    ok = sendfile_send(Send).
+
+
+t_sendfile_sendafter(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+
+    Send = fun(Sock) ->
+		   {Size, Data} = sendfile_file_info(Filename),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   ok = gen_tcp:send(Sock, <<2>>),
+		   <<Data/binary,2>>
+	   end,
+
+    ok = sendfile_send(Send).
+
+t_sendfile_recvafter(Config) ->
+    Filename = proplists:get_value(small_file, Config),
+
+    Send = fun(Sock) ->
+		   {Size, Data} = sendfile_file_info(Filename),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   ok = gen_tcp:send(Sock, <<1>>),
+		   {ok,<<1>>} = gen_tcp:recv(Sock, 1),
+		   <<Data/binary,1>>
+	   end,
+
+    ok = sendfile_send(Send).
+
+t_sendfile_sendduring(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+
+    Send = fun(Sock) ->
+		   {ok, #file_info{size = Size}} =
+		       file:read_file_info(Filename),
+		   spawn_link(fun() ->
+				      timer:sleep(50),
+				      ok = gen_tcp:send(Sock, <<2>>)
+			      end),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   Size+1
+	   end,
+
+    ok = sendfile_send({127,0,0,1}, Send, 0).
+
+t_sendfile_recvduring(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+
+    Send = fun(Sock) ->
+		   {ok, #file_info{size = Size}} =
+		       file:read_file_info(Filename),
+		   spawn_link(fun() ->
+				      timer:sleep(50),
+				      ok = gen_tcp:send(Sock, <<1>>),
+				      {ok,<<1>>} = gen_tcp:recv(Sock, 1)
+			      end),
+		   {ok, Size} = file:sendfile(Filename, Sock),
+		   timer:sleep(1000),
+		   Size+1
+	   end,
+
+    ok = sendfile_send({127,0,0,1}, Send, 0).
+
+t_sendfile_closeduring(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+
+    Send = fun(Sock,SFServPid) ->
+		   spawn_link(fun() ->
+				      timer:sleep(50),
+				      SFServPid ! stop
+			      end),
+		   case erlang:system_info(thread_pool_size) of
+		       0 ->
+			   {error, closed} = file:sendfile(Filename, Sock);
+		       _Else ->
+			   %% This can return how much has been sent or
+			   %% {error,closed} depending on OS.
+			   %% How much is sent impossible to know as
+			   %%  the socket was closed mid sendfile
+			   case file:sendfile(Filename, Sock) of
+			       {error, closed} ->
+				   ok;
+			       {ok, Size}  when is_integer(Size) ->
+				   ok
+			   end
+		   end,
+		   -1
+	   end,
+
+    ok = sendfile_send({127,0,0,1}, Send, 0).
+
+t_sendfile_crashduring(Config) ->
+    Filename = proplists:get_value(big_file, Config),
+
+    error_logger:add_report_handler(?MODULE,[self()]),
+
+    Send = fun(Sock) ->
+		   spawn_link(fun() ->
+				      timer:sleep(50),
+				      exit(die)
+			      end),
+		   {error, closed} = file:sendfile(Filename, Sock),
+		   -1
+	   end,
+    process_flag(trap_exit,true),
+    spawn_link(fun() ->
+		       ok = sendfile_send({127,0,0,1}, Send, 0)
+	       end),
+    receive
+	{stolen,Reason} ->
+	    process_flag(trap_exit,false),
+	    ct:fail(Reason)
+	after 200 ->
+		receive
+		    {'EXIT',_,Reason} ->
+			process_flag(trap_exit,false),
+			die = Reason
+		end
+	end.
+
+%% Generic sendfile server code
+sendfile_send(Send) ->
+    sendfile_send({127,0,0,1},Send).
+sendfile_send(Host, Send) ->
+    sendfile_send(Host, Send, []).
+sendfile_send(Host, Send, Orig) ->
+    SFServer = spawn_link(?MODULE, sendfile_server, [self(), Orig]),
+    receive
+	{server, Port} ->
+	    {ok, Sock} = gen_tcp:connect(Host, Port,
+					       [binary,{packet,0},
+						{active,false}]),
+	    Data = case proplists:get_value(arity,erlang:fun_info(Send)) of
+		       1 ->
+			   Send(Sock);
+		       2 ->
+			   Send(Sock, SFServer)
+		   end,
+	    ok = gen_tcp:close(Sock),
+	    receive
+		{ok, Bin} ->
+		    Data = Bin,
+		    ok
+	    end
+    end.
+
+sendfile_server(ClientPid, Orig) ->
+    {ok, LSock} = gen_tcp:listen(0, [binary, {packet, 0},
+				     {active, true},
+				     {reuseaddr, true}]),
+    {ok, Port} = inet:port(LSock),
+    ClientPid ! {server, Port},
+    {ok, Sock} = gen_tcp:accept(LSock),
+    {ok, Bin} = sendfile_do_recv(Sock, Orig),
+    ClientPid ! {ok, Bin},
+    gen_tcp:send(Sock, <<1>>).
+
+-define(SENDFILE_TIMEOUT, 10000).
+sendfile_do_recv(Sock, Bs) ->
+    TimeoutMul = case os:type() of
+		     {win32, _} -> 6;
+		     _ -> 1
+		 end,
+    receive
+	stop when Bs /= 0,is_integer(Bs) ->
+	    gen_tcp:close(Sock),
+	    {ok, -1};
+	{tcp, Sock, B} ->
+	    case binary:match(B,<<1>>) of
+		nomatch when is_list(Bs) ->
+		    sendfile_do_recv(Sock, [B|Bs]);
+		nomatch when is_integer(Bs) ->
+		    sendfile_do_recv(Sock, byte_size(B) + Bs);
+		_ when is_list(Bs) ->
+		    ct:log("Stopped due to a 1"),
+		    {ok, iolist_to_binary(lists:reverse([B|Bs]))};
+		_ when is_integer(Bs) ->
+		    ct:log("Stopped due to a 1"),
+		    {ok, byte_size(B) + Bs}
+	    end;
+	{tcp_closed, Sock} when is_list(Bs) ->
+	    ct:log("Stopped due to close"),
+	    {ok, iolist_to_binary(lists:reverse(Bs))};
+	{tcp_closed, Sock} when is_integer(Bs) ->
+	    ct:log("Stopped due to close"),
+	    {ok, Bs}
+    after ?SENDFILE_TIMEOUT * TimeoutMul ->
+	    ct:log("Sendfile timeout"),
+	    timeout
+    end.
+
+sendfile_file_info(File) ->
+    {ok, #file_info{size = Size}} = file:read_file_info(File),
+    {ok, Data} = file:read_file(File),
+    {Size, Data}.
+
+
+%% Error handler 
+
+init([Proc]) -> {ok,Proc}.
+
+handle_event({error,noproc,{emulator,Format,Args}}, Proc) -> 
+    Proc ! {stolen,lists:flatten(io_lib:format(Format,Args))},
+    {ok,Proc};
+handle_event(_, Proc) -> 
+    {ok,Proc}.

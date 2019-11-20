@@ -1,0 +1,9 @@
+#!/bin/sh
+case "$ACTION" in
+ifup)
+/etc/init.d/ddns enabled && /usr/lib/ddns/dynamic_dns_updater.sh -n "$INTERFACE" -- start
+;;
+ifdown)
+/usr/lib/ddns/dynamic_dns_updater.sh -n "$INTERFACE" -- stop
+;;
+esac

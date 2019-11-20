@@ -1,0 +1,105 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * DialPlans
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+ *
+-->
+<html>
+<head>
+	<title>Dialplans</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_DialPlans_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_DialPlans_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_DialPlans_list tr.frow td{ font-weight:bold; }
+		#table_DialPlans_list tr td{ padding : 3px; }
+		#table_DialPlans_list tr.even { background: #DFDFDF; }
+		#table_DialPlans_list tr.odd{ background: #FFFFFF; }
+		#table_DialPlans_list tr.even:hover, #table_DialPlans_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		DialPlans
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='lite_Heading'> Manage DialPlans </div>
+
+	<div class='top_buttons'  style='margin-top: -23px;'>
+		<span id='new_cr_button' class='guiButtonNew' onclick="show_NewDialPlan_form()">New DialPlan</span>
+	</div>
+
+	<center>
+		<div style='text-align:center; 	background-color : #FFFFFF; width: 95%; padding: 5px; margin-left: 1px; margin-top:14px; margin-bottom:20px; border:1px solid #CDCDCD; color: #575757 ' class='lite'>
+		A Dial Plan is a collection of Outgoing Call Rules <hyperlink>. Dial Plans are assigned to Users to specify the dialing permissions they have. For example, you might have one Dial Plan for local calling that only permits users of that Dial Plan to dial local numbers, via the "local" outgoing calling rule. Another user may be permitted to dial long distance numbers, and so would have a Dial Plan that includes both the "local" and "longdistance" outgoing calling rules.
+		</div>
+	</center>
+
+	<table id='table_DialPlans_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="Edit_DLPN_DIV" STYLE="display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id='Edit_dialog_title'></span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+		<TR>	<TD align="right"><nobr>&nbsp;&nbsp;&nbsp;DialPlan Name:</nobr></TD>
+			<TD><input id="edit_dlpn_name" size=24 maxlength="70" field_name='DialPlan Name' validation='alphanumericUnd' required='yes'></TD>
+		</TR>
+		<TR>	<TD align="right" colspan=2 height=10></TD></TR>
+
+		<TR>	<TD valign=top align="right">Include Outgoing Calling Rules:</TD>
+			<TD><div id='edit_includeCheckboxes_div'></div></TD>
+		</TR>
+
+		<TR>	<TD align="right" colspan=2 height=10></TD></TR>
+
+		<TR>	<TD valign=top align="right"><nobr>Include Local Contexts:</nobr></TD>
+			<TD><div id='edit_LC_includeCheckboxes_div'></div></TD>
+		</TR>
+
+		<TR>	<TD colspan=2 align=center height=50 valign=middle>
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' onclick='edit_DP_save_go();'>Save</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/dialplans.js"></script>
+</body>

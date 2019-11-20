@@ -1,0 +1,44 @@
+	$ mkdir patches
+
+	$ echo foo > foo
+	$ quilt new patch
+	> Patch patches/patch is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/patch
+
+	$ echo bar > foo
+	$ quilt refresh -p ab
+	> Refreshed patch patches/patch
+
+	$ mv patches/patch patches/patch~
+	$ echo Header > patches/patch
+	$ cat patches/patch~ >> patches/patch
+	$ quilt header
+	> Header
+
+	$ quilt header -r
+	< Header2
+	> Replaced header of patch patches/patch
+
+	$ quilt header
+	> Header2
+
+	$ quilt header -a
+	< Appended
+	> Appended text to header of patch patches/patch
+
+	$ quilt header
+	> Header2
+	> Appended
+
+	$ cat patches/patch
+	> Header2
+	> Appended
+	> Index: b/foo
+	> ===================================================================
+	> --- a/foo
+	> +++ b/foo
+	> @@ -1 +1 @@
+	> -foo
+	> +bar

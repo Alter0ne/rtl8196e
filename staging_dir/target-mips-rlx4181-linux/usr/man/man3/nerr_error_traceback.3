@@ -1,0 +1,33 @@
+.TH nerr_error_traceback 3 "12 July 2007" "ClearSilver" "util/neo_err.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+nerr_error_traceback 
+.SH SYNOPSIS
+.Ss
+#include <util/neo_err.h>
+.Se
+.Ss
+void nerr_error_traceback (NEOERR *err, STRING *str);
+
+.Se
+
+.SH ARGUMENTS
+err - error
+.br
+str - string to which the data is appended
+
+.SH DESCRIPTION
+returns the full traceback of the error chain
+
+.SH "SEE ALSO"
+.BR nerr_error_traceback "(3), "nerr_pass "(3), "nerr_error_string "(3), "defined "(3), "nerr_pass_ctx "(3), "nerr_passf "(3), "nerr_init "(3), "nerr_match "(3), "nerr_log_error "(3), "nerr_ignore "(3), "nerr_register "(3), "nerr_handle

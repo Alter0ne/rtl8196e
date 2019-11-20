@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter SYSTEM "chapter.dtd">
+
+<chapter>
+  <header>
+    <copyright>
+      <year>2004</year><year>2013</year>
+      <holder>Ericsson AB. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice>
+      The contents of this file are subject to the Erlang Public License,
+      Version 1.1, (the "License"); you may not use this file except in
+      compliance with the License. You should have received a copy of the
+      Erlang Public License along with this software. If not, it can be
+      retrieved online at http://www.erlang.org/.
+    
+      Software distributed under the License is distributed on an "AS IS"
+      basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+      the License for the specific language governing rights and limitations
+      under the License.
+    
+    </legalnotice>
+
+    <title>Erl_Docgen Release Notes</title>
+    <prepared>otp_appnotes</prepared>
+    <docno>nil</docno>
+    <date>nil</date>
+    <rev>nil</rev>
+    <file>notes.xml</file>
+  </header>
+  <p>This document describes the changes made to the <em>erl_docgen</em> application.</p>
+
+  <section><title>Erl_Docgen 0.3.4.1</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+          <p>
+	    The encoding of the <c>notes.xml</c> file has been
+	    changed from latin1 to utf-8 to avoid future merge
+	    problems.</p>
+          <p>
+	    Own Id: OTP-11310</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.3.4</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> Correct a PDF indentation bug for tagged lists in
+	    tagged lists and added some missing tags to the DTD. </p>
+          <p>
+	    Own Id: OTP-10725</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> Support for Unicode has been implemented. </p>
+          <p>
+	    Own Id: OTP-10302</p>
+        </item>
+        <item>
+	    <p>Where necessary a comment stating encoding has been
+	    added to Erlang files. The comment is meant to be removed
+	    in Erlang/OTP R17B when UTF-8 becomes the default
+	    encoding. </p>
+          <p>
+	    Own Id: OTP-10630</p>
+        </item>
+        <item>
+	    <p> Some examples overflowing the width of PDF pages have
+	    been corrected. </p>
+          <p>
+	    Own Id: OTP-10665</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.3.3</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> A possibility to configure erl_docgen so it can
+	    generate documentation for other products than
+	    Erlang/OTP. </p>
+          <p>
+	    Own Id: OTP-9040</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.3.2</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> A bug regarding spaces in C function prototypes has
+	    been fixed. (Thanks to Richard O'Keefe.) </p>
+          <p>
+	    Own Id: OTP-10138</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.3.1</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> Some links in C libraries were not generated
+	    correctly. This bug has been fixed. </p>
+          <p>
+	    Own Id: OTP-9832</p>
+        </item>
+        <item>
+          <p>
+	    Set `font-family: Courier, monospace' in OTP doc CSS</p>
+          <p>
+	    left Courier as the primary original font and also added
+	    monospace as secondary for people which in Linux does not
+	    have it installed.</p>
+          <p>
+	    Also adds minor cosmetic changes to the CSS. (Thanks to
+	    Ricardo Catalinas Jiménez)</p>
+          <p>
+	    Own Id: OTP-9918</p>
+        </item>
+        <item>
+          <p>
+	    When generating from edoc it is now possible to use
+	    ranges in specs and &lt;img&gt; tags in the description.</p>
+          <p>
+	    Own Id: OTP-9970</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> Optimize and improve handling of multiple func:s.
+	    </p>
+          <p>
+	    Own Id: OTP-9877</p>
+        </item>
+        <item>
+	    <p> The generation of the libraries' HTML documentation
+	    has been optimized. </p>
+          <p>
+	    Own Id: OTP-9893</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.3</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> Bug fixes concerning the generation of manpages. </p>
+          <p>
+	    Own Id: OTP-9614</p>
+        </item>
+        <item>
+	    <p> Fix syntax bug in eix files. </p>
+          <p>
+	    Own Id: OTP-9617</p>
+        </item>
+        <item>
+	    <p> Bug fix concerning the generation of manpages. </p>
+          <p>
+	    Own Id: OTP-9759</p>
+        </item>
+        <item>
+	    <p> Fixed an arity calculation bug for erlang functions
+	    in the documentation index for html and pdf. </p>
+          <p>
+	    Own Id: OTP-9772</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> The docbuilder application is removed in R15 and
+	    parts still used in the OTP documentation build process
+	    and the DTD documentation is moved to erl_docgen. </p>
+          <p>
+	    Own Id: OTP-9721</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.2.6</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p>Bug fixes. </p>
+          <p>
+	    Own Id: OTP-9360</p>
+        </item>
+        <item>
+	    <p> The manpage generation has been improved. </p>
+          <p>
+	    Own Id: OTP-9541 Aux Id: OTP-9550 </p>
+        </item>
+        <item>
+	    <p> Fix eix file generation for new function spec
+	    references. </p>
+          <p>
+	    Own Id: OTP-9562</p>
+        </item>
+        <item>
+	    <p> The function signatures in the pdf files was not in a
+	    fixed font. </p>
+          <p>
+	    Own Id: OTP-9563</p>
+        </item>
+        <item>
+	    <p> The parts level in the system documentation was
+	    missing in the bookmarks menu for the pdf and the
+	    copyright year generation for PDF was not correct. </p>
+          <p>
+	    Own Id: OTP-9576</p>
+        </item>
+        <item>
+	    <p> The indentation after <c>Warning:</c> and
+	    <c>Note:</c> in manpages has been improved. </p>
+          <p>
+	    Own Id: OTP-9588</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>Erl_Docgen 0.2.5</title>
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> The support for using Erlang specifications and types
+	    has been improved. </p>
+          <p>
+	    Own Id: OTP-9261</p>
+        </item>
+      </list>
+    </section>
+
+</section>
+
+<section><title>erl_docgen 0.2.4</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	  <p>Subsections below level 2 where not handled correct when generating html and pdf.</p>
+          <p>
+	    Own Id: OTP-90730</p>
+        </item>
+      </list>
+    </section>
+
+  </section>
+
+  <section><title>erl_docgen 0.2.3</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> Fix format_man_pages so it handles all man sections
+	    and remove warnings/errors in various man pages. </p>
+          <p>
+	    Own Id: OTP-8600</p>
+        </item>
+      </list>
+    </section>
+
+
+    <section><title>Improvements and New Features</title>
+      <list>
+        <item>
+	    <p> Support for using Dialyzer specifications and types
+	    has been added. This is an experimental release; changes
+	    are expected before the new functionality is used when
+	    building the OTP documentation. </p>
+          <p>
+	    Own Id: OTP-8720</p>
+        </item>
+      </list>
+    </section>
+
+  </section>
+
+  <section><title>erl_docgen 0.2.2</title>
+
+    <section><title>Fixed Bugs and Malfunctions</title>
+      <list>
+        <item>
+	    <p> Fixed the transformation from xml to html of the
+	    funcs block in comref pages. </p>
+          <p>
+	    Own Id: OTP-8792</p>
+        </item>
+      </list>
+    </section>
+
+  </section>
+
+  <section><title>erl_docgen 0.2.1</title>
+
+	<section><title>Fixed Bugs and Malfunctions</title>
+	  <list>
+	    <item>
+	      <p>
+                The text within code examples (CODE and PRE tags) will not be 
+                space normalized for man pages.
+              </p>
+	      <p>
+	        Own Id: OTP-8476
+              </p>
+	    </item>
+	  </list>
+	</section>
+
+    </section>
+
+    <section><title>erl_docgen 0.2</title>
+
+	<section><title>Improvements and New Features</title>
+	  <list>
+	    <item>
+	      <p>
+	    Added an xsl transform from OTP xml documentation to a
+	    file (.eix) of erlang terms that can be read by the
+	    erldoc application. Erldoc handles the documentation
+	    search mechanism at erlang.org. Added generation of eix
+	    files to otp_release_targets.mk. Fixed a copyright date
+	    error in db_html.xsl .</p>
+	      <p>
+	    Own Id: OTP-8308</p>
+	    </item>
+	    <item>
+	    <p>The documentation is now possible to build in an open
+	    source environment after a number of bugs are fixed and
+	    some features are added in the documentation build
+	    process. </p>
+	    <p>- The arity calculation is updated.</p>
+	    <p>- The module prefix used in the function names for
+	    bif's are removed in the generated links so the links
+	    will look like
+	    "http://www.erlang.org/doc/man/erlang.html#append_element-2"
+	    instead of
+	    "http://www.erlang.org/doc/man/erlang.html#erlang:append_element-2".</p>
+	    <p>- Enhanced the menu positioning in the html
+	    documentation when a new page is loaded.</p>
+	    <p>- A number of corrections in the generation of man
+	    pages (thanks to Sergei Golovan)</p>
+	    <p>- The legal notice is taken from the xml book file so
+	    OTP's build process can be used for non OTP
+	    applications.</p>
+	      <p>
+	    Own Id: OTP-8343</p>
+	    </item>
+	  </list>
+	</section>
+
+    </section>
+
+  <section><title>erl_docgen 0.1</title>
+
+    <section>
+      <title>Improvements and new features</title>
+      <p>This is the first release of erl_docgen for internal use.</p>
+    </section>
+
+
+  </section>
+
+</chapter>
+

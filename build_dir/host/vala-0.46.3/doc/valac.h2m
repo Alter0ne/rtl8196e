@@ -1,0 +1,48 @@
+[NAME]
+valac \- compiler that translates Vala source code into C source and header files
+
+[SYNOPSIS]
+.B valac
+[\fIOPTION\fR]... [\fIFILE\fR]...
+
+[DESCRIPTION]
+Vala  is  a  programming  language  that  aims  to  bring  modern
+programming language features to GNOME developers without imposing any
+additional  runtime requirements  and  without using  a different  ABI
+compared to applications and libraries written in C.
+.TP
+valac, the Vala compiler, is a self-hosting compiler that translates
+Vala source code into C source and header files. It uses the GObject
+type system to create classes and interfaces declared in the Vala
+source code.
+
+/Enable color output/
+.RS
+When no value is given \fIalways\fR is implied. When neither \fB--color\fR
+or \fB--no-color\fR are declared then \fB--color\fR=\fIauto\fR is used where
+output is colored when stderr is a terminal.
+.RE
+
+/Enable support for ABI stability/
+.RS
+This changes the current behaviour to output public members of classes and
+interfaces the same order as they appear in Vala source.
+For libraries is recommended to use \fB--abi-stability\fR to ensure the
+maintainability of the resulting Application Binary Interface (ABI).
+This option is disabled by default for backward compatibility because it can
+break ABI of existing projects.
+.RE
+
+[BUGS]
+https://gitlab.gnome.org/GNOME/vala/issues
+
+[HOMEPAGE or CONTACT]
+https://wiki.gnome.org/Projects/Vala
+
+[FEATURES]
+Interfaces, properties, signals, foreach, lambda expressions, type
+inference for local variables, generics, non-null types, assisted memory
+management, exception handling
+
+[AUTHORS]
+Jürg Billeter, Raffaele Sandrini.

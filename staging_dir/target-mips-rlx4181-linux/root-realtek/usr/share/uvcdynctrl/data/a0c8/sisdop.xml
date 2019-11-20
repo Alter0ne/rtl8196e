@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config version="1.0"
+	xmlns="http://www.saicare.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.saicare.com uvcconfig.xsd"
+>
+
+	<meta>
+		<version>1.0</version>
+		<author>Manav Gautama</author>
+		<contact>bandwidthcrunch@gmail.com</contact>
+		<revision>0.10</revision>
+		<copyright>Copyright (c) Manav Gautama 2012 </copyright>
+		<history>
+		  Initial Import of the vimicro based SIS DOP camera for enabling XU LED flash
+		</history>
+	</meta>
+
+
+	<constants>
+
+		<constant type="guid">
+                        <id>UVC_GUID_SIS_LED_HW_CONTROL</id>
+                        <value>5dc717a9-1941-da11-ae0e-000d56ac7b4c</value>
+                </constant>
+
+		<!-- Control selectors for User Hardware Control-->
+		
+		<constant type="integer">
+			<id>XU_HW_CONTROL_FLASH</id>
+			<value>4</value>
+		</constant>
+		
+		
+		<!-- Public V4L2 control identifiers -->
+			<constant type="integer">
+			<id>V4L2_CID_FLASH_MODE</id>
+			<value>0xb030</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_FLASH_FREQUENCY</id>
+			<value>0xb031</value>
+		</constant>
+
+	</constants>
+	
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0xa0c8</vendor_id> 
+				<product_id>3460</product_id>
+			</match>
+			
+			<controls>
+				
+	<control id="dop_led_flash">
+					<entity>UVC_GUID_SIS_LED_HW_CONTROL</entity>
+					<selector>XU_HW_CONTROL_FLASH</selector>
+					<index>2</index>
+					<size>4`</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Allows control over the state of the first LED.
+						Not much else information available at this time. 
+						
+					</description>
+				</control>
+		
+	
+			</controls>
+		</device>
+	</devices>
+
+	<!-- V4L2 mappings for the UVC controls defined above -->
+	<mappings>
+						
+			<mapping>
+			<name>LED2 Mode</name>
+			<uvc>
+				<control_ref idref="dop_led_flash"/>
+				<size>4</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_FLASH_MODE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_MENU</v4l2_type>
+				<menu_entry name="Off" value="0x20"/>
+				<menu_entry name="On" value="0x22"/>
+		
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>LED2 Frequency</name>
+			<uvc>
+				<control_ref idref="dop_led_flash"/>
+				<size>8</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_FLASH_FREQUENCY</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>	
+
+		
+		
+	</mappings>
+</config>

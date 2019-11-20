@@ -1,0 +1,25 @@
+# Test the testing code itself
+
+# Exported variables should be available immediately after being set
+$ echo %{VAR}
+>
+$ export VAR=foo
+$ echo %{VAR}
+> foo
+$ export VAR=bar
+$ echo %{VAR}
+> bar
+
+# Exported variables should survive accross commands and comments
+$ true
+$ echo %{VAR}
+> bar
+
+# Test multiple use cases
+$ echo "A %{VAR}%{VAR}ian walks into a %{VAR}"
+> A barbarian walks into a bar
+
+# Test combined use and set
+$ export PLACE=%{VAR}racks
+$ echo %{PLACE}
+> barracks

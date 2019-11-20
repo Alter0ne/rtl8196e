@@ -1,0 +1,61 @@
+#!/bin/sh
+# aoe-mkdevs - make static device nodes on systems without udev
+# Copyright 2009, CORAID, Inc., and licensed under GPL v.2.
+
+n_shelves=${n_shelves:-10}
+n_partitions=${n_partitions:-16}
+
+if test "$#" != "1"; then
+	echo "Usage: `basename $0` {dir}" 1>&2
+	echo "       n_partitions=16 `basename $0` {dir}" 1>&2
+	exit 1
+fi
+dir=$1
+zero="`basename $0`"
+MAJOR=152
+
+dyn=/sys/module/aoe/parameters/aoe_dyndevs
+if test -r "$dyn" && test "`cat $dyn`" = 1; then
+	cat 1>&2 <<EOF
+$zero Error: aoe module is using dynamic devices.
+$zero: Please see the aoe-mkdevs manpage.
+$zero: Exiting.
+EOF
+	exit 1
+fi
+if test "`ps axwwww | grep 'udev[d]'`" || test -d "/dev/.udev"; then
+	cat 1>&2 <<EOF
+$zero Error: udev detected.  You shouldn't need to use $zero.
+$zero: Please see the aoe-mkdevs manpage.
+$zero: Exiting.
+EOF
+	exit 1
+fi
+
+set -e
+
+mkdir -p $dir
+
+# (Status info is in sysfs.  See status.sh.)
+# rm -f $dir/stat
+# mknod -m 0400 $dir/stat c $MAJOR 1
+rm -f $dir/err
+mknod -m 0400 $dir/err c $MAJOR 2
+rm -f $dir/discover
+mknod -m 0200 $dir/discover c $MAJOR 3
+rm -f $dir/interfaces
+mknod -m 0200 $dir/interfaces c $MAJOR 4
+rm -f $dir/revalidate
+mknod -m 0200 $dir/revalidate c $MAJOR 5
+rm -f $dir/flush
+mknod -m 0200 $dir/flush c $MAJOR 6
+
+# pass along the env var to aoe-mkshelf
+export n_partitions
+
+mkshelf=`echo $0 | sed 's!mkdevs!mkshelf!'`
+i=0
+while test $i -lt $n_shelves; do
+	sh $mkshelf $dir $i
+	i=`expr $i + 1`
+done

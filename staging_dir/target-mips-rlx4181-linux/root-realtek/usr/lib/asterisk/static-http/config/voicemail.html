@@ -1,0 +1,114 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * General VoiceMail Settings
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Voicemail Settings</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		General VoiceMail Settings&nbsp;
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center><div id="tabbedMenu"></div></center>
+
+	<table align=center width=350>
+		<tr>	<td colspan=2><span class='lite_Heading'>General VoiceMail Settings</span> </td></tr>
+		<tr>	<td align=right>Extension for checking messages <img src="images/tooltip_info.gif" tip="en,voicemail,0" class='tooltipinfo'> : </td>
+			<td><input size='5' id='VoiceMailExtension'></td>
+		</tr>
+		<tr>	<td align=right>Direct Voicemail Dial <img src="images/tooltip_info.gif" tip="en,voicemail,15" class='tooltipinfo'> : </td>
+			<td><input type='checkbox' id='directVoiceMailDial'></td>
+		</tr>
+		<tr>	<td align=right>Max greeting (in seconds) <img src="images/tooltip_info.gif" tip="en,voicemail,13" class='tooltipinfo'> : </td>
+			<td><input size=4 id='maxgreet'></td>
+		</tr>
+		<tr>	<td align=right><label for='operator'>Dial '0' for Operator <img src="images/tooltip_info.gif" tip="en,voicemail,9" class='tooltipinfo'> : </label></td>
+			<td><input type='checkbox' id='operator'></td>
+		</tr>
+
+
+		<tr>	<td colspan=2><BR><B>Message Options</B> </td></tr>
+		<tr>	<td align=right>Maximum messages per folder <img src="images/tooltip_info.gif" tip="en,voicemail,5" class='tooltipinfo'> : </td>
+			<td> <select id='maxmsg'>
+				<option value='10'>10</option>
+				<option value='25'>25</option>
+				<option value='100'>100</option>
+				<option value='250'>250</option>
+				<option value='500'>500</option>
+				<option value='1000'>1000</option>
+				</select>
+			</td>
+		</tr>
+		<tr>	<td align=right>Max message time <img src="images/tooltip_info.gif" tip="en,voicemail,6" class='tooltipinfo'> : </td>
+			<td><select id='maxmessage'>
+				<option value='60'>1 minute</option>
+				<option value='120'>2 minutes</option>
+				<option value='300'>5 minutes</option>
+				<option value='900'>15 minutes</option>
+				<option value='1800'>30 minutes</option>
+				<option value='0'>Unlimited</option>
+				</select>
+			</td>
+		</tr>
+		<tr>	<td align=right>Min message time <img src="images/tooltip_info.gif" tip="en,voicemail,7" class='tooltipinfo'> : </td>
+			<td><select id='minmessage'>
+				<option value='0'>No minimum</option>
+				<option value='1'>1 second</option>
+				<option value='2'>2 seconds</option>
+				<option value='3'>3 seconds</option>
+				<option value='4'>4 seconds</option>
+				<option value='5'>5 seconds</option>
+				</select>
+			</td>
+		</tr>
+		<tr>	<td colspan=2><BR> <B>Playback Options</B></td></tr>
+
+		<tr>	<td align=right><label for='saycid'>Say message Caller-ID <img src="images/tooltip_info.gif" tip="en,voicemail,2" class='tooltipinfo'> : </label></td>
+			<td><input type='checkbox' id='saycid'></td>
+		</tr>
+		<tr>	<td align=right><label for='sayduration'>Say message duration <img src="images/tooltip_info.gif" tip="en,voicemail,3" class='tooltipinfo'> : </label></td>
+			<td><input type='checkbox' id='sayduration'></td>
+		</tr>
+		<tr>	<td align=right><label for='envelope'>Play envelope <img src="images/tooltip_info.gif" tip="en,voicemail,12" class='tooltipinfo'> : </label></td>
+			<td><input type='checkbox' id='envelope'></td>
+		</tr>
+		<tr>	<td align=right><label for='review'>Allow users to review <img src="images/tooltip_info.gif" tip="en,voicemail,11" class='tooltipinfo'> : </label></td>
+			<td><input type='checkbox' id='review'></td>
+		</tr>
+		<TR>	<TD colspan=2 align=center><BR>
+				<span class='guiButtonCancel' id='cancel' onclick='window.location.reload();'>Cancel</span>
+				<span class='guiButtonEdit' id='save' onclick='update();'>Save</span>
+			</TD>
+		</TR>
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/voicemail.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

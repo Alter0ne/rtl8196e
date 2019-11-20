@@ -1,0 +1,216 @@
+2014-12-10  Rodney Dawes  <dobey@wayofthemonkey.com>
+
+	Don't write $SRCDIR to the pot file.
+	Pass the $SRCDIR as a --directory option to xgettext.
+
+2014-05-13  Rodney Dawes  <dobey@wayofthemonkey.com>
+
+	Don't write $SRCDIR to the pot file.
+	Pass the $SRCDIR as a --directory option to xgettext.
+
+2014-12-10  Michi Henning  <michi.henning@canonical.com>
+
+	Fixed incorrect handling of spaces around = in .ini files.
+
+2014-12-04  Michi Henning  <michi.henning@canonical.com>
+
+	Added test cases for spaces around = in desktop files.
+
+2014-11-24  Michi Henning  <michi.henning@canonical.com>
+
+	Fixed incorrect handling of spaces around = in .ini files.
+
+2014-02-12  Danilo Šegan  <danilo@segan.org>
+
+	Merge branch from David Planella adding support for QT designer .UI files.
+	
+	Now intltool can extract translatable strings from files specified with
+	gettext/type of "qtdesigner".
+	
+	Fixes bug #953342.
+
+2014-02-12  Danilo Šegan  <danilo@segan.org>
+
+	Update tests for whitespace handling.
+
+2014-02-12  Danilo Šegan  <danilo@segan.org>
+
+	Merge David's branch ~dpm/intltool/add-qtdesigner-support.
+
+2013-05-10  David Planella  <david.planella@ubuntu.com>
+
+	Added files for gettext/qtdesigner testcase and result to the corresponding Makefile.am files
+
+2013-05-10  David Planella  <david.planella@ubuntu.com>
+
+	Updated man page with the new gettext/qtdesigner type for extraction
+
+2013-05-10  David Planella  <david.planella@ubuntu.com>
+
+	Added Qt Designer .ui file extraction support using the internal XML parser
+
+2013-05-10  David Planella  <david.planella@ubuntu.com>
+
+	Updated test case for Qt Designer extraction: no escapes
+
+2013-05-09  David Planella  <david.planella@ubuntu.com>
+
+	Updated links to Qt translation format specs
+
+2013-01-28  David Planella  <david.planella@ubuntu.com>
+
+	Merged trunk
+
+2013-01-28  David Planella  <david.planella@ubuntu.com>
+
+	Cleaned up qtdesigner code, added comments, updated test case and results
+
+2012-03-12  David Planella  <david.planella@ubuntu.com>
+
+	Properly added the qtdesigner test to be run with make check now
+
+2012-03-12  David Planella  <david.planella@ubuntu.com>
+
+	First shot at adding extraction support for Qt Designer .ui files
+
+2014-02-11  Danilo Šegan  <danilo@segan.org>
+
+	Add missing files to Makefile.am EXTRA_DIST definitions.
+
+2013-05-22  Rodney Dawes  <dobey@wayofthemonkey.com>
+
+	Use plain localedir to install mo files to, rather than trying to guess one.
+
+2013-05-12  Rodney Dawes  <dobey@wayofthemonkey.com>
+
+	Use plain localedir to install mo files to, rather than trying to guess one.
+
+2013-05-12  Hib Eris  <hib@hiberis.nl>
+
+	Fix makefile rule to build .pox files properly.
+
+2011-12-21  Hib Eris  <hib@hiberis.nl>
+
+	Fix make rule to build *.pox files
+
+2013-05-12  Jordi Mallach  <jordi@debian.org>
+
+	Fix incorrect usage of hyphens and dashes in man pages.
+
+2012-02-26  Jordi Mallach  <jordi@debian.org>
+
+	Fix incorrect uses of hyphens and dashes in several manpages.
+
+2013-05-12  Rodney Dawes  <dobey@wayofthemonkey.com>
+
+	Update .bzrignore with some new generated files.
+	Generate the ChangeLog in GNU changelog format, and only with last 50 changes.
+
+2013-05-12  Javier Jardón  <javier.jardon@codethink.co.uk>
+
+	Use autoreconf instead of gnome-autogen scripts.
+
+2012-03-28  Javier Jardón  <javier.jardon@codethink.co.uk>
+
+	Use autoreconf instead gnome-common
+
+2013-05-12  Robert Ancell  <robert.ancell@ubuntu.com>
+
+	Remove obsolete AM_GNU_GETTEXT information from docs.
+
+2012-07-11  Robert Ancell  <robert.ancell@canonical.com>
+
+	Remove obsolete AM_GNU_GETTEXT information from docs
+
+2012-11-18  Danilo Šegan  <danilo@segan.org>
+
+	Up the version number to 0.50.3.
+
+2012-11-07  Danilo Šegan  <danilo.segan@linaro.org>
+
+	Merge a fix for bug #1034153 to support single quotes in glade/gtkuibuilder files. Patch by Robert Bruce Park.
+
+2012-08-22  Robert Bruce Park  <robert.park@canonical.com>
+
+	Add test case for single quotes, and fix the bug that I discovered
+	as a result of adding this test.
+
+2012-08-07  Robert Bruce Park  <robru@gottengeography.ca>
+
+	Support translatable='yes' in glade XML
+
+2012-02-26  Danilo Šegan  <danilo@segan.org>
+
+	Fix #903340: Use --no-translations only if detected intltool on the system is 0.50 or better. Patch by Hib Eric.
+
+2012-02-20  Hib Eris  <hib@hiberis.nl>
+
+	Backward compatibily for INTLTOOL_XML_NOMERGE_RULE in intltool.m4
+	
+	Fixes bug #903340
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Update NEWS: Include a missed contribution by doko in 0.50.1 and reconstruct 0.50.0 stuff from the release notes on LP.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Up the version to 0.50.1.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Fix #924386: include ChangeLog in dist tarballs and create a NEWS file.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Document a soft bzr dependency.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Add the NEWS file.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Auto-generate a ChangeLog file from "bzr log" in a "make dist" step.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Bug #402516: support silent rules when merging translations and building MO files. Patch by Hib Eris.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Rename INTLTOOL_V_merge to INTLTOOL_V_MERGE_OPTIONS.
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Support silent rules. Patch by Hib Eris.
+
+2012-01-18  Hib Eris  <hib@hiberis.nl>
+
+	Add support for silent-rules
+
+2012-02-05  Danilo Šegan  <danilo@segan.org>
+
+	Ignore whitespace indentation in empty lines. Part of #922685 fix.
+
+2012-01-30  Danilo Šegan  <danilo@segan.org>
+
+	Add support for translatable attribute (well, any) tags in glade files. Patch by Ryan Lortie.
+
+2012-01-30  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug #923841: support menus in glade files
+	
+	Instead of hardcoding a list (property, atkproperty, col) of tags that
+	we support translatable="yes" on, support it on all tags.  This lets us
+	pick up <attribute translatable="yes"> as is used within <menu> of a
+	GtkBuilder file.
+
+2012-01-27  Danilo Segan  <danilo@canonical.com>
+
+	Bug #922685: Keep and normalize paragraphs in gsettings extraction. Strip starting/ending whitespace.  Patch by Ryan Lortie.
+
+2012-01-27  Danilo Segan  <danilo@canonical.com>
+
+	Make the spacing in test five lines to better test for double-newlines.
+

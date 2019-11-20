@@ -1,0 +1,48 @@
+$ mkdir patches
+
+$ echo foo > foo.orig
+$ echo foo2 > foo
+$ echo bar > bar.orig
+$ echo bar2 > bar
+$ diff -u foo.orig foo >> patches/foorab.diff
+$ diff -u bar bar.orig >> patches/foorab.diff
+$ mv foo.orig foo
+$ mv bar.orig bar
+$ echo foorab.diff -p0 > patches/series
+$ quilt push
+> Applying patch patches/foorab.diff
+>~ patching file `?foo'?
+>~ patching file `?bar'?
+> Hunk #1 FAILED at 1.
+>~ 1 out of 1 hunk FAILED -- rejects in file `?bar'?
+> Patch patches/foorab.diff does not apply (enforce with -f)
+$ echo %{?}
+> 1
+
+$ quilt push
+> Applying patch patches/foorab.diff
+>~ patching file `?foo'?
+>~ patching file `?bar'?
+> Hunk #1 FAILED at 1.
+>~ 1 out of 1 hunk FAILED -- rejects in file `?bar'?
+> Patch patches/foorab.diff does not apply (enforce with -f)
+$ echo %{?}
+> 1
+
+$ quilt push -qf
+> Applying patch patches/foorab.diff
+>~ 1 out of 1 hunk FAILED( -- saving rejects to( file)? bar.rej)?
+> Applied patch patches/foorab.diff (forced; needs refresh)
+$ echo %{?}
+> 1
+
+$ quilt diff
+> Index: foo
+> ===================================================================
+> --- foo.orig
+> +++ foo
+> @@ -1 +1 @@
+> -foo
+> +foo2
+$ echo %{?}
+> 0

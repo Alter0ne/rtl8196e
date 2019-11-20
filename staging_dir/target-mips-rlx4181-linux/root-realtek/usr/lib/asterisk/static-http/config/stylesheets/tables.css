@@ -1,0 +1,44 @@
+/* list class for tables */
+table.list {
+	background-color: #ffffff;
+	border-spacing: 1px;
+	width: 100%;
+}
+
+table.list thead tr.list_titles {
+	background-color: #6b79a5;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+table.list thead tr th {
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+table.list > tbody > tr:hover th[scope=row], table.list > tbody > tr:hover td {
+	background-color: #a8b6e5;
+}
+
+table.list tbody tr.even {
+	background: #EFEFEF; 
+}
+
+table.list tbody tr.odd {
+	background: #FFFFFF; 
+}
+
+/* Tablesorter Styling */
+th.header {
+	cursor: pointer;
+}
+
+th.header_sort_up {
+	background-image: url(../images/asterisk-arrow-up.png);
+	background-color: #ef8700;
+}
+
+th.header_sort_down {
+	background-image: url(../images/asterisk-arrow-down.png);
+	background-color: #ef8700;
+}

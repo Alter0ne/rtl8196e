@@ -1,0 +1,18 @@
+Source-Makefile: package/utils/jsonfilter/Makefile
+Package: jsonfilter
+Version: 2014-06-19-cdc760c58077f44fc40adbbe41e1556a67c1b9a9
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox +libjson-c
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: OpenWrt JSON filter utility
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Source: jsonfilter-2014-06-19-cdc760c58077f44fc40adbbe41e1556a67c1b9a9.tar.gz
+Type: ipkg
+Description: OpenWrt JSON filter utility
+http://git.openwrt.org/?p=project/jsonpath.git
+Jo-Philipp Wich <jow@openwrt.org>
+@@
+
+

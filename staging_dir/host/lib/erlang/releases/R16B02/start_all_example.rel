@@ -1,0 +1,26 @@
+%%
+%% %CopyrightBegin%
+%% 
+%% Copyright Ericsson AB 1996-2009. All Rights Reserved.
+%% 
+%% The contents of this file are subject to the Erlang Public License,
+%% Version 1.1, (the "License"); you may not use this file except in
+%% compliance with the License. You should have received a copy of the
+%% Erlang Public License along with this software. If not, it can be
+%% retrieved online at http://www.erlang.org/.
+%% 
+%% Software distributed under the License is distributed on an "AS IS"
+%% basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+%% the License for the specific language governing rights and limitations
+%% under the License.
+%% 
+%% %CopyrightEnd%
+%%
+{release, {"OTP  APN 181 01","R16B02"}, {erts, "5.10.3"},
+ [{kernel,"2.16.3"},
+  {stdlib,"1.19.3"},
+  {sasl, "2.3.3"},
+  {os_mon, "2.2.13"},
+  {inets, "5.9.6"},
+  {snmp, ""},
+  {mnesia, "4.10"}]}.

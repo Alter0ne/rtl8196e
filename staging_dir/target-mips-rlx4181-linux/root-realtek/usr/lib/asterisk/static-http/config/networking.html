@@ -1,0 +1,129 @@
+<!--
+ * Manage network settings on the appliance
+ *
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * All Rights Reserved.
+ *
+ * Distribution of this file is subject to the license
+ * agreement you accepted when obtained and/or activated
+ * the Digium product containing this file.
+ *
+-->
+<html>
+<head>
+	<title>Networking Configuration</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		&nbsp;Networking Configuration&nbsp;&nbsp;
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >
+			&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;
+		</span>
+	</div>
+
+	<div class='lite_Heading'>Network Configuration</div>
+	<center><div id="tabbedMenu" style='margin-top:-10px;'></div></center>
+	<table align="center">
+		<tr><td valign="top" align="center">
+			<div id="general_div" style='display:none;'>
+			<table align="center">
+				<TR>
+					<TD><B>Hostname</B></TD>
+					<TD><input type="text" id='HOSTNAME' size=14></TD>
+				</TR>
+				<TR>	<TD>NTP Server</TD>
+					<TD><input type="text" id='NTP_ADDRESS' size=14></TD>
+				</TR>
+				<TR>	<TD><B>SSH</B></TD>
+					<TD><input type="checkbox" id='SSHACCESS' value='yes'> Enable SSH</TD>
+				</TR>
+				<TR>	<TD height=20></TD>
+					<TD></TD>
+				</TR>
+				<TR id="URLforPolycom" style="display:none">
+					<TD valign="top" align="right">URL for Polycom <BR> auto provisioning:</TD>
+					<TD>	<input type="text" id='TFTP_LAN' size=24></TD>
+				</TR>
+			</table>
+			</div>
+
+			<div id="wan_div" style='display:none;'>
+			<table align="center">
+				<TR>	<TD>DHCP</TD>
+					<TD><input type="checkbox" id='DHCP_WAN'></TD>
+				</TR>
+				<TR>	<TD>IP</TD>
+					<TD><input type="text" id='IP_WAN' size=14></TD>
+				</TR>
+				<TR>	<TD>SUBNET</TD>
+					<TD><input type="text" id='SUBNET_WAN' size=14></TD>
+				</TR>
+				<TR>	<TD>GATEWAY</TD>
+					<TD><input type="text" id='GATEWAY_WAN' size=14></TD>
+				</TR>
+				<TR>	<TD>DNS</TD>
+					<TD><input type="text" id='DNS_WAN' size=14></TD>
+				</TR>
+				<TR>	<TD colspan=2 height=20></TD></TR>
+				<TR>	<TD align=right><input type="checkbox" id='GUI_WAN'>&nbsp;</TD>
+					<TD>Enable GUI on WAN interface</TD>
+				</TR>
+				<TR>	<TD align=right><input type="checkbox" id='DHCP_WAN_PROVISION'>&nbsp;</TD>
+					<TD>Enable WAN Side Provisioning</TD>
+				</TR>
+			</table>
+			</div>
+
+			<div id="lan_div" style='display:none;'>
+			<table align="center">
+				<TR>	<TD>Domain</TD>
+					<TD><input type="text" id='DOMAIN_LAN'></TD>
+				</TR>
+				<TR>	<TD>Enable DHCP Server</TD>
+					<TD><input type="checkbox" id='DHCP_LAN'></TD>
+				</TR>
+				<TR>	<TD>IP</TD>
+					<TD><input type="text" id='IP_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>SUBNET</TD>
+					<TD><input type="text" id='SUBNET_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>DNS</TD>
+					<TD><input type="text" id='DNS_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>IP Start Range</TD>
+					<TD><input type="text" id='START_RANGE_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>IP End Range</TD>
+					<TD><input type="text" id='END_RANGE_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>Lease Time (in milliseconds)</TD>
+					<TD><input type="text" id='LEASE_LAN' size=14></TD>
+				</TR>
+				<TR>	<TD>Max Number of Leases</TD>
+					<TD><input type="text" id='MAX_LEASE' size=14></TD>
+				</TR>
+			</table>
+			</div>
+			<BR>
+				<span class='guiButtonCancel' onclick='window.location.reload();'>Cancel</span>
+				<span class='guiButtonEdit' onclick='networking_ApplyChanges();'>Save</span>
+			</td>
+		</tr>
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/networking.js"></script>
+	<script src="js/jquery.autocomplete.js"></script>
+</body>
+</html>

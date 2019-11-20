@@ -1,0 +1,224 @@
+The following outlines the features and commands
+that Bahamut has for operators of the server.
+- 11/13/02 - srd (srd@dal.net)
+- 10/02/04 - Quension (quension@dal.net)
+
+Based upon opers.txt for ircd-hybrid by:
+ThemBones (kraemer@u.washington.edu)
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Usermodes: (* designates that the umode is oper only)
+
+ USERMODE      DESCRIPTION
+-----------------------------------------------------------------
+  +i        -  Is 'invisible'.
+  +w        -  Can see wallops messages.
+  +r        -  Is registered/identified to services.
+  +s        -  Can see oper kill messages.
+  +R        -  Will not receive messages from -r clients.
+ *+a        -  Designates the user as being a services administrator.
+ *+b        -  Can see chatops messages.
+ *+c        -  Can see client connections and exits.
+ *+d        -  Can see debug messages.
+ *+e        -  Can see dccallow failure notices.
+ *+f        -  Can see flood messages.
+ *+g        -  Can recieve globops messages.
+ *+h        -  Is available for help, being listed in /stats P
+ *+j        -  Can see rejected connection notices 
+ *+k        -  Can see server kill messages.
+ *+m        -  Can see spambot notices.
+ *+n        -  Can see routing notices.
+ *+o        -  Is a global IRC Operator.
+ *+y        -  Can see certain information requests. (e.g. /stats)
+ *+A        -  Is a server administrator.
+ *+F        -  Can bypass the ircd's recvq throttling
+ *+K        -  Can see U:lined kill messages
+ *+O        -  Is a local IRC Operator.
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Oper Commands: (+ indicates that /quote must be used with ircII)
+
+COMMAND         - USAGE and DESCRIPTION
+-------------------------------------------------------------------
+  SQUIT         - SQUIT <server> [reason]
+                  Splits <server> away from your side of the net with
+                  [reason].
+
+  KILL          - KILL <nick> <reason>
+                  Disconnects user <nick> from the IRC server he/she
+                  is connected to with reason <reason>.
+                  Local Opers can only kill clients on their servers.
+                  Global Opers can kill clients on any server on the
+                  IRC network.
+
+  STATS         - STATS <letter> [server|nick]
+                  Queries server [server] (or your own server if no
+                  server parameter is given) for info corresponding to
+                  <letter>.
+                  LETTER (* = Oper only.)
+                  ------
+                  * a - Shows akills
+                  * c - Shows connect blocks
+                  * D - Shows special clone limits
+                  * d - Shows clone limit statistics
+                  * G - Shows local gcos restrictions
+                  * g - Shows network gcos restrictions (sglines)
+                    i - Shows allow blocks
+                  * K - Shows permanent K lines
+                  * k - Shows temporary K lines
+                    l - Shows hostname and generic info about [nick]
+                  * m - Shows commands and their usage
+                    n - Shows user connection counters
+                    o - Shows oper blocks
+                    p - Shows opers connected and their idle times
+                  * Q - Shows local nick/chan restrictions
+                  * q - Shows network nick/chan restrictions (sqlines)
+                    r - Shows resource usage by ircd (only in DEBUGMODE)
+                  * s - Shows server name cache
+                  * T - Shows throttle stats
+                  * t - Shows generic server stats
+                  * U - Shows super (U-Lined) servers.
+                    u - Shows server uptime
+                    v - Shows connected servers and their idle times
+                  * w - Shows fd list (only in DEBUGMODE)
+                    y - Shows class blocks
+                  * z - Shows memory stats
+                    ? - Shows network traffic statistics
+
+  CONNECT       - CONNECT <server_A> [port [server_B]]
+                  When [server_B] is used, CONNECT asks [server_B] to
+                  connect to <server_A>.  Global Opers only.
+
+                  When [server_B] is not used, CONNECT trys to connect
+                  your server to <server_A>.  Local and Global Opers.
+
+                  When [port] is used, the connection will be attempted
+                  to [port].  When [port] is not used, a default will be
+                  chosen from the conf.
+
++ WALLOPS       - WALLOPS :<message>
+                  Sends a WALLOPS message of <message> to all users
+                  who are umode +w (this includes non-opers).
+
++ LOCOPS        - LOCOPS :<message>
+                  Sends an LOCOPS message of <message> to all
+                  opers on local server who are umode +g
+
++ GLOBOPS       - GLOBOPS :<message>
+                  Sends an GLOBOPS message of <message> to all
+                  opers on the network who are umode +g
+
++ CHATOPS       - CHATOPS :<message>
+                  Sends an CHATOPS message of <message> to all
+                  opers on the network who are umode +b
+
+  TRACE         - TRACE [server|nick]
+                  TRACE shows client info about [server|nick] or about
+                  the server you are on if no [server|nick] is given.
+
+                  All users that use TRACE can see the path to
+                  [server|nick] if given and all servers and opers
+                  connected, as well as the connection class they
+                  fall into.
+
+                  Opers can see unregistered connections on a server
+                  with TRACE as well as connection class counts.
+
+  REHASH        - REHASH [option]
+                  When no [option] is given, ircd will re-read the
+                  ircd.conf file.
+
+                  [option] can be one of the following:
+                    DNS       - Re-read the /etc/resolv.conf file
+                    TKLINES   - Clears temporary klines
+                    GC        - Performs garbage collecting of excess
+                                memory.
+                    MOTD      - Re-reads MOTD files
+                    THROTTLES - Clears connection throttles
+                    AKILLS    - Clears akills
+                    SQLINES   - Clears sqlines
+                    SGLINES   - Clears sglines
+                    TSQGLINES - Clears temporary nick/channel/gcos blocks
+
+  RESTART       - RESTART
+                  Restarts the IRC server.
+
+  CLOSE         - CLOSE
+                  Close any connections from clients who have not fully
+                  registered yet.
+
+  DIE           - DIE
+                  Terminates the IRC server.
+
++ DNS           - DNS
+                  Shows some stats about ircd's asynchronous resolving
+                  code
+
++ KLINE         - KLINE [minutes] <nick|user@host> :[reason]
+                  Adds a KLINE which will ban the specified user from
+                  using the server.  The banned client will receive a
+                  message saying he/she is banned with reason [reason]
+
+                  For a temporary KLINE, length of kline is given in
+                  minutes as the first parameter i.e.
+                  KLINE 10 <nick|user@host> :cool off for 10 minutes
+
+                  For a permanent KLINE, use a length of 0.  Leaving out
+                  the length will use a default time of 30 minutes.
+
++ UNKLINE       - UNKLINE <user@host>
+                  -- If compiled with UNKLINE --
+                  Will attempt to unkline the given <user@host>
+
++ SAMODE        - SAMODE <channel> <modes>
+                  Allows +a opers to forcibly set the specified modes on
+                  a channel, even if they do not have channel op status
+                  there.
+
++ SAJOIN        - SAJOIN <channel>
+                  Allows +a opers to join a channel even if bans or modes
+                  would normally block them.
+
++ USERIP        - USERIP <nick> [...]
+                  Works exactly as USERHOST does, but displays the IP
+                  instead of the resolved hostname (if any).
+
++ RWHO          - RWHO <options>
+                  An enhanced version of WHO, supporting regular expression
+                  patterns.  Use "RWHO ?" for online help.
+
++ CHECK         - CHECK NICK <nickname>
+                  Checks for gecos restrictions, SVSHOLDs, or SGLINEs that
+                  match the specific nick.
+
++ SET           - SET <option> <value>
+                  <option> can be one of the following:
+                    MAX       - Sets the number of max connections
+                                to <value>.
+
+                    -- The following three are if compiled with FLUD --
+                     FLUDNUM   - Sets the number of flud messages to 
+                                 trip flud alarm to <value>
+                     FLUDTIME  - Sets the number of seconds in which 
+                                  FLUDNUM msgs must occur to <value>
+                     FLUDBLOCK - Sets the number of seconds to block 
+                                 fluds to <value>
+
+                    -- The following are if compiled with THROTTLE_ENABLE --
+                     THROTTLE ENABLE     - Enables/disables connection
+                                           throttling
+                     THROTTLE COUNT      - Sets connection count to <value>
+                     THROTTLE TIME       - Sets time window to <value> seconds
+                     THROTTLE RECORDTIME - Sets host record time to <value>
+                                           seconds
+                     THROTTLE HASH       - Resizes throttle hashtable to
+                                           <value> buckets
+                     LCLONES <ip>        - Displays or sets soft local clone
+                                           limit for <ip> (1.2.3.4/1.2.3.*)
+                                           to <value> (0 to reset to default)
+                     GCLONES <ip>        - Displays or sets soft global clone
+                                           limit for <ip> to <value>
+                     DEFLCLONES          - Same as local_clones in conf
+                     DEFGCLONES          - Same as global_clones in conf

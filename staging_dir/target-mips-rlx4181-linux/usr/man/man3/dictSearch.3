@@ -1,0 +1,45 @@
+.TH dictSearch 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictSearch  - search for value in dictionary.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+void *dictSearch(dictCtx dict, const char *id, void **plock);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to search in.
+.br
+id - identifier of item to find.
+.br
+plock - place for value lock (or NULL).
+
+.SH DESCRIPTION
+Searches for <id> in <dict>, and returns value if 
+found, or NULL if not.  If <plock> is non-NULL, then
+the lock returned in <plock> will be associated with
+the returned value.  Until this lock is passed to
+dictReleaseLock(), the value will not be passed to the
+dictCleanupFunc callback (see dictCleanup()).
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+plock - set to value lock.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

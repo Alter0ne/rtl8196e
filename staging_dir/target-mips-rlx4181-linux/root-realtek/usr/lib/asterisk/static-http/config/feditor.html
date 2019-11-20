@@ -1,0 +1,98 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * File Editor
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>File Editor</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		.spzero{
+			cursor: pointer;
+			cursor: hand;
+		}
+	</style>
+</head>
+<body bgcolor="FFFFFF">
+	<div class="iframeTitleBar">
+		<span style="margin-left: 4px;font-weight:bold;">File Editor</span>
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();">
+			&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;
+		</span>
+		<select id="filenames" class="input8"></select>
+		<span id="createfile_button" class='guiButton' onclick='show_createfile();' style='margin-left:20px;'>New File</span>
+	</div>
+
+	<div style="display:none; font-size:14px; font-weight:bold; font-family:helvetica,sans-serif,'trebuchet ms'; padding : 6px 0px 6px 10px;" id="div_filename">
+		<span id="CurrentFileName"></span>&nbsp;&nbsp;
+		<a href=# class="splbutton" onclick="show_addcontext();" id="AddContextButton">Add Context</a>
+	</div>
+
+	<div id="file_output" style="height: 90%; width: 770px; overflow :auto;" align="center"></div>
+
+	<span id="temp_holding"></span>
+
+	<span id="div_editcontext" style="display:none; z-index:1000; background-color : #4D5423" onclick="stopBubble(event)">
+		<input id="context_edited" size=15 class="input8">&nbsp;
+		<span class='guiButton' id='save_context' onclick='update_context();'>Save</span>
+		<span class='guiButtonCancel' id='cancel_context' onclick='cancel_context();'>Cancel</span>
+		<span class='guiButtonDelete' id='delete_context' onclick='delete_context();'>Delete</span>
+	</span>
+	<div id="div_editcontextContent" style="display:none; z-index:1001; background-color : #E0E6C4"  onclick="stopBubble(event)">
+		<table>
+		<tr>
+		<td valign="top" align="right">
+			<span class='guiButton' id='save_contextContent' onclick='update_contextContent();'>Save</span>
+			<span class='guiButtonCancel' id='cancel_contextContent' onclick='cancel_contextContent();'>Cancel</span>
+		</td>
+		</tr>
+		<tr>	
+		<td>	<textarea id="context_Content" rows=1 cols=95 class="input9"></textarea>	</td>
+		</tr>
+		</table>
+	</div>
+
+	<div id="AddContext" style="display:none; position:absolute; z-index:1004; background-color : #C1D7EC; padding : 6px 6px 6px 10px;">
+	Add New Context : <input id="New_ContextName" size=20 class="input9">&nbsp;
+		<input type="button" value="Add" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="add_context();">&nbsp;
+		<input type="button" value="Cancel" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="cancel_addcontext();">
+	</div>
+
+	<div id="CreateFile" style="display:none; position:absolute; z-index:1005; background-color : #C1D7EC; padding : 6px 6px 6px 10px;">
+		<table>
+		<tr>	<td colspan=2 align=center><B>Create New ConfigFile</B></td>
+		</tr>
+		<tr>	<td>New FileName :</td>
+			<td>	<input id="New_FileName" size=20 class="input9">&nbsp; 
+				<input type="button" value="Add" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="create_file();">&nbsp;
+				<input type="button" value="Cancel" style="font-size: 8pt; border:1px solid; padding : 0px 0px 0px 0px;" onclick="cancel_file();"><BR>
+			</td>
+		</tr>
+		<tr>	<td></td>
+			<td>&nbsp;(Ex: newfile.conf)</td>
+		</tr>
+		</table>
+	</div>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/feditor.js"></script>
+</body>
+</html>

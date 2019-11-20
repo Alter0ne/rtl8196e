@@ -1,0 +1,48 @@
+.TH skipNext 3 "12 July 2007" "ClearSilver" "util/skiplist.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+skipNext  - find next item.
+.SH SYNOPSIS
+.Ss
+#include <util/skiplist.h>
+.Se
+.Ss
+void *skipNext(skipList list, UINT32 *pkey, void **plock);
+
+.Se
+
+.SH ARGUMENTS
+list - list to search in.
+.br
+pkey - pointer to previous key (0 to start).
+.br
+plock - place for value lock (or NULL).
+
+.SH DESCRIPTION
+Searches in list <list> for item with key next larger
+that the one in <pkey>, and returns its value if 
+found, or NULL if not.  If <plock> is non-NULL, then
+the lock returned in <plock> will be associated with
+the returned value.  Until this lock is passed to
+skipRelease(), the value will not be freed with the
+freeValue callback (see skipNewList()).
+
+MT-Level: Safe if <list> thread-safe.
+
+.SH "RETURN VALUE"
+pkey - set to new key.
+.br
+plock - set to value lock.
+
+.SH "SEE ALSO"
+.BR skipDelete "(3), "skipFreeList "(3), "skipRelease "(3), "skipInsert "(3), "skipSearch "(3), "skipNext "(3), "skipNewList

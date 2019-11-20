@@ -1,0 +1,101 @@
+----------------
+RSDK Release 4.6
+----------------
+
+We are pleased to announce the release of RSDK version 4.6 on September 24, 2012.
+RSDK stands for Realtek Software Development Kit. It is the software development
+kit for Realtek's in-house processor cores. Version 4.6.3 is the first stable
+release for branch 4.6.
+
+What's new in release 4.6:
+
+1. gcc-4.6.3
+
+The major version of gcc has come to 4.6. At this moment the note is made,
+it reached 4.6.3 with less bugs and more stability. Here is a brief list of
+ notable technique items that are added or enhanced since 4.4.
+
+  4.5) GCC has been integrated with the MPC library. This allows GCC to
+       evaluate complex arithmetic at compile time more accurately.
+
+  4.5) A new link-time optimizer has been added (-flto). When this option
+       is used, GCC generates a bytecode representation of each input file
+       and writes it to specially-named sections in each object file.
+       When the object files are linked together, all the function bodies
+       are read from these named sections and instantiated as if they had
+       been part of the same translation unit. This enables interprocedural
+       optimizations to work across different files (and even different
+       languages), potentially improving the performance of the generated
+       code.
+
+  4.5) MIPS: GNU/Linux targets can now generate read-only .eh_frame sections.
+       This optimization requires GNU binutils 2.20 or above, and is only
+       available if GCC is configured with a suitable version of binutils.
+
+  4.5) MIPS: GNU/Linux targets can now attach special relocations to indirect
+       calls, so that the linker can turn them into direct jumps or branches.
+
+  4.5) MIPS: GCC supports four new function attributes for interrupt handlers:
+       interrupt, use_shadow_register_set, keep_interrupts_masked and
+       use_debug_exception_return.
+
+  4.6) GCC now has stricter checks for invalid command-line options, such as
+       --as-needed are now rejected and -Wl,--as-needed should be used.
+
+  4.6) The C-only intermodule optimization framework (IMA, enabled by -combine)
+       has been removed in favor of the new generic link-time optimization
+       framework (LTO) introduced in GCC 4.5.0.
+
+  4.6) New -Wunused-but-set-variable and -Wunused-but-set-parameter warnings
+       were added for C, C++, Objective-C and Objective-C++. These warnings
+       diagnose variables respective parameters which are only set in the code
+       and never otherwise used.
+
+  4.6) A new switch -fstack-usage has been added. It makes the compiler output
+       stack usage information for the program, on a per-function basis, in an
+       auxiliary file.
+
+  4.6) A new warning, enabled by -Wdouble-promotion, has been added that warns
+       about cases where a value of type float is implicitly promoted to double.
+       This is especially helpful for CPUs that handle the former in hardware,
+       but emulate the latter in software.
+
+2. RSDK Supplementary Library Module
+
+A supplementary library module has been added to enrich RSDK's capability in
+functional profiling, performance tuning, and remote debugging. The supplementary
+library includes following modules:
+
+   a. CP3 library - CP3 performance counter
+   b. Profiler library - function-level profiling support
+   c. GDB I/O - remote I/O via GDB remote serial protocol
+   d. RLXCOV - RLX code coverage analysis library
+   e. RLXULS - RLX unaligned load/store library
+
+
+CPUs supported by RSDK release 4.6
+
+1. RX3081:
+All versions
+
+3. RLX4081:
+All versions
+
+3. LX4180:
+All versions
+
+4. RLX4181
+All versions
+
+5. LX5280
+All versions
+
+6. RLX5181
+All versions
+
+7. RLX4281
+All versions
+
+8. RLX5281
+All versions
+

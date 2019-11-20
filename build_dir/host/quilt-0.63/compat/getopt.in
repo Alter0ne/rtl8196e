@@ -1,0 +1,134 @@
+#! @PERL@ -w
+
+#  This script is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License version 2 as
+#  published by the Free Software Foundation.
+#
+#  See the COPYING and AUTHORS files for more details.
+
+use strict;
+
+my $opts;
+my @words;
+my $found_sep = 0;
+
+foreach my $arg (@ARGV) {
+  if ($arg eq '--') {
+    $found_sep = 1;
+  }
+  else {
+    if (!$found_sep) {
+      $opts .= ' ' . $arg;
+    }
+    else {
+      push @words, $arg;
+    }
+  }
+}
+
+# there is no reason to parse
+# the opts if there are no args.
+if (!@words) {
+	print " --\n";
+	exit;
+}
+
+my $short_opts = '';
+my @long_opts;
+
+# nothing fancy to see here; this script provides minimal compatibility
+# with the getopt from util-linux until a cross platform binary exists.
+# We silently ignore option -q.
+if ($opts =~ /^\s*(?:-q\s+)?-o ([a-zA-Z:]*)?(\s+--long .*)*/) {
+	$short_opts = $1;
+	if ($2) {
+		my $long_opts = $2;
+		$long_opts =~ s/^\s*--long //g;
+		$long_opts =~ s/ --long /,/g;
+		@long_opts = split(/,/,$long_opts);
+	}
+}
+
+my @barewords = ('--');
+my @options;
+
+# set the previous option name when a param is required
+my $need_param;
+
+sub quote_word
+{
+	my $word = shift;
+	$word =~ s/'/'\\''/;
+	return "'$word'";
+}
+
+foreach my $word (@words) {
+
+	# allow '-' to be an option value
+	if (!$need_param && $word !~ /^-./) {
+		push @barewords, quote_word($word);
+		next;
+	}
+	if ($need_param) {
+		die "expecting param for $need_param" if $word =~ /^-./;
+		push @options, quote_word($word);
+		$need_param = undef;
+		next;
+	}
+	# process short options
+	if ($word =~ s/^-([^-])/$1/) {
+		my @letters = reverse(split(//,$word));
+		while (@letters) {
+			my $letter = pop @letters;
+			my $found = grep(/$letter/, $short_opts);
+			push @options, '-'.$letter;
+			die "illegal option: $letter" if !$found;
+
+			# handle options with optional parameters
+			if (grep(/${letter}::/, $short_opts)) {
+				if (scalar(@letters) == 0) {
+					push @options, quote_word('');
+				} else {
+					# what looked like more short options
+					# are in fact the optional parameters
+					push @options, quote_word(join('', reverse @letters));
+				}
+				last;
+			}
+
+			# handle options with mandatory parameters
+			if (grep(/$letter:/, $short_opts)) {
+				if (scalar(@letters) == 0) {
+					$need_param = $letter;
+				} else {
+					# short options can have numerical args
+					# embedded in the short option list: -UO
+					die "unexpected character after option $letter"
+						if ($letters[$#letters] !~ /[0-9]/);
+					my @digits;
+					while (scalar(@letters) && ($letters[$#letters] =~ /[0-9]/)) {
+						push @digits, pop @letters;
+					}
+					push @options, quote_word(join('', reverse @digits));
+				}
+			}
+		}
+	}
+	# process long options
+	if ($word =~ s/^--//) {
+		my $param = '';
+		if ($word =~ /(.*)=(.*)/) {
+			$word = $1;
+			$param = $2;
+		}
+		my ($found) = grep(/^$word:{0,2}$/,@long_opts);
+		die "illegal option: $word" if !$found;
+		die "$word: unexpected paramater $param" if $found !~ /:$/ && $param ne '';
+
+		$need_param = $word if $found =~ /[^:]:$/ && $param eq '';
+		push @options, "--$word";
+		push @options, quote_word($param) if $param || $found =~ /::$/;
+	}
+}
+
+print " @options @barewords\n"

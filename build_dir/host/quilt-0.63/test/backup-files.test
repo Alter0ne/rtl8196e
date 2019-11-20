@@ -1,0 +1,231 @@
+Unit test of the backup-files script.
+
+	# Test backup without options; it should link, not copy
+	$ echo foo > foo
+	$ echo bar > "space bar"
+	$ sleep 1
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b foo
+	> Copying foo
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 2
+	$ [ backup/foo -nt foo ] && echo "mtimes differ"
+
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r foo
+	> Restoring foo
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+
+	# Test silent backup with -L; it should copy, not link
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L foo
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 1
+	$ [ backup/foo -nt foo ] && echo "mtimes differ"
+
+	# Test restore without options
+	$ echo modified > foo
+	$ sleep 1
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r foo
+	> Restoring foo
+
+	$ cat foo
+	> foo
+	$ [ -e backup/foo ] && echo "backup/foo not deleted"
+	$ [ -e backup ] && echo "backup directory not deleted"
+
+	# Test backup files with hard links
+	$ ln foo foo2
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L foo
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 2
+
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L foo2
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l foo2 | awk '{ print $2 }'
+	> 1
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 2
+	$ ls -l backup/foo2 | awk '{ print $2 }'
+	> 2
+
+	# Test restore of files with hard links
+	$ rm -f foo foo2
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s foo
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+	$ ls -l backup/foo2 | awk '{ print $2 }'
+	> 2
+	$ [ -e backup/foo ] && echo "backup/foo not deleted"
+	$ [ ! -e foo2 ] || echo "file foo2 shouldn't exist"
+
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s foo2
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+	$ ls -l foo2 | awk '{ print $2 }'
+	> 2
+	$ [ -e backup/foo2 ] && echo "backup/foo2 not deleted"
+	$ [ -e backup ] && echo "backup directory not deleted"
+
+	# Test restore with -t
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s foo
+	$ touch -r foo foo.timeref
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s -t foo
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+	$ [ foo -nt foo.timeref ] || echo "touch failed"
+
+	# Test restore with -k
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L foo "space bar"
+	$ touch -r "space bar" bar.timeref
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 2
+	$ ls -l "backup/space bar" | awk '{ print $2 }'
+	> 1
+	$ mkdir tmp
+	$ cd tmp
+	$ %{QUILT_DIR}/scripts/backup-files -B ../backup/ -r -s -k foo "space bar"
+	$ cd ..
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l "space bar" | awk '{ print $2 }'
+	> 1
+	$ ls -l backup/foo | awk '{ print $2 }'
+	> 3
+	$ ls -l "backup/space bar" | awk '{ print $2 }'
+	> 2
+	$ ls -l tmp/foo | awk '{ print $2 }'
+	> 3
+	$ ls -l "tmp/space bar" | awk '{ print $2 }'
+	> 2
+	$ rm -rf tmp
+
+	# Test restore all (-)
+	$ rm -f foo "space bar"
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s -t -
+	$ cat foo
+	> foo
+	$ cat "space bar"
+	> bar
+	$ [ "space bar" -nt bar.timeref ] || echo "touch failed"
+
+	# Backup and restore a non-existing files
+	$ mkdir "dir with spaces"
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L new "dir with spaces/space file"
+	$ echo data > new
+	$ echo data2 > "dir with spaces/space file"
+	$ ls -l backup/new | awk '{ print $5 }'
+	> 0
+	$ ls -l "backup/dir with spaces/space file" | awk '{ print $5 }'
+	> 0
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s -
+	$ [ ! -e backup/new ] || echo "file backup/new shouldn't exist"
+	$ [ ! -e new ] || echo "file new shouldn't exist"
+	$ [ ! -e "backup/dir with spaces/space file" ] || echo "file backup/dir with spaces/space file shouldn't exist"
+	$ [ ! -e "dir with spaces/space file" ] || echo "file dir with spaces/space file shouldn't exist"
+
+	# Test restore involving a dir name with spaces
+	$ echo data > "dir with spaces/space file"
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -L "dir with spaces/space file"
+	> Copying dir with spaces/space file
+	$ rm -rf "dir with spaces"
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -
+	> Restoring dir with spaces/space file
+	$ cat "dir with spaces/space file"
+	> data
+	$ [ -e backup ] && echo "backup directory not deleted"
+
+	# Test backup reading file list from a file
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -s -L -f -
+	< foo
+	< new
+	< space bar
+	$ echo data > new
+	$ echo modified > foo
+	$ rm -f "space bar"
+	$ [ -e backup/new -a ! -s backup/new ] || echo "file backup/new isn't empty"
+	$ ls -l backup/new | awk '{ print $5 }'
+	> 0
+	$ cat backup/foo
+	> foo
+	$ cat "backup/space bar"
+	> bar
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r -s -f -
+	< foo
+	< new
+	< space bar
+	$ [ ! -e backup/new ] || echo "file backup/new shouldn't exist"
+	$ [ ! -e new ] || echo "file new shouldn't exist"
+	$ cat foo
+	> foo
+	$ cat "space bar"
+	> bar
+
+	# Test the special -L alone case
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -b -L -f -
+	< new
+	< foo
+	< space bar
+	> New file new
+	> Copying foo
+	> Copying space bar
+	$ ln "space bar" "linked space"
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l "space bar" | awk '{ print $2 }'
+	> 2
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -L -
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l "space bar" | awk '{ print $2 }'
+	> 1
+	$ [ ! -e new ] || echo "file new shouldn't exist"
+	# Second call should be idempotent
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -L -
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+	$ ls -l "space bar" | awk '{ print $2 }'
+	> 1
+	$ [ ! -e new ] || echo "file new shouldn't exist"
+	$ %{QUILT_DIR}/scripts/backup-files -B backup/ -r - | sort
+	> Removing new
+	> Restoring foo
+	> Restoring space bar
+	$ rm "linked space"
+
+	# Test copy (as used by quilt snapshot)
+	$ %{QUILT_DIR}/scripts/backup-files -B snapshot/ -c -f -
+	< new
+	< foo
+	< space bar
+	< dir with spaces/space file
+	> New file new
+	> Copying foo
+	> Copying space bar
+	> Copying dir with spaces/space file
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+	$ ls -l "space bar" | awk '{ print $2 }'
+	> 1
+	$ ls -l "dir with spaces/space file" | awk '{ print $2 }'
+	> 1
+	$ [ ! -e new ] || echo "file new shouldn't exist"
+	$ ls -l snapshot/new | awk '{ print $2 }'
+	> 1
+	$ ls -l snapshot/foo | awk '{ print $2 }'
+	> 1
+	$ ls -l snapshot/"space bar" | awk '{ print $2 }'
+	> 1
+	$ ls -l snapshot/"dir with spaces/space file" | awk '{ print $2 }'
+	> 1
+	$ [ ! -s new ] || echo "file snapshot/new should be empty"
+	$ rm -rf snapshot

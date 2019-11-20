@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=lib
+includedir=${prefix}/include
+
+Name: GPSD
+Description: GPS Daemon communication library
+Version: 3.10
+Cflags: -I${includedir}
+Libs: -L${libdir} -lgps

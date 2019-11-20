@@ -1,0 +1,551 @@
+Source-Makefile: target/linux/ramips/Makefile
+Target: ramips
+Target-Board: ramips
+Target-Name: Ralink RT288x/RT3xxx
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: mipsel
+Target-Arch-Packages: ramips
+Target-Features: gpio squashfs
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32 -mtune=mips32
+CPU-Type: mips32
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target: ramips/rt305x
+Target-Board: ramips
+Target-Name: RT3x5x/RT5350 based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips_24kec
+Target-Features: dt gpio squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=24kec -mdsp
+CPU-Type: 24kec+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target-Profile: ALL02393G
+Target-Profile-Name: Allnet ALL0239-3G
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev restorefactory 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Allnet ALL0239-3G
+@@
+
+Target-Profile: ALL0256N
+Target-Profile-Name: Allnet ALL0256N
+Target-Profile-Packages: restorefactory rssileds 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Allnet ALL0256N
+@@
+
+Target-Profile: ALL5002
+Target-Profile-Name: Allnet ALL5002
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-ledtrig-usbdev kmod-i2c-core kmod-i2c-gpio kmod-hwmon-lm92 kmod-gpio-pcf857x 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Allnet ALL5002
+@@
+
+Target-Profile: ALL5003
+Target-Profile-Name: Allnet ALL5003
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-ledtrig-usbdev kmod-i2c-core kmod-i2c-gpio kmod-hwmon-lm92 kmod-gpio-pcf857x 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Allnet ALL5003
+@@
+
+Target-Profile: ASL26555
+Target-Profile-Name: Alpha ASL26555
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Alpha ASL26555
+@@
+
+Target-Profile: AWM002EVB
+Target-Profile-Name: AsiaRF AWM002-EVB
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-ledtrig-usbdev kmod-i2c-core kmod-i2c-gpio 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for AsiaRF AWM002 Evaluation Board
+@@
+
+Target-Profile: HW5503G
+Target-Profile-Name: Aztech HW550-3G
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Aztech HW550-3G
+@@
+
+Target-Profile: F5D8235V2
+Target-Profile-Name: Belkin F5D8235 v2
+Target-Profile-Packages: kmod-switch-rtl8366rb kmod-swconfig swconfig kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Belkin F5D8235 v2
+@@
+
+Target-Profile: F7C027
+Target-Profile-Name: Belkin F7C027
+Target-Profile-Packages: -kmod-usb-core -kmod-usb-rt305x-dwc_otg -kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Belkin F7C027 - Plug with soc_ap and a relay
+@@
+
+Target-Profile: BROADWAY
+Target-Profile-Name: Hauppauge Broadway
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev restorefactory 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Hauppauge Broadway
+@@
+
+Target-Profile: DIR615H1
+Target-Profile-Name: Dlink DIR-615 H1
+Target-Profile-Packages: -kmod-usb-core -kmod-usb-rt305x-dwc_otg -kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Dlink DIR-615 H1 board
+@@
+
+Target-Profile: DCS930
+Target-Profile-Name: Dlink DCS-930
+Target-Profile-Packages: kmod-video-core kmod-video-uvc kmod-usb-core kmod-usb-rt305x-dwc_otg 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Dlink DCS-930 board
+@@
+
+Target-Profile: DIR610A1
+Target-Profile-Name: Dlink DIR-610 A1
+Target-Profile-Packages: kmod-ledtrig-netdev kmod-ledtrig-timer 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Dlink DIR610 A1 board
+@@
+
+Target-Profile: ESR9753
+Target-Profile-Name: EnGenius Profile
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	EnGenius profile.
+@@
+
+Target-Profile: FONERA20N
+Target-Profile-Name: Fonera 2.0N
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Fonera 2.0N
+@@
+
+Target-Profile: FREESTATION5
+Target-Profile-Name: FreeStation5
+Target-Profile-Packages: kmod-usb-rt305x-dwc_otg kmod-rt2500-usb kmod-rt2800-usb kmod-rt2x00-usb 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for ARC FreeStation, Flex mARC, iFlex, and SplitStation
+@@
+
+Target-Profile: MPRA1
+Target-Profile-Name: HAME MPR-A1
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-net 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for HAME MPR-A1 board
+@@
+
+Target-Profile: MPRA2
+Target-Profile-Name: HAME MPR-A2
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-ledtrig-netdev kmod-ledtrig-timer kmod-usb-acm kmod-usb-net kmod-usb-net-asix kmod-usb-net-rndis kmod-usb-serial kmod-usb-serial-option usb-modeswitch usb-modeswitch-data comgt 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for HAME MPR-A2 board
+@@
+
+Target-Profile: HG255D
+Target-Profile-Name: HuaWei HG255D
+Target-Profile-Packages: kmod-leds-gpio kmod-rt2800-pci wpad-mini kmod-usb-rt305x-dwc_otg iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for HuaWei HG255D.
+@@
+
+Target-Profile: RT-N13U
+Target-Profile-Name: Asus RT-N13U
+Target-Profile-Packages: kmod-leds-gpio kmod-rt2800-pci wpad-mini kmod-usb-rt305x-dwc_otg iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Asus RT-N13U.
+@@
+
+Target-Profile: IP2202
+Target-Profile-Name: Poray IP2202
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-usb-rt305x-dwc_otg kmod-ledtrig-netdev kmod-ledtrig-timer restorefactory 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Poray IP2202 board
+@@
+
+Target-Profile: M3
+Target-Profile-Name: Poray M3
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-ledtrig-netdev kmod-ledtrig-timer 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Poray M3 board
+@@
+
+Target-Profile: M4
+Target-Profile-Name: Poray M4
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-ledtrig-netdev kmod-ledtrig-timer 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Poray M4 board
+@@
+
+Target-Profile: X5
+Target-Profile-Name: Poray X5/X6
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-ledtrig-netdev kmod-ledtrig-timer 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Poray X5/X6 board
+@@
+
+Target-Profile: X8
+Target-Profile-Name: Poray X8
+Target-Profile-Packages: kmod-usb-core kmod-usb2 kmod-ledtrig-netdev kmod-ledtrig-timer 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Poray X8 board
+@@
+
+Target-Profile: 3G300M
+Target-Profile-Name: Tenda 3G300M
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Tenda 3G300M board
+@@
+
+Target-Profile: W306R_V20
+Target-Profile-Name: Tenda W306R V2.0
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set for Tenda W306R V2.0 board
+@@
+
+Target-Profile: UR-336UN
+Target-Profile-Name: UPVEL UR-336UN
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with URVEL router board.
+@@
+
+Target-Profile: UR-326N4G
+Target-Profile-Name: UPVEL UR-326N4G
+Target-Profile-Packages: kmod-usb-core kmod-usb-rt305x-dwc_otg kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with URVEL router board.
+@@
+
+Target: ramips/mt7620a
+Target-Board: ramips
+Target-Name: MT7620a based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips_24kec
+Target-Features: dt gpio pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=24kec -mdsp
+CPU-Type: 24kec+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-usb-core kmod-usb-dwc2 kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target: ramips/mt7620n
+Target-Board: ramips
+Target-Name: MT7620n based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips_24kec
+Target-Features: dt gpio squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=24kec -mdsp
+CPU-Type: 24kec+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-usb-core kmod-usb-dwc2 kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target: ramips/mt7621
+Target-Board: ramips
+Target-Name: MT7621 based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips_24kec
+Target-Features: dt gpio pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=24kec -mdsp
+CPU-Type: 24kec+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-usb-core kmod-usb-dwc2 kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target: ramips/rt3883
+Target-Board: ramips
+Target-Name: RT3662/RT3883 based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips_24kec
+Target-Features: dt gpio pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=24kec -mdspr2
+CPU-Type: 24kec+dsp2
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target-Profile: RTN56U
+Target-Profile-Name: Asus RT-N56U
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set compatible with the Asus RT-N56U board.
+@@
+
+Target-Profile: DIR645
+Target-Profile-Name: D-Link DIR-645
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set compatible with the D-Link DIR-645 board.
+@@
+
+Target-Profile: OMNIEMBHPM
+Target-Profile-Name: Omnima EMB-HPM board
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set compatible with the Omnima EMB-HPM board.
+@@
+
+Target-Profile: TEW691GR
+Target-Profile-Name: TRENDnet TEW-691GR
+Target-Profile-Packages: swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set compatible with the TRENDnet TEW-691GR board.
+@@
+
+Target-Profile: TEW692GR
+Target-Profile-Name: TRENDnet TEW-692GR
+Target-Profile-Packages: swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set compatible with the TRENDnet TEW-692GR board.
+@@
+
+Target: ramips/rt288x
+Target-Board: ramips
+Target-Name: RT288x based boards
+Target-Path: target/linux/ramips
+Target-Arch: mipsel
+Target-Arch-Packages: ramips
+Target-Features: dt gpio squashfs
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=mips32r2
+CPU-Type: mips32r2
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build firmware images for Ralink RT288x/RT3xxx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-gpio-button-hotplug kmod-rt2800-pci kmod-rt2800-soc wpad-mini swconfig iwinfo
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages: kmod-switch-rtl8366s kmod-swconfig swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target-Profile: RTN15
+Target-Profile-Name: Asus RT-N15
+Target-Profile-Packages: kmod-switch-rtl8366s kmod-swconfig swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+       Package set for Asus RT-N15 board
+@@
+
+Target-Profile: F5D8235V1
+Target-Profile-Name: Belkin F5D8235 V1
+Target-Profile-Packages: kmod-switch-rtl8366s kmod-swconfig swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: BR6524N
+Target-Profile-Name: Edimax BR6524N
+Target-Profile-Packages: kmod-switch-ip17xx kmod-swconfig swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+       Package set for Edimax BR6524N
+@@
+
+

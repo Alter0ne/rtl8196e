@@ -1,0 +1,75 @@
+	$ mkdir patches
+
+# quilt should preserve hard links and not create new ones
+	$ echo foo > foo
+	$ ln foo foo2
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+
+	$ quilt new test.diff
+	> Patch patches/test.diff is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/test.diff
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+
+	$ ls -l .pc/test.diff/foo | awk '{ print $2 }'
+	> 2
+
+	$ echo "foo changed" > foo
+	$ quilt refresh
+	> Refreshed patch patches/test.diff
+
+	$ quilt new test2.diff
+	> Patch patches/test2.diff is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/test2.diff
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+
+	$ ls -l .pc/test2.diff/foo | awk '{ print $2 }'
+	> 1
+
+	$ echo "foo changed again" > foo
+	$ quilt refresh
+	> Refreshed patch patches/test2.diff
+
+	$ quilt pop -q
+	> Removing patch patches/test2.diff
+	> Now at patch patches/test.diff
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 1
+
+	$ ls -l .pc/test.diff/foo | awk '{ print $2 }'
+	> 2
+
+	$ quilt pop -q
+	> Removing patch patches/test.diff
+	> No patches applied
+
+	$ ls -l foo | awk '{ print $2 }'
+	> 2
+
+# quilt revert should not create hard links
+	$ echo bar > bar
+	$ quilt push -q
+	> Applying patch patches/test.diff
+	> Now at patch patches/test.diff
+
+	$ quilt add bar
+	> File bar added to patch patches/test.diff
+	$ echo "bar changed" > bar
+	$ quilt revert bar
+	> Changes to bar in patch patches/test.diff reverted
+
+	$ ls -l bar | awk '{ print $2 }'
+	> 1
+
+	$ quilt pop -q
+	> Removing patch patches/test.diff
+	> No patches applied

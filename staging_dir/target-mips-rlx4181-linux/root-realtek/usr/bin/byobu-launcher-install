@@ -1,0 +1,50 @@
+#!/bin/sh -e
+#
+#    byobu-launcher-install
+#    Copyright (C) 2008 Canonical Ltd.
+#
+#    Authors: Nick Barcet <nick.barcet@ubuntu.com>
+#             Dustin Kirkland <kirkland@canonical.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+PKG="byobu"
+
+install_launcher() {
+	printf "%s\n" 'case "$-" in *i*) byobu-launcher && exit 0; esac;' >> "$1"
+}
+
+# Sanitize the environment
+$PKG-launcher-uninstall || true
+# Hush login, since we will handle motd printing
+touch "$HOME"/.hushlogin
+rm -f "$HOME/.$PKG/disable-autolaunch"
+
+# Handle bourne shells, if not set globally in /etc/profile.d
+if [ ! -h "/etc/profile.d/Z98-$PKG.sh" ]; then
+	# Install in $HOME/.profile unconditionally
+	install_launcher "$HOME/.profile"
+	# Now, install in any shell-specific profiles, if they exist
+	# This list may grow to support other shells
+	for i in ".bash_profile" ".bash_login"; do
+		if [ -w "$HOME/$i" ]; then
+			install_launcher "$HOME/$i"
+		fi
+	done
+fi
+
+# Install in zprofile if default shell is zsh
+if grep -qs "^$USER:.*zsh$" /etc/passwd; then
+	install_launcher "$HOME/.zprofile"
+fi
+

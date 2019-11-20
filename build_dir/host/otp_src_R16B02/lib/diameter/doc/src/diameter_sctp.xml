@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="latin1" ?>
+<!DOCTYPE erlref SYSTEM "erlref.dtd" [
+  <!ENTITY gen_sctp '<seealso marker="kernel:gen_sctp">gen_sctp(3)</seealso>'>
+  <!ENTITY gen_sctp_open1
+  '<seealso marker="kernel:gen_sctp#open-1">gen_sctp:open/1</seealso>'>
+  <!ENTITY ip_address
+  '<seealso marker="kernel:inet#type-ip_address">inet:ip_address()</seealso>'>
+  <!ENTITY inet '<seealso marker="kernel:inet">inet(3)</seealso>'>
+  <!ENTITY % also SYSTEM "seealso.ent" >
+  <!ENTITY % here SYSTEM "seehere.ent" >
+  %also;
+  %here;
+]>
+
+<erlref>
+<header>
+<copyright>
+<year>2011</year><year>2013</year>
+<holder>Ericsson AB. All Rights Reserved.</holder>
+</copyright>
+<legalnotice>
+The contents of this file are subject to the Erlang Public License,
+Version 1.1, (the "License"); you may not use this file except in
+compliance with the License. You should have received a copy of the
+Erlang Public License along with this software. If not, it can be
+retrieved online at http://www.erlang.org/.
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+the License for the specific language governing rights and limitations
+under the License.
+
+</legalnotice>
+
+<title>diameter_sctp(3)</title>
+<prepared>Anders Svensson</prepared>
+<responsible></responsible>
+<docno></docno>
+<approved></approved>
+<checked></checked>
+<date></date>
+<rev></rev>
+<file>diameter_sctp.xml</file>
+</header>
+
+<module>diameter_sctp</module>
+<modulesummary>Diameter transport over SCTP.</modulesummary>
+
+<description>
+
+<p>
+This module implements diameter transport over SCTP using &gen_sctp;.
+It can be specified as the value of a transport_module option to
+&mod_add_transport;
+and implements the behaviour documented in
+&man_transport;.</p>
+
+<marker id="start"/>
+</description>
+
+<!-- ===================================================================== -->
+
+<funcs>
+
+<func>
+<name>start({Type, Ref}, Svc, [Opt])
+         -> {ok, Pid, [LAddr]} | {error, Reason}</name>
+<fsummary>Start a transport process.</fsummary>
+<type>
+<v>Type = connect | accept</v>
+<v>Ref = &mod_transport_ref;</v>
+<v>Svc = #diameter_service{}</v>
+<v>Opt = OwnOpt | SctpOpt</v>
+<v>Pid = pid()</v>
+<v>LAddr = &ip_address;</v>
+<v>Reason = term()</v>
+<v>OwnOpt = {raddr, &ip_address;}
+          | {rport, integer()}
+          | {accept, Match}</v>
+<v>SctpOpt = term()</v>
+<v>Match = &ip_address; | string() | [Match]</v>
+</type>
+<desc>
+
+<p>
+The start function required by &man_transport;.</p>
+
+<p>
+Options <c>raddr</c> and <c>rport</c> specify the remote address
+and port for a connecting transport and not valid for a listening
+transport: the former is required while latter defaults to 3868 if
+unspecified.
+Mupltiple <c>raddr</c> options can be specified, in which case the
+connecting transport in question attempts each in sequence until
+an association is established.</p>
+
+<p>
+Option <c>accept</c> specifies remote addresses for a listening
+transport and is not valid for a connecting transport.
+If specified, a remote address that does not match one of the
+specified addresses causes the association to be aborted.
+Multiple <c>accept</c> options can be specified.
+A string-valued <c>Match</c> that does not parse as an address is
+interpreted as a regular expression.</p>
+
+<p>
+Remaining options are any accepted by &gen_sctp_open1;, with the exception
+of options <c>mode</c>, <c>binary</c>, <c>list</c>, <c>active</c>
+and <c>sctp_events</c>.
+Note that options <c>ip</c> and <c>port</c> specify the local address
+and port respectively.</p>
+
+<p>
+Multiple <c>ip</c> options can be specified for a multihomed peer.
+If none are specified then the values of <c>Host-IP-Address</c>
+in the <c>#diameter_service{}</c> record are used.
+(In particular, one of these must be specified.)
+Option <c>port</c> defaults to 3868 for a listening transport and 0 for a
+connecting transport.</p>
+
+<warning>
+<p>
+An insufficiently large receive buffer may result in a peer having to
+resend incoming messages: set the &inet; option <c>recbuf</c> to increase
+the buffer size.</p>
+
+<p>
+An insufficiently large send buffer may result in outgoing messages
+being discarded: set the &inet; option <c>sndbuf</c> to increase
+the buffer size.</p>
+</warning>
+
+<p>
+diameter_sctp uses the <c>transport_data</c> field of
+the <c>#diameter_packet{}</c> record to communicate the stream on which an
+inbound message has been received, or on which an outbound message
+should be sent: the value will be of the form <c>{stream, Id}</c>
+on an inbound message passed to a &app_handle_request; or
+&app_handle_answer; callback.
+For an outbound message, either <c>undefined</c> (explicitly or
+by receiving the outbound message as a <c>binary()</c>) or a tuple
+should be set in the return value of &app_handle_request;
+(typically by retaining the value passed into this function)
+or &app_prepare_request;.
+The value <c>undefined</c> uses a "next outbound stream" id and
+increments this modulo the total number outbound streams.
+That is, successive values of <c>undefined</c> cycle through all
+outbound streams.</p>
+
+<!-- TODO: Some way of getting at the number of available outbound -->
+<!--       streams.                                                -->
+
+</desc>
+</func>
+
+</funcs>
+
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+
+<section>
+<title>SEE ALSO</title>
+
+<p>
+&man_main;, &man_transport;, &gen_sctp;, &inet;</p>
+
+</section>
+
+</erlref>

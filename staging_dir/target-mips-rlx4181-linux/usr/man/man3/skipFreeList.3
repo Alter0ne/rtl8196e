@@ -1,0 +1,37 @@
+.TH skipFreeList 3 "12 July 2007" "ClearSilver" "util/skiplist.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+skipFreeList  - free a skip list.
+.SH SYNOPSIS
+.Ss
+#include <util/skiplist.h>
+.Se
+.Ss
+void skipFreeList(skipList list);
+
+.Se
+
+.SH ARGUMENTS
+list - list to free.
+
+.SH DESCRIPTION
+Release all resources used by <list> including all key/value
+pairs.
+
+MT-Level: Safe for unique <list>.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR skipDelete "(3), "skipFreeList "(3), "skipRelease "(3), "skipInsert "(3), "skipSearch "(3), "skipNext "(3), "skipNewList

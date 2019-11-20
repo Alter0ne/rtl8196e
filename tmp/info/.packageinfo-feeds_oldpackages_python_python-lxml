@@ -1,0 +1,88 @@
+Source-Makefile: package/feeds/oldpackages/python/python-lxml/Makefile
+Package: python-lxml
+Submenu: Python
+Version: 4.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libxml2 +libxslt +libexslt +PACKAGE_python-lxml:python-light +PACKAGE_python-lxml:python-codecs
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: python-lxml
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: lxml-4.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: The lxml XML toolkit is a Pythonic binding
+for the C libraries libxml2 and libxslt.
+https://lxml.de
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python-lxml-src
+Submenu: Python
+Version: 4.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: python-lxml (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: lxml-4.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     The lxml XML toolkit is a Pythonic binding
+for the C libraries libxml2 and libxslt..
+    (Contains the Python sources for this package).
+https://lxml.de
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python3-lxml
+Submenu: Python
+Version: 4.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libxml2 +libxslt +libexslt +PACKAGE_python3-lxml:python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-lxml
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: lxml-4.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: The lxml XML toolkit is a Pythonic binding
+for the C libraries libxml2 and libxslt.
+.
+(Variant for Python3)
+https://lxml.de
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python3-lxml-src
+Submenu: Python
+Version: 4.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-lxml (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: lxml-4.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     The lxml XML toolkit is a Pythonic binding
+for the C libraries libxml2 and libxslt.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://lxml.de
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+

@@ -1,0 +1,77 @@
+	$ mkdir patches
+
+	$ cat > a
+	< a
+	< b
+	< c
+
+	$ quilt new test.diff
+	> Patch patches/test.diff is now on top
+
+	$ quilt add a
+	> File a added to patch patches/test.diff
+
+	$ cat > a
+	< a 
+	< b
+	< c 
+
+	$ quilt refresh
+	> Warning: trailing whitespace in lines 1,3 of a
+	> Refreshed patch patches/test.diff
+
+	$ grep '[ \t]$' patches/test.diff
+	> +a 
+	> +c 
+
+	$ quilt refresh -U0
+	> Warning: trailing whitespace in lines 1,3 of a
+	> Refreshed patch patches/test.diff
+
+	$ quilt refresh --strip-trailing-whitespace
+	> Removing trailing whitespace from lines 1,3 of a
+	> Refreshed patch patches/test.diff
+
+	$ grep '[ \t]$' patches/test.diff
+
+	$ quilt pop -q
+	> Removing patch patches/test.diff
+	> No patches applied
+
+	$ cat > a
+	< a
+	< b
+	< c
+
+	$ quilt new test2.diff
+	> Patch patches/test2.diff is now on top
+
+	$ quilt add a
+	> File a added to patch patches/test2.diff
+
+	$ cat > a
+	< a 
+	< b
+	< c 
+
+	$ quilt refresh -c
+	> Warning: trailing whitespace in lines 1,3 of a
+	> Refreshed patch patches/test2.diff
+
+	$ grep '[ \t]$' patches/test2.diff
+	> ! a 
+	> ! c 
+
+	$ quilt refresh -C0
+	> Warning: trailing whitespace in lines 1,3 of a
+	> Refreshed patch patches/test2.diff
+
+	$ quilt refresh -c --strip-trailing-whitespace
+	> Removing trailing whitespace from lines 1,3 of a
+	> Refreshed patch patches/test2.diff
+
+	$ grep '[ \t]$' patches/test2.diff
+
+	$ quilt pop -q
+	> Removing patch patches/test2.diff
+	> No patches applied

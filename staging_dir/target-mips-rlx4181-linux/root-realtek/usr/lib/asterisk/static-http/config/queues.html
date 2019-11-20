@@ -1,0 +1,212 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Configuration for Queues
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Queues</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_queueslist {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+
+		#table_queueslist tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_queueslist tr.frow td{ font-weight:bold; }
+		#table_queueslist tr td{ padding : 3px; }
+		#table_queueslist tr.even { background: #DFDFDF; }
+		#table_queueslist tr.odd{ background: #FFFFFF; }
+		#table_queueslist tr.even:hover, #table_queueslist tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	</style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		Queues
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="tabbedMenu"></div>
+
+	<div id='div_AgentLoginSettings' style='margin-top: -10px;'>
+		<table align='left' cellpadding=2 cellspacing=1 width=700>
+		<tr>
+		<td align=center>
+			<table align='center' cellpadding=2 cellspacing=1 width=560>
+				<tr>    <td colspan=2 align=center>
+						<span class='lite_Heading'>Agent Login Settings</span>
+					</td>
+				</tr>
+				<tr>
+					<td align=right width='40%'>Agent Login Extension: </td>
+					<td><input type=text id="login_exten" size=5  field_name='Agent Login Extension' validation='numeric'> 
+						<img src="images/tooltip_info.gif" tip="en,queues,14" class='tooltipinfo'></td>
+				</tr>
+				<tr>	<td align=right>Agent Callback Login Extension: </td>
+					<td><input type=text id="login_callback_exten" size=5  field_name='Agent Callback Login Extension' validation='numeric'>
+						<img src="images/tooltip_info.gif" tip="en,queues,15" class='tooltipinfo'>
+					</td>
+				</tr>
+				<tr>    <td align=right>Agent Logout: </td>
+					<td> To logout of <b>Agent Login</b> Hangup your phone. To Logout of <b>Agent Callback Login</b> Dial the same extension used to login, specify your extension and password when prompted, and hit # when asked for your callback extension. This will successfully log you out of all queues you are a part of.
+					</td>
+				</tr>
+				<tr>    <td></td>
+					<td><span class='guiButton' onclick='save_QueueSettings();'>Save</span>	</td>
+				</tr>
+			</table>
+
+		</td>
+		</tr>
+		</table>
+
+	</div>
+
+	<div id='div_ListOfQueues'>
+		<div class='top_buttons' style='margin-top: -10px;'>
+			<span class='guiButtonNew' onclick='newQueue_form();'>Create New Queue</span>
+			<span class='lite_Heading' style='margin-left: 170px;'> Manage Queues </span>
+		</div>
+
+		<table id='table_queueslist' cellpadding=0 cellspacing=0 border=0 align=center></table>
+	</div>
+
+	<div id="edit_QueueDiv" STYLE="width:670;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span id="edit_QueueDiv_title"></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<TR>	<TD align="right">Extension : </TD>
+				<TD><input id="edit_Ext" size=5  field_name='Queue Extension' validation='numeric' required='yes'>
+					<img src="images/tooltip_info.gif" tip="en,queues,0" class='tooltipinfo'>
+				</TD>
+				<td align=right> Name : </td>
+				<TD><input id="edit_label" size=15  field_name='Queue Name' validation='alphanumericUndSpace' required='yes'>
+					<img src="images/tooltip_info.gif" tip="en,queues,1" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>	<TD align=right> Strategy :</td>
+				<td>	<select id='edit_strategy' required='yes' dfalt='ringall'> 
+						<option value="ringall">ringall</option> 
+						<option value="roundrobin">roundrobin</option> 
+						<option value="leastrecent">leastrecent</option> 
+						<option value="fewestcalls">fewestcalls</option> 
+						<option value="random">random</option> 
+						<option value="rrmemory">rrmemory</option> 
+						</select>
+					<img src="images/tooltip_info.gif" tip="en,queues,2" class='tooltipinfo'>
+				</td>
+				<td align=right>Music On Hold :</td>
+				<td><select id="edit_musicclass"></select>
+					<img src="images/tooltip_info.gif" tip="en,queues,13" class='tooltipinfo'>
+				</td>
+			</TR>
+
+			<TR>	<td align=right>LeaveWhenEmpty :</td>
+				<td>	<select id='edit_leavewhenempty' dfalt='no'>
+						<option value='yes'>Yes</option>
+						<option value='no'>No</option>
+						<option value='strict'>Strict</option>
+					</select>
+					<img src="images/tooltip_info.gif" tip="en,queues,11" class='tooltipinfo'>
+				</td>
+				<td align=right>JoinEmpty :</td>
+				<td>	<select id='edit_joinempty' dfalt='yes'>
+						<option value='yes'>Yes</option>
+						<option value='no'>No</option>
+						<option value='strict'>Strict</option>
+					</select>
+					<img src="images/tooltip_info.gif" tip="en,queues,10" class='tooltipinfo'>
+				</td>
+			</TR>
+
+			<tr>	<td align="center" colspan=4>
+					<fieldset style="width: 560px;">
+						<legend>&nbsp;Queue Options:&nbsp;</legend>
+						<table align='center'>
+						<tr>	<td>TimeOut:</td>
+							<td><input size='2' id='edit_timeout'  field_name='TimeOut' validation='numeric' dfalt='15'>
+								<img src="images/tooltip_info.gif" tip="en,queues,5" class='tooltipinfo'>
+							</td>
+							<td>Wrapup Time:</td>
+							<td><input size='2' id='edit_wrapuptime'  field_name='Wrapup Time' validation='numeric' dfalt='15'>
+								<img src="images/tooltip_info.gif" tip="en,queues,6" class='tooltipinfo'>
+							</td>
+							<td>Max Len:</td>
+							<td><input size='2' id='edit_maxlen'  field_name='Max Length' validation='numeric' dfalt='0'>
+								<img src="images/tooltip_info.gif" tip="en,queues,9" class='tooltipinfo'>
+							</td>
+						</tr>
+						<tr>	<td align=right><input type=checkbox id='edit_autofill'>
+								<img src="images/tooltip_info.gif" tip="en,queues,7" class='tooltipinfo'>
+							</td>
+							<td><label for='edit_autofill'>Auto Fill</label></td>
+							<td align=right><input type=checkbox id='edit_autopause'>
+								<img src="images/tooltip_info.gif" tip="en,queues,8" class='tooltipinfo'>
+							</td>
+							<td><label for='edit_autopause'>Auto Pause</label></td>
+
+							<td align=right><input type=checkbox id='edit_reportholdtime'>
+								<img src="images/tooltip_info.gif" tip="en,queues,12" class='tooltipinfo'>
+							</td>
+							<td><label for='edit_reportholdtime'>Report Hold Time</label></td>
+						</tr>
+						<tr>	<td colspan=2 align=right>KeyPress Events :</td>
+							<td colspan=2><select id="edit_voicemenuclass"></select>
+								<img src="images/tooltip_info.gif" tip="en,queues,17" class='tooltipinfo'>
+							</td>
+						</tr>
+						</table>
+					</fieldset>
+					</td>
+			</tr>
+			<TR>	<TD align="right" valign=top>Agents: <img src="images/tooltip_info.gif" tip="en,queues,3" class='tooltipinfo'> </TD>
+					<TD colspan=3>
+						<div id='edit_agents_chboxes' style="height:140px; width: 400; border:1px solid #000000; overflow :auto;"></div>
+					</TD>
+			</TR>
+			<TR>	<TD colspan=4 align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='edit_queue_apply();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/queues.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/astman.js"></script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0041)http://localhost:8144/admin?page=settings -->
+<html><!-- InstanceBegin template="/Templates/peercast.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="title" -->
+<title>PeerCast on {$servMgr.serverIP}:{$servMgr.serverPort}</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="peercast.css" rel="stylesheet" type="text/css">
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body bgcolor="#DDDDDD">
+<div align="center">
+  <table width="100%" height="100%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#999999" bgcolor="#FFFFFF">
+    <tr> 
+      <td align="center" valign="top">
+<div align="center">
+<div align="center">
+            <table width="100%" border="0">
+              <tr> 
+                <td nowrap>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td valign="middle" nowrap> <table border="0" align="center" cellpadding="1" cellspacing="0">
+                          <tr> 
+                            <td rowspan="2" valign="middle"><a href="http://www.peercast.org"><img src="images/small-logo.png" alt="www.peercast.org" border="0"></a></td>
+                            <td valign="bottom"><div align="left"><span class="titlelinksBig">peercast</span></div></td>
+                          </tr>
+                          <tr> 
+                            <td valign="top"><div align="center"><span class="normal-small">{$servMgr.version}</span> 
+                              </div></td>
+                          </tr>
+                        </table>
+                        <div align="center"><span class="titlelinksBig"> </span> 
+                        </div></td>
+                      <td>
+					  {@if servMgr.upgradeURL} 
+	  				    <div align="center" class="normal">
+                        <a href="{$servMgr.upgradeURL}" target="_blank"><strong><font color="#FF0000">Please 
+                          upgrade your client, click here to download the latest 
+                          version. </font></strong></a>
+						</div>
+					  {@else}
+	  				    <div align="center" class="normal-small">
+					  	{$servMgr.rootMsg}
+						</div>						
+                      {@end} 
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div align="center"></div>
+          <table width="100%" border="1" cellpadding="1" cellspacing="0">
+            <tr class="normal"> 
+              <td><div align="center"><a href="index.html">Information</a></div></td>
+              <td><div align="center"><a href="http://yp.peercast.org/?host={$servMgr.serverLocalIP}:{$servMgr.serverPort1}" target="_blank">Yellow 
+                  Pages</a></div></td>
+              <td><div align="center"><a href="relays.html">Relays</a></div></td>
+              <td><div align="center"><a href="broadcast.html">Broadcast</a></div></td>
+              <td><div align="center"><a href="connections.html">Connections</a></div></td>
+              <td><div align="center"><a href="settings.html">Settings</a></div></td>
+              <td><div align="center"><a href="viewlog.html">View Log</a></div></td>
+              <td><div align="center"><a href="logout.html">Logout</a></div></td>
+            </tr>
+          </table>
+          <br>
+          <!-- InstanceBeginEditable name="content" --> 
+          <DIV align=center></DIV>
+          <TABLE align=center border=0>
+            <FORM action=/admin method=get>
+              <INPUT type=hidden value=apply name=cmd>
+              <TR align=middle> 
+                <TD colspan="2" vAlign=top><div align="center"> 
+                    <table width="50%" border="0">
+                      <tr bgcolor="#cccccc"> 
+                        <td colspan="2" class="normal"><div align="center"><strong>Basic 
+                            Settings</strong></div></td>
+                      </tr>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Port</TD>
+                        <TD><INPUT size=10 value={$servMgr.serverPort1} name=port></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>Password</TD>
+                        <TD bgcolor="#eeeeee"><INPUT name=passnew type=password size="10" maxlength="32" {@if servMgr.password}value={$servMgr.password}{@end}> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD bgcolor="#dddddd">Max. Relays</TD>
+                        <TD><INPUT size=5 value={$servMgr.maxRelays} name=maxrelays> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>Max. Direct streams</TD>
+                        <TD><INPUT size=5 value={$servMgr.maxDirect} name=maxdirect></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Language</TD>
+                        <TD><select name="htmlPath" size="1" id="htmlPath">
+                            <option value="en" selected>English</option>
+                            <option value="fr">French</option>
+                            <option value="de">Deutsch</option>
+                            <option value="ja">Japanese</option>
+                          </select></TD>
+                      </TR>
+                    </table>
+                  </div></TD>
+              </TR>
+              <TR align=middle> 
+                <TD colspan="2" vAlign=top><div align="center">
+                    <INPUT type=submit value="Save Settings" name=submit>
+                  </div></TD>
+              </TR>
+              <TR align=middle> 
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=2><B>Server</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD width="50%" bgcolor="#eeeeee">DJ Message</TD>
+                        <TD><INPUT {@if chanMgr.djMessage}value="{$chanMgr.djMessage}"{@end} name=djmsg> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>ICY MetaInterval</TD>
+                        <TD><INPUT size=5 value={$chanMgr.icyMetaInterval} name=icymeta></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD bgcolor="#eeeeee">Mode</TD>
+                        <TD> <INPUT type=radio {@if !servMgr.isRoot}CHECKED{@end} value=0 name=root></INPUT> 
+                          <I>Normal</I> <BR> <INPUT name=root type=radio value=1 {@if servMgr.isRoot}CHECKED{@end}></INPUT> 
+                          <I>Root</I> </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD bgcolor="#dddddd">Refresh HTML (sec)</TD>
+                        <TD><INPUT size=10 value={$servMgr.refreshHTML} 
+    name=refresh> </TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE></TD>
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=2><B>Network</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD bgcolor="#eeeeee">YP Address</TD>
+                        <TD bgcolor="#eeeeee"><input {@if servMgr.ypAddress}value={$servMgr.ypAddress}{@end} name=yp> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Max. Output (Kbits/s)</TD>
+                        <TD><INPUT size=5 value={$servMgr.maxBitrateOut} name=maxup> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD width="50%">Max. Relays Per Channel</TD>
+                        <TD><INPUT size=5 value={$chanMgr.maxRelaysPerChannel} name=maxrelaypc></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD width="50%">Max. Controls In</TD>
+                        <TD><INPUT size=5 value={$servMgr.maxControlsIn} name=maxcin></INPUT> 
+                        </TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE></TD>
+              </TR>
+              <TR align=middle> 
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=5><B>Filters</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD><B>IP Mask</B></TD>
+                        <TD><B>Network</B></TD>
+                        <TD><B>Direct</B></TD>
+                        <TD><B>Private</B></TD>
+                        <TD><B>Ban</B></TD>
+                      </TR>
+                    {@loop servMgr.numFilters} {@if loop.indexEven} 
+                    <TR align=middle bgColor=#eeeeee> {@else} 
+                    <TR align=middle bgColor=#dddddd class="normal"> {@end} 
+                      <TD><INPUT value={$loop.filter.ip} name=filt_ip></INPUT> 
+                      </TD>
+                      <TD><INPUT type=checkbox {@if loop.filter.network}CHECKED{@end} value=1 name=filt_nw{$loop.index}></INPUT> 
+                      </TD>
+                      <TD><INPUT type=checkbox {@if loop.filter.direct}CHECKED{@end} value=1 name=filt_di{$loop.index}></INPUT> 
+                      </TD>
+                      <TD><INPUT type=checkbox {@if loop.filter.private}CHECKED{@end} value=1 name=filt_pr{$loop.index}></INPUT> 
+                      </TD>
+                      <TD><INPUT type=checkbox {@if loop.filter.banned}CHECKED{@end} value=1 name=filt_bn{$loop.index}></INPUT> 
+                      </TD>
+                    </TR>
+                    {@end} </TBODY> </TABLE></TD>
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=3><B>Security</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD><B>Allow on port:</B></TD>
+                        <TD><B>{$servMgr.serverPort1}<B></B></B></TD>
+                        <TD><B>{$servMgr.serverPort2}<B></B></B></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>HTML</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.HTML1}CHECKED{@end} value=1 name=allowHTML1></INPUT> 
+                        </TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.HTML2}CHECKED{@end} value=1 name=allowHTML2></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>Broadcasting</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.broadcasting1}CHECKED{@end} value=1 name=allowBroadcast1></INPUT> 
+                        </TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.broadcasting2}CHECKED{@end} value=1 name=allowBroadcast2></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Network</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.network1}CHECKED{@end} value=1 name=allowNetwork1></INPUT> 
+                        </TD>
+                        <TD></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>Direct</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.allow.direct1}CHECKED{@end} value=1 name=allowDirect1></INPUT> 
+                        </TD>
+                        <TD> </TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE></TD>
+              </TR>
+              <TR align=middle> 
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=2><B>Authentication</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>HTML Authentication</TD>
+                        <TD><INPUT type=radio {@if servMgr.auth.useCookies}CHECKED{@end} value=cookie name=auth></INPUT> 
+                          <I>Cookies<BR>
+                          </I> <INPUT type=radio {@if servMgr.auth.useHTTP}CHECKED{@end} value=http name=auth></INPUT> 
+                          <I>Basic HTTP</I> </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Cookies Expire</TD>
+                        <TD><INPUT type=radio {@if servMgr.auth.useSessionCookies}CHECKED{@end} value=session name=expire></INPUT> 
+                          <I>End of session<BR>
+                          </I> <INPUT type=radio {@if !servMgr.auth.useSessionCookies}CHECKED{@end} value=never name=expire></INPUT> 
+                          <I>Never</I> </TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE></TD>
+                <TD vAlign=top> <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc class="normal"> 
+                        <TD colSpan=2><B>Log</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD width="50%">Debug</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.log.debug}CHECKED{@end} value=1 name=logDebug></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Errors</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.log.errors}CHECKED{@end} value=1 name=logErrors></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee class="normal"> 
+                        <TD>Network</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.log.gnet}CHECKED{@end} value=1 name=logNetwork></INPUT> 
+                        </TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd class="normal"> 
+                        <TD>Channels</TD>
+                        <TD><INPUT type=checkbox {@if servMgr.log.channel}CHECKED{@end} value=1 name=logChannel></INPUT> 
+                        </TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE></TD>
+              </TR>
+              <TR align=middle> 
+                <TD> {@if servMgr.isRoot} 
+                  <TABLE width="100%" align=center border=0>
+                    <TBODY>
+                      <TR align=middle bgColor=#cccccc> 
+                        <TD colSpan=2><B>Root Mode</B></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee> 
+                        <TD>Host Update (sec)</TD>
+                        <TD><INPUT size=5 {@if chanMgr.hostUpdateInterval}value={$chanMgr.hostUpdateInterval}{@end} name=huint></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd> 
+                        <TD>Message</TD>
+                        <TD><INPUT size=50 {@if servMgr.rootMsg}value={$servMgr.rootMsg}{@end} name=pcmsg></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee> 
+                        <TD width="50%">Get Update</TD>
+                        <TD bgcolor="#eeeeee"><INPUT type=checkbox value=1 name=getupd></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd> 
+                        <TD width="50%">Send</TD>
+                        <TD><INPUT type=checkbox value=1 name=brroot></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee> 
+                        <TD>Min. PGNU In</TD>
+                        <TD bgcolor="#eeeeee"><INPUT size=5 value={$servMgr.minPGNUIn} name=minpgnu></TD>
+                      </TR>
+                      <TR align=left bgColor=#dddddd> 
+                        <TD>Max. PGNU In</TD>
+                        <TD><INPUT size=5 value={$servMgr.maxPGNUIn} name=maxpgnu></TD>
+                      </TR>
+                      <TR align=left bgColor=#eeeeee> 
+                        <TD>Broadcast IDs</TD>
+                        <TD><a href="bcid.html">View</a></TD>
+                      </TR>
+                    </TBODY>
+                  </TABLE>
+                  {@end} </TD>
+                <TD>&nbsp;</TD>
+              </TR>
+              <TR align=middle> 
+                <TD 
+      colSpan=2><div align="center"> </div></TD>
+              </TR>
+            </FORM>
+            <tr> 
+              <td></TBODY> 
+          </TABLE>
+          <!-- InstanceEndEditable --> 
+          <hr size="1">
+          <div align="center" class="normal-small"> &copy; 2005<a href="http://www.peercast.org" target="_blank"> 
+            peercast.org</a> </div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+</body>
+<!-- InstanceEnd --></html>

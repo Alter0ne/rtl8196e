@@ -1,0 +1,11 @@
+#
+# cshark uci configuration
+#
+
+config cshark 'cshark'
+	option url 'https://openwrt.cloudshark.org'
+	option token '4fffb380713323c47b05ad153332a436'
+	option ca '/etc/ssl/certs/ca-the_usertrust_network.pem'
+	option ca_verify '1'
+	option dir '/tmp/'
+        option tags ''

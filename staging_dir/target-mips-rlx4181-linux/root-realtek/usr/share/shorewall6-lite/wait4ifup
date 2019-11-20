@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+#     Shorewall6 interface helper utility - V4.2
+#
+#     This program is under GPL [http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt]
+#
+#     (c) 2007 - Tom Eastep (teastep@shorewall.net)
+#
+#	This file is installed in /usr/share/shorewall/wait4ifup
+#
+#	Shorewall documentation is available at http://www.shorewall.net
+#
+#	This program is free software; you can redistribute it and/or modify
+#	it under the terms of Version 2 of the GNU General Public License
+#	as published by the Free Software Foundation.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program; if not, write to the Free Software
+#	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+#	If an error occurs while starting or restarting the firewall, the
+#	firewall is automatically stopped.
+#
+#	The firewall uses configuration files in /etc/shorewall/ - skeleton
+#	files is included with the firewall.
+#
+#	wait4ifup <interface> [ <seconds to wait> ]
+#
+
+interface_is_up() {
+    [ -n "$(ip link list dev $1 2> /dev/null | grep -e '[<,]UP[,>]')" ] 
+}
+
+case $# in
+    1)
+	timeout=60
+	;;
+    2)
+	timeout=$2
+	;;
+    *)
+	echo "usage: $(basename $0) <interface> [ <timeout> ]"
+	exit 2
+	;;
+esac
+
+while [ $timeout -gt 0 ]; do
+    interface_is_up $1 && exit 0
+    sleep 1
+    timeout=$(( $timeout - 1 ))
+done
+
+exit 1
+
+    

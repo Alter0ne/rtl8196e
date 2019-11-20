@@ -1,0 +1,48 @@
+.TH cs_init 3 "12 July 2007" "ClearSilver" "cs/cs.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cs_init  - create and initialize a CS context
+.SH SYNOPSIS
+.Ss
+#include <cs/cs.h>
+.Se
+.Ss
+NEOERR *cs_init (CSPARSE **parse, HDF *hdf);
+
+.Se
+
+.SH ARGUMENTS
+parse - a pointer to a pointer to a CSPARSE structure that
+.br
+will be created
+.br
+hdf - the HDF dataset to be used during parsing and rendering
+
+.SH DESCRIPTION
+cs_init will create a CSPARSE structure and initialize
+it.  This structure maintains the state and information
+necessary for parsing and rendering a CS template.
+
+MT-Level: cs routines perform no locking, and neither do hdf
+routines.  They should be safe in an MT environment as long
+as they are confined to a single thread.
+
+.SH "RETURN VALUE"
+parse will contain a pointer to the allocated CSPARSE
+.br
+structure.  This structure will be deallocated with
+.br
+cs_destroy()
+
+.SH "SEE ALSO"
+.BR cs_dump "(3), "cs_destroy "(3), "cs_render "(3), "cs_register_esc_strfunc "(3), "cs_arg_parsev "(3), "cs_register_fileload "(3), "cs_init "(3), "cs_register_strfunc "(3), "cs_arg_parse "(3), "cs_parse_string "(3), "cs_parse_file "(3), "= "(3), "cs_register_function

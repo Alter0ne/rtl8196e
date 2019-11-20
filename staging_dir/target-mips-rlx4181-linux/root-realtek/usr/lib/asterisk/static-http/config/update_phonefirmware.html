@@ -1,0 +1,119 @@
+<!--
+ * Asterisk GUI - update polycom firmware on AA50
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * 
+ * Copyright (C) 2008, Digium, Inc.
+ * All Rights Reserved.
+ *
+-->
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Update Polycom Firmware
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<table align=center width='95%'>
+		<tr>
+			<td colspan=2 align='center'>
+				<div class='lite_Heading'> Update Appliance Firmware </div>
+			</td>
+		</tr>
+		<tr>	<td colspan=2 align='center' height=20></td></tr>
+		<tr>
+			<td valign=top align=right>Firmware Archive Name :</td>
+			<td> <input id="fmarchivename" size=20 value="spip_ssip_3_1_1.tar.gz"></td>
+		</tr>
+		<tr>	<td colspan=2 align='center' height=20></td></tr>
+		<tr>
+			<td valign=top align=right>Bootrom Archive Name :</td>
+			<td> <input id="brarchivename" size=20 value="spip_ssip_BootROM_4_1_2.tar.gz"></td>
+		</tr>
+		<tr>	<td colspan=2 align='center' height=20></td></tr>
+		<tr>
+			<td colspan=2 align='center'>
+				<span class='guiButton' onclick='update_firmware()'> Download new Firmware </span>
+			</td>
+		</tr>
+		<tr>	<td colspan=2 align='center' height=20></td></tr>
+		<tr>	<td colspan=2 align='center' height=20>
+				Note: get the latest Archive names from <A target='_blank' href="http://downloads.digium.com/pub/polycom/firmware">here</A>
+			</td>
+		</tr>
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script>
+
+	var localajaxinit = function(){
+
+	};
+
+	var update_firmware = function(){
+		parent.ASTGUI.dialog.waitWhile(' Downloading Firmware ... <BR> This process might take several minutes depending on your download speed.');
+
+		var checkAndUpdateOutPut = function(){
+			var tmp = ASTGUI.loadHTML(sessionData.directories.output_SysInfo);
+			//var tmp = ASTGUI.loadHTML('./sysinfo_output.html');
+			if( tmp.contains('**Completed**') ){
+				try{
+					var ta = 'Finished downloading firmware !' +
+						'\n Please reboot the appliance for the new firmware to be effective.' +
+						'\n Note: The reboot process might take 4 to 8 minutes. ';
+					alert(ta);
+					return;
+				}finally{
+					parent.ASTGUI.dialog.hide();
+					window.location.reload();
+				}
+			}
+
+			var tmp_files = tmp.split('\n');
+			var DOWNLOADFILES = [];
+			for( var i=0; i < tmp_files.length ; i++){
+
+				if( tmp_files[i].trim() == '' )
+					continue;
+
+				DOWNLOADFILES.push( tmp_files[i] );
+			}
+
+			var statusmsg = '';
+			if( DOWNLOADFILES.length == 1 ){
+				statusmsg = 'Downloading ' + DOWNLOADFILES[0] ;
+			}else{
+				var downloaded_Files = ASTGUI.cloneObject(DOWNLOADFILES);
+				downloaded_Files.pop();
+				statusmsg = 'Downloaded ' + downloaded_Files.join("<BR>Downloaded") + " <BR>Downloading " + DOWNLOADFILES[ DOWNLOADFILES.length -1 ] ;
+			}
+
+			parent.ASTGUI.dialog.waitWhile(statusmsg);
+		};
+		var cmd = 'update_phoneprov';
+
+		if( ASTGUI.getFieldValue('fmarchivename') ){
+			cmd = cmd + ' ' + ASTGUI.getFieldValue('fmarchivename');
+		}
+
+		if( ASTGUI.getFieldValue('brarchivename') ){
+			cmd = cmd + ' ' + ASTGUI.getFieldValue('brarchivename');
+		}
+
+		parent.ASTGUI.systemCmd( cmd, function(){} );
+		setInterval( checkAndUpdateOutPut, 4000 );
+
+	};
+
+
+	</script>
+</body>
+</html>

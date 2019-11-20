@@ -1,0 +1,3 @@
+pcmcia.ko
+pcmcia_core.ko
+serial_cs.ko

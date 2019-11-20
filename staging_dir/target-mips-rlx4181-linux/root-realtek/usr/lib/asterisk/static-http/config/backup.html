@@ -1,0 +1,128 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Configuration for "Backup / Restore"
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Backup / Restore Configurations</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_one tr{
+			background: #6b79a5;
+			color: #CED7EF;
+		}
+
+		#nocf {
+			font-size: 13pt;
+			border:1px solid;
+			padding : 10;
+			margin-left : 15;
+			margin-right : 15;
+			margin-top : 25;
+			text-align: center;
+		}
+
+		#thispageContent{
+			/*
+			font-size: 10pt;
+			margin-left : 15;
+			margin-top : 15;
+			*/
+		}
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		&nbsp;Backup / Restore Configurations 
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+	<div style='display:none;' id='nocf'> You need a&nbsp;&nbsp;<b>CompactFlash&reg;</b>&nbsp;&nbsp;to use this feature </div>
+
+	<div id='backup_download_Link' style='display:none; background: #FFFFFF; border-style : solid; border-width: 1px ; border-color: #bdc7e7; border-style: solid ; margin:20px ; padding: 10px ;' >
+	 <span style="float:right; font-size: 85%;" onclick="$('#backup_download_Link').hide();"><a href='#'>close</a></span>
+	 <div id='backup_download_Link_url'></div>
+	</div>
+
+	<div id='thispageContent' style='text-align:center;'>
+		<div class='lite_Heading'>Manage Configuration Backups</div>
+		<center>
+		<fieldset  style="font-size : 13px; width: 745px;" id='uploadForm_container'>
+			<legend><B>&nbsp;Upload a previous backup file :&nbsp;</B></legend>
+			<IFRAME src="upload_form.html" id="uploadiframe" width="480" height="100" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+		</fieldset>
+
+		<div  style='margin-top:20px; margin-bottom:10px;'><span class='guiButtonNew' id="takebkp" onclick='take_bkp();'>Create New Backup</span></div>
+
+		<fieldset  style="font-size : 13px; height: 230px; width: 845px"  id="fieldset2">
+			<legend><B>&nbsp;List of Previous Configuration Backups :&nbsp;</B></legend>
+			<table id="table_one" cellpadding=3 cellspacing=1 border=0 align=center width=800>
+				<tr>	<td width=35>S.No</td>
+					<td width="180">Name</td>
+					<td width="125">Date</td>
+					<td align="center">Options</td>
+				</tr>
+			</table>
+			<div id="bkpfilesTable_div" style="height:200px;width=100%; overflow :auto; padding : 0px 0px 0px 0px;">
+				<table id="bkpfilesTable" cellpadding=2 cellspacing=1 border=0 align=center width=800></table>
+			</div>
+		</fieldset>
+		</center>
+
+	</div>
+
+
+	<div id="newbkp_content" STYLE="width:450; height:150;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Create New Backup</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0 width="100%" align="center">
+			<tr>	<td colspan=2 height=20 valign=middle align=center class="field_text"></td>	</tr>
+			<tr>	<td class="field_text" align="right">File Name:&nbsp;</td>
+				<td><input id='newbkp_name' size=25 class="input9" validation='alphanumericUnd' required='yes'></td>
+			</tr>
+			
+			<tr class='AA50only'>	<td colspan=2 align=center height=6></td>	</tr>
+			<tr class='AA50only'>
+				<td valign=top align="right">
+					<input type='checkbox' id='newbkp_completeBackup' class="input9">&nbsp;
+				</td>
+				<td class="field_text">
+					<label for='newbkp_completeBackup'>Also backup Voicemails & Custom Prompts</label>
+				</td>
+			</tr>
+			<tr>	<td colspan=2 align=center height=6></td>	</tr>
+			
+			<tr>	<td colspan=2 align=center>
+					<span class='guiButtonCancel' id="cancel_a" onclick='cancel_newbackup();'>Cancel</span>
+					<span class='guiButtonEdit' id="getbackup" onclick='backup_new();'>Backup</span>
+				</td>
+			</tr>
+			<tr>	<td colspan=2 align=center height=16></td>	</tr>
+		</table>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/backup.js"></script>
+</body>
+</html>

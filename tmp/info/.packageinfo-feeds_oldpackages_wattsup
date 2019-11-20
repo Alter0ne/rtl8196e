@@ -1,0 +1,18 @@
+Source-Makefile: package/feeds/oldpackages/wattsup/Makefile
+Package: wattsup
+Version: 1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Wattsup polling utility
+Maintainer: 
+Source: 
+Type: ipkg
+Feed: oldpackages
+Description: Wattsup polling utility
+
+@@
+
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Note: This script is only called on the AA50 
+
+tar -xf $1 -C /
+# clean out dhcpcd cache data
+rm /etc/config/dhcpcd*
+save_config
+sync
+sleep 1
+reboot
+

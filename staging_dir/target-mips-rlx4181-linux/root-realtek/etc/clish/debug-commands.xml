@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+	<!--=======================================================-->
+    <COMMAND name="tcl"
+           access="debug"
+             help="Run a raw TCL command line"
+     escape_chars=""
+             args="command"
+        args_help="Command and arguments of TCL script">
+        <DETAIL>
+This enables low level TCL script to be written on the command line.
+The remains of the line (following the 'tcl' command) is interpreted
+as a raw TCL script.
+
+For example the following command displays the numbers 1-10
+> tcl for {set i 0} {$i &lt; 10} {incr i} {puts "number: $i"}
+number: 1
+number: 2
+number: 3
+number: 4
+number: 5
+number: 6
+number: 7
+number: 8
+number: 9
+number: 10
+> 
+NB. Be aware that variable expansion of the form ${foobar} is valid
+both in the &lt;ACTION&gt; tag and in TCL. The quoting of such 
+variables will always be interpreted as clish variables, and will
+not appear in the TCL script.
+        </DETAIL>
+        <ACTION>${command}</ACTION>
+    </COMMAND>
+	<!--=======================================================-->
+</CLISH_MODULE>

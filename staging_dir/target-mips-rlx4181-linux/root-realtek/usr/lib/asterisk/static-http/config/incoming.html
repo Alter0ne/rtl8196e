@@ -1,0 +1,153 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Incoming Calling Rules
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Incoming Calling Rules</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		.table_incomingRulesList {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+
+		.table_incomingRulesList tr.frow { background: #6b79a5; color: #CED7EF; }
+		.table_incomingRulesList tr.frow td { font-weight:bold; }
+		.table_incomingRulesList tr td { padding : 3px; }
+		.table_incomingRulesList tr.even { background: #DFDFDF; }
+		.table_incomingRulesList tr.odd { background: #FFFFFF; }
+		.table_incomingRulesList tr.even:hover, .table_incomingRulesList tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Incoming Calling Rules 
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+	
+	<div class='top_buttons'>
+		<span class='guiButtonNew' onclick='incomingRules_MiscFunctions.new_IR_form();'>New Incoming Rule</span>
+		<span class='lite_Heading'  style='margin-left: 80px'> Incoming Calling Rules </span>
+	</div>
+
+	<center> <DIV id='IR_CONTAINER'></DIV> </center>
+	<div id="div_ir_edit" STYLE="width:610;display:none" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id="div_ir_edit_title">New Incoming Rule</span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%' bgcolor='#FAF7F1'>
+
+			<TR class='hideOnEdit'>
+				<TD align="right"><nobr>Trunk :</nobr></TD>
+				<TD><select id='edit_itrl_trunk' required='yes'></select></TD>
+			</TR>
+
+			<TR class='hideOnEdit'>
+				<TD align="right"><nobr>Time Interval :</nobr></TD>
+				<TD><select id='edit_itrl_tf'></select></TD>
+			</TR>
+
+			<TR>	<TD align="right"><nobr>Pattern <img src="images/tooltip_info.gif" tip="en,callingrules,1" class='tooltipinfo'> : </nobr></TD>
+				<TD><input id='edit_itrl_pattern' size=12  field_name='Pattern' validation='dialpattern' required='yes'></select></TD>
+			</TR>
+
+			<TR>	<TD align="right"><nobr>Destination :</nobr></TD>
+				<TD><select id='edit_itrl_dest'  required='yes'></select></TD>
+			</TR>
+
+			<TR class='localext_byDid' style='display:none'>
+				<TD align="right"><nobr>Local Extension by DID Pattern :</nobr></TD>
+				<TD>&nbsp;${EXTEN:<input id='edit_itrl_LocalDest_Pattern' size=2>}</TD>
+			</TR>
+
+			<TR>
+				<TD align="right" colspan=2 height=10> </TD>
+			</TR>
+
+			<TR>	<TD align=center valign=middle colspan=2>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='incomingRules_MiscFunctions.update_IR();' >Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/astman.js"></script>
+<script src="js/incoming.js"></script>
+<script src="js/jquery.tooltip.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		top.document.title = "Incoming Calling Rules";
+		
+		incomingRules_MiscFunctions.listAllRulesInTable();
+
+		/* Populate Time Intervals <select> */
+		var itrl_tf = $('#edit_itrl_tf');
+		var list = parent.pbx.time_intervals.list();
+		for (var ti in list) {
+			if (!list.hasOwnProperty(ti)) {
+				continue;
+			}
+
+			itrl_tf.append($('<option>').html(ti).val(ti));
+		};
+		itrl_tf.append($('<option>').html('None (no Time Intervals matched)').val(''));
+		delete itrl_tf;
+		delete list;
+
+		/* Populate Destinations <select> */
+		var dest = $('#edit_itrl_dest');
+		var list = parent.miscFunctions.getAllDestinations();
+		for (var d=0; d<list.length; d++) {
+			dest.append($('<option>').html(list[d].optionText).val(list[d].optionValue));
+		}
+		dest.append($('<option>').html('Local Extension by DID').val('ByDID'));
+
+		/* now lets add some events!! */
+		dest.change(function() {
+			if ($(this).val() === 'ByDID') {
+				$('.localext_byDid').show();
+			} else {
+				$('.localext_byDid').hide();
+			}
+		});
+		$('#edit_itrl_trunk').click(function() {
+			incomingRules_MiscFunctions.enableDisablePattern();
+		});
+	});
+</script>
+</body>
+</html>

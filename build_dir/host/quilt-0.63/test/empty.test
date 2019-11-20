@@ -1,0 +1,34 @@
+	$ mkdir patches
+
+	$ cat > patches/series
+	< empty1.diff
+	< empty2.diff
+	$ touch patches/empty1.diff patches/empty2.diff
+
+	$ quilt push -qa
+	> Applying patch %{P}empty1.diff
+	> Patch %{P}empty1.diff appears to be empty; applied
+	> Applying patch %{P}empty2.diff
+	> Patch %{P}empty2.diff appears to be empty; applied
+	> Now at patch %{P}empty2.diff
+
+	$ quilt rename empty3.diff
+	> Patch %{P}empty2.diff renamed to %{P}empty3.diff
+
+	$ quilt pop -qa
+	> Patch %{P}empty3.diff appears to be empty, removing
+	> Patch %{P}empty1.diff appears to be empty, removing
+	> No patches applied
+
+	$ quilt new empty_new.diff
+	> Patch %{P}empty_new.diff is now on top
+
+	$ quilt pop -q
+	> Patch %{P}empty_new.diff appears to be empty, removing
+	> No patches applied
+
+	$ quilt delete empty_new.diff
+	> Removed patch %{P}empty_new.diff
+
+	$ quilt rename -P empty3.diff empty_new.diff
+	> Patch %{P}empty3.diff renamed to %{P}empty_new.diff

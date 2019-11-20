@@ -1,0 +1,2 @@
+#!/bin/sh
+exec "/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001/bin/mips-linux-objdump" "$@"

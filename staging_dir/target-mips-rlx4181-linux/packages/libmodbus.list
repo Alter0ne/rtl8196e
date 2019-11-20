@@ -1,0 +1,15 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libmodbus.so.5
+./usr/lib/libmodbus.so.5.1.0
+./usr/lib/libmodbus.so
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libmodbus.pc
+./usr/include
+./usr/include/modbus
+./usr/include/modbus/modbus-version.h
+./usr/include/modbus/modbus.h
+./usr/include/modbus/modbus-tcp.h
+./usr/include/modbus/modbus-rtu.h

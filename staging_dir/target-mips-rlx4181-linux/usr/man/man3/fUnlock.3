@@ -1,0 +1,36 @@
+.TH fUnlock 3 "12 July 2007" "ClearSilver" "util/ulocks.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+fUnlock  - release file lock.
+.SH SYNOPSIS
+.Ss
+#include <util/ulocks.h>
+.Se
+.Ss
+void fUnlock(int lock);
+
+.Se
+
+.SH ARGUMENTS
+lock - Lock to release.
+
+.SH DESCRIPTION
+Releases the lock identified by <lock>.
+
+MT-Level: Safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR mCreate "(3), "fCreate "(3), "mUnlock "(3), "fUnlock "(3), "cBroadcast "(3), "cSignal "(3), "fFind "(3), "cDestroy "(3), "cCreate "(3), "mDestroy "(3), "cWait "(3), "fLock "(3), "fDestroy "(3), "mLock

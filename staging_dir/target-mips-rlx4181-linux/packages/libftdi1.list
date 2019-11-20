@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libftdi1.pc
+./usr/lib/libftdi1.a
+./usr/lib/libftdi1.so
+./usr/lib/libftdi1.so.2
+./usr/lib/libftdi1.so.2.1.0
+./usr/include
+./usr/include/libftdi1
+./usr/include/libftdi1/ftdi.h

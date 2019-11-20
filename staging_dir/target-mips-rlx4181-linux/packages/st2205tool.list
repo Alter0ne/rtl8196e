@@ -1,0 +1,8 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libst2205.so
+./usr/lib/libst2205.a
+./usr/include
+./usr/include/st2205.h

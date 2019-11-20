@@ -1,0 +1,10 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libgmp.so
+./usr/lib/libgmp.a
+./usr/lib/libgmp.so.10
+./usr/lib/libgmp.so.10.2.0
+./usr/include
+./usr/include/gmp.h

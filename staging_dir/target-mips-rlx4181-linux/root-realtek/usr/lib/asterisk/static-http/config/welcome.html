@@ -1,0 +1,594 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * System status
+ *
+ * Copyright (C) 2008-2011, Digium, Inc.
+ *
+ * Ryan Brindley <rbrindley@digium.com>
+ * Erin Spiceland <espiceland@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>System Status</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<link href="stylesheets/ui-tabs.css" media="all" rel="Stylesheet" type="text/css" />
+	<link href="stylesheets/tables.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		body { background-color: #EFEFEF; }
+		.clear { clear: both; }
+		.notinuse { color: red; }
+		.inuse { color: #ef8700; } 
+		.template { display: none; }
+		img.loadTrunks, img.loadQueues { cursor: pointer; }
+		img.title_img { float: left; }
+
+		div.column { display: block; }
+		div.left { float:left; width: 60%; }
+		div.right { float:right; width: 40%; }
+
+		div.content_container { -moz-border-radius: 8px; -webkit-border-radius: 8px; background-color: #FFFFFF; border: 1px solid #6b79a5; }
+		div.content_container, div.info_container { margin: 8px; padding: 1px; padding-top: 5px; }
+			div.content_container .title, div.info_container .title { font-weight: bold; font-size: 16px; color: #6b79a5; }
+
+		#sysstat_left_container { margin-right: 4px; }
+		#sysstat_right_container, #sysstat_botright_container { margin-left: 4px; }
+		#sysstat_hdr_container { margin-top: 8px; }
+
+		div.handle { 
+			-moz-border-radius-topleft: 4px; 
+			-moz-border-radius-topright: 4px; 
+			-webkit-border-radius-topleft: 4px; 
+			-webkit-border-radius-topright: 4px; 
+			cursor: move; 
+			padding-left: 10px; 
+		}
+		div.title span.minimaxi { color: #000000; cursor: pointer; display: block; float: right; font-size: 12px; margin-right: 20px; }
+
+		#legend { float: right; text-align: center; margin: 0px 20px 0px 30px; padding:0px; font-weight: normal; color: #000000; }
+		#extensions_list { margin-top: 5px; }
+
+		div.content { -moz-border-radius: 4px; -webkit-border-radius: 4px; background-color: #ffffff; margin: 10px 4px 10px 4px; }
+			div.content div.body { -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+
+		div.placeholder {
+			-moz-border-radius: 4px; 
+			-webkit-border-radius: 4px; 
+			background-color: #dddddd; 
+			border: 1px dotted #6b79a5; 
+			margin: 4px; 
+			height: 50px; 
+		}
+
+		#sys_status_queues div.column { display: block; }
+		#sys_status_queues div.left { float:left; width: 50%; }
+		#sys_status_queues div.right { float:right; width: 50%; }
+		#sys_status_queues div.container { margin: 2px; }
+
+		#queue_left_container { margin-right: 1px; }
+		#queue_right_container { margin-left: 1px; }
+
+		div.queue, div.conf_room { margin-bottom: 4px; }
+			div.queue div.title, div.conf_room div.title { 
+				-moz-border-radius-topleft: 4px; 
+				-moz-border-radius-topright: 4px; 
+				-webkit-border-radius-topleft: 4px; 
+				-webkit-border-radius-topright: 4px; 
+				background-color: #6b79a5; 
+				color: #ffffff; 
+				font-size: 12px; 
+				font-weight: bold; 
+				height: 20px; 
+				padding-left: 10px; 
+				vertical-align: center; 
+			}
+			div.queue div.body, div.conf_room div.body {
+				-moz-border-radius-topleft: 0px;
+				-moz-border-radius-topright: 0px;
+				-webkit-border-radius-topleft: 0px;
+				-webkit-border-radius-topright: 0px;
+				background-color: #ef8700;
+				border: 1px solid #ef8700;
+				border-top: 0px;
+			}
+			div.queue div.body div.calls { display: block; float: left; }
+				div.queue div.body div.calls table { width: auto; }
+					div.queue div.body div.calls table tbody tr.new { color: green; }
+					div.queue div.body div.calls table tbody tr.average { color: orange; }
+					div.queue div.body div.calls table tbody tr.old { color: red; }
+			div.queue div.body div.agents div.agent {
+				-moz-border-radius: 4px;
+				-moz-border-radius: 4px;
+				background-color: #ffffff;
+				border: 1px solid #6b79a5;
+				display: block;
+				float: left;
+				margin: 2px;
+				padding: 1px;
+				text-align: center;
+			}
+			div.queue div.body div.agents div.template { display: none; }
+			div.queue div.body div.stats {
+				-moz-border-radius-bottomleft: 4px;
+				-moz-border-radius-bottomright: 4px;
+				-webkit-border-radius-bottomleft: 4px;
+				-webkit-border-radius-bottomright: 4px;
+				background-color: #efefef;
+				font-weight: bold;
+				padding: 2px;
+			}
+				div.queue div.body div.stats span { font-weight: normal; }
+
+			div.conf_room div.actions { display: block; float: left; width: 67px; text-align: center; }
+				div.conf_room div.actions  > ul {
+					background-color: #6b79a5;
+					border: 1px solid #ffffff;
+					color: #ffffff;
+					font-weight: bold;
+					list-style: none;
+					margin: 4px;
+					padding: 4px;
+				}
+					div.conf_room div.actions > ul li {
+						background-color: #ffffff;
+						border: 1px solid #efefef;
+						color: #000000;
+						font-weight: normal;
+						text-align: center;
+					}
+				div.conf_room div.actions .action { cursor: pointer; }
+					div.conf_room div.actions a, div.conf_room div.actions a:visited { text-decoration: none; color: #000000; }
+					div.conf_room div.actions a:hover { color: #ef8700; }
+				div.conf_room div.members { display: relative; padding-left: 67px; right: 67px; }
+					div.conf_room div.members > table.list { -moz-border-radius-bottomright: 4px; -webkit-border-radius-bottomright: 4px; }
+						div.conf_room div.members > table.list tbody td { padding-left: 5px; }
+					div.conf_room div.members .checkbox { width: 20px; }
+					div.conf_room div.members .person { width: 1px; }
+
+		#extensions_sections { height: 18px; text-indent: 20px; }
+			#extensions_sections .section {
+				-moz-border-radius: 4px;
+				-webkit-border-radius: 4px;
+				background-color: #ef8700;
+				border: 1px solid #ffffff;
+				color: #ffffff;
+				cursor: pointer;
+				font: 10px bold;
+				margin-left: 2px;
+				padding: 1px 4px 1px 4px;
+			}
+			#extensions_sections .active {
+				background-color: #ffffff;
+				border: 1px solid #6b79a5;
+				color: #6b79a5;
+				cursor: default;
+			}
+	</style>
+</head>
+<body>
+	<div class="iframeTitleBar">
+		System Status
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="sysstat_hdr_container">
+		<div id="ast_uptime"></div>
+		<div id="sys_uptime"></div>
+	</div>
+
+	<div class="left column">
+		<div id="sysstat_left_container" class="content_container">
+			<div id="sys_status_trunks" class="content">
+				<div class="handle title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					Trunks <img class="loadTrunks" src="images/refresh.png" title="Refresh" border="0" />
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<table id="trunks_list" class="list">
+					<thead>
+					<tr class="list_titles">
+						<th>Status</th>
+						<th>Trunk</th>
+						<th>Type</th>
+						<th>Username</th>
+						<th>Port/Hostname/IP</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
+				</div>
+			</div>
+			<div id="sys_status_extensions" class="content">
+				<div class="handle title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					Extensions
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<span id="legend">
+						<img src="images/status_green.png" border="0"> Free 
+						<img src="images/status_orange.png" border="0"> Ringing 
+						<img src="images/status_red.png" border="0"> Busy 
+						<img src="images/status_gray.png" border="0"> UnAvailable 
+					</span>
+					<div id="extensions_sections">
+						<span title="all" class="section active"> All </span>
+						<span title="analog" class="section"> Analog </span>
+						<span title="feature" class="section"> Features </span>
+						<span title="iax" class="section"> IAX </span>
+						<span title="sip" class="section"> SIP </span>
+					</div>
+					<div class="clear"></div>
+					<table id="extensions_list" class="list">
+					<thead>
+					<tr class="list_titles">
+						<th></th>
+						<th>Extension</th>
+						<th>Name/Label</th>
+						<th>Status</th>
+						<th>Type</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
+				</div>
+			</div>
+			<div id="sys_status_queues" class="content">
+				<div class="handle title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					Queues <img class="loadQueues" src="images/refresh.png" title="Refresh" border="0" />
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<div class="left column">
+						<div class="container" id="queue_left_container">
+							<div class="queue template">
+								<div class="title">
+									<span class="minimaxi">[ - ]</span>
+									<span class="name"></span> (<span class="strategy"></span>) - <span class="users_agents"></span> 
+								</div>
+								<div class="body">
+									<div class="calls">
+										<table class="list">
+										<tbody>
+										</tbody>
+										</table>
+									</div>
+									<div class="agents">
+										<div id="agent_template" class="template agent">
+											<img class="status_icon" src="" border="0" /> 
+											<span class="extension"></span>
+										</div>
+									</div>
+									<div class="clear"></div>
+									<div class="stats">
+										Service Level: <span class="service_level"></span><br />
+										Calls Completed: <span class="calls_complete"></span><br />
+										Calls Abandoned: <span class="calls_abandoned"></span><br />
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="right column">
+						<div class="container" id="queue_right_container">
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="right column">
+		<div id="sysstat_right_container" class="content_container">
+			<div id="sys_status_meetme" class="content">
+				<div class="handle title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					Conference Rooms
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<div class="conf_room template">
+						<div class="title">
+							<span class="minimaxi">[ - ]</span>
+							<span class="refresh">@</span>
+							<span class="name"></span> - <span class="inuse status"></span>
+						</div>
+						<div class="clear"></div>
+						<div class="body">
+							<div class="actions">
+								<ul> Actions
+									<li><a href="#"><span class="kick action">Kick</span></a></li>
+									<li><a href="#"><span class="mute action">Mute</span></a></li>
+								</ul>
+								<span class="time"></span>
+							</div>
+							<div class="members">
+								<table class="list">
+								<tbody>
+								<tr class="template">
+									<td class="checkbox"><img src="images/checkbox_blank.gif" /></td>
+									<td class="person"><img src="images/agent_loggedin.png" /></td>
+									<td class="extension"></td>
+									<td class="mem_status"></td>
+									<td class="duration"></td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sys_status_plot" class="content">
+				<div class="handle title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					Parking Lot
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<table id="parking_lot_list" class="list">
+					<thead>
+					<tr class="list_titles">
+						<th>Caller ID</th>
+						<th>Channel</th>
+						<th>Extension</th>
+						<th>Timeout</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div id="sysstat_botright_container" class="info_container">
+			<div id="sys_status_info">
+				<div class="title"> 
+					<span class="minimaxi">[ - ]</span>
+					<img src="images/asterisk_red.gif" class="title_img" />
+					System Info
+				</div>
+				<div class="clear"></div>
+				<div class="body">
+					<ul class="ui-tabs-nav">
+						<li><a href="#info_general"><span>General</span></a></li>
+						<li><a href="#info_network"><span>Network</span></a></li>
+						<li><a href="#info_memory"><span>Memory</span></a></li>
+						<li><a href="#info_disk"><span>Disk</span></a></li>
+					</ul>
+					<div id="info_general" class="ui-tabs-panel">
+						<B>Hostname:</B> <div id="hostname" style="font-family:courier; font-size:10pt;"></div><BR>
+						<B>OS Version:</B> <div id="osversion" style="font-family:courier; font-size:10pt;"></div><BR>
+						<B>Asterisk Build:</B> <div id="asterisk" style="font-family:courier; font-size:10pt;"></div><BR>
+						<B>Server Date & Timezone</B> <div id="today" style="font-family:courier; font-size:10pt;"></div><BR>
+						<B>Uptime:</B> <div id="uptime" style="font-family:courier; font-size:10pt;"></div><BR>
+					</div>
+					<div id="info_network" class="ui-tabs-panel">
+						<div id="ifconfig" style="font-family:courier; font-size:9pt;overflow :auto;"></div>
+					</div>
+					<div id="info_memory" class="ui-tabs-panel">
+						<B>Memory Usage:</B><div id="memoryusage" style="font-family:courier; font-size:9.5pt;"></div>
+					</div>
+					<div id="info_disk" class="ui-tabs-panel">
+						<B>Disk Usage:</B><div id="diskusage" style="font-family:courier; font-size:10pt;"></div>
+						<div id="CF_Usage" style="display:none; width: 430px">
+							<table border=0>
+								<tr>	<td><b><nobr>CompactFlash&reg; : </b></nobr></td>
+									<td id="CF_Usage_td" width="300"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+
+	<div id="sysstat_ftr_container">
+		<div id="sysstat_sys_events"></div>
+	</div>
+<!-- Initial Javascript -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="js/jquery.ui.sortable.js"></script>
+<script type="text/javascript" src="js/jquery.ui.tabs.js"></script>
+<script type="text/javascript" src="js/jquery.delegate-1.1.js"></script>
+<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="js/astman.js"></script>
+<script type="text/javascript" src="js/welcome.js"></script>
+<script type="text/javascript" src="js/sysinfo.js"></script>
+<script type="text/javascript">
+
+ /* This function will be called when the page has completed loading */
+ $(document).ready(function() {
+
+	/* jQuery sortable init for content sections */
+ 	$('#sysstat_right_container, #sysstat_left_container').sortable({
+		axis: 'y',
+		cancel: '.minimaxi, .loadTrunks, .loadQueues',
+		cursor: 'move',
+		forcePlaceholderSize: true,
+		handle: 'div.handle',
+		items: '> div.content',
+		placeholder: 'placeholder'
+	});
+
+	/* jQuery tabs init */
+	$("#sys_status_info .body > ul").tabs().bind('tabsselect', function (e, ui) {
+		switch($(ui.panel).attr('id')) {
+		case 'info_general':
+			getsysinfohtml();
+			break;
+		case 'info_network':
+			$(ui.panel).empty();
+			ASTGUI.systemCmdWithOutput( 'ifconfig', function(output) {
+				$('<pre></pre>').html(output).appendTo(ui.panel);
+			});
+			break;
+		case 'info_memory':
+			$(ui.panel).empty();
+			ASTGUI.systemCmdWithOutput( 'free' , function(output){
+				$('<pre></pre>').html(output).appendTo(ui.panel);
+			});
+			break;
+		case 'info_disk':
+			$(ui.panel).empty();
+			ASTGUI.systemCmdWithOutput( 'df -k' , function(output){
+				$('<pre></pre>').html(output).appendTo(ui.panel);
+			});
+			if(parent.sessionData.PLATFORM.isAA50) {
+				try{
+					percentage_usage(output);
+				}catch(err){
+					top.log.debug( '<B>Error Trying to calculate CF usage %');
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	});
+	getsysinfohtml(); //pre-load general information as its not automatically triggered
+
+	/* Event Delegation */
+	$('body')
+		.delegate('click','.minimaxi', function () {
+			$(this).parent().parent().children(".body").toggle();
+			if ($(this).html() == "[ - ]") {
+				$(this).html("[ + ]");
+			} else {
+				$(this).html("[ - ]");
+			}
+			return false;
+		})
+		.delegate('click','img.loadTrunks', function () {
+			loadTrunks();
+			return false;
+		})
+		.delegate('click','img.loadQueues', function () {
+			loadQueues();
+			return false;
+	});
+	$('#sys_status_meetme')
+		.delegate('click', '.actions .kick', function() {
+			alert('kick!');
+		}).delegate('click', '.actions .mute', function() {
+			alert('mute!');
+	});
+	$('#extensions_sections')
+		.delegate('click','.section', function () {
+			var title;
+			if ( (title = $(this).attr('title')) != 'all') {
+				//set all to inactive
+				$(this).siblings('span:first[title=all]').removeClass('active');
+				extension_loads['all'] = false;
+
+				//toggle active for title
+				var has_class = $(this).toggleClass('active').hasClass('active');
+				extension_loads[title] = has_class?true:false;
+
+				//traverse sections and hide everything. 
+				$(this).siblings('[title!=all]').andSelf().each( function() {
+					var title = $(this).attr('title');
+					$('#extensions_list .'+title).hide();
+					top.log.debug( 'hiding ' + title);
+				});
+				//traverse sections and show only what we want. 
+				$(this).siblings('[title!=all]').andSelf().each( function() {
+					var show = $(this).hasClass('active');
+					var title = $(this).attr('title');
+					
+					if (show) {
+						$('#extensions_list .'+title).show();
+						top.log.debug( 'showing ' + title);
+					}
+				});
+
+				if (extension_loads['sip'] || extension_loads['iax']) {
+					$('#extensions_list .sip.iax').show();
+				}
+			} else {
+				$(this).addClass('active');
+				$(this).siblings('span').each( function() {
+					$(this).removeClass('active');
+					var title = $(this).attr('title');
+					extension_loads[title] = false;
+				});
+				$('#extensions_list').find('.sip, .iax, .analog, .feature').show();
+			}
+			
+			var title = $(this).attr('title');
+			extension_loads[title] = extension_loads[title]?true:false;
+	});
+
+	setTimeout(loadTrunks, 1);
+	loadExtensions();
+	setTimeout(loadQueues, 1);
+	setTimeout(loadConferenceRooms, 1);
+	setTimeout(loadParkingLot, 1);
+
+	/* jQuery Tablesorter init */
+	/* this requires a rewrite of the loadExtensions and loadTrunks */
+		$("#extensions_list").tablesorter({
+			cancelSelection: true,
+			cssAsc: "header_sort_up",
+			cssDesc: "header_sort_down",
+			widgets: ['zebra']
+		});
+
+		$("#parking_lot_list").tablesorter({
+			cancelSelection: true,
+			cssAsc: "header_sort_up",
+			cssDesc: "header_sort_down",
+			widgets: ['zebra']
+		});
+	
+	/* set vars that determine which name to use for manager events */
+	mgr.newchannel = {};
+	mgr.newchannel.channelstate = ASTGUI.version.gteq("1.6.0") ? 'channelstatedesc' : 'state';
+	mgr.newcallerid = {};
+	mgr.newcallerid.calleridnum = ASTGUI.version.gteq("1.6.0") ? 'calleridnum' : 'callerid';
+	mgr.newstate = {};
+	mgr.newstate.channelstate = ASTGUI.version.gteq("1.6.0") ? 'channelstatedesc' : 'state';
+
+	manager_events.watch();
+
+	/* countUp and countDown tickers */
+	setTimeout(countHtml,1000);
+	setTimeout(countSecs,1000);
+
+	return;
+ });
+
+</script>
+<!-- End Initial Javascript -->
+</body>
+</html>

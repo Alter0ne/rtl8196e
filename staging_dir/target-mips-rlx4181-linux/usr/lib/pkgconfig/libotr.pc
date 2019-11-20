@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libotr
+Description: Off-the-Record Messaging Library
+Version: 3.1.0
+URL: http://otr.cypherpunks.ca/
+Libs: -L${libdir} -lotr
+Cflags: -I${includedir}

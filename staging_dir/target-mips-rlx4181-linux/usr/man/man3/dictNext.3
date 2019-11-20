@@ -1,0 +1,51 @@
+.TH dictNext 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictNext  - search for next value in dictionary.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+void *dictNext(dictCtx dict, char **id, void **plock);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to iterate over.
+.br
+id - pointer to identifier of last item found, or
+.br
+pointer to NULL to retrieve first.
+.br
+plock - place for value lock (or NULL).
+
+.SH DESCRIPTION
+Can be used to iterate through values in the dictionary.
+The order is the order of the hash of the ids, which
+isn't usefully externally.  Will return the value if 
+found, or NULL if not.  If <plock> is non-NULL, then
+the lock returned in <plock> will be associated with
+the returned value.  Until this lock is passed to
+dictReleaseLock(), the value will not be passed to the
+dictCleanupFunc callback (see dictCleanup()).
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+plock - set to value lock.
+.br
+id - pointer to id of found value
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

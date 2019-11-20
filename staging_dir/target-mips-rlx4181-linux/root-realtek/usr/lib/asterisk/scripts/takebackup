@@ -1,0 +1,6 @@
+#!/bin/sh
+/bin/tar -cf $1 /etc/asterisk /etc/localtime
+if [ "$2" = "YES" ]; then
+	SF=`echo "$1" | cut -d '.' -f 1`
+	/bin/tar -cf "${SF}"_sounds.tar /var/lib/asterisk/sounds/voicemail /var/lib/asterisk/sounds/record
+fi

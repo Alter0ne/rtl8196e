@@ -1,0 +1,150 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * GUI General Preferences
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>General Preferences</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		General Preferences 
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center><div id="tabbedMenu"></div></center>
+
+	<table width=95% cellpadding=2 cellspacing=2 border=0  align=center>
+		<tr>	<td align=right>Global OutBound CID <img src="images/tooltip_info.gif" tip="en,options,7" class='tooltipinfo'> :</td>
+			<td><input id='obCid_input' size=16></td>
+		</tr>
+		<tr>	<td align=right>Global OutBound CID Name<img src="images/tooltip_info.gif" tip="en,options,14" class='tooltipinfo'> :</td>
+			<td><input id='obCidName_input' size=16></td>
+		</tr>
+		<tr>	<td align=right>Operator Extension <img src="images/tooltip_info.gif" tip="en,options,8" class='tooltipinfo'> :</td>
+			<td><select id='op_ext'></select></td>
+		</tr>
+		<tr>	<td align=right>Ring Timeout <img src="images/tooltip_info.gif" tip="en,options,11" class='tooltipinfo'> :</td>
+			<td><input size=2 id='op_ringTimeOut_Voicemail'></td>
+		</tr>
+		<tr class='16_Only' style='display:none;'>
+			<td align=right>Enable Idle Image Display <img src="images/tooltip_info.gif" tip="en,options,10" class='tooltipinfo'> :</td>
+			<td><input type='checkbox' id='op_polycom_idleimage'></td>
+		</tr>
+		<tr class='16_Only' style='display:none;'>
+			<td align=right>VoIP Phone Digit Map <img src="images/tooltip_info.gif" id="tooltip_img_voipPhoneDigitMap"> :</td>
+			<td><input size=15 id='op_voip_digitmap'></td>
+		</tr>
+		<tr class='16_Only' style='display:none;'>
+			<td align=right>VoIP Phone Digit Timeout <img src="images/tooltip_info.gif" tip="en,options,13" class='tooltipinfo'> :</td>
+			<td><input size=10 id='op_voip_digit_timeout'></td>
+		</tr>
+	</table>
+
+	<table cellpadding=2 cellspacing=2 border=0  align=center width="90%">
+	<tr><td align=center>
+		<fieldset style="max-width:700px;min-width:500px;">
+			<legend><B>&nbsp;Extension preferences:&nbsp;</B></legend>
+			<table cellpadding=2 cellspacing=2 border=0  align=center>
+	 		<tr>
+	 			<td align=right>Disable Extension Ranges:</td>
+	 			<td><input id='disable_extension_ranges' type='checkbox' onclick='saveDisableExtensionRanges()'> 
+	 			</td>
+	 		</tr>
+			<tr>	<td align=right>User Extensions :</td>
+				<td><input id='ue_start' size=4 validation='numeric' required='yes'> to 
+					<input id='ue_end' size=4 validation='numeric' required='yes'> 
+					<span id='ue_label'></span>
+				</td>
+			</tr>
+			<tr>	<td align=right>Conference Extensions :</td>
+				<td><input id='mm_start' size=4 validation='numeric' required='yes'> to 
+					<input id='mm_end' size=4 validation='numeric' required='yes'> 
+					<span id='mm_label'></span>
+				</td>
+			</tr>
+			<tr>	<td align=right>VoiceMenu Extensions :</td>
+				<td><input id='vme_start' size=4 validation='numeric' required='yes'> to 
+					<input id='vme_end' size=4 validation='numeric' required='yes'> 
+					<span id='vme_label'></span>
+				</td>
+			</tr>
+			<tr>	<td align=right>RingGroup Extensions :</td>
+				<td><input id='rge_start' size=4 validation='numeric' required='yes'> to 
+					<input id='rge_end' size=4 validation='numeric' required='yes'> 
+					<span id='rge_label'></span>
+				</td>
+			</tr>
+			<tr>	<td align=right>Queue Extensions :</td>
+				<td><input id='qe_start' size=4 validation='numeric' required='yes'> to 
+					<input id='qe_end' size=4 validation='numeric' required='yes'> 
+					<span id='qe_label'></span>
+				</td>
+			</tr>
+			<tr>	<td align=right>VoiceMail Group Extensions :</td>
+				<td><input id='vmg_start' size=4 validation='numeric' required='yes'> to 
+					<input id='vmg_end' size=4 validation='numeric' required='yes'> 
+					<span id='vmg_label'></span>
+				</td>
+			</tr>
+
+	 		<tr>
+	 			<td colspan=2 align=center>
+	 				<span class='guiButton' onclick='reset_ranges_default()' id='reset_ranges_button'>Reset to defaults</spann>
+				</td>
+			</tr>
+
+			</table>
+		</fieldset>
+	</td>
+	</tr>
+	</table>
+
+
+	<div style='text-align:center; width: 95%; margin-top:15px'>
+		<span class='guiButtonCancel' onclick='window.location.reload();'>Cancel</span>
+		<span class='guiButtonEdit' onclick='save_changes();'>Save</span>
+	</div>
+
+	<div id='tooltip_voipPhoneDigitMap' style="max-width:500px; display:none; background-color : #e8c991; padding: 3px; margin:10px;">
+	This option allows the administrator to define a global digit mapping string compatible with RFC 3435, section 2.1.5,
+	to be used with VoIP phones provisioned by this system. There is no default setting and this option does not sync with the 
+	dialplan assigned to an individual user. The following examples should assist in writing an acceptable digit mapping string.
+	<li>[2-9]11 - Where calls beginning with digits 2-9 followed by digits 11 are dialed immediately.
+	<li>0T - Where calls beginning with digit 0 followed by a pause equal to the "Digit Timeout" option.
+	<li>+011xxx.T - Where calls beginning with the + character, followed by 011 digits and then at least three more digits before any arbitrary number is matched, dialed after Digit Timeout is reached.
+	<li>0[2-9]xxxxxxxxx - Where calls beginning with 0, followed by any digit from 2-9, followed further by 9 more digits are dialed immediately.
+	<li>+1[2-9]xxxxxxxx - Where calls beginning with the + character, followed by 1, followed by any digit from 2-9, followed by 8 more digits are dialed immediately.
+	<li>[2-9]xxxxxxxxx - Where calls beginning with any digit from 2-9, followed by 9 more digits are dialed immediately.
+	<li>[2-9]xxxT - Where calls beginning with any digit from 2-9, followed by three more digits are dialed after Digit Timeout is reached.
+	These examples would be represented in this option entry box as:<BR>
+	<li>[2-9]11|0T|+011xxx.T|0[2-9]xxxxxxxxx|+1[2-9]xxxxxxxx|[2-9]xxxxxxxxx|[2-9]xxxT<BR>
+	where each entry is separated by the | character. For more information, please refer to RFC 3435.
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/preferences.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

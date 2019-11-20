@@ -1,0 +1,66 @@
+.TH filter_create_fd 3 "12 July 2007" "ClearSilver" "util/filter.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+filter_create_fd  - Create a sub process and return the
+requested pipes
+.SH SYNOPSIS
+.Ss
+#include <util/filter.h>
+.Se
+.Ss
+NEOERR *filter_create_fd(const char *cmd, int *fdin, int *fdout, int *fderr, 
+                         pid_t *pid);
+
+.Se
+
+.SH ARGUMENTS
+cmd -> the sub command to execute.  Will be executed with
+.br
+/bin/sh -c
+.br
+fdin -> pointer to return the stdin pipe, or NULL if you don't
+.br
+want the stdin pipe
+.br
+fdout -> pointer to return the stdout pipe, or NULL if you don't
+.br
+want the stdout pipe
+.br
+fderr -> pointer to return the stderr pipe, or NULL if you don't
+.br
+want the stderr pipe
+
+.SH DESCRIPTION
+filter_create_fd and filter_create_fp are what popen
+
+been: a mechanism to create sub processes
+and have pipes to all their input/output.  The concept
+was taken from mutt, though python has something similar
+with popen3/popen4.  You control which pipes the
+function returns by the fdin/fdout/fderr arguments.  A
+NULL value means "don't create a pipe", a pointer to an
+int will cause the pipes to be created and the value
+of the file descriptor stored in the int.  You will have
+to close(2) the file descriptors yourself.
+
+.SH "RETURN VALUE"
+fdin -> the stdin file descriptor of the sub process
+.br
+fdout -> the stdout file descriptor of the sub process
+.br
+fderr -> the stderr file descriptor of the sub process
+.br
+pid -> the pid of the sub process
+
+.SH "SEE ALSO"
+.BR filter_wait "(3), "filter_create_fp "(3), "filter_create_fd

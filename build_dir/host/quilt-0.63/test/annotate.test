@@ -1,0 +1,114 @@
+	$ mkdir patches
+
+	$ cat > foo
+	< foo
+	< bar
+	< baz
+
+	$ quilt new patch
+	> Patch patches/patch is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/patch
+
+	$ sed -e 's:b:B:' foo > foo.new
+	$ mv foo.new foo
+	$ quilt refresh
+	> Refreshed patch patches/patch
+
+	$ quilt annotate foo
+	>	foo
+	> 1	Bar
+	> 1	Baz
+	>
+	> 1	patches/patch
+
+	$ quilt new patch2
+	> Patch patches/patch2 is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/patch2
+
+	$ sed -e 's:Baz:baz:' foo > foo.new
+	$ mv foo.new foo
+	$ quilt refresh
+	> Refreshed patch patches/patch2
+
+	$ quilt annotate foo
+	>	foo
+	> 1	Bar
+	> 2	baz
+	>
+	> 1	patches/patch
+	> 2	patches/patch2
+
+	$ quilt new patch3
+	> Patch patches/patch3 is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/patch3
+
+	$ sed -e '/Bar/d' foo > foo.new
+	$ mv foo.new foo
+	$ quilt refresh
+	> Refreshed patch patches/patch3
+
+	$ quilt annotate foo
+	>	foo
+	> 2	baz
+	>
+	> 1	patches/patch
+	> 2	patches/patch2
+	> 3	patches/patch3
+
+	$ quilt annotate -P patch3 foo
+	>	foo
+	> 2	baz
+	>
+	> 1	patches/patch
+	> 2	patches/patch2
+	> 3	patches/patch3
+
+	$ quilt annotate -P patch2 foo
+	>	foo
+	> 1	Bar
+	> 2	baz
+	>
+	> 1	patches/patch
+	> 2	patches/patch2
+
+	$ quilt annotate -P patch foo
+	>	foo
+	> 1	Bar
+	> 1	Baz
+	>
+	> 1	patches/patch
+
+	$ quilt new patch4
+	> Patch patches/patch4 is now on top
+
+	$ cat > jkl
+	< abc
+	< def
+
+	$ quilt add jkl wrz
+	> File jkl added to patch patches/patch4
+	> File wrz added to patch patches/patch4
+
+	$ rm -f jkl
+	$ cat > wrz
+	< one
+	< two
+
+	$ quilt refresh
+	> Refreshed patch patches/patch4
+
+	$ quilt annotate jkl
+	>
+	> 1	patches/patch4
+
+	$ quilt annotate wrz
+	> 1	one
+	> 1	two
+	>
+	> 1	patches/patch4

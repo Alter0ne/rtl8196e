@@ -1,0 +1,137 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Displays calls in progress - options to transfer, hangup a call
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Call Status</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_channel_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_channel_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_channel_list tr.frow td{ font-weight:bold; }
+		#table_channel_list tr td{ padding : 3px; }
+		#table_channel_list tr.even { background: #DFDFDF; }
+		#table_channel_list tr.odd{ background: #FFFFFF; }
+		#table_channel_list tr.even:hover, #table_channel_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+		#sqDestinations{
+			height:120px ;
+			background-color:#FFFFFF;
+			padding: 5px;
+			border-width: 1px;
+			border-color: #7E5538;
+			border-style: solid;
+			cursor: default;
+			font: 83%/1.4 arial, helvetica, sans-serif;
+			overflow :auto;
+		}
+		
+		#sqDestinations div {
+			clear :both;
+			padding : 3px 5px 0px 5px;
+			min-height: 20px;
+		}
+		#sqDestinations div:hover {
+			background-color:#DEDEDE;
+		}
+		
+		#sqDestinations div span.step_desc {
+			float: left;
+			/* max-width: 300px; */
+			background: transparent;
+		}
+		#sqDestinations div span.step_desc:hover{
+			background-color:#DEDEDE;
+		}
+		
+		#sqDestinations div span.step_up {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/asterisk-arrow-up.png") no-repeat;
+		}
+		
+		#sqDestinations div span.step_down {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/asterisk-arrow-down.png") no-repeat;
+		}
+		
+		#sqDestinations div span.step_delete {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/delete_circle.png") no-repeat;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Channel Management <span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='top_buttons'>
+		<span class='guiButton' onclick='updateChannels_List();' style='float:left'>Refresh Now</span>
+		<div class='lite_Heading' id='thisPage_lite_Heading'>Active Channels</div>
+	</div>
+	<center><div id='thisPage_COuntDown'></div></center>
+
+	<table id='table_channel_list' cellpadding=0 cellspacing=0 border=0 align=center style='clear:both;'></table>
+
+	<div id="div_activechannel_edit" STYLE="width:550; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id="div_activechannel_edit_title"></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<tr>	<td align=right>User <img src="images/tooltip_info.gif" tip="en,channels,0" class='tooltipinfo'> :</td>
+				<td>	<select id='USERS' required='yes'> </td>
+			</tr>
+	
+			<tr>	<td align=center valign=bottom colspan=2 style="padding:15px; background-color: #f4deb7">
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick="doTransfer();">Transfer</span>
+				</td>
+			</tr>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/status.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

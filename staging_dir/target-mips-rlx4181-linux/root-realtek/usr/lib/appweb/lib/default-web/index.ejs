@@ -1,0 +1,58 @@
+
+<%@ layout "default" %>
+<div class="contentLeft">
+    <h1>Welcome to Ejscript</h1>
+
+    <img src="<%= appUrl + "/web/images/splash.jpg"%>" class="wrapLeft shadow" alt=""/>
+    <p>Ejscript is a web framework that makes it dramatically easier to create dynamic web 
+    applications using Server-Side JavaScript.</p>
+
+    <p>Ejscript has an application generator, templating engine, a Model/View/Controller framework and a library 
+        of Ajax view controls. Enjoy!</p>
+	<br/>
+
+    <h2>Quick Start</h2>
+    <ol>
+        <li><b>Review Configuration Files</b>
+            <p>Review config/*.ecf and tailor if required. Update your config/database.ecf for the database
+            parameters.</p>
+        </li>
+
+        <li><b><a href="http://www.ejscript.org/products/ejs/doc/guide/ejs/web/views.html">Create Views</b></a>
+            <p>Create views under the <b>views</b> directory. Modify the layout in
+            "views/layouts/default.ejs" and customize the style sheet in the "web" directory for static content.</p>
+        </li>
+        <li><b><a href="http://www.ejscript.org/products/ejs/doc/guide/ejs/web/controllers.html">Generate 
+            Models and Controllers</a></b>:
+            <p>Create controllers to manage your app. Run 
+                <a href="http://www.ejscript.org/products/ejs/doc/guide/ejs/web/ejsweb.html"><b>ejsweb</b></a> 
+                with no options to see its usage.</p>
+            <pre>ejsweb generate controller NAME [action, ...]</pre>
+        </li>
+        <li><b><a href="http://www.ejscript.org/products/ejs/doc/guide/ejs/web/ejsweb.html#scaffolds">Generate 
+            Scaffolds</a></b>:
+            <p>Create entire scaffolds for large sections of your application. 
+            <pre>ejsweb generate scaffold model [field:type, ...]</pre>
+        </li>
+        
+        <li><b><a href="http://www.ejscript.org/products/ejs/doc/product/index.html">Read the Documentation</b>
+            <p>Go to <a href="http://www.ejscript.org/products/ejs/doc/product/index.html">
+            http://www.ejscript.org/products/ejs/doc/product/index.html</a> for the latest Ejscript documentation. 
+            Here you can read quick tours, overviews and access all the Ejscript APIs.</b>
+        </li>
+		<li><b>Enjoy!</b></li>
+		<p>&nbsp;</p>
+</div>
+
+<div class="contentRight">
+    <h2 class="section">Ejscript Links</h2>
+    <ul>
+        <li><a href="http://www.ejscript.org">Official Web Site</li>
+        <li><a href="http://www.ejscript.org/forum/index.php">Support Forum</li>
+        <li><a href="http://www.ejscript.org/products/ejs/doc/product/index.html">Documentation</li>
+        <li><a href="http://www.ejscript.org/products/ejs/doc/ref/ejs/webArchitecture.html">Web Framework</li>
+        <li><a href="http://www.ejscript.org/products/ejs/doc/api/ejscript/index.html">Ejscript API</li>
+        <li><a href="http://www.embedthis.com/blog/">Blog</li>
+        <li><a href="http://www.appwebserver.org">Appweb</li>
+    </ul>
+</div>

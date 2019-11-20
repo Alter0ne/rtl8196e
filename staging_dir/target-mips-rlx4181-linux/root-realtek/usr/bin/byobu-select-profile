@@ -1,0 +1,217 @@
+#!/bin/sh -e
+#
+#    byobu-select-profile
+#    Copyright (C) 2008 Canonical Ltd.
+#
+#    Authors: Dustin Kirkland <kirkland@canonical.com>
+#             Nick Barcet <nick.barcet@ubuntu.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# If you change any strings, please generate localization information with:
+#	./debian/rules get-po
+
+PKG="byobu"
+[ -z "$BYOBU_PREFIX" ] && export BYOBU_PREFIX="/usr"
+export BYOBU_PREFIX
+[ -r "/etc/$PKG/socketdir" ] && . "/etc/$PKG/socketdir" || SOCKETDIR="/var/run/screen"
+
+TEXTDOMAIN="$PKG"
+
+COLORS="default_light \
+	default_dark \
+	white \
+	black \
+	grey \
+	dark_grey \
+	light_grey \
+	blue \
+	light_blue \
+	cyan \
+	light_cyan \
+	green \
+	light_green \
+	purple \
+	light_purple \
+	red \
+	light_red \
+	yellow \
+	brown"
+
+usage () {
+    cat <<EOT
+Usage: $0 [(-l|--list)][(-h|--help)]
+    -l,--list           list available profiles
+    -b,--background	set the background color
+    -f,--foreground     set the foreground color
+    -h,--help           this help
+
+    Without any parameters, runs interactively.
+EOT
+}
+
+# Initialize variables
+FILE="$HOME"/."$PKG"/color
+PROFILE="$HOME/.$PKG/profile"
+[ -r "$PROFILE" ] || ln -sf $BYOBU_PREFIX/share/$PKG/profiles/common "$PROFILE"
+selected=-1
+color=
+
+assert_symlink() {
+	if [ -e "$1" ]; then
+		if [ ! -L "$1" ]; then
+			echo `gettext 'Error:'` $1 `gettext ' file exists, but is not a symlink'`
+			exit 1
+		fi
+	fi
+}
+
+mkdir -p "$HOME/.$PKG"
+# If these files exist, they must be a symlink
+assert_symlink "$HOME/.$PKG/profile"
+
+listprofiles() {
+	# Display list of profiles, one per line
+	for x in $COLORS; do
+		echo "$x"
+	done
+}
+
+prompt() {
+	which="$1"
+	count=1
+	selected=-1
+	while /bin/true; do
+		if [ $count -gt 5 ]; then
+			echo `gettext "ERROR: Invalid selection"`
+			exit 1
+		fi
+		count=$(expr $count + 1)
+		echo
+		if [ "$which" = "foreground" ]; then
+			echo `gettext 'Select the foreground color: '`
+			simple="white"
+		else
+			echo `gettext 'Select the background color: '`
+			simple="black"
+		fi
+		i=1
+		for x in $COLORS; do
+			test $i -lt 10 2>/dev/null && echo -n "  " || echo -n " "
+			echo "$i. $x"
+			i=$(expr $i + 1)
+			[ "$simple" = "$x" ] && simple=$i
+		done
+		echo
+		if [ -z "$selected" -a -n "$simple" ]; then
+			selected="$simple"
+		elif ! test $selected -gt 0 2>/dev/null; then
+			echo -n "`gettext 'Choose'` 1-$i [$simple]: "
+			selected=`head -n1`
+		elif ! test $selected -le $i 2>/dev/null; then
+			echo -n "`gettext 'Choose'` 1-$i [$simple]: "
+			selected=`head -n1`
+		else
+			i=1
+			for color in $COLORS; do
+				[ "$i" = "$selected" ] && break
+				i=$(expr $i + 1)
+			done
+			echo `gettext "Selected"` "$which [$color]"
+			setcolor "$which" "$color"
+			return 0
+		fi
+	done
+}
+
+getletter() {
+	count=$(echo "$1" | wc -c)
+	if [ "$count" = "2" ]; then
+		echo "$1"
+		return
+	fi
+	color="$1"
+	case $color in
+		default_light) letter="d";;
+		default_dark)  letter="D";;
+		black)         letter="k";;
+		dark_grey)     letter="K";;
+		blue)          letter="b";;
+		light_blue)    letter="B";;
+		cyan)          letter="c";;
+		light_cyan)    letter="C";;
+		green)         letter="g";;
+		light_green)   letter="G";;
+		purple)        letter="m";;
+		light_purple)  letter="M";;
+		red)           letter="r";;
+		light_red)     letter="R";;
+		grey)          letter="w";;
+		light_grey)    letter="W";;
+		white)         letter="w";;
+		yellow)        letter="Y";;
+		brown)         letter="y";;
+		*)             letter="d";;
+	esac
+	echo "$letter"
+}
+
+setcolor() {
+	which="$1"
+	color="$2"
+	[ -r $FILE ] && . $FILE
+	if [ "$which" = "foreground" ]; then
+		FOREGROUND=$(getletter "$color")
+	else
+		BACKGROUND=$(getletter "$color")
+	fi
+	[ "$MONOCHROME" = "1" ] || MONOCHROME=0
+	printf "FOREGROUND=$FOREGROUND\nBACKGROUND=$BACKGROUND\nMONOCHROME=$MONOCHROME" > $FILE
+	touch "$SOCKETDIR/S-$USER/$PKG.reload-required"
+}
+
+if [ $# -eq 0 ]; then
+	prompt "background"
+	prompt "foreground"
+	screen -X at 0 source "$HOME/.$PKG/profile"
+else
+	while true; do
+		case "$1" in
+			-b|--background)
+				setcolor "background" "$2"
+				shift 2
+			;;
+			-f|--foreground)
+				setcolor "foreground" "$2"
+				shift 2
+			;;
+			-l|--list)
+				listprofiles
+				shift
+				break
+			;;
+			*)
+				usage
+				exit 1
+			;;
+			--)
+				shift
+				break
+			;;
+		esac
+		[ $# -eq 0 ] && break
+	done
+fi
+
+exit 0

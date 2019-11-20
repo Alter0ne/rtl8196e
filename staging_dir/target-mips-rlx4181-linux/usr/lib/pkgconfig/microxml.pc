@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: microxml
+Description: micro XML library
+Version: 1.0
+Libs: -L${exec_prefix}/lib -lmicroxml 
+Cflags: -I${prefix}/include 

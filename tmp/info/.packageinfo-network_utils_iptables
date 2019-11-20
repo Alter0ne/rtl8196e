@@ -1,0 +1,521 @@
+Source-Makefile: package/network/utils/iptables/Makefile
+Package: iptables
+Menu: 1
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +kmod-ipt-core +libip4tc +IPV6:libip6tc +libxtables
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IP firewall administration tool
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IP firewall administration tool.
+
+ Matches:
+  - icmp
+  - tcp
+  - udp
+  - comment
+  - conntrack
+  - limit
+  - mac
+  - mark
+  - multiport
+  - set
+  - state
+  - time
+
+ Targets:
+  - ACCEPT
+  - CT
+  - DNAT
+  - DROP
+  - REJECT
+  - LOG
+  - MARK
+  - MASQUERADE
+  - REDIRECT
+  - SET
+  - SNAT
+  - TCPMSS
+
+ Tables:
+  - filter
+  - mangle
+  - nat
+  - raw
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-conntrack-extra
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-conntrack-extra
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Extra connection tracking extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: Extra iptables extensions for connection tracking.
+
+ Matches:
+  - connbytes
+  - connlimit
+  - connmark
+  - recent
+  - helper
+
+ Targets:
+  - CONNMARK
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-extra
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-extra
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Other extra iptables extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: Other extra iptables extensions.
+
+ Matches:
+  - addrtype
+  - condition
+  - owner
+  - physdev (if ebtables is enabled)
+  - pkttype
+  - quota
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-filter
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-filter
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Content inspection extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for packet content inspection.
+Includes support for:
+
+ Matches:
+  - layer7
+  - string
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-ipopt
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-ipopt
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IP/Packet option extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for matching/changing IP packet options.
+
+ Matches:
+  - dscp
+  - ecn
+  - length
+  - statistic
+  - tcpmss
+  - unclean
+  - hl
+
+ Targets:
+  - DSCP
+  - CLASSIFY
+  - ECN
+  - HL
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-ipsec
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-ipsec
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IPsec extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for matching ipsec traffic.
+
+ Matches:
+  - ah
+  - esp
+  - policy
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-nat-extra
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-nat-extra
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Extra NAT extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for extra NAT targets.
+
+ Targets:
+  - MIRROR
+  - NETMAP
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-iprange
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-iprange
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IP range extension
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for matching ip ranges.
+
+ Matches:
+  - iprange
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-ulog
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-ulog
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: user-space packet logging
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for user-space packet logging.
+
+ Targets:
+  - ULOG
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-hashlimit
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-hashlimit
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: hashlimit matching
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for hashlimit matching
+
+ Matches:
+  - hashlimit
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-led
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-led
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: LED trigger iptables extension
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extension for triggering a LED.
+
+ Targets:
+  - LED
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-tproxy
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-tproxy
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Transparent proxy iptables extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: Transparent proxy iptables extensions.
+
+ Matches:
+  - socket
+
+ Targets:
+  - TPROXY
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-tee
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-tee
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: TEE iptables extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: TEE iptables extensions.
+
+ Targets:
+  - TEE
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-u32
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-ipt-u32
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: U32 iptables extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: U32 iptables extensions.
+
+ Matches:
+  - u32
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-nflog
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-nfnetlink-log +kmod-ipt-nflog
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Netfilter NFLOG target
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description:  iptables extension for user-space logging via NFNETLINK.
+
+ Includes:
+  - libxt_NFLOG
+
+http://netfilter.org/
+
+@@
+
+Package: iptables-mod-nfqueue
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread iptables +kmod-nfnetlink-queue +kmod-ipt-nfqueue
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Netfilter NFQUEUE target
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description:  iptables extension for user-space queuing via NFNETLINK.
+
+ Includes:
+  - libxt_NFQUEUE
+
+http://netfilter.org/
+
+@@
+
+Package: ip6tables
+Menu: 1
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @IPV6 +kmod-ip6tables +iptables
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IPv6 firewall administration tool
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv6 firewall administration tool
+http://netfilter.org/
+
+@@
+
+Package: ip6tables-extra
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ip6tables +kmod-ip6tables-extra
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IPv6 header matching modules
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv6 header matching modules
+http://netfilter.org/
+
+@@
+
+Package: ip6tables-mod-nat
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ip6tables +kmod-ipt-nat6
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: IPv6 NAT extensions
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: iptables extensions for IPv6-NAT targets.
+http://netfilter.org/
+
+@@
+
+Package: libiptc
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libip4tc +IPV6:libip6tc
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: IPv4/IPv6 firewall - shared libiptc library (compatibility stub)
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv4/IPv6 firewall - shared libiptc library (compatibility stub)
+http://netfilter.org/
+
+@@
+
+Package: libip4tc
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: IPv4 firewall - shared libiptc library
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv4 firewall - shared libiptc library
+http://netfilter.org/
+
+@@
+
+Package: libip6tc
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: IPv6 firewall - shared libiptc library
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv6 firewall - shared libiptc library
+http://netfilter.org/
+
+@@
+
+Package: libxtables
+Submenu: Firewall
+Version: 1.4.21-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: IPv4/IPv6 firewall - shared xtables library
+Maintainer: 
+Source: iptables-1.4.21.tar.bz2
+Type: ipkg
+Description: IPv4/IPv6 firewall - shared xtables library
+http://netfilter.org/
+
+@@
+
+

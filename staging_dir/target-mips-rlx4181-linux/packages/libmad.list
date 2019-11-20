@@ -1,0 +1,10 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libmad.a
+./usr/lib/libmad.so.0
+./usr/lib/libmad.so.0.2.1
+./usr/lib/libmad.so
+./usr/include
+./usr/include/mad.h

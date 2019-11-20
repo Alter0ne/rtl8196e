@@ -1,0 +1,138 @@
+#!/bin/bash
+#
+# $Id$
+#
+# Copyright (c) 2007-2008
+#         The Xfce development team. All rights reserved.
+#
+# Written for Xfce by Jannis Pohlmann <jannis@xfce.org>.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2 of the License, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# xdt-commit - Part of the Xfce developer tools.
+#
+
+
+##
+## Check what kind of repo we have
+##
+if [ -d .git ]; then
+  repo_type=git
+elif [ -d .svn ]; then
+  repo_type=svn
+else
+  echo "This doesn't appear to be the root of a versioned source tree." >&2
+  exit 1
+fi
+
+
+##
+## Check if needed tools are installed
+##
+if [ "$repo_type" = "git" ]; then
+  if ! type git &>/dev/null; then
+    echo "Git needs to be installed." >&2
+    exit 1
+  fi
+elif [ "$repo_type" = "svn" ]; then
+  if ! type svn &> /dev/null; then
+    echo "Subversion needs to be installed." >&2
+    exit 1
+  fi
+
+  ##
+  ## Check if we are in a versioned directory
+  ##
+  if ! svn info &> /dev/null; then
+    echo "Current working directory is not versioned." >&2
+    exit 1
+  fi
+fi
+
+
+##
+## Files to be committed
+##
+FILES=$*
+
+
+##
+## Detect all ChangeLog's inside this directory by scanning it 
+## recursively
+##
+CHANGELOGS=$(find . -type f -iname ChangeLog | sed 's:^\./::')
+
+
+##
+## Append parsed diff output of each ChangeLog to the commit message
+##
+for CHANGELOG in $CHANGELOGS; do
+  # Make sure the file exists
+  if [ -f "$CHANGELOG" ]; then
+    if [ "$repo_type" = "svn" ]; then
+      # Determine SVN status
+      STATUS=$(svn status "${CHANGELOG}")
+      if [ -z "$STATUS" ]; then
+        STATUS='?'
+      fi
+    elif [ "$repo_type" = "git" ]; then
+      # Determine git status, and fake it into svn-style status
+      STATUS=$(git status | grep -E "(modified|new file):[[:space:]]+${CHANGELOG}")
+      [ "$STATUS" ] || STATUS='?'  # signal no changes or not versioned
+    fi
+
+    # Check if file is versioned
+    if [ "$STATUS" != "?" ]; then
+      # Add changelog to the commit
+      if [ "$repo_type" = "git" ]; then
+        git add "${CHANGELOG}"
+      fi
+
+      # Parse output
+      if [ "$repo_type" = "svn" ]; then
+        MSG=$(svn diff "${CHANGELOG}")
+      elif [ "$repo_type" = "git" ]; then
+        MSG=$(git diff --cached "${CHANGELOG}")
+      fi
+      MSG=$(echo "$MSG" | awk '/^+\t/' | sed 's/^+//')
+
+      # Append to commit message (and insert newline between ChangeLogs)
+      if [ -z "$COMMIT_MSG" ]; then
+        COMMIT_MSG="$MSG"
+      else
+        COMMIT_MSG=$(echo "$COMMIT_MSG"$'\n'"$MSG")
+      fi
+    fi
+  fi
+done
+
+
+##
+## Commit changes. If the commit message generate from the ChangeLog 
+## files is empty, ask the user to enter a commit message himself
+##
+if [ -n "$COMMIT_MSG" ]; then
+  if [ "$repo_type" = "svn" ]; then
+    svn commit $FILES -m "$COMMIT_MSG"
+  elif [ "$repo_type" = "git" ]; then
+    git commit $FILES -m "$COMMIT_MSG"
+  fi
+else
+  if [ "$repo_type" = "svn" ]; then
+    svn commit $FILES
+  elif [ "$repo_type" = "git" ]; then
+    git commit $FILES
+  fi
+fi

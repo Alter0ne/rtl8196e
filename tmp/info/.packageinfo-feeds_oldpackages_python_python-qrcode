@@ -1,0 +1,84 @@
+Source-Makefile: package/feeds/oldpackages/python/python-qrcode/Makefile
+Package: python-qrcode
+Submenu: Python
+Version: 6.1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-qrcode:python +PACKAGE_python-qrcode:python-setuptools +PACKAGE_python-qrcode:python-six +PACKAGE_python-qrcode:python-pillow
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: QR Code image generator
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: qrcode-6.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Pure python QR Code generator
+https://github.com/lincolnloop/python-qrcode
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python-qrcode-src
+Submenu: Python
+Version: 6.1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: QR Code image generator (sources)
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: qrcode-6.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Pure python QR Code generator.
+    (Contains the Python sources for this package).
+https://github.com/lincolnloop/python-qrcode
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python3-qrcode
+Submenu: Python
+Version: 6.1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-qrcode:python3 +PACKAGE_python3-qrcode:python3-setuptools +PACKAGE_python3-qrcode:python3-six +PACKAGE_python3-qrcode:python3-pillow
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: QR Code image generator
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: qrcode-6.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Pure python QR Code generator
+.
+(Variant for Python3)
+https://github.com/lincolnloop/python-qrcode
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python3-qrcode-src
+Submenu: Python
+Version: 6.1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: QR Code image generator (sources)
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: qrcode-6.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Pure python QR Code generator
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/lincolnloop/python-qrcode
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+

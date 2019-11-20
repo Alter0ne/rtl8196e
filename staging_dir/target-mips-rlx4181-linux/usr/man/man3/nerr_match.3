@@ -1,0 +1,37 @@
+.TH nerr_match 3 "12 July 2007" "ClearSilver" "util/neo_err.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+nerr_match 
+.SH SYNOPSIS
+.Ss
+#include <util/neo_err.h>
+.Se
+.Ss
+int nerr_match (NEOERR *err, NERR_TYPE type);
+
+.Se
+
+.SH ARGUMENTS
+err - the NEOERR that has an error.
+.br
+type - the NEOERR type, as registered with nerr_register
+
+.SH DESCRIPTION
+nerr_match is used to walk the NEOERR chain and match
+the error against a specific error type.  In exception
+parlance, this would be the equivalent of "catch".
+Typically, you can just compare a NEOERR against STATUS_OK
+or just test for true if you are checking for any error.
+
+.SH "SEE ALSO"
+.BR nerr_error_traceback "(3), "nerr_pass "(3), "nerr_error_string "(3), "defined "(3), "nerr_pass_ctx "(3), "nerr_passf "(3), "nerr_init "(3), "nerr_match "(3), "nerr_log_error "(3), "nerr_ignore "(3), "nerr_register "(3), "nerr_handle

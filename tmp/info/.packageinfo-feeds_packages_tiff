@@ -1,0 +1,54 @@
+Source-Makefile: package/feeds/packages/tiff/Makefile
+Package: libtiff
+Version: 4.0.10-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zlib +libjpeg
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: TIFF library
+Maintainer: Jiri Slachta <jiri@slachta.eu>
+Source: tiff-4.0.10.tar.gz
+Type: ipkg
+Feed: packages
+Description: TIFF library
+http://simplesystems.org/libtiff/
+Jiri Slachta <jiri@slachta.eu>
+@@
+
+Package: libtiffxx
+Version: 4.0.10-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libtiff +USE_UCLIBCXX:uclibcxx +USE_LIBSTDCXX:libstdcpp
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: TIFF library(c++ bindings)
+Maintainer: Jiri Slachta <jiri@slachta.eu>
+Source: tiff-4.0.10.tar.gz
+Type: ipkg
+Feed: packages
+Description: TIFF library(c++ bindings)
+http://simplesystems.org/libtiff/
+Jiri Slachta <jiri@slachta.eu>
+@@
+
+Package: tiff-utils
+Submenu: Image Manipulation
+Version: 4.0.10-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libtiff
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: TIFF utilities
+Maintainer: Jiri Slachta <jiri@slachta.eu>
+Source: tiff-4.0.10.tar.gz
+Type: ipkg
+Feed: packages
+Description: TIFF utilities
+http://simplesystems.org/libtiff/
+Jiri Slachta <jiri@slachta.eu>
+@@
+
+

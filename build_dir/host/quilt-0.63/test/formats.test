@@ -1,0 +1,120 @@
+	# We create our own working directory to be able to verify
+	# all patch formats, including the ones which mention the
+	# base directory.
+	$ mkdir -p d/patches
+	$ cd d
+
+	$ cat > test.txt
+	< 1
+	< 2
+	< old
+	< 4
+	< 5
+
+	$ quilt new test
+	> Patch %{P}test is now on top
+
+	$ quilt add test.txt
+	> File test.txt added to patch %{P}test
+
+	$ cat > test.txt
+	< 1
+	< 2
+	< new
+	< 4
+	< 5
+
+	$ quilt diff
+	> Index: d/test.txt
+	> ===================================================================
+	> --- d.orig/test.txt
+	> +++ d/test.txt
+	> @@ -1,5 +1,5 @@
+	>  1
+	>  2
+	> -old
+	> +new
+	>  4
+	>  5
+
+	$ quilt diff --no-index
+	> --- d.orig/test.txt
+	> +++ d/test.txt
+	> @@ -1,5 +1,5 @@
+	>  1
+	>  2
+	> -old
+	> +new
+	>  4
+	>  5
+
+	$ quilt diff -R
+	> Index: d/test.txt
+	> ===================================================================
+	> --- d.orig/test.txt
+	> +++ d/test.txt
+	> @@ -1,5 +1,5 @@
+	>  1
+	>  2
+	> -new
+	> +old
+	>  4
+	>  5
+
+	$ quilt diff -U1
+	> Index: d/test.txt
+	> ===================================================================
+	> --- d.orig/test.txt
+	> +++ d/test.txt
+	> @@ -2,3 +2,3 @@
+	>  2
+	> -old
+	> +new
+	>  4
+
+	$ quilt diff -c
+	> Index: d/test.txt
+	> ===================================================================
+	> *** d.orig/test.txt
+	> --- d/test.txt
+	> ***************
+	> *** 1,5 ****
+	>   1
+	>   2
+	> ! old
+	>   4
+	>   5
+	> --- 1,5 ----
+	>   1
+	>   2
+	> ! new
+	>   4
+	>   5
+
+	$ quilt diff -C1
+	> Index: d/test.txt
+	> ===================================================================
+	> *** d.orig/test.txt
+	> --- d/test.txt
+	> ***************
+	> *** 2,4 ****
+	>   2
+	> ! old
+	>   4
+	> --- 2,4 ----
+	>   2
+	> ! new
+	>   4
+
+	$ quilt diff -p ab
+	> Index: b/test.txt
+	> ===================================================================
+	> --- a/test.txt
+	> +++ b/test.txt
+	> @@ -1,5 +1,5 @@
+	>  1
+	>  2
+	> -old
+	> +new
+	>  4
+	>  5

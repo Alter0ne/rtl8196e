@@ -1,0 +1,41 @@
+.TH hdf_set_copy 3 "12 July 2007" "ClearSilver" "util/neo_hdf.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+hdf_set_copy  -> Copy a value from one location in the
+dataset to another
+.SH SYNOPSIS
+.Ss
+#include <util/neo_hdf.h>
+.Se
+.Ss
+NEOERR* hdf_set_copy (HDF *hdf, const char *dest, const char *src);
+
+.Se
+
+.SH ARGUMENTS
+hdf -> the pointer to the dataset node
+.br
+dest -> the name of the destination node
+.br
+src -> the name of the source node
+
+.SH DESCRIPTION
+hdf_set_copy first walks the hdf dataset to the named src
+node, and then copies that value to the named dest node.
+If the src node is not found, an error is raised.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR hdf_set_symlink "(3), "hdf_get_valuef "(3), "compareFunc) "(3), "hdf_dump_str "(3), "hdf_get_int_value "(3), "hdf_read_string_ignore "(3), "hdf_copy "(3), "hdf_get_node "(3), "hdf_set_value "(3), "hdf_obj_child "(3), "hdf_read_string "(3), "hdf_set_buf "(3), "hdf_register_fileload "(3), "hdf_get_obj "(3), "hdf_get_attr "(3), "hdf_obj_top "(3), "hdf_dump_format "(3), "hdf_destroy "(3), "hdf_init "(3), "hdf_obj_value "(3), "hdf_write_string "(3), "hdf_set_valuevf "(3), "hdf_sort_obj "(3), "hdf_write_file_atomic "(3), "hdf_obj_attr "(3), "hdf_set_valuef "(3), "hdf_get_copy "(3), "hdf_write_file "(3), "hdf_get_valuevf "(3), "hdf_set_int_value "(3), "hdf_dump "(3), "hdf_get_value "(3), "hdf_set_copy "(3), "hdf_obj_next "(3), "hdf_search_path "(3), "hdf_obj_name "(3), "hdf_set_attr "(3), "hdf_get_child "(3), "hdf_remove_tree

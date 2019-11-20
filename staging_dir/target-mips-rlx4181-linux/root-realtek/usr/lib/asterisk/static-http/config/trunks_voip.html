@@ -1,0 +1,265 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage VOIP trunks
+ *
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>VoIP Trunks</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_VOIPTrunks_list {
+			border: 0px solid #666666;
+			margin-top: 8px;
+			padding : 1px;
+			width: 96%;
+		}
+
+		#table_VOIPTrunks_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_VOIPTrunks_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_VOIPTrunks_list tr.frow td{ font-weight:bold; }
+		#table_VOIPTrunks_list tr td{ padding : 3px; }
+		#table_VOIPTrunks_list tr.even { background: #DFDFDF; }
+		#table_VOIPTrunks_list tr.odd{ background: #FFFFFF; }
+		#table_VOIPTrunks_list tr.even:hover, #table_VOIPTrunks_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	#div_INR_LIST {
+		text-align:left;
+		height:200px;
+		width:96%;
+		border-width: 1px;
+		border-color: #7E5538;
+		border-style: solid;
+		overflow: auto;
+	}
+
+	#div_INR_LIST div {
+		clear: both;
+		padding : 3px 5px 0px 5px;
+		min-height: 20px;
+	}
+
+	#div_INR_LIST div:hover{
+		background-color:#DEDEDE;
+	}
+
+	#div_INR_LIST div span.rule_desc {
+		padding: 2px 3px 2px 5px;
+		float: left;
+		background: transparent;
+	}
+
+	#div_INR_LIST div span.rule_delete {
+		float: right;
+		width: 20px;
+		background: transparent url("./images/delete_circle.png") no-repeat;
+	}
+
+	.variable {
+		clear: both;
+		width: 100%;
+	}
+
+	.variable > .label {
+		float: left;
+		padding: 2px;
+		padding-right: 4px;
+		text-align: right;
+		width: 30%;
+	}
+
+	.variable > .field {
+		padding: 2px;
+		margin-left: 30%;
+		text-align: left;
+		width: 70%;
+	}
+
+	#edit_VOIPTrunk_DIV {
+		display: none;
+		padding: 4px;
+		text-align: center;
+		width: 620px;
+	}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Manage SIP & IAX trunks
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="tabbedMenu"></div>
+
+	<div class='top_buttons' style="margin-top: -10px;">
+		<span id='edit_voiptrunk_button' class='guiButtonNew' onclick="new_trunk_form();">New SIP/IAX Trunk</span>
+	</div>
+
+	<table id='table_VOIPTrunks_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="edit_VOIPTrunk_DIV" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id='edit_VOIPTrunk_DIV_Title'></span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<div id="TR_trunktype" class="variable">
+			<div class="label">Type:</div>
+			<div class="field">
+				<select id="edit_VOIPTrunk_Type" required="yes">
+					<option value="SIP">SIP</option>
+					<option value="IAX">IAX</option>
+				</select>
+			</div>
+		</div>
+		<div id="TR_contextbasis" class="variable">
+			<div class="label">
+				Context Naming <img src="images/tooltip_info.gif" tip="en,trunks,40" class="tooltipinfo" />:
+			</div>
+			<div class="field">
+				<select id='edit_VOIPTrunk_Context_Basis'  required='yes'>
+					<option value='GUIAssigned' selected>Assigned by Asterisk GUI</option>
+					<option value='FromUser'>Based on Username</option>
+					<option value='FromProvider'>Based on Provider Name</option>
+				</select>
+			</div>
+		</div>
+		<div id="TR_providername" class="variable">
+			<div class="label">
+				Provider Name <img src="images/tooltip_info.gif" tip="en,trunks,37" class='tooltipinfo' />:
+			</div>
+			<div class="field">
+				<input id='edit_VOIPTrunk_Providername' size=20 required='yes' />
+			</div>
+		</div>
+		<div id="TR_hostname" class="variable">
+			<div class="label">
+				Hostname <img src="images/tooltip_info.gif" tip="en,trunks,41" class='tooltipinfo' />:
+			</div>
+			<div class="field">
+				<input id='edit_VOIPTrunk_Hostname' size=30 required='yes' />
+			</div>
+		</div>
+		<div id="TR_username" class="variable">
+			<div class="label">
+				Username <img src="images/tooltip_info.gif" tip="en,trunks,39" class='tooltipinfo' />:
+			</div>
+			<div class="field">
+				<input id='edit_VOIPTrunk_Username' size=25  required='yes' validation='voipusername' />
+			</div>
+		</div>
+		<div id="TR_password" class="variable">
+			<div class="label">Password :</div>
+			<div class="field">
+				<input id='edit_VOIPTrunk_Password' size=25 required='yes' />
+			</div>
+		</div>
+		<div id="TR_codecs" class="editTrunk_Field variable">
+			<div class="label">Codecs:</div>
+			<div class="field">
+				First : <select id='codec_one'></select>
+				Second : <select id='codec_two'></select>
+				Third : <select id='codec_three'></select><BR>
+				Fourth : <select id='codec_fourth'></select>
+				Fifth : <select id='codec_fifth'></select>
+			</div>
+		</div>
+		<div id="TR_callerid" class="editTrunk_Field variable">
+			<div class="label">
+				CallerID <img src="images/tooltip_info.gif" tip="en,trunks,36" class='tooltipinfo' />:
+			</div>
+			<div class="field">
+				<input id="trunk_obcid" size="16" />
+			</div>
+		</div>
+		<div id="TR_fromdomain" class='editTrunk_Field variable'>
+			<div class="label">FromDomain:</div>
+			<div class="field">
+				<input id="trunk_fromdomain" size="16" />
+			</div>
+		</div>
+		<div id="TR_fromuser" class='editTrunk_Field variable'>
+			<div class="label">FromUser:</div>
+			<div class="field">
+				<input id="trunk_fromuser" size="16" />
+			</div>
+		</div>
+		<div id="TR_authuser" class='editTrunk_Field variable'>
+			<div class="label">AuthUser:</div>
+			<div class="field">
+				<input id="trunk_authuser" size="16" />
+			</div>
+		</div>
+		<div id="TR_insecure" class='editTrunk_Field variable'>
+			<div class="label">insecure:</div>
+			<div class="field">
+				<select id="trunk_insecure" dfalt='no' class="input8">
+					<option value='port'>port</option>
+					<option value='port,invite'>very</option>
+					<option value='no'>no</option>
+				</select>
+			</div>
+		</div>
+		<div id="outboundproxy_field" class='editTrunk_Field variable'>
+			<div class="label">Outbound Proxy:</div>
+			<div class="field">
+				<input id="trunk_outboundproxy" size="16" />
+			</div>
+		</div>
+		<div id="TR_ermwi" class='editTrunk_Field_ermwi variable'>
+			<div class="label">Enable Remote MWI:</div>
+			<div class="field">
+				<input type='checkbox' id='edit_ERMWI' />
+			</div>
+		</div>
+		<div id='editTrunk_Field_ermwi_row2' class='editTrunk_Field_ermwi variable'>
+			<div class="label">Remote MailBox:<br />Local User:</div>
+			<div class="field">
+				<input id='edit_ERMWI_rmbx' size="4" /><br />
+				<select id='edit_ERMWI_luser'></select>
+			</div>
+		</div>
+			<span class='guiButtonCancel' id="edit_VOIPTrunk_cancel"  onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+			<span class='guiButtonEdit' id="edit_VOIPTrunk_save"  onclick='edit_VOIPTrunk_save_go();'>Save</span>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/object.customs.js"></script>
+	<script src="js/trunks_voip.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

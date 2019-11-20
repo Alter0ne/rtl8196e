@@ -1,0 +1,170 @@
+Source-Makefile: feeds/packages/admin/zabbix/Makefile
+Package: zabbix-agent
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix agent
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix agent
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-agentd
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix agentd
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix agentd
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-extra-mac80211
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zabbix-agentd @PACKAGE_MAC80211_DEBUGFS @KERNEL_DEBUG_FS
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix discovery/userparameters for mac80211
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: An extra package for zabbix-agentd that adds a discovery rule for mac80211 wifi phy and many userparameters.
+It contains an suid helper to allow zabbix-agentd to still run as zabbix user and not as root.
+See http://wiki.openwrt.org/doc/howto/zabbix for ready to use zabbix templates.
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-extra-network
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zabbix-agentd +libuci-lua +lua
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix discovery/userparameters for network
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: An extra package for zabbix-agentd that adds a discovery rule for openwrt network interfaces.
+The idea here is to discover only interfaces listed in /etc/config/network (discover br-lan and not eth0.1 and wlan0)
+See http://wiki.openwrt.org/doc/howto/zabbix for ready to use zabbix templates.
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-extra-wifi
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zabbix-agentd +libiwinfo-lua +libuci-lua +lua
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix discovery/userparameters for wifi
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: An extra package for zabbix-agentd that adds a discovery rule for wifi interfaces and many userparameters.
+As it uses libiwinfo, it works with all wifi devices supported by openwrt.
+See http://wiki.openwrt.org/doc/howto/zabbix for ready to use zabbix templates.
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-sender
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix sender
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix sender
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-server
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsqlite3
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix server
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix server
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-proxy
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsqlite3
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix proxy
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix proxy
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+Package: zabbix-get
+Submenu: zabbix
+Version: 2.4.3-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: admin
+Category: Administration
+Title: Zabbix get
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Source: zabbix-2.4.3.tar.gz
+Type: ipkg
+Description: Zabbix get
+http://www.zabbix.com/
+Etienne CHAMPETIER <champetier.etienne@gmail.com>
+@@
+
+

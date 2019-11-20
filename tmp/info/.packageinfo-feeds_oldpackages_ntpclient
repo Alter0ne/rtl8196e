@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/ntpclient/Makefile
+Package: ntpclient
+Submenu: Time Synchronization
+Version: 2015_365-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +librt
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: NTP (Network Time Protocol) client
+Maintainer: Ted Hess <thess@kitschensync.net>
+Source: ntpclient_2015_365.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: 	NTP client for setting system time from NTP servers.
+http://doolittle.icarus.com/ntpclient/
+Ted Hess <thess@kitschensync.net>
+@@
+
+

@@ -1,0 +1,41 @@
+.TH dictSetValue 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictSetValue  - set/reset an items value.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+NEOERR *dictSetValue(dictCtx dict, const char *id, void *value);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to add pair to.
+.br
+id - identifier to insert/update
+.br
+value - value to store (may NOT be NULL)
+
+.SH DESCRIPTION
+Updates the <id>/<value> pair into <dict>.
+If <id> is not in <dict>, it is created.
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

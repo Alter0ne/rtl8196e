@@ -1,0 +1,58 @@
+Check whether quilt generates patches properly so that GNU patch recognizes
+file creates and deletions.
+
+	$ mkdir patches
+
+	$ echo delete > delete
+	$ quilt new test.diff
+	> Patch %{P}test.diff is now on top
+
+	$ quilt add create
+	> File create added to patch %{P}test.diff
+
+	$ echo create > create
+	$ quilt refresh
+	> Refreshed patch %{P}test.diff
+
+	$ quilt add delete
+	> File delete added to patch %{P}test.diff
+
+	$ rm -f delete
+	$ quilt refresh
+	> Refreshed patch %{P}test.diff
+	$ quilt header -r
+	< ---
+	<  create |    1 +
+	<  delete |    1 -
+	<  2 files changed, 1 insertion(+), 1 deletion(-)
+	<
+	> Replaced header of patch %{P}test.diff
+
+	$ quilt patches -v create
+	> = %{P}test.diff
+	$ quilt patches delete
+	> %{P}test.diff
+
+	$ quilt pop -q
+	> Removing patch %{P}test.diff
+	> No patches applied
+
+	$ quilt patches create
+	> %{P}test.diff
+	$ quilt patches -v delete
+	>   %{P}test.diff
+	$ quilt patches -- /dev/null dev/null null ---
+
+	$ echo create > create
+	$ rm -f delete
+	$ patch -p1 --dry-run < patches/test.diff
+	>~ The next patch would create the file `?create'?,
+	> which already exists!  Assume -R? [n] 
+	> Apply anyway? [n] 
+	> Skipping patch.
+	>~ 1 out of 1 hunk ignored( -- saving rejects to( file)? create.rej)?
+	>~ The next patch would delete the file `?delete'?,
+	> which does not exist!  Assume -R? [n] 
+	> Apply anyway? [n] 
+	> Skipping patch.
+	> 1 out of 1 hunk ignored

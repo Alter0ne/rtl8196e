@@ -1,0 +1,84 @@
+Source-Makefile: package/feeds/oldpackages/python/python-jdcal/Makefile
+Package: python-jdcal
+Submenu: Python
+Version: 1.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-jdcal:python-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Julian dates from proleptic Gregorian and Julian calendars
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: jdcal-1.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   This module contains functions for converting between Julian dates and calendar dates.
+https://github.com/phn/jdcal
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python-jdcal-src
+Submenu: Python
+Version: 1.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Julian dates from proleptic Gregorian and Julian calendars (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: jdcal-1.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       This module contains functions for converting between Julian dates and calendar dates..
+    (Contains the Python sources for this package).
+https://github.com/phn/jdcal
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-jdcal
+Submenu: Python
+Version: 1.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-jdcal:python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Julian dates from proleptic Gregorian and Julian calendars
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: jdcal-1.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   This module contains functions for converting between Julian dates and calendar dates.
+.
+(Variant for Python3)
+https://github.com/phn/jdcal
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-jdcal-src
+Submenu: Python
+Version: 1.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Julian dates from proleptic Gregorian and Julian calendars (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: jdcal-1.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       This module contains functions for converting between Julian dates and calendar dates.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/phn/jdcal
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+

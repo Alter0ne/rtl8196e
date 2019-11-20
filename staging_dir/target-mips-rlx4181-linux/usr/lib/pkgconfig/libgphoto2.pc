@@ -1,0 +1,14 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+VERSION=2.4.12
+driverdir=${libdir}/libgphoto2/2.4.12
+
+Name: libgphoto2
+Description: Library for easy access to digital cameras
+URL: http://gphoto.org/proj/libgphoto2/
+Version: 2.4.12
+Requires: libgphoto2_port >= 0.6.2, libexif >= 0.6.13
+Libs: -L${libdir} -lgphoto2 -lm
+Cflags: -I${includedir}/gphoto2

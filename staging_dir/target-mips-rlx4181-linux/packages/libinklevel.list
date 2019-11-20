@@ -1,0 +1,9 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libinklevel.so
+./usr/lib/libinklevel.so.5
+./usr/lib/libinklevel.so.5.0.0
+./usr/include
+./usr/include/inklevel.h

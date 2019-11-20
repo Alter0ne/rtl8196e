@@ -1,0 +1,25 @@
+# Test case for patches which attempt to modify a file which doesn't exist.
+# As no part of the patch applies, this triggers a corner case in
+# backup-files (restore called but no file to restore.)
+
+$ mkdir patches
+$ cat > patches/series
+< one.patch
+$ cat > patches/one.patch
+< --- a/foo
+< +++ b/foo
+< @@ -1 +1 @@
+< -foo
+< +bar
+$ quilt push -q
+> Applying patch patches/one.patch
+> The text leading up to this was:
+> --------------------------
+> |--- a/foo
+> |+++ b/foo
+> --------------------------
+> No file to patch.  Skipping patch.
+> 1 out of 1 hunk ignored
+> Patch patches/one.patch does not apply (enforce with -f)
+$ echo %{?}
+> 1

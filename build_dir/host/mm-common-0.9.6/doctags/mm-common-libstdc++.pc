@@ -1,0 +1,12 @@
+prefix=/home/alter0ne/rtk_openwrt_sdk/staging_dir/host
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+pkgdatadir=${datadir}/mm-common
+
+doxytagfile=${pkgdatadir}/doctags/libstdc++.tag
+htmlrefpub=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/
+
+Name: mm-common-libstdc++
+Description: mm-common's GNU libstdc++ metadata module
+Version: 0.9.6
+URL: http://www.gtkmm.org/

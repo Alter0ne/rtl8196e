@@ -1,0 +1,56 @@
+.TH cgiwrap_init_emu 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_init_emu  - initialize cgiwrap for emulated use
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+void cgiwrap_init_emu (void *data, READ_FUNC read_cb, 
+    WRITEF_FUNC writef_cb, WRITE_FUNC write_cb, GETENV_FUNC getenv_cb,
+    PUTENV_FUNC putenv_cb, ITERENV_FUNC iterenv_cb);
+
+.Se
+
+.SH ARGUMENTS
+data - user data to be passed to the specified callbacks
+.br
+read_cb - a cb to replace fread(stdin)
+.br
+writef_cb - a cb to repalce fprintf(stdout)
+.br
+write_cb - a cb to replace fwrite(stdout)
+.br
+getenv_cb - a cb to replace getenv
+.br
+putenv_cb - a cb to replace putenv
+.br
+iterenv_cb - a cb to replace the default environment iteration
+.br
+function (which just wraps walking the envp array)
+
+.SH DESCRIPTION
+cgiwrap_init_emu sets up the cgiwrap subsystem for use
+in an emulated environment where you are providing
+routines to use in place of the standard routines, ie
+when used to interface with a server or scripting
+language.
+See cgi/cgiwrap.h for the exact definitions of the
+callback functions.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

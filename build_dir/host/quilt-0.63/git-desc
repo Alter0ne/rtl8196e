@@ -1,0 +1,11 @@
+#! /bin/sh
+
+if git rev-parse --show-cdup > /dev/null 2> /dev/null; then
+	tag=$(git describe --tags HEAD 2> /dev/null || \
+	      git rev-parse --short HEAD)
+	dirty=$(git update-index --refresh --unmerged > /dev/null
+		if git diff-index --name-only HEAD | read dummy; then
+		    echo -dirty
+		fi)
+	echo $tag$dirty
+fi

@@ -1,0 +1,12 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libiwinfo.so
+./usr/lib/lua
+./usr/lib/lua/iwinfo.so
+./usr/include
+./usr/include/iwinfo.h
+./usr/include/iwinfo
+./usr/include/iwinfo/lua.h
+./usr/include/iwinfo/utils.h

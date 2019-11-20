@@ -1,0 +1,2414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config version="1.0"
+	xmlns="http://www.quickcamteam.net"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.quickcamteam.net uvcconfig.xsd"
+>
+
+	<meta>
+		<version>1.0</version>
+		<author>Martin Rubli, Logitech</author>
+		<contact>http://www.quickcamteam.net/</contact>
+		<revision>0.32</revision>
+		<copyright>Copyright (c) 2006-2010 Logitech</copyright>
+		<history>
+			0.32 2013-03-27
+			- Added LED frequency V4L2 control mapping for V3 Logitech cameras
+
+			0.31 2013-02-25
+			- Added LED V4L2 control mapping for V3 Logitech cameras
+
+			0.30, 2010-07-30:
+			- Added support for XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL.
+
+			0.29, 2010-07-26:
+			- Updated the size of the XU_VIDEO_FW_ZOOM_CONTROL to be in sync with the latest specification.
+			- Added support for XU_VIDEO_SENSOR_CROPPING_DIMENSION_CONTROL and XU_VIDEO_MJPEG_RESYNC_MARKER_CONTROL.
+
+			0.28, 2010-07-02:
+			- Updated the size of the XU_PERIPHERAL_CONTROL_SPEAKER_VOLUME to be in sync with the specification.
+
+			0.26, 2010-05-19:
+			- Updated the size of several controls to be in sync with the latest version of the specification. This includes CXU_ENCODER_CONFIGURATION_CONTROL, CXU_RATE_CONTROL, CXXU_STATIC_CONTROL, CXU_DYNAMIC_CONTROL.
+
+			0.25, 2010-04-26:
+			- Mark SET_CUR as supported for XU_EXTENDED_FIRMWARE_VERSION_CONTROL. This looks like a bug in the current specification because the control cannot be properly queried otherwise.
+			- Mark GET_CUR instead of SET_CUR as supported for XU_PERIPHERAL_CONTROL_DEVICE_CODEC_STATUS to match latest specification.
+
+			0.24, 2010-04-24:
+			- Updated the size of XU_PERIPHERAL_CONTROL_DEVICE_CODEC_STATUS to match latest implementation.
+
+			0.23, 2010-04-13:
+			- Updated the size of CXU_ENCODER_VIDEO_FORMAT_CONTROL to be in sync with the latest version of the specification.
+
+			0.22, 2010-03-25:
+			- Added support for XU_PERIPHERAL_CONTROL_DEVICE_CODEC_STATUS and XU_PERIPHERAL_CONTROL_SPEAKER.
+
+			0.21, 2010-02-24:
+			- Commented out some potentially dangerous controls in the test and debug XU.
+
+			0.20, 2010-02-02:
+			- Updated based on the H.264 Device Interface specification 0.9e from 2010-01-15.
+			- Merged with wolverine.xml. This file is intended to be the master copy from which subsets can be extracted and published.
+			- Added support for all FY11 extension unit controls.
+
+			0.17, 2008-10-17:
+			- Mark the GET_CUR request as supported for the XU_MOTORCONTROL_FOCUS control.
+
+			0.16, 2008-03-07:
+			- Updated the values of V4L2_CID_PAN_RELATIVE and V4L2_CID_PAN_RELATIVE to work with the latest UVC driver (those values will be part of kernels >= 2.6.26).
+			- Support for two new controls defined by V4L2 starting from 2.6.26: V4L2_CID_PAN_RESET ('Pan Reset') and V4L2_CID_TILT_RESET ('Tilt reset').
+
+			0.15, 2007-12-13:
+			- Added a control to change the LED blink frequency.
+			- Added the two controls required for enabling Bayer mode (Disable video processing and Raw bits per pixel).
+
+			0.14, 2007-11-19:
+			- Fixed the bitmap indices which were off by one.
+
+			0.13, 2007-11-16:
+			- Added focus motor control for cameras that support it (QuickCam Pro 9000, QuickCam Pro for Notebooks, QuickCam Orbit/Sphere AF).
+			- Added the pan/tilt reset control for the QuickCam Orbit/Sphere series.
+			- Added a control to change the LED mode.
+
+			0.12, 2007-11-02:
+			- Initial release to the public
+		</history>
+	</meta>
+
+
+	<constants>
+		<!-- Public Logitech extension unit GUIDs (v1, up to 2007) -->
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_USER_HW_CONTROL_V1</id>
+			<value>63610682-5070-49ab-b8cc-b3855e8d221f</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_VIDEO_PIPE_V1</id>
+			<value>63610682-5070-49ab-b8cc-b3855e8d2250</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_MOTOR_CONTROL_V1</id>
+			<value>63610682-5070-49ab-b8cc-b3855e8d2256</value>
+		</constant>
+
+		<!-- Internal Logitech extension unit GUIDs (v1, up to 2007) -->
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V1</id>
+			<value>63610682-5070-49ab-b8cc-b3855e8d221e</value>
+		</constant>
+
+		<!-- Public Logitech extension unit GUIDs (v3, 2010) -->
+		<!-- Internal Logitech extension unit GUIDs (v3, 2010) -->
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</id>
+			<value>69678EE4-410F-40db-A850-7420D7D8240E</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</id>
+			<value>49E40215-F434-47fe-B158-0E885023E51B</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_TEST_DEBUG_V3</id>
+			<value>1F5D4CA9-DE11-4487-840D-50933C8EC8D1</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_PERIPHERAL</id>
+			<value>FFE52D21-8030-4e2c-82D9-F587D00540BD</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_CODEC</id>
+			<value>9ACD00B6-DC4A-4bbd-BDF8-5FFBB0C0D366</value>
+		</constant>
+		<constant type="guid">
+			<id>UVC_GUID_LOGITECH_CODECEX</id>
+			<value>49C532A0-4F15-4cfc-908A-5BCE154B1CEA</value>
+		</constant>
+		
+		<!-- UVC 1.1 H.264 public GUID -->
+		<constant type="guid">
+			<id>GUID_UVCX_H264_XU</id>
+			<value>A29E7641-DE04-47E3-8B2B-F4341AFF003B</value>
+		</constant>
+		
+		<!-- Control selectors for User Hardware Control (v1)-->
+		<constant type="integer">
+			<id>XU_HW_CONTROL_LED1</id>
+			<value>1</value>
+		</constant>
+
+		<!-- Control selectors for Video Pipe (v1)-->
+		<constant type="integer">
+			<id>XU_COLOR_PROCESSING_DISABLE</id>
+			<value>5</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_RAW_DATA_BITS_PER_PIXEL</id>
+			<value>8</value>
+		</constant>
+
+		<!-- Control selectors for Motor Control (v1)-->
+		<constant type="integer">
+			<id>XU_MOTORCONTROL_PANTILT_RELATIVE</id>
+			<value>1</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_MOTORCONTROL_PANTILT_RESET</id>
+			<value>2</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_MOTORCONTROL_FOCUS</id>
+			<value>3</value>
+		</constant>
+		<!-- Public control selectors for Device Information (v3) -->
+		<!-- Internal control selectors for Device Information (v3) -->
+		<constant type="integer">
+			<id>XU_FIRMWARE_VERSION_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_FIRMWARE_CRC_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_EEPROM_VERSION_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_SENSOR_INFORMATION_CONTROL</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PROCESSOR_INFORMATION_CONTROL</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_USB_INFORMATION_CONTROL</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_LENS_FOV_CONTROL</id>
+			<value>0x09</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_SENSOR_DIMENSION_CONTROL</id>
+			<value>0x0A</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_EXTENDED_FIRMWARE_VERSION_CONTROL</id>
+			<value>0x0B</value>
+		</constant>
+
+		<!-- Public control selectors for Video Pipe Control (v3) -->
+		<!-- Internal control selectors for Video Pipe Control (v3) -->
+		<constant type="integer">
+			<id>XU_VIDEO_COLOR_BOOST_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_NATIVE_MODE_FORCED_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_NATIVE_MODE_AUTO_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_RIGHTLIGHT_MODE_CONTROL</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_RIGHTLIGHT_ZOI_CONTROL</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_FW_ZOOM_CONTROL</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_DUAL_ISO_ENABLE_CONTROL</id>
+			<value>0x07</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_SENSOR_CROPPING_DIMENSION_CONTROL</id>
+			<value>0x08</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_VIDEO_MJPEG_RESYNC_MARKER_CONTROL</id>
+			<value>0x09</value>
+		</constant>
+
+		<!-- Public control selectors for Test and Debug (v3) -->
+		<!-- Internal control selectors for Test and Debug (v3) -->
+		<!-- Note: Some controls below are commented out because they can be dangerous. -->
+		<!--
+		<constant type="integer">
+			<id>XU_TEST_REGISTER_ADDRESS_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_REGISTER_ACCESS_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_EEPROM_ADDRESS_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_EEPROM_ACCESS_CONTROL</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_SENSOR_ADDRESS_CONTROL</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_SENSOR_ACCESS_CONTROL</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_PERIPHERAL_MODE_CONTROL</id>
+			<value>0x07</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_PERIPHERAL_OP_CONTROL</id>
+			<value>0x08</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_PERIPHERAL_ACCESS_CONTROL</id>
+			<value>0x09</value>
+		</constant>
+		-->
+		<constant type="integer">
+			<id>XU_TEST_TDE_MODE_CONTROL</id>
+			<value>0x0A</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_GAIN_CONTROL</id>
+			<value>0x0B</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_LOW_LIGHT_PRIORITY_CONTROL</id>
+			<value>0x0C</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_COLOR_PROCESSING_DISABLE_CONTROL</id>
+			<value>0x0D</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_PIXEL_DEFECT_CORRECTION_CONTROL</id>
+			<value>0x0E</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_LENS_SHADING_COMPENSATION_CONTROL</id>
+			<value>0x0F</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_GAMMA_CONTROL</id>
+			<value>0x10</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_INTEGRATION_TIME_CONTROL</id>
+			<value>0x11</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_RAW_DATA_BITS_PER_PIXEL_CONTROL</id>
+			<value>0x12</value>
+		</constant>
+		<!--
+		<constant type="integer">
+			<id>XU_TEST_ISP_ADDRESS_CONTROL</id>
+			<value>0x13</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_ISP_ACCESS_CONTROL</id>
+			<value>0x14</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL</id>
+			<value>0x15</value>
+		</constant>
+		-->
+
+		<!-- Public control selectors for Peripheral Control (v3) -->
+		<!-- Internal control selectors for Peripheral Control (v3) -->
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_PANTILT_RELATIVE_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_PANTILT_MODE_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_MAXIMUM_RESOLUTION_SUPPORT_FOR_PANTILT_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_AF_MOTORCONTROL</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_AF_BLOB_CONTROL</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_AF_VCM_PARAMETERS</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_AF_STATUS</id>
+			<value>0x07</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_AF_THRESHOLDS</id>
+			<value>0x08</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERALCONTROL_LED</id>
+			<value>0x09</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERAL_CONTROL_PERIPHERAL_STATUS</id>
+			<value>0x0A</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERAL_CONTROL_SPEAKER_VOLUME</id>
+			<value>0x0B</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERAL_CONTROL_DEVICE_CODEC_STATUS</id>
+			<value>0x0C</value>
+		</constant>
+		<constant type="integer">
+			<id>XU_PERIPHERAL_CONTROL_SPEAKER</id>
+			<value>0x0D</value>
+		</constant>
+
+		<!-- Internal control selectors for the Codec XU -->
+		<constant type="integer">
+			<id>CXU_ENCODER_VIDEO_FORMAT_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>CXU_ENCODER_CONFIGURATION_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>CXU_RATE_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>CXU_FRAME_TYPE_CONTROL</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>CXU_CAMERA_DELAY</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>CXU_FILTER_CONTROL</id>
+			<value>0x06</value>
+		</constant>
+
+		<!-- (UVC 1.1) H.264 uvcx control selectors -->
+		<constant type="integer">
+			<id>UVCX_VIDEO_CONFIG_PROBE</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VIDEO_CONFIG_COMMIT</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_RATE_CONTROL_MODE</id>
+			<value>0x03</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_TEMPORAL_SCALE_MODE</id>
+			<value>0x04</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_SPATIAL_SCALE_MODE</id>
+			<value>0x05</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_SNR_SCALE_MODE</id>
+			<value>0x06</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_LTR_BUFFER_SIZE_CONTROL</id>
+			<value>0x07</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_LTR_PICTURE_CONTROL</id>
+			<value>0x08</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_PICTURE_TYPE_CONTROL</id>
+			<value>0x09</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VERSION</id>
+			<value>0x0A</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_ENCODER_RESET</id>
+			<value>0x0B</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_FRAMERATE_CONFIG</id>
+			<value>0x0C</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_VIDEO_ADVANCE_CONFIG</id>
+			<value>0x0D</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_BITRATE_LAYERS</id>
+			<value>0x0E</value>
+		</constant>
+		<constant type="integer">
+			<id>UVCX_QP_STEPS_LAYERS</id>
+			<value>0x0F</value>
+		</constant>
+		
+		<!-- Internal control selectors for the CodecEX XU -->
+		<constant type="integer">
+			<id>CXXU_STATIC_CONTROL</id>
+			<value>0x01</value>
+		</constant>
+		<constant type="integer">
+			<id>CXXU_DYNAMIC_CONTROL</id>
+			<value>0x02</value>
+		</constant>
+		<constant type="integer">
+			<id>CXXU_ROI_CONTROL</id>
+			<value>0x03</value>
+		</constant>
+
+		<!-- Internal V4L2 control identifiers -->
+		<constant type="integer">
+			<id>V4L2_CID_USB_VID</id>
+			<value>0x0A046DF0</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_USB_PID</id>
+			<value>0x0A046DF1</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_USB_BCD</id>
+			<value>0x0A046DF2</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_USB_INFO</id>
+			<value>0x0A046DF3</value>
+		</constant>
+
+		<!-- Public V4L2 control identifiers -->
+		<constant type="integer">
+			<id>V4L2_CID_PAN_RELATIVE</id>
+			<value>0x009A0904</value><!-- V4L2_CID_CAMERA_CLASS_BASE + 4 -->
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_TILT_RELATIVE</id>
+			<value>0x009A0905</value><!-- V4L2_CID_CAMERA_CLASS_BASE + 5 -->
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_PAN_RESET</id>
+			<value>0x009A0906</value><!-- V4L2_CID_CAMERA_CLASS_BASE + 6 -->
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_TILT_RESET</id>
+			<value>0x009A0907</value><!-- V4L2_CID_CAMERA_CLASS_BASE + 7 -->
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_FOCUS_ABSOLUTE</id>
+			<value>0x009A090A</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_LED1_MODE</id>
+			<value>0x0A046D05</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_LED1_FREQUENCY</id>
+			<value>0x0A046D06</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_DISABLE_PROCESSING</id>
+			<value>0x0A046D71</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_CID_RAW_BITS_PER_PIXEL</id>
+			<value>0x0A046D72</value>
+		</constant>
+		<!-- UVC 1.1 H264 DEFINITIONS -->
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_FRAME_INTERVAL</id>
+			<value>0x0A046D50</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_BIT_RATE</id>
+			<value>0x0A046D51</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_HINTS</id>
+			<value>0x0A046D52</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_CONFIG_INDEX</id>
+			<value>0x0A046D53</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_WIDTH</id>
+			<value>0x0A046D54</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_HEIGHT</id>
+			<value>0x0A046D55</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_SLICE_UNITS</id>
+			<value>0x0A046D56</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_SLICE_MODE</id>
+			<value>0x0A046D57</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_PROFILE</id>
+			<value>0x0A046D58</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_IFRAME_PERIOD</id>
+			<value>0x0A046D59</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_ESTIMATED_VIDEO_DELAY</id>
+			<value>0x0A046D5A</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_USAGE_TYPE</id>
+			<value>0x0A046D5B</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_RATE_CONTROL_MODE</id>
+			<value>0x0A046D5C</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_TEMPORAL_SCALE_MODE</id>
+			<value>0x0A046D5D</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_SPATIAL_SCALE_MODE</id>
+			<value>0x0A046D5E</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_SNR_SCALE_MODE</id>
+			<value>0x0A046D5F</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_STREAM_MUX_OPTION</id>
+			<value>0x0A046D60</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_STREAM_FORMAT</id>
+			<value>0x0A046D61</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_ENTROPY_CABAC</id>
+			<value>0x0A046D62</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_TIMESTAMP</id>
+			<value>0x0A046D63</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_NUM_OF_REORDER_FRAMES</id>
+			<value>0x0A046D64</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_PREVIEW_FLIPPED</id>
+			<value>0x0A046D65</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_VIEW</id>
+			<value>0x0A046D66</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_STREAM_ID</id>
+			<value>0x0A046D67</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_SPATIAL_LAYER_RATIO</id>
+			<value>0x0A046D68</value>
+		</constant>
+		<constant type="integer">
+			<id>V4L2_UVC_H264_PRB_LEAKY_BUCKET_SIZE</id>
+			<value>0x0A046D69</value>
+		</constant>
+	</constants>
+
+
+	<!-- Public generic Logitech controls -->
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0x046d</vendor_id>
+			</match>
+
+			<controls>
+				<control id="logitech_video_processing">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V1</entity>
+					<selector>XU_COLOR_PROCESSING_DISABLE</selector>
+					<index>4</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Enable or disable the color processing pipeline within the camera.
+
+						0 = color processing enabled (default)
+						1 = color processing disabled
+					</description>
+				</control>
+
+				<control id="logitech_video_raw_bpp">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V1</entity>
+					<selector>XU_RAW_DATA_BITS_PER_PIXEL</selector>
+					<index>7</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Specify the number of bits per pixel for raw data.
+
+						This value is only relevant if XU_COLOR_PROCESSING_DISABLE is set to 0.
+						0 = 8 bits per pixel (default)
+						1 = 10 bits per pixel
+					</description>
+				</control>
+
+				<control id="logitech_userhw_led1">
+					<entity>UVC_GUID_LOGITECH_USER_HW_CONTROL_V1</entity>
+					<selector>XU_HW_CONTROL_LED1</selector>
+					<index>0</index>
+					<size>3</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Allows control over the state of the first LED.
+
+						Bits 0 to 7 represent the LED mode.
+						Currently, the following modes are available:
+						- 0: Off. The LED is never illuminated, whether or not the device is streaming video.
+						- 1: On. The LED is always illuminated, whether or not the device is streaming video.
+						- 2: Blinking. The LED blinks, whether or not the device is streaming video.
+						- 3: Auto. The LED is in control of the device. Typically this means that means that is is illuminated when streaming video and off when not streaming video.
+
+						Bits 16 to 23 represent the LED frequency.
+						The frequency value only influences the 'Blinking' mode.
+						It is expressed in units of 0.05 Hz and sets the blink frequency f.
+						The blink interval T = 1/f is defined as the time between two adjoining rising edges (or two adjoining falling edges).
+						The following table illustrates the relation between the LED frequency value used in bits 16 to 23, the physical blink frequency, and the physical blink interval.
+						+-------------------------------+------------------------+----------------------+
+						| Frequency value 20f [0.05 Hz] | Blink frequency f [Hz] | Blink interval T [s] |
+						+-------------------------------+------------------------+----------------------+
+						| 1                             | 0.05                   | 20                   |
+						| 2                             | 0.1                    | 10                   |
+						| 10                            | 0.5                    | 2                    |
+						| 20                            | 1                      | 1                    |
+						| 50                            | 2.5                    | 0.4                  |
+						| 100                           | 5                      | 0.2                  |
+						+-------------------------------+------------------------+----------------------+
+					</description>
+				</control>
+			</controls>
+		</device>
+	</devices>
+
+	<!-- Logitech controls for cameras with mechanical focus -->
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0x046d</vendor_id>
+				<!-- Logitech QuickCam Pro 9000 -->
+				<product_id>0x0809</product_id>
+				<product_id>0x0990</product_id>
+				<!-- Logitech QuickCam Pro for Notebooks -->
+				<product_id>0x0991</product_id>
+				<!-- Logitech QuickCam Orbit/Sphere AF -->
+				<product_id>0x0994</product_id>
+			</match>
+
+			<controls>
+				<control id="logitech_motor_focus">
+					<entity>UVC_GUID_LOGITECH_MOTOR_CONTROL_V1</entity>
+					<selector>XU_MOTORCONTROL_FOCUS</selector>
+					<index>2</index>
+					<size>6</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Allows the control of focus motor movements for camera models that support mechanical focus.
+
+						Bits 0 to 7 allow selection of the desired lens position.
+						There are no physical units, instead, the focus range is spread over 256 logical units with 0 representing infinity focus and 255 being macro focus.
+					</description>
+				</control>
+			</controls>
+		</device>
+	</devices>
+
+	<!-- Logitech controls for cameras with mechanical pan/tilt -->
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0x046d</vendor_id>
+				<!-- Logitech QuickCam Orbit/Sphere MP -->
+				<product_id>0x08c2</product_id>
+				<!-- Logitech QuickCam Orbit/Sphere MP (2006 model) -->
+				<product_id>0x08cc</product_id>
+				<!-- Logitech QuickCam Orbit/Sphere AF -->
+				<product_id>0x0994</product_id>
+			</match>
+
+			<controls>
+				<control id="logitech_motor_pantilt_relative">
+					<entity>UVC_GUID_LOGITECH_MOTOR_CONTROL_V1</entity>
+					<selector>XU_MOTORCONTROL_PANTILT_RELATIVE</selector>
+					<index>0</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Allows the control of pan/tilt motor movements for camera models that support mechanical pan/tilt.
+
+						Bits 0 to 15 control pan, bits 16 to 31 control tilt.
+						The unit of the pan/tilt values is 1/64th of a degree and the resolution is 1 degree.
+					</description>
+				</control>
+
+				<control id="logitech_motor_pantilt_reset">
+					<entity>UVC_GUID_LOGITECH_MOTOR_CONTROL_V1</entity>
+					<selector>XU_MOTORCONTROL_PANTILT_RESET</selector>
+					<index>1</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_DEF</request>
+					</requests>
+					<description>
+						Reset the pan/tilt motors to their original position for camera models that support mechanical pan/tilt.
+
+						Setting bit 0 resets the pan position.
+						Setting bit 1 resets the tilt position.
+
+						Both bits can be set at the same time to reset both, pan and tilt, at the same time.
+					</description>
+				</control>
+			</controls>
+		</device>
+	</devices>
+
+	<!-- Internal Logitech controls (v3) -->
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0x046d</vendor_id>
+			</match>
+
+			<controls>
+				<!-- Controls for the Device Information XU (v1) -->
+				<control id="devinfo_usb_information_control_v1">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V1</entity>
+					<selector>XU_USB_INFORMATION_CONTROL</selector>
+					<index>5</index>
+					<size>6</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+
+				<!-- Controls for the Device Information XU (v3) -->
+				<control id="devinfo_firmware_version_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_FIRMWARE_VERSION_CONTROL</selector>
+					<index>0</index>
+					<size>4</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_firmware_crc_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_FIRMWARE_CRC_CONTROL</selector>
+					<index>1</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_eeprom_version_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_EEPROM_VERSION_CONTROL</selector>
+					<index>2</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_sensor_information_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_SENSOR_INFORMATION_CONTROL</selector>
+					<index>3</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_processor_information_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_PROCESSOR_INFORMATION_CONTROL</selector>
+					<index>4</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_usb_information_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_USB_INFORMATION_CONTROL</selector>
+					<index>5</index>
+					<size>6</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_lens_fov_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_LENS_FOV_CONTROL</selector>
+					<index>8</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_sensor_dimension_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_SENSOR_DIMENSION_CONTROL</selector>
+					<index>9</index>
+					<size>4</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="devinfo_extended_firmware_version_control_v3">
+					<entity>UVC_GUID_LOGITECH_DEVICE_INFORMATION_V3</entity>
+					<selector>XU_EXTENDED_FIRMWARE_VERSION_CONTROL</selector>
+					<index>10</index>
+					<size>5</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+
+				<!-- Controls for the Video Pipe Control XU (v3) -->
+				<control id="video_color_boost_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_COLOR_BOOST_CONTROL</selector>
+					<index>0</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_native_mode_forced_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_NATIVE_MODE_FORCED_CONTROL</selector>
+					<index>1</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_native_mode_auto_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_NATIVE_MODE_AUTO_CONTROL</selector>
+					<index>2</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_rightlight_mode_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_RIGHTLIGHT_MODE_CONTROL</selector>
+					<index>3</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<!-- XU_VIDEO_RIGHTLIGHT_ZOI_CONTROL not implemented because of variable size -->
+				<control id="video_fw_zoom_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_FW_ZOOM_CONTROL</selector>
+					<index>5</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_dual_iso_enable_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_DUAL_ISO_ENABLE_CONTROL</selector>
+					<index>6</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_sensor_cropping_dimension_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_SENSOR_CROPPING_DIMENSION_CONTROL</selector>
+					<index>7</index>
+					<size>6</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="video_mjpeg_resync_marker_control_v3">
+					<entity>UVC_GUID_LOGITECH_VIDEO_PIPE_V3</entity>
+					<selector>XU_VIDEO_MJPEG_RESYNC_MARKER_CONTROL</selector>
+					<index>8</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+
+				<!-- Controls for the Test and Debug XU (v3) -->
+				<!-- Note: Some controls below are commented out because they can be dangerous.
+				<control id="test_register_address_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_REGISTER_ADDRESS_CONTROL</selector>
+					<index>0</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_register_access_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_REGISTER_ACCESS_CONTROL</selector>
+					<index>1</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_eeprom_address_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_EEPROM_ADDRESS_CONTROL</selector>
+					<index>2</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_eeprom_access_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_EEPROM_ACCESS_CONTROL</selector>
+					<index>3</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_sensor_address_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_SENSOR_ADDRESS_CONTROL</selector>
+					<index>4</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				-->
+				<!-- XU_TEST_SENSOR_ACCESS_CONTROL not implemented because of variable size -->
+				<!--
+				<control id="test_peripheral_mode_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_PERIPHERAL_MODE_CONTROL</selector>
+					<index>6</index>
+					<size>5</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_peripheral_op_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_PERIPHERAL_OP_CONTROL</selector>
+					<index>7</index>
+					<size>6</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_peripheral_access_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_PERIPHERAL_ACCESS_CONTROL</selector>
+					<index>8</index>
+					<size>64</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				-->
+				<control id="test_tde_mode_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_TDE_MODE_CONTROL</selector>
+					<index>9</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_gain_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_GAIN_CONTROL</selector>
+					<index>10</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_low_light_priority_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_LOW_LIGHT_PRIORITY_CONTROL</selector>
+					<index>11</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_color_processing_disable_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_COLOR_PROCESSING_DISABLE_CONTROL</selector>
+					<index>12</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_pixel_defect_correction_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_PIXEL_DEFECT_CORRECTION_CONTROL</selector>
+					<index>13</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_lens_shading_compensation_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_LENS_SHADING_COMPENSATION_CONTROL</selector>
+					<index>14</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_gamma_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_GAMMA_CONTROL</selector>
+					<index>15</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_integration_time_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_INTEGRATION_TIME_CONTROL</selector>
+					<index>16</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_raw_data_bits_per_pixel_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_RAW_DATA_BITS_PER_PIXEL_CONTROL</selector>
+					<index>17</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<!--
+				<control id="test_isp_address_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_ISP_ADDRESS_CONTROL</selector>
+					<index>18</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_isp_access_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_ISP_ACCESS_CONTROL</selector>
+					<index>19</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="test_peripheral_access_ext_control_v3">
+					<entity>UVC_GUID_LOGITECH_TEST_DEBUG_V3</entity>
+					<selector>XU_TEST_PERIPHERAL_ACCESS_EXT_CONTROL</selector>
+					<index>20</index>
+					<size>64</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				-->
+
+				<!-- Controls for the Peripheral Control XU (v3) -->
+				<control id="peripheral_pantilt_relative_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_PANTILT_RELATIVE_CONTROL</selector>
+					<index>0</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_pantilt_mode_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_PANTILT_MODE_CONTROL</selector>
+					<index>1</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_max_res_support_for_pantilt_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_MAXIMUM_RESOLUTION_SUPPORT_FOR_PANTILT_CONTROL</selector>
+					<index>2</index>
+					<size>4</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_af_motorcontrol_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_AF_MOTORCONTROL</selector>
+					<index>3</index>
+					<size>6</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<!-- XU_PERIPHERALCONTROL_AF_BLOB_CONTROL not implemented because of variable size -->
+				<control id="peripheral_af_vcm_parameters_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_AF_VCM_PARAMETERS</selector>
+					<index>5</index>
+					<size>10</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+					</requests>
+				</control>
+				<control id="peripheral_af_status_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_AF_STATUS</selector>
+					<index>6</index>
+					<size>7</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+					</requests>
+				</control>
+				<control id="peripheral_af_thresholds_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_AF_THRESHOLDS</selector>
+					<index>7</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+					</requests>
+				</control>
+				<control id="peripheral_led_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERALCONTROL_LED</selector>
+					<index>8</index>
+					<size>5</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_peripheral_status_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERAL_CONTROL_PERIPHERAL_STATUS</selector>
+					<index>9</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_speaker_volume_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERAL_CONTROL_SPEAKER_VOLUME</selector>
+					<index>10</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_device_codec_status_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERAL_CONTROL_DEVICE_CODEC_STATUS</selector>
+					<index>11</index>
+					<size>4</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="peripheral_speaker_control_v3">
+					<entity>UVC_GUID_LOGITECH_PERIPHERAL</entity>
+					<selector>XU_PERIPHERAL_CONTROL_SPEAKER</selector>
+					<index>12</index>
+					<size>4</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<!-- Controls for uvc 1.1 H.264 XU -->
+				<control id="uvcx_video_config_probe">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>0</index>
+					<size>46</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_commit">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_COMMIT</selector>
+					<index>1</index>
+					<size>46</size>
+					<requests>
+						<request>SET_CUR</request>
+					</requests>
+				</control>
+				
+			</controls>
+		</device>
+	</devices>
+
+	<!-- Internal Logitech controls for H.264 cameras -->
+	<devices>
+		<device>
+			<match>
+				<vendor_id>0x046d</vendor_id>
+				<product_id>0x080c</product_id>
+			</match>
+
+			<controls>
+				<!-- Controls for the Codec XU -->
+				<control id="codec_encoder_video_format_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_ENCODER_VIDEO_FORMAT_CONTROL</selector>
+					<index>0</index>
+					<size>10</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="codec_encoder_configuration_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_ENCODER_CONFIGURATION_CONTROL</selector>
+					<index>1</index>
+					<size>25</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="codec_rate_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_RATE_CONTROL</selector>
+					<index>2</index>
+					<size>8</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="codec_frame_type_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_FRAME_TYPE_CONTROL</selector>
+					<index>3</index>
+					<size>1</size>
+					<requests>
+						<request>SET_CUR</request>
+					</requests>
+				</control>
+				<control id="codec_camera_delay_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_CAMERA_DELAY</selector>
+					<index>4</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+					</requests>
+				</control>
+				<control id="codec_filter_control">
+					<entity>UVC_GUID_LOGITECH_CODEC</entity>
+					<selector>CXU_FILTER_CONTROL</selector>
+					<index>5</index>
+					<size>2</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+
+				<!-- Controls for the CodecEX XU -->
+				<control id="codecex_static_control">
+					<entity>UVC_GUID_LOGITECH_CODECEX</entity>
+					<selector>CXXU_STATIC_CONTROL</selector>
+					<index>0</index>
+					<size>132</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="codecex_dynamic_control">
+					<entity>UVC_GUID_LOGITECH_CODECEX</entity>
+					<selector>CXXU_DYNAMIC_CONTROL</selector>
+					<index>1</index>
+					<size>144</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="codecex_static_control">
+					<entity>UVC_GUID_LOGITECH_CODECEX</entity>
+					<selector>CXXU_ROI_CONTROL</selector>
+					<index>2</index>
+					<size>124</size>
+					<requests>
+						<request>SET_CUR</request>
+						<request>GET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_RES</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+			</controls>
+		</device>
+	</devices>
+
+	<!-- V4L2 mappings for the UVC controls defined above -->
+	<mappings>
+		<!-- V4L2 mappings for the internal UVC controls defined above -->
+		<!--
+		<mapping>
+			<name>USB VID</name>
+			<uvc>
+				<control_ref idref="devinfo_usb_information_control_v1"/>
+				<size>16</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_USB_VID</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>USB PID</name>
+			<uvc>
+				<control_ref idref="devinfo_usb_information_control_v1"/>
+				<size>16</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_USB_PID</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>USB BCD</name>
+			<uvc>
+				<control_ref idref="devinfo_usb_information_control_v1"/>
+				<size>16</size>
+				<offset>32</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_USB_BCD</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>USB Information</name>
+			<uvc>
+				<control_ref idref="devinfo_usb_information_control_v1"/>
+				<size>48</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_RAW</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_USB_INFO</id>
+				<v4l2_type>V4L2_CTRL_TYPE_STRING</v4l2_type>
+			</v4l2>
+		</mapping>
+		-->
+
+		<!-- V4L2 mappings for the Public UVC controls defined above -->
+		<mapping>
+			<name>Pan (relative)</name>
+			<uvc>
+				<control_ref idref="logitech_motor_pantilt_relative"/>
+				<size>16</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Pan (relative)</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_relative_control_v3"/>
+				<size>16</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Tilt (relative)</name>
+			<uvc>
+				<control_ref idref="logitech_motor_pantilt_relative"/>
+				<size>16</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Tilt (relative)</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_relative_control_v3"/>
+				<size>16</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_SIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RELATIVE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Pan Reset</name>
+			<uvc>
+				<control_ref idref="logitech_motor_pantilt_reset"/>
+				<size>1</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Pan Reset</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_mode_control_v3"/>
+				<size>1</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_PAN_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Tilt Reset</name>
+			<uvc>
+				<control_ref idref="logitech_motor_pantilt_reset"/>
+				<size>1</size>
+				<offset>1</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<mapping>
+			<name>Tilt Reset</name>
+			<uvc>
+				<control_ref idref="peripheral_pantilt_mode_control_v3"/>
+				<size>1</size>
+				<offset>1</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_TILT_RESET</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BUTTON</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Focus</name>
+			<uvc>
+				<control_ref idref="logitech_motor_focus"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_FOCUS_ABSOLUTE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>LED1 Mode</name>
+			<uvc>
+				<control_ref idref="logitech_userhw_led1"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_MODE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_MENU</v4l2_type>
+				<menu_entry name="Off" value="0"/>
+				<menu_entry name="On" value="1"/>
+				<menu_entry name="Blinking" value="2"/>
+				<menu_entry name="Auto" value="3"/>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>LED1 Frequency</name>
+			<uvc>
+				<control_ref idref="logitech_userhw_led1"/>
+				<size>8</size>
+				<offset>16</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_FREQUENCY</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Disable video processing</name>
+			<uvc>
+				<control_ref idref="logitech_video_processing"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_BOOLEAN</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_DISABLE_PROCESSING</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BOOLEAN</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Raw bits per pixel</name>
+			<uvc>
+				<control_ref idref="logitech_video_raw_bpp"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_RAW_BITS_PER_PIXEL</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>Raw bits per pixel</name>
+			<uvc>
+				<control_ref idref="logitech_video_raw_bpp"/>
+				<size>8</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_RAW_BITS_PER_PIXEL</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+
+		<mapping>
+			<name>LED1 Mode</name>
+			<uvc>
+				<control_ref idref="peripheral_led_control_v3"/>
+				<size>2</size>
+				<offset>8</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_MODE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_MENU</v4l2_type>
+				<menu_entry name="Off" value="0"/>
+				<menu_entry name="On" value="1"/>
+				<menu_entry name="Blink" value="2"/>
+				<menu_entry name="Auto" value="3"/>
+			</v4l2>
+		</mapping>
+		
+
+		<mapping>
+			<name>LED1 Frequency</name>
+			<uvc>
+				<control_ref idref="peripheral_led_control_v3"/>
+				<size>8</size>
+				<offset>24</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_CID_LED1_FREQUENCY</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+		<!-- Mappings for uvc 1.1 H264 -->
+		<!--
+		<mapping>
+			<name>Frame Interval</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>32</size>
+				<offset>0</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_FRAME_INTERVAL</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Bit Rate</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>32</size>
+				<offset>32</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_BIT_RATE</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Hints</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>16</size>
+				<offset>64</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_HINTS</id>
+				<v4l2_type>V4L2_CTRL_TYPE_BITMASK</v4l2_type>
+			</v4l2>
+		</mapping>
+		<mapping>
+			<name>Configuration Index</name>
+			<uvc>
+				<control_ref idref="uvcx_video_config_probe"/>
+				<size>16</size>
+				<offset>64</offset>
+				<uvc_type>UVC_CTRL_DATA_TYPE_UNSIGNED</uvc_type>
+			</uvc>
+			<v4l2>
+				<id>V4L2_UVC_H264_PRB_CONFIG_INDEX</id>
+				<v4l2_type>V4L2_CTRL_TYPE_INTEGER</v4l2_type>
+			</v4l2>
+		</mapping>
+		
+						
+				<control id="uvcx_video_config_probe_wWidth">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>12</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wHeight">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>14</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wSliceUnits">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>16</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wSliceMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>18</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wProfile">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>20</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wIFramePeriod">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>22</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wEstimatedVideoDelay">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>24</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wEstimatedMaxConfigDelay">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>26</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bUsageType">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>28</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bRateControlMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>29</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bTemporalScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>30</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSpatialScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>31</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSNRScaleMode">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>32</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamMuxOption">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>33</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamFormat">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>34</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bEntropyCABAC">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>35</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bTimestamp">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>36</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bNumOfReorderFrames">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>37</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bPreviewFlipped">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>38</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bView">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>39</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bReserved1">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>40</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bReserved2">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>41</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bStreamID">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>42</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_bSpatialILayerRatio">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>43</index>
+					<size>1</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+				<control id="uvcx_video_config_probe_wLeakyBucketSize">
+					<entity>GUID_UVCX_H264_XU</entity>
+					<selector>UVCX_VIDEO_CONFIG_PROBE</selector>
+					<index>44</index>
+					<size>2</size>
+					<requests>
+						<request>GET_CUR</request>
+						<request>SET_CUR</request>
+						<request>GET_MIN</request>
+						<request>GET_MAX</request>
+						<request>GET_LEN</request>
+						<request>GET_INFO</request>
+						<request>GET_DEF</request>
+					</requests>
+				</control>
+			-->
+	</mappings>
+</config>

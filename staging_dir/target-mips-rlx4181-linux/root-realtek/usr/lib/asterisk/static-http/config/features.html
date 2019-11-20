@@ -1,0 +1,292 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Call Features 
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Ryan Brindley <rbrindley@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Call Features</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		body { background-color: #efefef; }
+
+		#right_container { float: right; width: 60%; }
+		#left_container { width: 40%; }
+		#bottom_container { clear: both; }
+
+		.section { -moz-border-radius: 8px; -webkit-border-radius: 8px; background-color: #ffffff; border: 1px solid #6b79a5; margin: 4px; padding: 4px; }
+			.section .title { color: #6b79a5; font-size: 16px; font-weight: bold; }
+			.section .enabled { color: #000000; }
+			.section .disabled { color: #666666; }
+
+		#call_parking .feature label, #feature_map .feature label, #feature_options .feature label { float: left; margin-right: 5px; text-align: right; }
+			#call_parking .feature label { width: 200px; }
+			#feature_options .feature label { width: 150px; }
+			#feature_map .feature label { width: 120px; }
+			#feature_map .checkbox { float: left; padding: 0px; margin: 4px; }
+			.feature label { width: 200px; }
+
+		.ui-tabs-panel { text-align: left; }
+
+		#application_map_list { margin-top 5px; margin-bottom 10px; padding: 1px; text-align: center; width: 96%; }
+			#application_map_list thead tr { background: #6b79a5; color: #ced7ef; }
+			#application_map_list thead th { font-weight: bold; }
+			#application_map_list tr td { padding: 3px; }
+			#application_map_list tr.even { background: #dfdfdf; }
+			#application_map_list tr.odd { background: #ffffff; }
+			#application_map_list td.buttons, th.buttons { width: 100px; }
+
+		#dial_options { height: 305px; }
+
+		.update { background-color: #ffc58a; border: 1px dotted #e8440c; display: none; padding: 2px 4px 2px 4px; }
+		.error { background-color: #ffaeae; }
+		.hidden { display: none; }
+		.template { display: none; }
+	</style>
+</head>
+<body>
+	<div class="iframeTitleBar"> 
+		Feature Codes & Call Parking Preferences
+		<span class="refresh_icon" >&nbsp;<img src="images/refresh.png" title=" Refresh " border="0" >&nbsp;</span>
+	</div>
+	<div id="right_container" class="container">
+		<div id="dial_options" class="section">
+			<span class="title"><img class="title_img" src="images/asterisk_red.gif"/>Dial Options</span>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_t" value="t" />
+				<label for="dial_t"> <b>t</b> - Allow the called party to transfer the calling party by sending the 'Blind Transfer' or 'Attended Transfer' feature maps.</label>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_T" value="T" />
+				<label for="dial_T"> <b>T</b> - Allow the calling party to transfer the called party by sending the 'Blind Transfer' or 'Attended Transfer' feature maps.</label>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_h" value="h" />
+				<label for="dial_h"> <b>h</b> - Allow the called party to hang up by sending the 'Disconnect' feature map.</label>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_H" value="H" />
+				<label for="dial_H"> <b>H</b> - Allow the calling party to hang up by sending the 'Disconnect' feature map.</label>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_k" value="k" />
+				<label for="dial_k"> <b>k</b> - Allow the called party to enable parking of the call by sending the 'Call Parking' feature map.</label>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<input type="checkbox" id="dial_K" value="K" />
+				<label for="dial_K"> <b>K</b> - Allow the calling party to enable parking of the call by sending the 'Call Parking' feature map.</label>
+				<span class="update"></span>
+			</div>
+		</div>
+	</div>
+	<div id="left_container" class="container">
+		<div id="feature_options" class="section">
+			<span class="title"><img class="title_img" src="images/asterisk_red.gif"/>Feature Options</span>
+			<div class="feature disabled">
+				<label for="feature_featuredigittimeout">Feature Digit Timeout:</label>
+				<input type="text" id="feature_featuredigittimeout" size="4" />
+				(milliseconds)
+				<span class="update"></span>
+			</div>
+		</div>
+		<div id="call_parking" class="section">
+			<span class="title"><img class="title_img" src="images/asterisk_red.gif"/>Call Parking</span>
+			<div class="feature disabled">
+				<label for="parkext">Extension to Dial to Park a Call:</label>
+				<input type="text" id="parkext" size="4"/>
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<label for="parkpos">Extensions for Parked Calls:</label>
+				<input type="text" id="parkpos" size="10" /> (Ex: '701-720')
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<label for="parkingtime">Parked Call Timeout (in secs):</label>
+				<input type="text" id="parkingtime" size="2" />
+				<span class="update"></span>
+			</div>
+		</div>
+		<div id="feature_map" class="section">
+			<span class="title"><img class="title_img" src="images/asterisk_red.gif"/>Feature Map</span>
+			<div class="feature disabled">
+				<label for="fmap_blindxfer">Blind Transfer:</label>
+				<input type="text" id="fmap_blindxfer" size="2" />  (default is #)
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<label for="fmap_disconnect">Disconnect:</label>
+				<input type="text" id="fmap_disconnect" size="2" />  (default is *)
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<label for="fmap_atxfer">Attended Transfer:</label>
+				<input type="text" id="fmap_atxfer" size="2" />
+				<span class="update"></span>
+			</div>
+			<div class="feature disabled">
+				<label for="fmap_parkcall">Call Parking:</label>
+				<input type="text" id="fmap_parkcall" size="2" />
+				<span class="update"></span>
+			</div>
+		</div>
+	</div>
+	<div id="bottom_container" class="container">
+		<div id="application_map" class="section">
+			<span class="title"><img class="title_img" src="images/asterisk_red.gif"/>Application Map</span>
+			<span class="guiButtonNew">New Application Map</span>
+			<table id="application_map_list" align="center" cellpadding="0" cellspacing="1" border="0">
+			<thead>
+			<tr>
+				<th>Enabled</th>
+				<th>Feature Name</th>
+				<th>Digits</th>
+				<th>ActiveOn/By</th>
+				<th>App Name</th>
+				<th>Arguments</th>
+				<th class="buttons"></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr class="template">
+				<td class="enabled">
+					<input type="checkbox" checked="checked" />
+				</td>
+				<td class="name">
+					<input type="text" size="10" />
+				</td>
+				<td class="digits">
+					<input type="text" size="2" />
+				</td>
+				<td class="active">
+					<select>
+						<option value="self">Self</option>
+						<option value="peer">Peer</option>
+						<option value="self/caller">Self/Caller</option>
+						<option value="peer/caller">Peer/Caller</option>
+						<option value="self/callee">Self/Callee</option>
+						<option value="peer/callee">Peer/Callee</option>
+						<option value="self/both">Self/Both</option>
+						<option value="peer/both">Peer/Both</option>
+					</select>
+				</td>
+				<td class="app_name">
+					<input type="text" size="20" />
+				</td>
+				<td class="app_args">
+					<input type="text" size="10" />
+				</td>
+				<td class="buttons">
+					<span class="guiButton save hidden">Save</span>
+					<span class="guiButton delete">Delete</span>
+				</td>
+			</tr>
+			</tbody>
+			</table>
+
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/astman.js"></script>
+<script type="text/javascript" src="js/features.js"></script>
+<script type="text/javascript" src="js/jquery.tooltip.js"></script>
+<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="js/jquery.delegate-1.1.js"></script>
+<script type="text/javascript" src="js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/effects.core.js"></script>
+<script type="text/javascript" src="js/effects.highlight.js"></script>
+<script type="text/javascript">
+	$(document).ready( function() {
+		top.document.title = "Call Feature Preferences";
+
+		load();
+
+		$('.refresh_icon').click( function() {
+			window.location.reload();
+		});
+		$('#application_map .guiButtonNew').click(function() {
+			newAmap();
+		});
+		$('#application_map_list')
+			.delegate('click', 'span.delete', function() {
+				removeAmap($(this));
+			}).delegate('click', 'span.save', function() {
+				if (editAmap($(this))) {
+					$(this).parents('tr').find('.buttons > span.save').hide();
+				}
+			}).delegate('change', 'input, select', function() {
+				if ($(this).parents('td').hasClass('enabled')) {
+					if ($(this).attr('checked') === true) {
+						enableAmap($(this));
+					} else {
+						disableAmap($(this));
+					}
+				} else {
+					var obj = $(this).parents('tr');
+					var vari = $(this).parents('td').attr('class');
+					var val = $(this).val();
+					if (validateAmap(obj, {variable: vari, value: val}, false)) {
+						$(this).parents('td').siblings('.buttons').children('.save').show();
+					} else {
+						$(this).parents('td').siblings('.buttons').children('.save').hide();
+					}
+				}
+		});
+		$('#feature_map, #call_parking, #feature_options, #dial_options')
+			.delegate('click', ':text', function() {
+				$(this).parents('.feature').removeClass('disabled');
+				$(this).select();
+			}).delegate('change', 'input', function() {
+				if ($(this).val() === '' || ($(this).attr('type') === 'checkbox' && $(this).attr('checked') === false)) {
+					$(this).parents('.feature').addClass('disabled');
+					/* send action to remove feature */
+					remove($(this));
+				} else {
+					$(this).parents('.feature').removeClass('disabled');
+					/* send action to update */
+					edit($(this));
+				}
+		});
+		$('#feature_map :text, #call_parking :text, #feature_options :text').blur(function() {
+				if ($(this).val() === vals[$(this).attr('id')]) {
+					return;
+				}
+				if ($(this).val() === '') {
+					$(this).parents('.feature').addClass('disabled');
+					/* send action to remove feature */
+					if (typeof vals[$(this).attr('id')] === 'undefined' && $(this).val() === '') {
+						return;
+					}
+					remove($(this));
+				} else {
+					/* send action to update */
+					edit($(this));
+				}
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,73 @@
+#
+# %CopyrightBegin%
+#
+# Copyright Ericsson AB 1996-2013. All Rights Reserved.
+#
+# The contents of this file are subject to the Erlang Public License,
+# Version 1.1, (the "License"); you may not use this file except in
+# compliance with the License. You should have received a copy of the
+# Erlang Public License along with this software. If not, it can be
+# retrieved online at http://www.erlang.org/.
+#
+# Software distributed under the License is distributed on an "AS IS"
+# basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+# the License for the specific language governing rights and limitations
+# under the License.
+#
+# %CopyrightEnd%
+
+include $(ERL_TOP)/make/target.mk
+include $(ERL_TOP)/make/$(TARGET)/otp.mk
+
+
+# These have to be built first
+ERTS_APPLICATIONS = stdlib sasl kernel compiler
+
+# Then these have to be build
+ERLANG_APPLICATIONS = tools test_server common_test runtime_tools \
+			inets xmerl edoc erl_docgen
+
+# These are only build if -a is given to otp_build or make is used directly
+ALL_ERLANG_APPLICATIONS = snmp otp_mibs appmon erl_interface asn1 jinterface \
+	          wx debugger reltool gs \
+	          ic mnesia crypto orber os_mon parsetools syntax_tools \
+	          pman public_key ssl toolbar tv observer odbc diameter \
+	          cosTransactions cosEvent cosTime cosNotification \
+	          cosProperty cosFileTransfer cosEventDomain et megaco webtool \
+		  eunit ssh typer percept eldap dialyzer hipe
+
+ifdef BUILD_ALL
+  ERLANG_APPLICATIONS += $(ALL_ERLANG_APPLICATIONS)
+
+# We use whildcard */ to figure out if there are any other applications
+# in here.
+  EXPECTED_APPLICATIONS := $(ERTS_APPLICATIONS) $(ERLANG_APPLICATIONS) \
+	autom4te.cache
+  EXTRA_APPLICATIONS += $(filter-out $(EXPECTED_APPLICATIONS),\
+				$(subst /,,$(wildcard */)))
+endif
+
+ifdef BOOTSTRAP
+  SUB_DIRECTORIES = \
+    kernel stdlib compiler
+else
+  ifdef SECONDARY_BOOTSTRAP
+    SUB_DIRECTORIES = hipe parsetools asn1/src
+  else
+    ifdef TERTIARY_BOOTSTRAP
+      SUB_DIRECTORIES = snmp sasl jinterface ic syntax_tools wx
+    else # Not bootstrap build
+      SUB_DIRECTORIES = $(ERTS_APPLICATIONS) \
+			$(ERLANG_APPLICATIONS) \
+			$(EXTRA_APPLICATIONS)
+    endif
+  endif
+endif
+
+# Any applications listed in SKIP-APPLICATIONS should be skipped
+SKIP_FILE := $(wildcard SKIP-APPLICATIONS)
+SKIP_APPLICATIONS := $(if $(SKIP_FILE),$(shell cat $(SKIP_FILE)))
+SUB_DIRECTORIES := $(filter-out $(SKIP_APPLICATIONS),$(SUB_DIRECTORIES))
+
+# ----------------------------------------------------------------------
+include $(ERL_TOP)/make/otp_subdir.mk

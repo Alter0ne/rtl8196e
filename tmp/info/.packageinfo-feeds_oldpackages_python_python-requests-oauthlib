@@ -1,0 +1,88 @@
+Source-Makefile: package/feeds/oldpackages/python/python-requests-oauthlib/Makefile
+Package: python-requests-oauthlib
+Submenu: Python
+Version: 1.2.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-requests-oauthlib:python +PACKAGE_python-requests-oauthlib:python-oauthlib +PACKAGE_python-requests-oauthlib:python-requests
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: OAuthlib auth for Requests
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: requests-oauthlib-1.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   This python package provides first-class OAuth library support
+  for Requests.
+https://github.com/requests/requests-oauthlib
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python-requests-oauthlib-src
+Submenu: Python
+Version: 1.2.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: OAuthlib auth for Requests (sources)
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: requests-oauthlib-1.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       This python package provides first-class OAuth library support
+  for Requests..
+    (Contains the Python sources for this package).
+https://github.com/requests/requests-oauthlib
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-requests-oauthlib
+Submenu: Python
+Version: 1.2.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-requests-oauthlib:python3 +PACKAGE_python3-requests-oauthlib:python3-oauthlib +PACKAGE_python3-requests-oauthlib:python3-requests
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: OAuthlib auth for Requests
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: requests-oauthlib-1.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   This python package provides first-class OAuth library support
+  for Requests.
+.
+(Variant for Python3)
+https://github.com/requests/requests-oauthlib
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-requests-oauthlib-src
+Submenu: Python
+Version: 1.2.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: OAuthlib auth for Requests (sources)
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: requests-oauthlib-1.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       This python package provides first-class OAuth library support
+  for Requests.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/requests/requests-oauthlib
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+

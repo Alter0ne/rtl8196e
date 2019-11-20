@@ -1,0 +1,18 @@
+Source-Makefile: package/boot/kobs-ng/Makefile
+Package: kobs-ng
+Version: 3.0.35-4.0.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_imx6
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Application for writing bootstreams to NAND flash
+Maintainer: 
+Source: kobs-ng-3.0.35-4.0.0.tar.gz
+Type: ipkg
+Description:  The kobs-ng application writes a bootstream to NAND flash with the proper
+ FCB/DBBT headers and replicated streams.
+
+@@
+
+

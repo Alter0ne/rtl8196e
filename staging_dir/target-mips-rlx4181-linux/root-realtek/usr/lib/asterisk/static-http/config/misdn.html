@@ -1,0 +1,167 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ *  mISDN (actually just b410p for now) 
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Brandon Kruse <bkruse@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>mISDN Card Configuration</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		.taglist {
+			border: 1px solid #666666;
+			margin-top:10px;
+			margin-bottom:10px;
+			max-width: 745;
+		}
+
+		.taglist tr.frow {
+			background-color: #6b79a5;
+			color: #CED7EF;
+		}
+
+		.taglist tr.even {
+			background-color: #DFDFDF;
+		}
+
+		.taglist tr.odd{
+			background-color: #FFFFFF;
+		}
+
+		.taglist tr.even:hover, .taglist tr.odd:hover {
+			background-color: #a8b6e5;
+		}
+
+		#errmsg{
+			border: 1px solid #666666;
+			margin-left:50px;
+			margin-right:50px;
+			margin-top: 50px; 
+			padding : 20px 10px 20px 10px;
+			font-size: 125%;
+			text-align: center;
+			background-color:#FFFFFF;
+		}
+
+		.pageheading{
+			padding : 10px 10px 10px 10px;
+			font-size: 135%;
+			text-align: center;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		mISDN Card Configuration
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >
+		&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div style="overflow:auto;left:40" id="div_misdncardstable">
+		<h2 align="center"><div id="b410p_cards"></div></h2>
+		<table class="taglist" id="misdntable" cellpadding=5 cellspacing=1 border=0 align=center></table>
+		<center>
+			<span class='guiButton' onclick='generate_applyMisdn();'>Update</span>
+			<span class='guiButton' onclick='reloadpage();'>Cancel</span>
+		</center>
+	</div>
+
+	<div style="overflow:auto;left:40" id="div_misdnTrunkstable">
+		<h2 align="center"><div id='div_noTrunks'>List of mISDN Service providers (trunks)</div></h2>
+		<table class="taglist" id="misdntrunkstable" cellpadding=5 cellspacing=1 border=0 align=center></table>
+		<center>
+			<input type="button" value="Add" onclick="new_misdntrunk();">
+		</center>
+	</div>
+
+	<div id="edit_trunk" STYLE="width:500; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Add/Edit Trunk</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=3 cellspacing=2 border=0>
+		<TR>	<TD align="right">TrunkName :</TD>
+			<TD> <input type=text size=15 id="edit_MTrunk_trunkName" class="input8"></TD>
+		</TR>
+		<TR>	<TD align="right" valign=top>Port(s):</TD>
+			<TD> <input type=text size=15 id="edit_MTrunk_ports" class="input8"><BR>
+				Ex: 1&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;1,2,3
+			</TD>
+		</TR>
+
+		<TR>	<TD colspan=2 align=center height=30 valign=middle>
+				<span class='guiButton' onclick='updateTrunkInfo();'>Update</span>
+				<span class='guiButton' onclick='canelTrunkInfo();'>Cancel</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+
+
+	<div id="edit_port" STYLE="width:500; height:180;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Edit Port</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+		<TR>	<TD align="right">Card/Port:</TD>
+			<TD> <span id="editport_label"></span> </TD>
+		</TR>
+		<TR>	<TD align="right">Port Settings:</TD>
+			<TD>	<select id="editport_type">
+				<option value="te_ptp">TE-Mode, PTP</option>
+				<option value="te_ptmp">TE-Mode, PTMP</option>
+				<option value="te_capi_ptp">TE-Mode(Capi), PTP</option>
+				<option value="te_capi_ptmp">TE-Mode(Capi), PTMP</option>
+				<option value="nt_ptp">NT-Mode, PTP</option>
+				<option value="nt_ptmp">NT-Mode, PMTP</option>
+				</select>
+			</TD>
+		</TR>
+		<TR>	<TD align="right">Port Options (Optional):</TD>
+			<TD>	<select id="editport_option">
+					<option value="master_clock">Master Clock</option>
+					<option value="ais,nocrc4">ais, nocrc4</option>
+					<option value="optical,los,ais,slip">optical, los, ais, slip</option>
+					<option value=''> None </option>
+				</select>
+			</TD>
+		</TR>
+		<TR>	<TD colspan=2 align=center height=50 valign=middle>  
+				<span class='guiButton' onclick='updatePortInfo();'>Update</span>
+				<span class='guiButton' onclick='canelPortInfo();'>Cancel</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/misdn.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Name: libssh
+Description: The SSH Library
+Version: 0.7.0
+Libs: -L/usr/lib -lssh
+Cflags: -I/usr/include
+

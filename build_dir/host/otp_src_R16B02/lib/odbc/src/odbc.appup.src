@@ -1,0 +1,8 @@
+%% -*- erlang -*-
+{"%VSN%",
+ [
+  {<<"2\\.*">>,  [{restart_application, odbc}]}
+ ],
+ [
+  {<<"2\\.*">>,  [{restart_application, odbc}]}
+ ]}.

@@ -1,0 +1,17 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libtwin.so
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libtwin.pc
+./usr/lib/libtwin.so.0
+./usr/lib/libtwin.a
+./usr/lib/libtwin.so.0.0.1
+./usr/include
+./usr/include/libtwin
+./usr/include/libtwin/twin_linux_mouse.h
+./usr/include/libtwin/twin_jpeg.h
+./usr/include/libtwin/twin_linux_js.h
+./usr/include/libtwin/twin_fbdev.h
+./usr/include/libtwin/twin.h

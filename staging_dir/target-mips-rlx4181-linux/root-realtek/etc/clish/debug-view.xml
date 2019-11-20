@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+    <VIEW name="debug-view" prompt="debug> ">
+        <COMMAND name="sh"
+                 help="launch a full shell">
+            <ACTION>bash</ACTION>
+        </COMMAND>
+
+        <COMMAND name="ps"
+                 help="give details of current processes">
+            <ACTION>ps -f</ACTION>
+        </COMMAND>
+
+        <COMMAND name="ls"
+                 help="List the files in the current directory">
+                <ACTION>echo ${PWD};ls -F -l -a</ACTION>
+        </COMMAND>
+
+        <COMMAND name="exit"
+                 help="Go back to main menu"
+                 view="root-view">
+            <ACTION>echo "Leaving diagnostic mode..."</ACTION>
+        </COMMAND>
+    </VIEW>
+
+</CLISH_MODULE>

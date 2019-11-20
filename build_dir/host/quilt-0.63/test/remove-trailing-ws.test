@@ -1,0 +1,193 @@
+# Unit test for the remove-trailing-ws script.
+
+# Prepare the working directory
+$ mkdir files.orig files
+
+$ cat > files.orig/add
+< Line 1
+< Line 2
+< Line 3
+<
+< Line 5
+< Line 6
+$ cat > files.orig/change
+< change
+< from
+< this
+$ cat > files.orig/complex
+< Line 1
+< Line 2
+<
+< Line 3
+< Line 4
+<
+< Line 5
+< Line 6
+<
+< Line 7
+< Line 8
+<
+< Line 9
+< Line 10
+$ cat > files.orig/delete
+< delete
+< an old
+< file
+$ cat > files.orig/remove
+< Line 1
+< Line 2
+<
+< Line 3
+< Line 4
+<
+< Line 5
+< Line 6
+$ cat > files.orig/remove-at-end
+< Line 1
+< Line 2
+<
+< Line 3
+< Line 4
+<
+< Line 5
+< Line 6
+<
+< Line 7
+< Line 8
+<
+< Line 9
+< Line 10
+
+$ cat > files/add
+< Line 1
+< Line 2
+<
+< Line 3
+< Line 4 
+<
+< Line 5
+< Line 6
+$ cat > files/change
+< change
+< to 
+< that 
+$ cat > files/complex
+< Line 1
+< Line 2
+< Line 3
+< Line 4
+<
+< Line 5
+< Line 6
+<
+< Line 7
+< Line 8
+<
+< Line 9	
+< Line A
+<
+< Line B
+< Line C 	
+<
+< Line D
+< Line E
+< Line F
+< Line 10
+$ cat > files/create
+< create 
+< a new 
+< file 
+$ cat > files/remove
+< Line 1
+< Line 2
+< Line 3
+<
+< Line 5
+< Line 6
+$ cat > files/remove-at-end
+< Line 1
+< Line 2
+<
+< Line 3
+< Line 4
+<
+< Line 5
+< Line 6
+
+$ cp -r files files.backup
+
+# Generate the two patches
+$ diff -ruN files.orig files > unified.diff
+# For the context diff we need the files listed in a certain order to
+# cover some corner cases
+$ diff -c files.orig/add files/add > context.diff
+$ diff -C 10 files.orig/remove-at-end files/remove-at-end >> context.diff
+$ diff -cN files.orig/create files/create | sed -e '/^diff /d' >> context.diff
+$ diff -cN files.orig/delete files/delete >> context.diff
+$ diff -c files.orig/remove files/remove | sed -e '/^diff /d' >> context.diff
+$ diff -c files.orig/change files/change | sed -e '/^diff /d'  >> context.diff
+$ diff -c files.orig/complex files/complex >> context.diff
+
+$ %{QUILT_DIR}/scripts/remove-trailing-ws < unified.diff > unified-wsok.diff
+> Removing trailing whitespace from line 5 of files/add
+> Removing trailing whitespace from lines 2,3 of files/change
+> Removing trailing whitespace from lines 12,16 of files/complex
+> Removing trailing whitespace from lines 1,2,3 of files/create
+$ wc -l files/add
+>~ (\s+)?8 files/add
+$ wc -l files/change
+>~ (\s+)?3 files/change
+$ wc -l files/complex
+>~ (\s+)?21 files/complex
+$ wc -l files/create
+>~ (\s+)?3 files/create
+$ wc -l files/remove
+>~ (\s+)?6 files/remove
+$ wc -l files/remove-at-end
+>~ (\s+)?8 files/remove-at-end
+$ wc -l unified.diff
+>~ (\s+)?85 unified.diff
+$ wc -l unified-wsok.diff
+>~ (\s+)?85 unified-wsok.diff
+$ diff -u unified.diff unified-wsok.diff | grep '^++[^+]'
+> ++Line 4
+> ++to
+> ++that
+> ++Line 9
+> ++Line C
+> ++create
+> ++a new
+> ++file
+
+$ rm -rf files
+$ mv files.backup files
+$ %{QUILT_DIR}/scripts/remove-trailing-ws < context.diff > context-wsok.diff
+> Removing trailing whitespace from line 5 of files/add
+> Removing trailing whitespace from lines 2,3 of files/change
+> Removing trailing whitespace from lines 12,16 of files/complex
+> Removing trailing whitespace from lines 1,2,3 of files/create
+$ wc -l files/add
+>~ (\s+)?8 files/add
+$ wc -l files/change
+>~ (\s+)?3 files/change
+$ wc -l files/complex
+>~ (\s+)?21 files/complex
+$ wc -l files/create
+>~ (\s+)?3 files/create
+$ wc -l files/remove
+>~ (\s+)?6 files/remove
+$ wc -l files/remove-at-end
+>~ (\s+)?8 files/remove-at-end
+$ wc -l context.diff
+>~ (\s+)?104 context.diff
+$ wc -l context-wsok.diff
+>~ (\s+)?104 context-wsok.diff
+$ diff -u context.diff context-wsok.diff | grep '^+[+!] '
+> ++ Line 4
+> ++ create
+> ++ a new
+> ++ file
+> +! to
+> +! that
+> +! Line 9
+> +! Line C

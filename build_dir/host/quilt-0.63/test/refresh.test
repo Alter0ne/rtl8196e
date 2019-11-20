@@ -1,0 +1,22 @@
+	$ mkdir patches
+
+	$ echo a > a
+	$ echo b > b
+	$ diff -u a b > patches/patch
+	$ echo patch -p0 > patches/series
+	$ rm -f b
+	$ quilt push -q
+	> Applying patch patches/patch
+	> Now at patch patches/patch
+
+	$ echo a > a
+	$ quilt refresh
+	> Nothing in patch patches/patch
+	$ quilt pop
+	> Removing patch patches/patch
+	> Restoring a
+	>
+	> No patches applied
+	$ cat a
+	> a
+	$ cat patches/patch

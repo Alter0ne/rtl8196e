@@ -1,0 +1,37 @@
+.TH cgiwrap_init_std 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_init_std  - Initialize cgiwrap with default functions
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+void cgiwrap_init_std (int argc, char **argv, char **envp);
+
+.Se
+
+.SH ARGUMENTS
+the arguments to main, namely argc/argv/envp
+
+.SH DESCRIPTION
+cgiwrap_init_std will initialize the cgiwrap subsystem 
+to use the default CGI functions, ie
+getenv/putenv/stdio.  In reality, all this is doing is
+setting up the data for the cgiwrap_iterenv() function.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

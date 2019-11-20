@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+	<VIEW name="script-view"
+              prompt="Scripting Demo&gt; ">
+		<COMMAND name="show"
+                 help="Dump the contents of the script.txt file">
+			<ACTION>cat ./script.txt</ACTION>
+		</COMMAND>
+		<COMMAND name="pwd"
+                         help="Show the current working directory">
+			<ACTION>pwd</ACTION>
+		</COMMAND>
+		<COMMAND name="run"
+                         help="Lanuch a new clish session and feed in script.txt">
+			<ACTION>./clish &lt; script.txt</ACTION>
+		</COMMAND>
+		<COMMAND name="exit"
+                         help="Exit the scripting demo view"
+			 view="root-view">
+		</COMMAND>
+	</VIEW>
+
+</CLISH_MODULE>

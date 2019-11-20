@@ -1,0 +1,9 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libid3tag.so
+./usr/lib/libid3tag.so.0
+./usr/lib/libid3tag.so.0.3.0
+./usr/include
+./usr/include/id3tag.h

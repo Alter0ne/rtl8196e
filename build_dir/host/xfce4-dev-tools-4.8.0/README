@@ -1,0 +1,23 @@
+What is it?
+===========
+
+The Xfce development tools are a collection of tools and macros for
+Xfce developers and people that want to build Xfce from Git In addition
+it contains the Xfce developer's handbook.
+
+
+Installation
+============
+
+The file 'INSTALL' contains generic installation instructions.
+
+
+How to report bugs?
+===================
+
+Bugs should be reported to the Xfce bugtracking system
+(http://bugzilla.xfce.org, product Xfce development tools). You will
+need to create an account for yourself.
+
+Please read the file 'HACKING' for information on where to send changes
+or bugfixes for this package.

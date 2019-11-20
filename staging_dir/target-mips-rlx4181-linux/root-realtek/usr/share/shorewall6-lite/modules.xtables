@@ -1,0 +1,42 @@
+#
+# Shorewall6 version 4 - Xtables Modules File
+#
+# /usr/share/shorewall6/modules.xtables
+#
+#	This file loads the modules that may be needed by the firewall.
+#
+#	THE ORDER OF THE COMMANDS BELOW IS IMPORTANT!!!!!! You MUST load in
+#	dependency order. i.e., if M2 depends on M1 then you must load M1
+#	before you load M2.
+#
+#  If you need to modify this file, copy it to /etc/shorewall and modify the
+#  copy.
+#
+###############################################################################
+loadmodule xt_CLASSIFY
+loadmodule xt_connmark
+loadmodule xt_CONNMARK
+loadmodule xt_conntrack
+loadmodule xt_dccp
+loadmodule xt_dscp
+loadmodule xt_DSCP
+loadmodule xt_hashlimit
+loadmodule xt_helper
+loadmodule xt_iprange
+loadmodule xt_length
+loadmodule xt_limit
+loadmodule xt_mac
+loadmodule xt_mark
+loadmodule xt_MARK
+loadmodule xt_multiport
+loadmodule xt_NFQUEUE
+loadmodule xt_owner
+loadmodule xt_physdev
+loadmodule xt_pkttype
+loadmodule xt_policy
+loadmodule xt_sctp
+loadmodule xt_tcpmss
+loadmodule xt_TCPMSS
+loadmodule xt_time
+loadmodule xt_IPMARK
+loadmodule xt_TPROXY

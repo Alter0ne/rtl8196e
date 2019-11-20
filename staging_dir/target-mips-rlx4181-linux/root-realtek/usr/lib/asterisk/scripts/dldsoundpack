@@ -1,0 +1,87 @@
+#!/bin/sh
+# Grabs the latest sound files from the digium downaloads site 
+PROGRAM_VERSION=AA50-1.2
+MODE=$2
+SOUND_ARCHIVE_URL="http://downloads.digium.com/pub/telephony/sounds/releases"
+SOUNDS_CORE_VERSION=1.4.8 
+SOUNDS_EXTRA_VERSION=1.4.7
+SOUNDS_LANGUAGE="en"
+SOUND_FORMATS="ulaw alaw gsm g722 g729"
+SOUND_BASE="/var/lib/asterisk/sounds"
+SOUND_LOC="$SOUND_BASE"
+DO_EXTRA="yes"
+
+if [ "" = "$1" ]; then
+	echo "Updating default language ($SOUNDS_LANGUAGE)"
+elif [ "en" = "$1" ]; then
+	echo "Updating English language ($SOUNDS_LANGUAGE)"
+elif [ "fr" = "$1" ]; then
+	SOUNDS_LANGUAGE="$1"
+	DO_EXTRA="no"
+	SOUND_LOC="$SOUND_LOC/$1"
+	echo "Updating French language ($SOUNDS_LANGUAGE)"
+elif [ "es" = "$1" ]; then
+	SOUNDS_LANGUAGE="$1"
+	DO_EXTRA="no"
+	SOUND_LOC="$SOUND_LOC/$1"
+	echo "Updating Spanish language ($SOUNDS_LANGUAGE)"
+else
+	echo "Unrecognized language type: $1"
+	echo "Usage: update_sounds [en | fr | es]"
+	exit 1
+fi
+
+if [ "$MODE" = "AA50" ]; then
+	if mount | grep -q ${SOUND_BASE}; then
+		echo "Filesystem mounted on ${SOUND_BASE}"
+	else
+		echo "Compact Flash is not mounted on ${SOUND_BASE}!"
+		exit 1
+	fi
+fi
+
+if [ ! -d $SOUND_LOC ]; then
+	mkdir $SOUND_LOC
+fi
+
+echo "Downloading and unpacking sounds of format: ${SOUNDS_LANGUAGE}"
+cd ${SOUND_LOC}
+for formats in $SOUND_FORMATS; do
+	# Only show Errors/Warnings (stderr) and the actual download
+	wget ${SOUND_ARCHIVE_URL}/asterisk-core-sounds-${SOUNDS_LANGUAGE}-${formats}-${SOUNDS_CORE_VERSION}.tar.gz -O - | gzip -dc | tar xvf - > /dev/null
+	if [ "yes" = "$DO_EXTRA" ]; then 
+		# Only show Errors/Warnings (stderr) and the actual download
+		wget ${SOUND_ARCHIVE_URL}/asterisk-extra-sounds-${SOUNDS_LANGUAGE}-${formats}-${SOUNDS_EXTRA_VERSION}.tar.gz -O - | gzip -dc | tar xvf - > /dev/null
+	fi
+done 
+
+cd ${SOUND_BASE}
+if [ ! -d moh ]; then
+	mkdir moh
+fi
+cd moh
+for formats in $SOUND_FORMATS; do
+	# Only show Errors/Warnings (stderr) and the actual download
+	wget http://downloads.digium.com/pub/telephony/sounds/asterisk-moh-freeplay-${formats}.tar.gz -O - | gzip -dc | tar xvf - > /dev/null
+done
+
+cd ${SOUND_BASE}
+if [ ! -d voicemail ]; then
+	mkdir voicemail
+fi
+if [ ! -d meetme ]; then
+	mkdir meetme
+fi
+
+# Use 2 echoes to prevent the following six lines from being modified during make 
+echo -n "PROGRAM_VERSION" >${SOUND_LOC}/cf-version.txt 
+echo "=${PROGRAM_VERSION}" >>${SOUND_LOC}/cf-version.txt
+echo -n "SOUNDS_CORE_VERSION" >>${SOUND_LOC}/cf-version.txt
+echo "=${SOUNDS_CORE_VERSION}" >>${SOUND_LOC}/cf-version.txt
+echo -n "SOUNDS_EXTRA_VERSION" >>${SOUND_LOC}/cf-version.txt
+echo "=${SOUNDS_EXTRA_VERSION}" >>${SOUND_LOC}/cf-version.txt
+
+
+echo "DoneDoneDone" >> /var/lib/asterisk/static-http/config/sysinfo_output.html
+sync; sync; sync
+

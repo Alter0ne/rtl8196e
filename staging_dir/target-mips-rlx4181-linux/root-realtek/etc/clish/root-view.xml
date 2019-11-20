@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+ 	<!--=======================================================-->
+    <VIEW name="root-view"
+        prompt="${SYSTEM_NAME}&gt; ">
+        <!--===================================================-->
+        <COMMAND name="exit"
+                 help="Exit this CLI session">
+            <ACTION builtin="clish_close"/>
+        </COMMAND>
+        <!--===================================================-->
+        <COMMAND name="params"
+                 help="Demonstrate the different parameter types">
+            <PARAM name="one"
+                   help="no prefix and no default"
+                  ptype="STRING"/>
+            <PARAM name="two"
+                   help="prefix but no default"
+                  ptype="STRING"
+                 prefix="-one"/>
+            <PARAM name="three"
+                   help="default and prefix"
+                   ptype="STRING"
+                  prefix="-three"
+                 default = "default-three"/>
+            <PARAM name="four"
+                   help="default but no prefix"
+                  ptype="STRING"
+               default = "default-four"/>
+               
+            <ACTION>
+                echo "ONE  : ${one}"
+                echo "TWO  : ${two}"
+                echo "THREE: ${three}"
+                echo "FOUR : ${four}"
+            </ACTION>
+        </COMMAND>
+        <!--===================================================-->
+    </VIEW>
+ 	<!--=======================================================-->    
+</CLISH_MODULE>

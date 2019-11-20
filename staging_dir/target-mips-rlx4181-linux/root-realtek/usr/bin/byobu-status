@@ -1,0 +1,92 @@
+#!/bin/sh -e
+#
+#    byobu-status
+#    Copyright (C) 2008 Canonical Ltd.
+#
+#    Authors: Dustin Kirkland <kirkland@canonical.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+PKG="byobu"
+[ -z "$BYOBU_PREFIX" ] && export BYOBU_PREFIX="/usr"
+export BYOBU_PREFIX
+
+find_script () {
+	# Allow for local status scripts
+	if [ -x "$HOME/.$PKG/bin/$1" ]; then
+		echo "$HOME/.$PKG/bin/$1"
+	elif [ -x "$BYOBU_PREFIX/lib/$PKG/$1" ]; then
+		echo "$BYOBU_PREFIX/lib/$PKG/$1"
+	elif [ -x "$BYOBU_PREFIX/libexec/$PKG/$1" ]; then
+		echo "$BYOBU_PREFIX/libexec/$PKG/$1"
+	else
+		echo "/dev/null"
+	fi
+}
+
+# Define colors
+ESC="\005"
+color() {
+	case "$1" in
+		"") return 0 ;;
+		-)   printf "$ESC{-}" ;;
+		esc)    printf "$ESC" ;;
+		bold1)  printf "$ESC{=b }" ;;
+		bold2)  printf "$ESC{+b }" ;;
+		none)   printf "$ESC{= }" ;;
+		invert) printf "$ESC{=r }" ;;
+		*)
+			if [ "$#" = "2" ]; then
+				[ "$MONOCHROME" = "1" ] && printf "$ESC{= }"   || printf "$ESC{= $1$2}"
+			else
+				[ "$MONOCHROME" = "1" ] && printf "$ESC{=$1 }" || printf "$ESC{=$1 $2$3}"
+			fi
+		;;
+	esac
+}
+
+# Source configurations
+[ -r "$HOME/.$PKG/color" ] && . "$HOME/.$PKG/color"
+[ -r "/etc/$PKG/statusrc" ] && . "/etc/$PKG/statusrc"
+[ -r "$HOME/.$PKG/status" ] && . "$HOME/.$PKG/status"
+[ -r "$HOME/.$PKG/statusrc" ] && . "$HOME/.$PKG/statusrc"
+
+export P="$1"
+case "$P" in
+	--detail)
+		VER=
+		if which dpkg-query >/dev/null; then
+			VER=$(set -- $(dpkg-query --show $PKG); echo "$2")
+		fi
+		printf "$PKG-$VER Detailed Status Navigation\n  Expand all - zr\t\tCollapse all - zm\n  Expand one - zo\t\tCollapse one - zc\n\n"
+		for i in "$BYOBU_PREFIX/lib/$PKG"/* "$HOME/.$PKG/bin"/*; do
+			i=${i##*/}
+			[ "$i" = "menu" ] && continue
+			script=`find_script $i`
+			short=`$script --short | sed -e 's/^\s*//' -e 's/\s*$//' -e 's/.{[^}]*}//g'` || true
+			detail=`$script --detail | sed -e '/^$/d' -e 's/^/\t/g'` || true
+			printf "%s\n\t(%s)\n" "$short" "$i"
+			[ -n "$detail" ] && printf "%s\n" "$detail"
+		done
+	;;
+	color)
+		[ -z "$FOREGROUND" ] && FOREGROUND="w"
+		[ -z "$BACKGROUND" ] && BACKGROUND="k"
+		printf "$ESC{= $BACKGROUND$FOREGROUND}"
+	;;
+	*)
+		eval x="\$$P" || exit 1
+		[ "$x" = "1" ] || exit 0
+		shift
+		. $(find_script "$P") "$@"
+esac

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0039)http://localhost:8144/admin?page=logout -->
+<html><!-- InstanceBegin template="/Templates/peercast.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="title" -->
+<title>PeerCast on {$servMgr.serverIP}:{$servMgr.serverPort}</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="peercast.css" rel="stylesheet" type="text/css">
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body bgcolor="#DDDDDD">
+<div align="center">
+  <table width="100%" height="100%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#999999" bgcolor="#FFFFFF">
+    <tr> 
+      <td align="center" valign="top">
+<div align="center">
+<div align="center">
+            <table width="100%" border="0">
+              <tr> 
+                <td nowrap>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td valign="middle" nowrap> <table border="0" align="center" cellpadding="1" cellspacing="0">
+                          <tr> 
+                            <td rowspan="2" valign="middle"><a href="http://www.peercast.org"><img src="images/small-logo.png" alt="www.peercast.org" border="0"></a></td>
+                            <td valign="bottom"><div align="left"><span class="titlelinksBig">peercast</span></div></td>
+                          </tr>
+                          <tr> 
+                            <td valign="top"><div align="center"><span class="normal-small">{$servMgr.version}</span> 
+                              </div></td>
+                          </tr>
+                        </table>
+                        <div align="center"><span class="titlelinksBig"> </span> 
+                        </div></td>
+                      <td>
+					  {@if servMgr.upgradeURL} 
+	  				    <div align="center" class="normal">
+                        <a href="{$servMgr.upgradeURL}" target="_blank"><strong><font color="#FF0000">Please 
+                          upgrade your client, click here to download the latest 
+                          version. </font></strong></a>
+						</div>
+					  {@else}
+	  				    <div align="center" class="normal-small">
+					  	{$servMgr.rootMsg}
+						</div>						
+                      {@end} 
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div align="center"></div>
+          <table width="100%" border="1" cellpadding="1" cellspacing="0">
+            <tr class="normal"> 
+              <td><div align="center"><a href="index.html">Information</a></div></td>
+              <td><div align="center"><a href="http://yp.peercast.org/?host={$servMgr.serverLocalIP}:{$servMgr.serverPort1}" target="_blank">Yellow 
+                  Pages</a></div></td>
+              <td><div align="center"><a href="relays.html">Relays</a></div></td>
+              <td><div align="center"><a href="broadcast.html">Broadcast</a></div></td>
+              <td><div align="center"><a href="connections.html">Connections</a></div></td>
+              <td><div align="center"><a href="settings.html">Settings</a></div></td>
+              <td><div align="center"><a href="viewlog.html">View Log</a></div></td>
+              <td><div align="center"><a href="logout.html">Logout</a></div></td>
+            </tr>
+          </table>
+          <br>
+          <!-- InstanceBeginEditable name="content" -->
+<DIV align=center></DIV>
+<table width="50%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+	{@if servMgr.auth.useCookies}  
+    <td><form action=/admin method=get>
+        <div align="center"> 
+          <input type=hidden value=logout name=cmd>
+          <input type=submit value=Logout name=logout>
+        </div>
+      </form>
+	</td>
+	{@end}
+    <td><form action=/admin method=get>
+        <div align="center"> 
+          <input type=hidden value=shutdown name=cmd>
+          <input name=shutdown type=submit id="shutdown" value=Shutdown>
+        </div>
+      </form></td>
+  </tr>
+</table>
+<div align="center"></div>
+<!-- InstanceEndEditable --> 
+          <hr size="1">
+          <div align="center" class="normal-small"> &copy; 2005<a href="http://www.peercast.org" target="_blank"> 
+            peercast.org</a> </div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+</body>
+<!-- InstanceEnd --></html>

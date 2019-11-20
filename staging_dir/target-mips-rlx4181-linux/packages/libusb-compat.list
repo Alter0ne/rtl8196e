@@ -1,0 +1,14 @@
+./
+./host
+./usr
+./usr/bin
+./usr/bin/libusb-config
+./usr/lib
+./usr/lib/libusb.a
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libusb.pc
+./usr/lib/libusb-0.1.so.4.4.4
+./usr/lib/libusb-0.1.so.4
+./usr/lib/libusb.so
+./usr/include
+./usr/include/usb.h

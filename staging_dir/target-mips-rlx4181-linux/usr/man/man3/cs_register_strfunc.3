@@ -1,0 +1,52 @@
+.TH cs_register_strfunc 3 "12 July 2007" "ClearSilver" "cs/cs.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cs_register_strfunc  - register a string handling function
+.SH SYNOPSIS
+.Ss
+#include <cs/cs.h>
+.Se
+.Ss
+NEOERR *cs_register_strfunc(CSPARSE *parse, char *funcname, CSSTRFUNC str_func);
+
+.Se
+
+.SH ARGUMENTS
+parse - a pointer to a CSPARSE structure initialized with cs_init()
+.br
+funcname - the name for the CS function call
+.br
+Note that registering a duplicate funcname will
+.br
+raise a NERR_DUPLICATE error
+.br
+str_func - a CSSTRFUNC not-callback
+
+.SH DESCRIPTION
+cs_register_strfunc will register a string function that
+can be called during CS render.  This not-callback is 
+designed to allow for string formating/escaping
+functions that are not built-in to CS (since CS is not
+HTML specific, for instance, but it is very useful to
+have CS have functions for javascript/html/url
+escaping).  Note that we explicitly don't provide any
+associated data or anything to attempt to keep you from
+using this as a generic callback...
+The format of a CSSTRFUNC is:
+NEOERR * str_func(char *in, char **out);
+This function should not modify the input string, and 
+should allocate the output string with a libc function.
+(as we will call free on it)
+
+.SH "SEE ALSO"
+.BR cs_dump "(3), "cs_destroy "(3), "cs_render "(3), "cs_register_esc_strfunc "(3), "cs_arg_parsev "(3), "cs_register_fileload "(3), "cs_init "(3), "cs_register_strfunc "(3), "cs_arg_parse "(3), "cs_parse_string "(3), "cs_parse_file "(3), "= "(3), "cs_register_function

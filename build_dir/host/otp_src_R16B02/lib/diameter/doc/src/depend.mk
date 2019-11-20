@@ -1,0 +1,12 @@
+$(HTMLDIR)/diameterc.html: diameter_compile.xml
+$(HTMLDIR)/diameter.html: diameter.xml
+$(HTMLDIR)/diameter_app.html: diameter_app.xml
+$(HTMLDIR)/diameter_codec.html: diameter_codec.xml
+$(HTMLDIR)/diameter_make.html: diameter_make.xml
+$(HTMLDIR)/diameter_transport.html: diameter_transport.xml
+$(HTMLDIR)/diameter_tcp.html: diameter_tcp.xml
+$(HTMLDIR)/diameter_sctp.html: diameter_sctp.xml
+$(HTMLDIR)/diameter_intro.html: diameter_intro.xml
+$(HTMLDIR)/diameter_using.html: diameter_using.xml
+$(HTMLDIR)/diameter_examples.html: diameter_examples.xml
+$(HTMLDIR)/notes.html: notes.xml

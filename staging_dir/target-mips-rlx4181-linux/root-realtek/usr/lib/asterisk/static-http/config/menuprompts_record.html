@@ -1,0 +1,135 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Record custom voicemenus
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Custom Voice Menu Prompts</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#recfilesTable {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#recfilesTable tr.frow { background: #6b79a5; color: #CED7EF; }
+		#recfilesTable tr.frow td{ font-weight:bold; }
+		#recfilesTable tr td{ padding : 3px; }
+		#recfilesTable tr.even { background: #DFDFDF; }
+		#recfilesTable tr.odd{ background: #FFFFFF; }
+		#recfilesTable tr.even:hover, #recfilesTable tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Custom Voice Menu Prompts
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >
+			&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;
+		</span>
+	</div>
+
+	<div style='display:none;' class='nocf' id='nocf'> You need a&nbsp;&nbsp;<b>CompactFlash&reg;</b>&nbsp;&nbsp;to use this feature </div>
+
+	<div id='thispageContent'>
+		<div class='lite_Heading'>
+			List of Custom Voice Menu Prompts
+		</div>
+		<div STYLE="text-align: center;" class='top_buttons'>
+			<span class='guiButton' onclick='show_record_New();'>Record a new Voice Menu prompt</span>
+			<span class='guiButton' onclick='window.location.href="menuprompts_upload.html";' id='uploadVoiceMenuPrompt_Button'>Upload a Voice Menu prompt</span>
+			<span class='guiButton' style='margin-left:100px;' onclick="parent.miscFunctions.toDigiumStore('IVRPROMPT');" id='whereToBuy_button' tip="en,record,90">Where to Buy</span>
+		</div>
+		<BR>
+		<div id="recfilesTable_div" style="height:370px; width=100%; overflow :auto; padding : 0">
+			<table id="recfilesTable" cellpadding=2 cellspacing=1 border=0 align=center></table>
+		</div>
+	</div>
+
+	<div id="recordnew_content" STYLE="max-width:575; height:190; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Record a new Voice Menu prompt</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0>
+			<tr>	<td colspan=2 height=15 valign=middle align=center class="field_text"></td></tr>
+			<tr>	<td class="field_text" align=right>File Name:</td>
+				<td><input id='newvmenu_name' size=24>
+				</td>
+			</tr>
+			<tr>	<td class="field_text" align=right>Format:</td>
+				<td>	<select id="newvmenu_format">
+						<option value='.gsm'>GSM</option>
+						<option value='.wav'>WAV</option>
+					</select>
+				</td>
+			</tr>
+			<tr>	<td class="field_text">dial this User Extension to record a new voice prompt:</td>
+				<td><select id='newvmenu_ext'></select></td>
+			</tr>
+			<tr>	<td colspan=2 align=center height=10></td></tr>
+			<tr>	<td colspan=2 align=center>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);' style='margin-left:15px'>Cancel</span>
+					<span class='guiButton' onclick='record_new_Verify();'>Record</span>
+				</td>
+			</tr>
+			<tr>	<td colspan=2 align=center height=10></td></tr>
+		</table>
+	</div>
+
+
+	<div id="playFile_content" STYLE="width:475; height:150; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Choose an Extension</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0 align=center width=95%>
+			<tr>	<td  align=right>File to Play :</td>
+				<td width='40%'><span id='playVmenu_name'></span></td>
+			</tr>
+			<tr>	<td align=right id='playVmenu_ext_0'></td>
+				<td><select id='playVmenu_ext'></select></td>
+			</tr>
+			<tr>	<td colspan=2 align=center height=60 valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);' style='margin-left:15px'>Cancel</span>
+					<span class='guiButton' onclick='play_record_file();' id="play_record_button">Play</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/menuprompts_record.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

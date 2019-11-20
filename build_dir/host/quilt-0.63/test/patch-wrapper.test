@@ -1,0 +1,76 @@
+$ mkdir somewhere
+
+$ cat > foo.orig
+< 1
+<
+< 3
+<
+< 5
+$ sed -e 's/3/3a/' foo.orig > foo
+$ diff -u foo.orig foo > foo.diff
+$ mv foo.orig foo
+
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -s -p0 < foo.diff
+$ quilt pop -q
+> Removing patch patches/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper --backup -B xxx/ -s -p0 < foo.diff
+$ find xxx -type f
+> xxx/foo
+$ quilt pop -q
+> Removing patch patches/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -s -p0 -i foo.diff
+$ quilt pop -q
+> Removing patch patches/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -p0 < foo.diff
+> patching file foo
+$ quilt pop -q
+> Removing patch patches/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ mv foo.diff somewhere/
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -p0 < somewhere/foo.diff
+> patching file foo
+$ quilt pop -q
+> Removing patch patches/somewhere/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -p0 -i somewhere/foo.diff
+> patching file foo
+$ quilt pop -q
+> Removing patch patches/somewhere/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}
+
+$ sed -e 's/5/5b/' foo > foo.new
+$ mv foo.new foo
+$ mkdir ${QUILT_PATCHES:-patches}
+$ patch-wrapper -p0 < somewhere/foo.diff
+> patching file foo
+> Hunk #1 succeeded at 1 with fuzz 1.
+$ cat foo.orig
+> 1
+>
+> 3
+>
+> 5b
+$ quilt pop -q
+> Removing patch patches/somewhere/foo.diff
+> No patches applied
+$ rm -rf ${QUILT_PATCHES:-patches} ${QUILT_PC:-.pc}

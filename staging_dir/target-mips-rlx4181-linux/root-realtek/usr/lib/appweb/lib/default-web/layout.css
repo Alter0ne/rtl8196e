@@ -1,0 +1,196 @@
+
+/*
+ * 	Default layout style sheet
+ */
+
+html {
+}
+
+body {
+	margin: 0;
+	padding: 0;
+    min-width: 650px;
+}
+
+div.top {
+	height: 90px;
+}
+
+div.top h1 a {
+    margin: 10px 0 0 20px;
+}
+
+div.bottom {
+}
+
+div#logo {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    align: left;
+    font-weight: bold;
+}
+
+div.content {
+    margin: 0px 0px 10px 0px;
+	padding: 0 10px 20px 20px;
+}
+
+div.content ul li {
+	margin: 0;
+}
+
+div.content ol li {
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+div.contentLeft {
+    float: left;
+    width: 70%;
+    min-height: 400px;
+    margin: 0;
+	padding: 8px 10px 0 0;
+    display: block;
+}
+
+div.contentRight { 
+    float: right;
+    width: 18%;
+    min-height: 400px;
+	margin: 0 0 0 10px;
+	padding: 0 10px 100px 20px;
+    display: block;
+}
+
+div.contentRight ul {
+    padding: 0;
+    margin: 0;
+}
+
+div.contentRight h2 {
+	position: relative; 
+	left: -11px;
+	margin: 20px 0 4px 0px;
+	padding: 2px 4px 3px 10px;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+h1 {
+	padding: 20px 0 10px 0;
+	margin: 0;
+}
+
+h2 {
+	padding: 12px 0 px 0;
+	margin: 0;
+}
+
+h2.section {
+	padding: 24px 0 2px 0;
+    margin-bottom: 10px;
+}
+
+h3 {
+    padding: 10px 0 4px 0;
+    margin: 0px;
+}
+
+ul { 
+    margin-top: 2px;
+    margin-bottom: 6px;
+}
+
+ul.bare {
+	padding: 0;
+	margin: 0;
+}
+
+ol { 
+    margin-top: 2px;
+    margin-bottom: 6px;
+}
+
+pre { 
+	padding: 10px 15px 10px 15px;
+	margin: 10px 0 10px 0;
+}
+
+p.footnote {
+	margin: 0;
+	padding: 0 0 0 20px;
+    clear: both;
+}
+
+img.screen {
+    margin: 8px 0 4px 0;
+	border: 1px solid #AAA;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-webkit-box-shadow: 9px 9px 9px #AAA;
+}
+
+img.wrapLeft {
+	float: left;
+	margin: 0px 18px 12px 0px;
+}
+
+img.wrapRight {
+	float: right;
+	margin: 0px 0px 3px 10px;
+}
+
+table {
+    margin-bottom: 15px;
+}
+
+td {
+	padding: 4px 8px 4px 8px;
+}
+
+
+th {
+    padding: 6px 10px 6px 6px;
+}
+
+form table {
+    padding: 10px;
+}
+
+form td {
+    padding: 2px;
+}
+
+/*
+ * 	Ejscript web controls layout style sheet
+ */
+div.-ejs-tabs {
+    margin-left: 40px;
+}
+
+div.-ejs-tabs ul {
+    margin: 0;
+    padding: 0;
+	white-space: nowrap;
+}
+
+div.-ejs-tabs li {
+    float: left;
+	margin: 4px 4px 0 0;
+	padding: 8px 6px 8px 4px;
+}
+
+div.-ejs-formError {
+    width: 550px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+div.-ejs-flash {
+    width: 500px;
+    margin: 20px;
+    padding: 10px;
+}

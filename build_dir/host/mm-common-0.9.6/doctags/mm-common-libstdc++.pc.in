@@ -1,0 +1,12 @@
+prefix=@prefix@
+datarootdir=@datarootdir@
+datadir=@datadir@
+pkgdatadir=${datadir}/@PACKAGE_TARNAME@
+
+doxytagfile=${pkgdatadir}/doctags/libstdc++.tag
+htmlrefpub=http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/
+
+Name: mm-common-libstdc++
+Description: mm-common's GNU libstdc++ metadata module
+Version: @PACKAGE_VERSION@
+URL: http://www.gtkmm.org/

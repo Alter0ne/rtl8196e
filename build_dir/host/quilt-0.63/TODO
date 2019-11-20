@@ -1,0 +1,126 @@
+General:
+
+	- Abstract backup operations to/from the .pc/ directory, so that
+	  optionally something like rcs can be used instead of
+	  scripts/backup-files?
+
+	- Add something similar to cvs diff, which scans all files for
+	  changes that have not been folded back into their patches,
+	  similar to:
+	  `for p in $(quilt series); do quilt diff -z $p; done'?
+
+	- Allow to add a directory? Then we could detect also new files
+	  in the directory, without having to add them individually.
+
+	- Support different diff/patch options for different patches.
+	  (By specifying them in the series file?)
+
+	- Add command that generates a summary (patch names + descriptions).
+
+	- Add more long-form options, and add some nagative options so that
+	  defaults from .quiltrc can easily be overruled.
+
+	- series.conf: Allow to specify options like -R, -u, -Unum, -c,
+	  -Cnum per patch.
+
+	- Whenever the contents of the QUILT_PATCHES directory change,
+	  optionally call a trigger so that another tool can keep track of
+	  the patches directory history (e.g., CVS, RCS). Also call the
+	  trigger when the series file changes?
+
+	- Check if we can somehow support -p0 style patches that are
+	  applied in subdirectories (patch -d option): There are problems
+	  with relative $QUILT_PATCHES, and likely with several commands.
+
+	- wrapper scripts: check with [ -ef ] if the wrapper is the same
+	  as the default binary found to avoid wrappers like awk -> gawk.
+
+	- Add some more colors.
+
+	- Add the same kind of (optional) pager handling that git has.
+
+Documentation:
+
+	- How to import a complete directory before doing wild changes?
+
+	- Describe how to work with hard-linked trees
+
+	- /etc/quilt.quiltrc and ~/.quiltrc
+
+	- diff/refresh: C -c -N -n options
+
+	- Subdirectory support
+
+quilt new:
+
+	- Prevent spaces in patch names.
+
+quilt push:
+
+	- Add option to print the reject to stdout
+
+	- If push fails, check if patch can be reversed.
+
+	- Add -l option to ignore whitespace changes.
+
+	- Check if there are any .orig or .rej files and barf if so.
+
+quilt pop:
+
+	- The timestamp comparison logic is broken; need to track
+	  last-known timestamps per file.
+
+quilt diff:
+
+	- Error message when a file is specified that isn't in the
+	  patch(es).
+
+	- When a directory is specified, diff all files below it.
+
+quilt refresh:
+
+	- Add an -m option similar to `cvs commit -m "..."' to simplify
+	  keeping a change log in the patch documentation?
+
+	- Add option to log the updates of each patch (e.g., append the
+	  output of ``quilt diff -zR'' to patch.log on each update).
+
+	- Remove existing diffstat if --diffstat is not specified?
+
+	- Improve whitespace stripping
+
+quilt import:
+
+	- Add option to replace the currently applied patch with a new
+	  one, by backing out the topmost patch first.
+
+quilt setup:
+
+	- Also recognize other uses of tar and patch (with options in the
+	  command line), etc.
+
+quit edit:
+
+	- Check for actual changes, and remove files again that haven't been
+	  changed.
+
+quilt files:
+
+	- Print filenames relative to the working directory.
+
+quilt mail:
+
+	- Improve recipient handling (quote special characters automatically;
+	  encode 8-bit characters).
+
+	- Character set handling is missing, too.
+
+	- Too many passes of edmail make it a bit slow.
+	- If someone adds a References header to the intro, the References
+	  header added to patch messages for threading do not append to that
+	  header. They probably should; not sure if duplicate References
+	  headers are valid.
+
+quilt fold:
+
+	- Add an -R option for reverse-applying a patch.

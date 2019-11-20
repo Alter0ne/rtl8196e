@@ -1,0 +1,20 @@
+Source-Makefile: feeds/packages/lang/lualanes/Makefile
+Package: lualanes
+Submenu: Lua
+Version: 3.9.4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lua +luac +liblua +libpthread
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luac/host
+Section: lang
+Category: Languages
+Title: LuaLanes
+Maintainer: Vladimir Malyutin <first-leon@yandex.ru>
+Source: lualanes-3.9.4-aa9bfcf2dd49f55f11b27e7c21d5b75d81ccfc7e.tar.gz
+Type: ipkg
+Description: 	Lanes is a lightweight, native, lazy evaluating multithreading library for Lua 5.1 and 5.2.
+http://luaforge.net/projects/lanes/
+Vladimir Malyutin <first-leon@yandex.ru>
+@@
+
+

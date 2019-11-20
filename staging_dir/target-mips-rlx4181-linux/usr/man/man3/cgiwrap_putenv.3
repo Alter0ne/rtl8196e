@@ -1,0 +1,42 @@
+.TH cgiwrap_putenv 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_putenv  - wrap the putenv call
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+NEOERR *cgiwrap_putenv (const char *k, const char *v);
+
+.Se
+
+.SH ARGUMENTS
+k - the env var name
+.br
+v - the new value for env var k
+
+.SH DESCRIPTION
+cgiwrap_putenv wraps the putenv call.  This is mostly
+used by the cgi_debug_init function to create an
+artificial environment.  This version differs from the
+system version by having separate arguments for the
+variable name and value, which makes life easier for the
+caller (usually), and keeps most wrapping callbacks from
+having to implement a parser to separate them.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

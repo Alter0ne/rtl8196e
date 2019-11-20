@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE appref SYSTEM "appref.dtd">
+
+<appref>
+  <header>
+    <copyright>
+      <year>1999</year>
+      <year>2013</year>
+      <holder>Ericsson AB, All Rights Reserved</holder>
+    </copyright>
+    <legalnotice>
+  The contents of this file are subject to the Erlang Public License,
+  Version 1.1, (the "License"); you may not use this file except in
+  compliance with the License. You should have received a copy of the
+  Erlang Public License along with this software. If not, it can be
+  retrieved online at http://www.erlang.org/.
+
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+  the License for the specific language governing rights and limitations
+  under the License.
+
+  The Initial Developer of the Original Code is Ericsson AB.
+    </legalnotice>
+
+    <title>crypto</title>
+    <file>crypto_app.sgml</file>
+  </header>
+  <app>crypto</app>
+  <appsummary>The Crypto Application</appsummary>
+  <description>
+    <p>The purpose of the Crypto application is to provide an Erlang API
+    to cryptographic functions, see <seealso marker="crypto">crypto(3)</seealso>.
+    Note that the API is on a fairly low level and there are some
+    corresponding API functions available in <seealso marker="public_key:public_key">public_key(3)</seealso>,
+    on a higher abstraction level, that uses the crypto application in its implementation.
+    </p>
+  </description>
+
+  <section>
+    <title>DEPENDENCIES</title>
+
+    <p>The current crypto implementation uses nifs to interface OpenSSLs crypto library
+    and requires <em>OpenSSL</em> package version 0.9.8 or higher.</p>
+    <p>Source releases of OpenSSL can be downloaded from the <url href="http://www.openssl.org">OpenSSL</url> project home page,
+    or mirror sites listed there.
+    </p>
+    </section>
+
+  <section>
+    <title>SEE ALSO</title>
+    <p>application(3)</p>
+  </section>
+</appref>
+

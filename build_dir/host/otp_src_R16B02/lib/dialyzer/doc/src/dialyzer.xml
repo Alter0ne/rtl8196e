@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="latin1" ?>
+<!DOCTYPE erlref SYSTEM "erlref.dtd">
+
+<erlref>
+  <header>
+    <copyright>
+      <year>2006</year><year>2013</year>
+      <holder>Ericsson AB. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice>
+      The contents of this file are subject to the Erlang Public License,
+      Version 1.1, (the "License"); you may not use this file except in
+      compliance with the License. You should have received a copy of the
+      Erlang Public License along with this software. If not, it can be
+      retrieved online at http://www.erlang.org/.
+
+      Software distributed under the License is distributed on an "AS IS"
+      basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+      the License for the specific language governing rights and limitations
+      under the License.
+
+    </legalnotice>
+
+    <title>dialyzer</title>
+    <prepared></prepared>
+    <docno></docno>
+    <date></date>
+    <rev></rev>
+  </header>
+  <module>dialyzer</module>
+  <modulesummary>The Dialyzer, a DIscrepancy AnalYZer for ERlang programs</modulesummary>
+  <description>
+    <p>The Dialyzer is a static analysis tool that identifies software
+    discrepancies such as definite type errors, code which has become
+    dead or unreachable due to some programming error, unnecessary
+    tests, etc. in single Erlang modules or entire (sets of)
+    applications. Dialyzer starts its analysis from either
+    debug-compiled BEAM bytecode or from Erlang source code. The file
+    and line number of a discrepancy is reported along with an
+    indication of what the discrepancy is about. Dialyzer bases its
+    analysis on the concept of success typings which allows for sound
+    warnings (no false positives).</p>
+    <p>Read more about Dialyzer and about how to use it from the GUI
+    in <seealso marker="dialyzer_chapter">Dialyzer User's
+    Guide</seealso>.</p>
+  </description>
+
+  <section>
+    <title>Using the Dialyzer from the command line</title>
+    <p>Dialyzer also has a command line version for automated use. Below is a
+      brief description of the list of its options. The same information can
+      be obtained by writing</p>
+    <code type="none"><![CDATA[
+      dialyzer --help
+    ]]></code>
+    <p>in a shell. Please refer to the GUI description for more details on
+      the operation of Dialyzer.</p>
+    <p>The exit status of the command line version is:</p>
+    <code type="none"><![CDATA[
+      0 - No problems were encountered during the analysis and no
+          warnings were emitted.
+      1 - Problems were encountered during the analysis.
+      2 - No problems were encountered, but warnings were emitted.
+    ]]></code>
+    <p>Usage:</p>
+    <code type="none"><![CDATA[
+       dialyzer [--help] [--version] [--shell] [--quiet] [--verbose]
+		[-pa dir]* [--plt plt] [--plts plt*] [-Ddefine]*
+                [-I include_dir]* [--output_plt file] [-Wwarn]*
+                [--src] [--gui | --wx] [files_or_dirs] [-r dirs]
+                [--apps applications] [-o outfile]
+		[--build_plt] [--add_to_plt] [--remove_from_plt]
+		[--check_plt] [--no_check_plt] [--plt_info] [--get_warnings]
+                [--no_native] [--fullpath]
+    ]]></code>
+    <p>Options:</p>
+    <taglist>
+      <tag><c><![CDATA[files_or_dirs]]></c> (for backwards compatibility also
+        as: <c><![CDATA[-c files_or_dirs]]></c></tag>
+      <item>Use Dialyzer from the command line to detect defects in the
+        specified files or directories containing <c><![CDATA[.erl]]></c> or
+         <c><![CDATA[.beam]]></c> files, depending on the type of the
+         analysis.</item>
+      <tag><c><![CDATA[-r dirs]]></c></tag>
+      <item>Same as the previous but the specified directories are searched
+        recursively for subdirectories containing <c><![CDATA[.erl]]></c> or
+        <c><![CDATA[.beam]]></c> files in them, depending on the type of
+        analysis.</item>
+      <tag><c><![CDATA[--apps applications]]></c></tag>
+      <item>Option typically used when building or modifying a plt as in:
+        <code type="none"><![CDATA[
+           dialyzer --build_plt --apps erts kernel stdlib mnesia ...
+        ]]></code>
+        to conveniently refer to library applications corresponding to the
+        Erlang/OTP installation. However, the option is general and can also
+        be used during analysis in order to refer to Erlang/OTP applications.
+        In addition, file or directory names can also be included, as in:
+        <code type="none"><![CDATA[
+           dialyzer --apps inets ssl ./ebin ../other_lib/ebin/my_module.beam
+        ]]></code></item>
+      <tag><c><![CDATA[-o outfile]]></c> (or
+        <c><![CDATA[--output outfile]]></c>)</tag>
+      <item>When using Dialyzer from the command line, send the analysis
+        results to the specified outfile rather than to stdout.</item>
+      <tag><c><![CDATA[--raw]]></c></tag>
+      <item>When using Dialyzer from the command line, output the raw analysis
+        results (Erlang terms) instead of the formatted result. The raw format
+        is easier to post-process (for instance, to filter warnings or to
+        output HTML pages).</item>
+      <tag><c><![CDATA[--src]]></c></tag>
+      <item>Override the default, which is to analyze BEAM files, and
+        analyze starting from Erlang source code instead.</item>
+      <tag><c><![CDATA[-Dname]]></c> (or <c><![CDATA[-Dname=value]]></c>)</tag>
+      <item>When analyzing from source, pass the define to Dialyzer. (**)</item>
+      <tag><c><![CDATA[-I include_dir]]></c></tag>
+      <item>When analyzing from source, pass the <c><![CDATA[include_dir]]></c>
+        to Dialyzer. (**)</item>
+      <tag><c><![CDATA[-pa dir]]></c></tag>
+      <item>Include <c><![CDATA[dir]]></c> in the path for Erlang (useful when
+        analyzing files that have <c><![CDATA['-include_lib()']]></c>
+        directives).</item>
+      <tag><c><![CDATA[--output_plt file]]></c></tag>
+      <item>Store the plt at the specified file after building it.</item>
+      <tag><c><![CDATA[--plt plt]]></c></tag>
+      <item>Use the specified plt as the initial plt (if the plt was built
+        during setup the files will be checked for consistency).</item>
+      <tag><c><![CDATA[--plts plt*]]></c></tag>
+      <item>Merge the specified plts to create the initial plt -- requires
+        that the plts are disjoint (i.e., do not have any module
+        appearing in more than one plt).
+        The plts are created in the usual way:
+        <code type="none"><![CDATA[
+           dialyzer --build_plt --output_plt plt_1 files_to_include
+           ...
+           dialyzer --build_plt --output_plt plt_n files_to_include
+        ]]></code>
+        and then can be used in either of the following ways:
+        <code type="none"><![CDATA[
+           dialyzer files_to_analyze --plts plt_1 ... plt_n
+        ]]></code>
+        or:
+        <code type="none"><![CDATA[
+           dialyzer --plts plt_1 ... plt_n -- files_to_analyze
+        ]]></code>
+        (Note the -- delimiter in the second case)</item>
+      <tag><c><![CDATA[-Wwarn]]></c></tag>
+      <item>A family of options which selectively turn on/off warnings
+        (for help on the names of warnings use
+        <c><![CDATA[dialyzer -Whelp]]></c>).</item>
+      <tag><c><![CDATA[--shell]]></c></tag>
+      <item>Do not disable the Erlang shell while running the GUI.</item>
+      <tag><c><![CDATA[--version]]></c> (or <c><![CDATA[-v]]></c>)</tag>
+      <item>Print the Dialyzer version and some more information and
+        exit.</item>
+      <tag><c><![CDATA[--help]]></c> (or <c><![CDATA[-h]]></c>)</tag>
+      <item>Print this message and exit.</item>
+      <tag><c><![CDATA[--quiet]]></c> (or <c><![CDATA[-q]]></c>)</tag>
+      <item>Make Dialyzer a bit more quiet.</item>
+      <tag><c><![CDATA[--verbose]]></c></tag>
+      <item>Make Dialyzer a bit more verbose.</item>
+      <tag><c><![CDATA[--statistics]]></c></tag>
+      <item>Prints information about the progress of execution (analysis phases,
+      time spent in each and size of the relative input).</item>
+      <tag><c><![CDATA[--build_plt]]></c></tag>
+      <item>The analysis starts from an empty plt and creates a new one from
+        the files specified with <c><![CDATA[-c]]></c> and
+        <c><![CDATA[-r]]></c>. Only works for beam files. Use
+        <c><![CDATA[--plt]]></c> or <c><![CDATA[--output_plt]]></c> to
+        override the default plt location.</item>
+       <tag><c><![CDATA[--add_to_plt]]></c></tag>
+       <item>The plt is extended to also include the files specified with
+         <c><![CDATA[-c]]></c> and <c><![CDATA[-r]]></c>. Use
+         <c><![CDATA[--plt]]></c> to specify which plt to start from,
+         and <c><![CDATA[--output_plt]]></c> to specify where to put the plt.
+         Note that the analysis might include files from the plt if they depend
+         on the new files. This option only works with beam files.</item>
+       <tag><c><![CDATA[--remove_from_plt]]></c></tag>
+       <item>The information from the files specified with
+         <c><![CDATA[-c]]></c> and <c><![CDATA[-r]]></c> is removed
+         from the plt. Note that this may cause a re-analysis of the remaining
+         dependent files.</item>
+       <tag><c><![CDATA[--check_plt]]></c></tag>
+       <item>Check the plt for consistency and rebuild it if it is not
+         up-to-date.</item>
+       <tag><c><![CDATA[--no_check_plt]]></c></tag>
+       <item>Skip the plt check when running Dialyzer. Useful when working with
+         installed plts that never change.</item>
+       <tag><c><![CDATA[--plt_info]]></c></tag>
+       <item>Make Dialyzer print information about the plt and then quit. The
+         plt can be specified with <c><![CDATA[--plt(s)]]></c>.</item>
+       <tag><c><![CDATA[--get_warnings]]></c></tag>
+       <item>Make Dialyzer emit warnings even when manipulating the plt.
+         Warnings are only emitted for files that are actually analyzed.</item>
+       <tag><c><![CDATA[--dump_callgraph file]]></c></tag>
+       <item>Dump the call graph into the specified file whose format is
+         determined by the file name extension. Supported extensions are: raw,
+         dot, and ps. If something else is used as file name extension, default
+         format '.raw' will be used.</item>
+       <tag><c><![CDATA[--no_native]]></c> (or <c><![CDATA[-nn]]></c>)</tag>
+       <item>Bypass the native code compilation of some key files that Dialyzer
+         heuristically performs when dialyzing many files; this avoids the
+         compilation time but it may result in (much) longer analysis
+         time.</item>
+       <tag><c><![CDATA[--fullpath]]></c></tag>
+       <item>Display the full path names of files for which warnings are emitted.</item>
+       <tag><c><![CDATA[--gui]]></c></tag>
+       <item>Use the gs-based GUI.</item>
+       <tag><c><![CDATA[--wx]]></c></tag>
+       <item>Use the wx-based GUI.</item>
+    </taglist>
+    <note>
+      <p>* denotes that multiple occurrences of these options are possible.</p>
+      <p>** options <c><![CDATA[-D]]></c> and <c><![CDATA[-I]]></c> work both from command-line and in the Dialyzer GUI;
+        the syntax of defines and includes is the same as that used by <c><![CDATA[erlc]]></c>.</p>
+    </note>
+    <p>Warning options:</p>
+    <taglist>
+      <tag><c><![CDATA[-Wno_return]]></c></tag>
+      <item>Suppress warnings for functions that will never return a
+        value.</item>
+      <tag><c><![CDATA[-Wno_unused]]></c></tag>
+      <item>Suppress warnings for unused functions.</item>
+      <tag><c><![CDATA[-Wno_improper_lists]]></c></tag>
+      <item>Suppress warnings for construction of improper lists.</item>
+      <tag><c><![CDATA[-Wno_tuple_as_fun]]></c></tag>
+      <item>Suppress warnings for using tuples instead of funs.</item>
+      <tag><c><![CDATA[-Wno_fun_app]]></c></tag>
+      <item>Suppress warnings for fun applications that will fail.</item>
+      <tag><c><![CDATA[-Wno_match]]></c></tag>
+      <item>Suppress warnings for patterns that are unused or cannot
+       match.</item>
+      <tag><c><![CDATA[-Wno_opaque]]></c></tag>
+      <item>Suppress warnings for violations of opaqueness of data types.</item>
+      <tag><c><![CDATA[-Wno_behaviours]]></c>***</tag>
+      <item>Suppress warnings about behaviour callbacks which drift from the
+       published recommended interfaces.</item>
+      <tag><c><![CDATA[-Wunmatched_returns]]></c>***</tag>
+      <item>Include warnings for function calls which ignore a structured return
+        value or do not match against one of many possible return
+        value(s).</item>
+      <tag><c><![CDATA[-Werror_handling]]></c>***</tag>
+      <item>Include warnings for functions that only return by means of an
+       exception.</item>
+      <tag><c><![CDATA[-Wrace_conditions]]></c>***</tag>
+      <item>Include warnings for possible race conditions.</item>
+      <tag><c><![CDATA[-Wunderspecs]]></c>***</tag>
+      <item>Warn about underspecified functions
+      (the -spec is strictly more allowing than the success typing).</item>
+    </taglist>
+    <p>The following options are also available but their use is not
+      recommended: (they are mostly for Dialyzer developers and internal
+      debugging)</p>
+    <taglist>
+      <tag><c><![CDATA[-Woverspecs]]></c>***</tag>
+      <item>Warn about overspecified functions
+      (the -spec is strictly less allowing than the success typing).</item>
+      <tag><c><![CDATA[-Wspecdiffs]]></c>***</tag>
+      <item>Warn when the -spec is different than the success typing.</item>
+    </taglist>
+    <note>
+      <p>*** Identifies options that turn on warnings rather than
+      turning them off.</p>
+    </note>
+  </section>
+
+  <section>
+    <title>Using the Dialyzer from Erlang</title>
+    <p>You can also use Dialyzer directly from Erlang. Both the GUI and the
+      command line versions are available. The options are similar to the ones
+      given from the command line, so please refer to the sections above for
+      a description of these.</p>
+  </section>
+  <funcs>
+    <func>
+      <name>gui() -> ok | {error, Msg}</name>
+      <name>gui(OptList) -> ok | {error, Msg}</name>
+      <fsummary>Dialyzer GUI version</fsummary>
+      <type>
+        <v>OptList -- see below</v>
+      </type>
+      <desc>
+        <p>Dialyzer GUI version.</p>
+        <code type="none"><![CDATA[
+OptList  :: [Option]
+Option   :: {files,          [Filename :: string()]}
+          | {files_rec,      [DirName :: string()]}
+          | {defines,        [{Macro: atom(), Value : term()}]}
+          | {from,           src_code | byte_code} %% Defaults to byte_code
+          | {init_plt,       FileName :: string()}  %% If changed from default
+          | {plts,           [FileName :: string()]} %% If changed from default
+          | {include_dirs,   [DirName :: string()]}
+          | {output_file,    FileName :: string()}
+          | {output_plt,     FileName :: string()}
+          | {analysis_type,  'succ_typings' |
+                             'plt_add' |
+                             'plt_build' |
+                             'plt_check' |
+                             'plt_remove'}
+          | {warnings,       [WarnOpts]}
+          | {get_warnings,   bool()}
+
+WarnOpts :: no_return
+          | no_unused
+          | no_improper_lists
+          | no_fun_app
+          | no_match
+          | no_opaque
+          | no_fail_call
+          | error_handling
+          | race_conditions
+          | behaviours
+          | unmatched_returns
+          | overspecs
+          | underspecs
+          | specdiffs
+        ]]></code>
+      </desc>
+    </func>
+    <func>
+      <name>run(OptList) -> Warnings</name>
+      <fsummary>Dialyzer command line version</fsummary>
+      <type>
+        <v>OptList -- see gui/0,1</v>
+        <v>Warnings -- see below </v>
+      </type>
+      <desc>
+        <p>Dialyzer command line version.</p>
+        <code type="none"><![CDATA[
+Warnings :: [{Tag, Id, Msg}]
+Tag :: 'warn_return_no_exit' | 'warn_return_only_exit'
+     | 'warn_not_called' | 'warn_non_proper_list'
+     | 'warn_fun_app' | 'warn_matching'
+     | 'warn_failing_call' | 'warn_contract_types'
+     | 'warn_contract_syntax' | 'warn_contract_not_equal'
+     | 'warn_contract_subtype' | 'warn_contract_supertype'
+Id = {File :: string(), Line :: integer()}
+Msg = msg() -- Undefined
+]]></code>
+      </desc>
+    </func>
+    <func>
+      <name>format_warning(Msg) -> string()</name>
+      <fsummary>Get the string version of a warning message.</fsummary>
+      <type>
+        <v>Msg = {Tag, Id, msg()} -- See run/1</v>
+      </type>
+      <desc>
+        <p>Get a string from warnings as returned by dialyzer:run/1.</p>
+      </desc>
+    </func>
+    <func>
+      <name>plt_info(string()) -> {'ok', [{atom(), any()}]} | {'error', atom()}</name>
+      <fsummary>Returns information about the specified plt.</fsummary>
+      <desc>
+        <p>Returns information about the specified plt.</p>
+      </desc>
+    </func>
+  </funcs>
+</erlref>

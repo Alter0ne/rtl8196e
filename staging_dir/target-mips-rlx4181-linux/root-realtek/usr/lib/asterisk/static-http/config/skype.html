@@ -1,0 +1,220 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * 'Skype for Asterisk' Configuration
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Manage Skype Accounts</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_AccountsList {
+			border: 1px solid #666666;
+			margin: 0px;
+			text-align: center;
+			padding : 1px;
+			width: 95% ;
+		}
+		#table_AccountsList tr.heading { background: #FFFFFF;}
+		#table_AccountsList tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_AccountsList tr.frow td{ font-weight:bold; }
+		#table_AccountsList tr td { padding : 3px; }
+		#table_AccountsList tr.even { background: #DFDFDF; }
+		#table_AccountsList tr.odd { background: #FFFFFF; }
+		#table_AccountsList tr.even:hover, #table_AccountsList tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Manage Skype Accounts
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div  id='table_AccountsList_DIV' style='margin-left:50px; margin-top: 20px; margin-right: 50px; padding: 0px'>
+		<div style="margin-bottom: 10px; margin-top:0px">
+			<span class='guiButtonNew' onclick='MANAGE_ACCOUNTS.new_Account_form();'>New Skype Account</span>
+			<span class='lite_Heading' style="margin-left: 50px">Skype Accounts</span>
+		</div>
+		<table id='table_AccountsList' cellpadding=0 cellspacing=0 border=0 align=center></table>
+	</div>
+
+	<div id="account_editdiv" STYLE="width:500px; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0 width="100%" align="center">
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=right>Username:&nbsp;</td>
+				<td colspan=2><input id="edit_account_text" size=25></td>
+			</tr>
+			<tr>	<td align=right>Password:&nbsp;</td>
+				<td colspan=2><input id="edit_account_secret" size=16></td>
+			</tr>
+			<tr>	<td align=right>Incoming Calls to :&nbsp;</td>
+				<td colspan=2><select id="edit_accountIncomingCalls_select"></select></td>
+			</tr>
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=center colspan=3>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='MANAGE_ACCOUNTS.saveAccount();'>Save</span>
+				</td>
+			</tr>
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+		</table>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script>
+	var SKYPE_CNF, EXTENSIONS_CNF;
+	var EDIT_ACCOUNT ;
+
+	var set_as_default_account = function(a){
+		ASTGUI.updateaValue({ file: 'chan_skype.conf', context :'general', variable :'default_user', value : a });
+		ASTGUI.feedback( { msg: 'Updated default Skype Account !', showfor: 2 , color: 'blue', bgcolor: '#FFFFFF' } );
+		window.location.reload();
+	};
+
+	var MANAGE_ACCOUNTS = {
+		listAccounts : function(){
+			var TBL = ASTGUI.TABLE('table_AccountsList');
+			TBL.clear();
+			var DEFAULT_ACCOUNT = ( SKYPE_CNF.hasOwnProperty('general') && SKYPE_CNF['general'].default_user ) ? SKYPE_CNF['general'].default_user : '' ;
+
+			for( account in SKYPE_CNF ){
+				if( !SKYPE_CNF.hasOwnProperty(account) || account == 'general' ) continue;
+
+				var img_name = ( DEFAULT_ACCOUNT == account ) ? 'images/edit.gif' : 'images/checkbox_blank.gif';
+				var tmp_context = SKYPE_CNF[account].context || '' ;
+				var dest_line = ( tmp_context && tmp_context.contains(ASTGUI.contexts.skypeIncomingContext) && EXTENSIONS_CNF.hasOwnProperty(tmp_context) ) ? EXTENSIONS_CNF[tmp_context][0] : '' ;
+				var tmp = "<span class='guiButton' onclick=\"MANAGE_ACCOUNTS.edit_Account_form('" + account +"')\">Edit</span>&nbsp;"
+						+ "<span class='guiButtonDelete' onclick=\"MANAGE_ACCOUNTS.deleteAccount('" + account +"')\">Delete</span>" ;
+
+
+				TBL.addRow({className : 'alt'});
+
+				TBL.addCell({ html: "<A href='#' TITLE='Set this as the default skype account for placing calls through skype network'><img src=" 
+							+ img_name + " border=0 onclick=\"set_as_default_account('" + account +"')\"></A>" });
+				TBL.addCell({ html: account, align: 'left' });
+				TBL.addCell({ html: ASTGUI.parseContextLine.showAs(dest_line) , align:'left' });
+				TBL.addCell({ html: tmp, align: 'center' });
+			}
+
+			if( TBL.rowCount() == 0 ){
+				TBL.addRow();
+				TBL.addCell({ html: "<BR>No Skype accounts configured. <BR> Please click on 'New Skype Account' button to send and receive calls via your skype account.<BR><BR>"});
+			}else{
+				TBL.addRow({className : 'frow'} , 0);
+
+				TBL.addCell({ html: 'Default' });
+				TBL.addCell({ html: 'Skype Account' , align: 'left' });
+				TBL.addCell({ html: 'Incoming calls go to', align: 'left' });
+				TBL.addCell({ html: '' });
+			}
+		},
+
+		deleteAccount : function(a, silentmode){ // MANAGE_ACCOUNTS.deleteAccount()
+			if(!silentmode && !confirm("Delete account '"+ a + "' ?")) { return true; }
+			var u = new listOfSynActions('chan_skype.conf') ;
+			u.new_action('delcat', a, '', '');
+			u.callActions();
+
+			u.clearActions('extensions.conf');
+				u.new_action('delcat', SKYPE_CNF[a].context , '', '');
+			u.callActions();
+
+			if( !silentmode ){
+				ASTGUI.feedback({ msg:"Deleted skype account '" + a + "'", showfor: 3, color:'red', bgcolor:'#FFFFFF' });
+				window.location.reload();
+			}
+		},
+
+		saveAccount : function(){ // MANAGE_ACCOUNTS.saveAccount()
+			if ( EDIT_ACCOUNT ){
+				this.deleteAccount(EDIT_ACCOUNT, true);
+			}
+
+			var v = new listOfActions('chan_skype.conf');
+			var catname = ASTGUI.getFieldValue('edit_account_text');
+			var contextName = ASTGUI.contexts.skypeIncomingContext + catname ;
+			v.new_action('newcat', catname, '', '');
+			v.new_action('append', catname , 'secret', ASTGUI.getFieldValue('edit_account_secret'));
+			v.new_action('append', catname , 'context', contextName);
+			v.new_action('append', catname , 'exten', 's');
+			v.new_action('append', catname , 'disallow', 'all');
+			v.new_action('append', catname , 'allow', 'ulaw');
+			v.new_action('append', catname , 'authpolicy', 'allow');
+			v.callActions( function(){
+
+				var W = new listOfSynActions('extensions.conf') ;
+				W.new_action('newcat', contextName , '', '');
+				W.new_action('append', contextName , 'exten', 's,1,' + ASTGUI.getFieldValue('edit_accountIncomingCalls_select') );
+				W.callActions();
+
+				ASTGUI.feedback( { msg:"updated account" , showfor: 3, color:'red', bgcolor:'#FFFFFF' } );
+				window.location.reload();
+			});
+		},
+
+		new_Account_form : function(){ // MANAGE_ACCOUNTS.new_Account_form()
+			EDIT_ACCOUNT = '';
+			ASTGUI.resetTheseFields([ 'edit_account_text', 'edit_account_secret','edit_accountIncomingCalls_select' ]);
+			$('#account_editdiv .dialog_title > span').html('Add a Skype Account');
+			$('#account_editdiv').showWithBg();
+		},
+
+		edit_Account_form : function(a){ // MANAGE_ACCOUNTS.edit_Account_form()
+			if(!a) return;
+			EDIT_ACCOUNT = a;
+
+			ASTGUI.updateFieldToValue( 'edit_account_text',  EDIT_ACCOUNT );
+			ASTGUI.updateFieldToValue( 'edit_account_secret',  SKYPE_CNF[EDIT_ACCOUNT].secret );
+
+			var dest_line = ( EXTENSIONS_CNF.hasOwnProperty( SKYPE_CNF[EDIT_ACCOUNT].context ) ) ? EXTENSIONS_CNF[ SKYPE_CNF[EDIT_ACCOUNT].context ][0] : '' ;
+			ASTGUI.selectbox.selectDestinationOption( 'edit_accountIncomingCalls_select' , ASTGUI.parseContextLine.getAppWithArgs(dest_line) );
+
+			$('#account_editdiv .dialog_title > span').html('Edit Account ' + EDIT_ACCOUNT );
+			$('#account_editdiv').showWithBg();
+		}
+
+	};
+
+	var localajaxinit = function(){
+		top.document.title = 'Configure Skype Accounts' ;
+		SKYPE_CNF = config2json({ filename:'chan_skype.conf', usf:1 });
+		EXTENSIONS_CNF = config2json({ filename:'extensions.conf', usf:0 });
+
+		var someArray = parent.miscFunctions.getAllDestinations() ; 
+		ASTGUI.selectbox.populateArray('edit_accountIncomingCalls_select', someArray);
+
+		MANAGE_ACCOUNTS.listAccounts();
+	};
+	</script>
+</body>
+</html>

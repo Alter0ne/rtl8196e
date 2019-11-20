@@ -1,0 +1,29 @@
+Source-Makefile: target/linux/cns21xx/Makefile
+Target: cns21xx
+Target-Board: cns21xx
+Target-Name: Cavium Networks Econa CNS21xx
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: arm
+Target-Arch-Packages: cns21xx
+Target-Features: gpio squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -march=armv4 -mtune=fa526
+CPU-Type: fa526
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: arm
+Target-Description:
+ Build firmware images for Cavium Networks CNS21XX based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-leds-gpio kmod-input-core kmod-input-gpio-keys kmod-button-hotplug 
+Target-Profile: Default
+Target-Profile-Name: Default Profile (all drivers)
+Target-Profile-Packages: kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb2-cns21xx kmod-ledtrig-usbdev 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+

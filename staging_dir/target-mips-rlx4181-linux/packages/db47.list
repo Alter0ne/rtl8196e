@@ -1,0 +1,12 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libdb-4.so
+./usr/lib/libdb-4.7.a
+./usr/lib/libdb-4.7.so
+./usr/lib/libdb.a
+./usr/lib/libdb.so
+./usr/include
+./usr/include/db_cxx.h
+./usr/include/db.h

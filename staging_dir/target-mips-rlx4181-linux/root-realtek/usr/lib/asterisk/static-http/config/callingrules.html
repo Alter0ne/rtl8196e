@@ -1,0 +1,174 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage Calling Rules
+ *
+ * Copyright (C) 2006-2010, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Ryan Brindley <rbrindley@digium.com>
+ * Erin Spiceland <espiceland@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Manage Calling Rules</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_CRLS_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_CRLS_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_CRLS_list tr.frow td{ font-weight:bold; }
+		#table_CRLS_list tr td{ padding : 3px; }
+		#table_CRLS_list tr.even { background: #DFDFDF; }
+		#table_CRLS_list tr.odd{ background: #FFFFFF; }
+		#table_CRLS_list tr.even:hover, #table_CRLS_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Manage Calling Rules
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >
+			&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;
+		</span>
+	</div>
+
+
+	<div class='top_buttons'>
+		<span id='new_cr_button' class='guiButtonNew'>New Calling Rule</span>
+		<span id='restore_default_clrs_button' class='guiButton'>Restore Default Calling Rules</span>
+		<!--<input type=button id='deleted_crs' class='regularButton' value='Delete'>-->
+		<span class='lite_Heading' style='margin-left:30px'>Outgoing Calling Rules</span>
+	</div>
+
+	<center>
+		<div style='text-align:center; 	background-color : #FFFFFF; width: 95%; padding: 5px; margin-left: 1px; margin-top:14px; margin-bottom:20px; border:1px solid #CDCDCD; color: #575757 ' class='lite'>
+		An outgoing calling rule pairs an extension pattern with a trunk used to dial the pattern. This allows different patterns to be dialed through different trunks (e.g. "local" 7-digit dials through an FXO but "long distance" 10-digit dials through a low-cost SIP trunk). You can optionally set a failover trunk to use when the primary trunk fails. Note that this panel manages only individual outgoing call rules. See the Dial Plans <hyperlink> section to associate multiple outgoing calling rules to be used for User outbound dialing.
+		</div>
+	</center>
+
+
+	<table id='table_CRLS_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="new_CRL_DIV" STYLE="width:650;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+			<TR class="dialog_title_tr">
+				<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span id='cr_dialog_title'></span></TD>
+				<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+			</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+			<TR>	<TD align="right">Calling Rule Name <img src="images/tooltip_info.gif" tip="en,callingrules,0" class='tooltipinfo'> :</TD>
+				<TD><input id="new_crl_name" size=20 field_name='Calling Rule Name' validation='alphanumericUnd' required='yes'></TD>
+			</TR>
+			<TR>	<TD align="right">Pattern <img src="images/tooltip_info.gif" tip="en,callingrules,1" class='tooltipinfo'> :</TD>
+				<TD><input id="new_crl_pattern" size=20 field_name='Pattern' validation='dialpattern' required='yes'></TD>
+			</TR>
+	 		<TR>	<TD align="right">Caller ID<img src="images/tooltip_info.gif" tip="en,callingrules,8" class='tooltipinfo'> :</TD>
+	 			<TD><input id="new_crl_caller_id" size=20'></TD>
+	 		</TR>
+			<TR>	<TD colspan=2>
+					<fieldset>
+						<legend>&nbsp;<input type=checkbox id='toLocalDest' required="yes"> 
+							<label for='toLocalDest'>Send to Local Destination 
+								<img src="images/tooltip_info.gif" tip="en,callingrules,5" class='tooltipinfo'>
+							</label>
+						</legend>
+						<table width='580'>
+						<TR>	<TD align="right" width='40%' valign='top'>Destination :</TD>
+							<TD>
+								<select id='new_crl_localDest'></select>
+								<div id='new_crl_localDest_CUSTOM_container' style='margin-top:3px;display:none'>
+									<input id='new_crl_localDest_CUSTOM' size=30> <BR>
+									Ex: Macro(someMacro,${EXTEN:1})
+								</div>
+							</TD>
+						</TR>
+						</table>
+					</fieldset>
+				</TD>
+			</TR>
+			<TR class='STT_TR_OPTIONS'>	<TD colspan=2>
+					<fieldset>
+						<legend>&nbsp;Send this call through trunk: </legend>
+						<table width='580'>
+						<TR>	<TD align="right" width='40%'>Use Trunk <img src="images/tooltip_info.gif" tip="en,callingrules,6" class='tooltipinfo'> </TD>
+							<TD><select id='new_crl_trunk' required="yes"></select></TD>
+						</TR>
+						<TR>	<TD align=right>Strip <img src="images/tooltip_info.gif" tip="en,callingrules,2" class='tooltipinfo'> </TD>
+							<TD> <input id="new_crl_tr_stripx" size=1 validation='numeric'> digits from front </TD>
+						</TR>
+						<TR>	<TD align=right> and Prepend these digits 
+								<img src="images/tooltip_info.gif" tip="en,callingrules,3" class='tooltipinfo'> 
+							</TD>
+							<TD> <input id="new_crl_tr_prepend" size=3  validation='numeric_plus_w'> before dialing</TD>
+						</TR>
+						<TR>	<TD align=right> using this filter:							<img src="images/tooltip_info.gif" tip="en,callingrules,7" class='tooltipinfo'> 
+							</TD>
+							<TD> <input id="new_crl_tr_filter" size=3  validation='required'></TD>
+						</TR>
+						</table>
+					</fieldset>
+				</TD>
+			</TR>
+			<TR class='STT_TR_OPTIONS'>
+				<TD colspan=2>
+					<fieldset>
+						<legend>&nbsp;<input type=checkbox id='new_crl_foChkbx' > <label for='new_crl_foChkbx'>Use FailOver Trunk <img src="images/tooltip_info.gif" tip="en,callingrules,4" class='tooltipinfo'>  :</label> </legend>
+						<table width='580'>
+							<TR>	<TD align="right" width='40%'>fail over Trunk <img src="images/tooltip_info.gif" tip="en,callingrules,4" class='tooltipinfo'> </TD>
+								<TD><select id='new_crl_fotrunk'></select></TD>
+							</TR>
+							<TR>	<TD align=right>Strip <img src="images/tooltip_info.gif" tip="en,callingrules,2" class='tooltipinfo'> </TD>
+								<TD> <input id="new_crl_fotr_stripx" size=1 validation='numeric'> digits from front </TD>
+							</TR>
+						<TR>	<TD align=right> and Prepend these digits 
+								<img src="images/tooltip_info.gif" tip="en,callingrules,3" class='tooltipinfo'> 
+							</TD>
+								<TD> <input id="new_crl_fotr_prepend" size=3 validation='numeric_plus_w'> before dialing</TD>
+							</TR>
+							<TR>	<TD align=right> using this filter:							<img src="images/tooltip_info.gif" tip="en,callingrules,7" class='tooltipinfo'> 
+								</TD>	
+								<TD> <input id="new_crl_fotr_filter" size=3  validation='required'></TD>
+							</TR>
+						</table>
+					</fieldset>
+				</TD>
+			</TR>
+			<TR>	<TD colspan=2 align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='new_crl_save_go();'>Save</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/callingrules.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

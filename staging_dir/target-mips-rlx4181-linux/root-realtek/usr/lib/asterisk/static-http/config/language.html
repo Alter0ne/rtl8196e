@@ -1,0 +1,154 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Language Preferences
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Language Preferences</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Language Preferences
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center><div id="tabbedMenu"></div></center>
+
+	<div class='lite_Heading'>Language Settings</div>
+
+	<table align="center" cellpadding=2 cellspacing=2 border=0>
+		<tr>	<td align=right>Language <img src="images/tooltip_info.gif" tip="en,options,9" class='tooltipinfo'> :</td>
+			<td>&nbsp;<select id='language' dfalt='en'>
+				<option value='en'>English</option>
+				<option value='es'>Spanish</option>
+				<option value='fr'>French</option>
+				</select></td>
+		</tr>
+		<tr>	<td colspan=2 align=center height=40 valign=bottom>
+				<span class='guiButtonCancel' id='cancel' onclick='window.location.reload();'>Cancel</span>
+				<span class='guiButtonEdit' id='save' onclick='save_changes();'>Save</span>
+
+			</td>
+		</tr>
+	</table>
+
+<!--	<div class='lite_Heading'>Download a Language Pack</div>
+
+	<table align="center" cellpadding=2 cellspacing=2 border=0>
+		<tr>	<td align=right>Language:</td>
+			<td>&nbsp;<select id='language_pack'>
+				<option value='en'>English</option>
+				<option value='es'>Spanish</option>
+				<option value='fr'>French</option>
+				</select></td>
+		</tr>
+		<tr>	<td colspan=2 align=center height=40 valign=bottom>
+				<span class='guiButton' id='save' onclick='download_selectedLangPack();'>Download</span>
+			</td>
+		</tr>
+	</table>-->
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script>
+
+	function localajaxinit(){
+		(function(){
+			var fd_text = (parent.sessionData.PLATFORM.isAA50 || parent.sessionData.PLATFORM.isABE ) ? 'Factory Reset' : 'Reset Configuration' ;
+			var t = [
+				{url:'preferences.html', desc:'General Preferences'} ,
+				{url:'#', desc:'Language', selected:true } ,
+				{url:'password.html', desc:'Change Password'}
+			];
+			if(parent.sessionData.PLATFORM.isAA50 ) {
+				t.push({url:'reset_defaults.html', desc: fd_text });
+			}
+			t.push( {url:'reboot.html', desc:'Reboot' } );
+			t.push( {url:'flipadvanced.html', desc:'Advanced Options' } );
+			ASTGUI.tabbedOptions( _$('tabbedMenu') , t );
+
+		})();
+		top.document.title = 'Language preferences' ;
+		var c = config2json({filename: 'users.conf', usf:1});
+		if(c.hasOwnProperty('general')){
+			ASTGUI.updateFieldToValue( 'language' , c['general'].getProperty('language') );
+		}
+	};
+
+
+	function save_changes(){
+		var u = new listOfSynActions('users.conf');
+			u.new_action('update', 'general' , 'language', ASTGUI.getFieldValue('language') );
+		u.callActions();
+		check_ifNeedsDownloading_andDownload();
+	};
+
+	var check_ifNeedsDownloading_andDownload = function(){
+		var download_selectedLangPack = function(){
+			var check_ifDone = function(){
+				var t = ASTGUI.loadHTML(top.sessionData.directories.output_SysInfo);
+				if ( t.contains('DoneDoneDone') ){
+					ASTGUI.feedback({msg:' Donwloaded Sound Pack !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+					setTimeout( function(){
+						parent.ASTGUI.dialog.hide();
+						ASTGUI.feedback({msg:' Updated language preferences !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+						window.location.reload();
+					}, 2000 );
+					return;
+				}
+				setTimeout( check_ifDone , 10000 );
+			};
+			var after = function(){ setTimeout( check_ifDone , 10000 ); };
+			var l = ASTGUI.getFieldValue('language')
+			var platform = (parent.sessionData.PLATFORM.isAA50) ? 'AA50' : 'none';
+			parent.ASTGUI.dialog.waitWhile(' Downloading Language ...');
+			parent.ASTGUI.systemCmd( top.sessionData.directories.script_dldsoundpack + ' ' + l + ' ' + platform + ' &', after);
+		};
+
+		var check_ifDownloadNeeded = function(){
+			parent.ASTGUI.dialog.waitWhile(' Checking if the selected Language Sounds are installed ...');
+			if( ASTGUI.getFieldValue('language') != 'en' ){
+				ASTGUI.listSystemFiles( top.sessionData.directories.Sounds +  ASTGUI.getFieldValue('language') + '/' , function(a){
+					if( a.length < 15 ){
+						download_selectedLangPack();
+					}else{
+						parent.ASTGUI.dialog.hide();
+						ASTGUI.feedback({msg:' Updated language preferences !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+						window.location.reload();
+					}
+				});
+			}else{
+				parent.ASTGUI.dialog.hide();
+				ASTGUI.feedback({msg:' Updated language preferences !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+				window.location.reload();
+			}
+		};
+
+		check_ifDownloadNeeded();
+	};
+
+
+	</script>
+</body>
+</html>

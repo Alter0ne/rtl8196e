@@ -1,0 +1,13 @@
+#!/bin/sh
+
+SYSINFO_OUTPUT="/var/lib/asterisk/static-http/config/sysinfo_output.html"
+
+#/bin/echo "<div id=list_files>" > $SYSINFO_OUTPUT
+/bin/mkdir -p -- "$1"
+#/bin/echo "</div>" >> $SYSINFO_OUTPUT
+
+if [ "$2" = "time" ]; then
+	params='-r --sort=time'
+fi
+
+/bin/ls $params -- "$1" > $SYSINFO_OUTPUT

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="latin1" ?>
+<!DOCTYPE erlref SYSTEM "erlref.dtd">
+
+<erlref>
+  <header>
+    <copyright>
+      <year>1996</year><year>2013</year>
+      <holder>Ericsson AB. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice>
+      The contents of this file are subject to the Erlang Public License,
+      Version 1.1, (the "License"); you may not use this file except in
+      compliance with the License. You should have received a copy of the
+      Erlang Public License along with this software. If not, it can be
+      retrieved online at http://www.erlang.org/.
+    
+      Software distributed under the License is distributed on an "AS IS"
+      basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+      the License for the specific language governing rights and limitations
+      under the License.
+    
+    </legalnotice>
+
+    <title>sys</title>
+    <prepared>Martin Bj&ouml;rklund</prepared>
+    <responsible>Bjarne D&auml;cker</responsible>
+    <docno></docno>
+    <approved>Bjarne D&auml;cker</approved>
+    <checked></checked>
+    <date>1996-06-06</date>
+    <rev></rev>
+    <file>sys.sgml</file>
+  </header>
+  <module>sys</module>
+  <modulesummary>A Functional Interface to System Messages</modulesummary>
+  <description>
+    <p>This module contains functions for sending system messages used by programs, and messages used for debugging purposes.
+      </p>
+    <p>Functions used for implementation of processes 
+      should also understand system messages such as debugging
+      messages and code change. These functions must be used to implement the use of system messages for a process; either directly, or through standard behaviours, such as <c>gen_server</c>.</p>
+    <p>The default timeout is 5000 ms, unless otherwise specified. The
+      <c>timeout</c> defines the time period to wait for the process to
+      respond to a request. If the process does not respond, the
+      function evaluates <c>exit({timeout, {M, F, A}})</c>.
+      </p>
+    <p><marker id="dbg_opt"/>The functions make reference to a debug structure.
+      The debug structure is a list of <c>dbg_opt()</c>.
+      <c>dbg_opt()</c> is an internal data type used by the
+      <c>handle_system_msg/6</c> function. No debugging is performed if it is an empty list.
+      </p>
+  </description>
+
+  <section>
+    <title>System Messages</title>
+    <p>Processes which are not implemented as one of the standard
+      behaviours must still understand system
+      messages. There are three different messages which must be
+      understood:
+      </p>
+    <list type="bulleted">
+      <item>
+        <p>Plain system messages. These are received as
+          <c>{system, From, Msg}</c>. The content and meaning of
+          this message are not interpreted by the
+          receiving process module. When a system message has been
+          received, the function <c>sys:handle_system_msg/6</c>
+          is called in order to handle the request.
+          </p>
+      </item>
+      <item>
+        <p>Shutdown messages. If the process traps exits, it must
+          be able to handle an shut-down request from its parent, the
+          supervisor. The message <c>{'EXIT', Parent, Reason}</c>
+          from the parent is an order to terminate.  The process must terminate when this message is received, normally with the
+          same <c>Reason</c> as <c>Parent</c>.
+          </p>
+      </item>
+      <item>
+        <p>There is one more message which the process must understand if the modules used to implement the process change dynamically during runtime. An example of such a process is the <c>gen_event</c> processes. This message is <c>{get_modules, From}</c>. The reply to this message is <c>From ! {modules, Modules}</c>,
+          where <c>Modules</c> is a list of the currently active modules in the process.
+          </p>
+        <p>This message is used by the release handler to find which
+          processes execute a certain module. The process may at a
+          later time be suspended and ordered to perform a code change
+          for one of its modules.
+          </p>
+      </item>
+    </list>
+  </section>
+
+  <section>
+    <title>System Events</title>
+    <p>When debugging a process with the functions of this
+      module, the process generates <em>system_events</em> which are
+      then treated in the debug function. For example, <c>trace</c>
+      formats the system events to the tty.
+      </p>
+    <p>There are three predefined system events which are used when a
+      process receives or sends a message. The process can also define its
+      own system events. It is always up to the process itself
+      to format these events.</p>
+  </section>
+  <datatypes>
+    <datatype>
+      <name name="name"/>
+    </datatype>
+    <datatype>
+      <name name="system_event"/>
+    </datatype>
+    <datatype>
+      <name name="dbg_opt"/>
+      <desc><p>See <seealso marker="#dbg_opt">above</seealso>.</p></desc>
+    </datatype>
+    <datatype>
+      <name name="dbg_fun"/>
+    </datatype>
+  </datatypes>
+  <funcs>
+    <func>
+      <name name="log" arity="2"/>
+      <name name="log" arity="3"/>
+      <fsummary>Log system events in memory</fsummary>
+      <desc>
+        <p>Turns the logging of system events On or Off. If On, a
+          maximum of <c><anno>N</anno></c>  events are kept in the
+          debug structure (the default is 10). If <c><anno>Flag</anno></c> is <c>get</c>, a list of all
+          logged events is returned. If <c><anno>Flag</anno></c> is <c>print</c>, the
+          logged events are printed to <c>standard_io</c>. The events are
+          formatted with a function that is defined by the process that
+          generated the event (with a call to
+          <c>sys:handle_debug/4</c>).</p>
+      </desc>
+    </func>
+    <func>
+      <name name="log_to_file" arity="2"/>
+      <name name="log_to_file" arity="3"/>
+      <fsummary>Log system events to the specified file</fsummary>
+      <desc>
+        <p>Enables or disables the logging of all system events in textual
+          format to the file. The events are formatted with a function that is 
+          defined by the process that generated the event (with a call
+          to <c>sys:handle_debug/4</c>).</p>
+      </desc>
+    </func>
+    <func>
+      <name name="statistics" arity="2"/>
+      <name name="statistics" arity="3"/>
+      <fsummary>Enable or disable the collections of statistics</fsummary>
+      <desc>
+        <p>Enables or disables the collection of statistics. If <c><anno>Flag</anno></c> is
+          <c>get</c>, the statistical collection is returned.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="trace" arity="2"/>
+      <name name="trace" arity="3"/>
+      <fsummary>Print all system events on <c>standard_io</c></fsummary>
+      <desc>
+        <p>Prints all system events on <c>standard_io</c>. The events are
+          formatted with a function that is defined by the process that
+          generated the event (with a call to
+          <c>sys:handle_debug/4</c>).</p>
+      </desc>
+    </func>
+    <func>
+      <name name="no_debug" arity="1"/>
+      <name name="no_debug" arity="2"/>
+      <fsummary>Turn off debugging</fsummary>
+      <desc>
+        <p>Turns off all debugging for the process. This includes
+          functions that have been installed explicitly with the
+          <c>install</c> function, for example triggers.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="suspend" arity="1"/>
+      <name name="suspend" arity="2"/>
+      <fsummary>Suspend the process</fsummary>
+      <desc>
+        <p>Suspends the process. When the process is suspended, it
+          will only respond to other system messages, but not other
+          messages.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="resume" arity="1"/>
+      <name name="resume" arity="2"/>
+      <fsummary>Resume a suspended process</fsummary>
+      <desc>
+        <p>Resumes a suspended process.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="change_code" arity="4"/>
+      <name name="change_code" arity="5"/>
+      <fsummary>Send the code change system message to the process</fsummary>
+      <desc>
+        <p>Tells the process to change code. The process must be
+          suspended to handle this message. The <c><anno>Extra</anno></c> argument is
+          reserved for each process to use as its own. The function
+          <c><anno>Module</anno>:system_code_change/4</c> is called. <c><anno>OldVsn</anno></c> is
+          the old version of the <c><anno>Module</anno></c>.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="get_status" arity="1"/>
+      <name name="get_status" arity="2"/>
+      <fsummary>Get the status of the process</fsummary>
+      <desc>
+        <p>Gets the status of the process.</p>
+        <p>The value of <c><anno>Misc</anno></c> varies for different types of
+          processes. For example, a <c>gen_server</c> process returns
+          the callback module's state, a <c>gen_fsm</c> process
+          returns information such as its current state name and state data,
+          and a <c>gen_event</c> process returns information about each of its
+          registered handlers. Callback modules for <c>gen_server</c>,
+          <c>gen_fsm</c>, and <c>gen_event</c> can also customise the value
+          of <c><anno>Misc</anno></c> by exporting a <c>format_status/2</c>
+          function that contributes module-specific information;
+          see <seealso marker="gen_server#Module:format_status/2">gen_server:format_status/2</seealso>,
+          <seealso marker="gen_fsm#Module:format_status/2">gen_fsm:format_status/2</seealso>, and
+          <seealso marker="gen_event#Module:format_status/2">gen_event:format_status/2</seealso>
+          for more details.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="get_state" arity="1"/>
+      <name name="get_state" arity="2"/>
+      <fsummary>Get the state of the process</fsummary>
+      <desc>
+        <p>Gets the state of the process.</p>
+        <note>
+          <p>These functions are intended only to help with debugging. They are provided for
+            convenience, allowing developers to avoid having to create their own state extraction
+            functions and also avoid having to interactively extract state from the return values of
+            <c><seealso marker="#get_status-1">get_status/1</seealso></c> or
+            <c><seealso marker="#get_status-2">get_status/2</seealso></c> while debugging.</p>
+        </note>
+        <p>The value of <c><anno>State</anno></c> varies for different types of
+          processes. For a <c>gen_server</c> process, the returned <c><anno>State</anno></c>
+          is simply the callback module's state. For a <c>gen_fsm</c> process,
+          <c><anno>State</anno></c> is the tuple <c>{CurrentStateName, CurrentStateData}</c>.
+          For a <c>gen_event</c> process, <c><anno>State</anno></c> a list of tuples,
+          where each tuple corresponds to an event handler registered in the process and contains
+          <c>{Module, Id, HandlerState}</c>, where <c>Module</c> is the event handler's module name,
+          <c>Id</c> is the handler's ID (which is the value <c>false</c> if it was registered without
+          an ID), and <c>HandlerState</c> is the handler's state.</p>
+        <p>To obtain more information about a process, including its state, see
+          <seealso marker="#get_status-1">get_status/1</seealso> and
+          <seealso marker="#get_status-2">get_status/2</seealso>.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="replace_state" arity="2"/>
+      <name name="replace_state" arity="3"/>
+      <fsummary>Replace the state of the process</fsummary>
+      <desc>
+        <p>Replaces the state of the process, and returns the new state.</p>
+        <note>
+          <p>These functions are intended only to help with debugging, and they should not be
+            be called from normal code. They are provided for convenience, allowing developers
+            to avoid having to create their own custom state replacement functions.</p>
+        </note>
+        <p>The <c><anno>StateFun</anno></c> function provides a new state for the process.
+          The <c><anno>State</anno></c> argument and <c><anno>NewState</anno></c> return value
+          of <c><anno>StateFun</anno></c> vary for different types of processes. For a
+          <c>gen_server</c> process, <c><anno>State</anno></c> is simply the callback module's
+          state, and <c><anno>NewState</anno></c> is a new instance of that state. For a
+          <c>gen_fsm</c> process, <c><anno>State</anno></c> is the tuple
+          <c>{CurrentStateName, CurrentStateData}</c>, and <c><anno>NewState</anno></c>
+          is a similar tuple that may contain a new state name, new state data, or both.
+          For a <c>gen_event</c> process, <c><anno>State</anno></c> is the tuple
+          <c>{Module, Id, HandlerState}</c> where <c>Module</c> is the event handler's module name,
+          <c>Id</c> is the handler's ID (which is the value <c>false</c> if it was registered without
+          an ID), and <c>HandlerState</c> is the handler's state. <c><anno>NewState</anno></c> is a
+          similar tuple where <c>Module</c> and <c>Id</c> shall have the same values as in
+          <c><anno>State</anno></c> but the value of <c>HandlerState</c> may be different. Returning
+          a <c><anno>NewState</anno></c> whose <c>Module</c> or <c>Id</c> values differ from those of
+          <c><anno>State</anno></c> will result in the event handler's state remaining unchanged. For a
+          <c>gen_event</c> process, <c><anno>StateFun</anno></c> is called once for each event handler
+          registered in the <c>gen_event</c> process.</p>
+        <p>If a <c><anno>StateFun</anno></c> function decides not to effect any change in process
+          state, then regardless of process type, it may simply return its <c><anno>State</anno></c>
+          argument.</p>
+        <p>If a <c><anno>StateFun</anno></c> function crashes or throws an exception, then
+          for <c>gen_server</c> and <c>gen_fsm</c> processes, the original state of the process is
+          unchanged. For <c>gen_event</c> processes, a crashing or failing <c><anno>StateFun</anno></c>
+          function means that only the state of the particular event handler it was working on when it
+          failed or crashed is unchanged; it can still succeed in changing the states of other event
+          handlers registered in the same <c>gen_event</c> process.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="install" arity="2"/>
+      <name name="install" arity="3"/>
+      <fsummary>Install a debug function in the process</fsummary>
+      <desc>
+        <p>This function makes it possible to install other debug
+          functions than the ones defined above. An example of such a
+          function is a trigger, a function that waits for some
+          special event and performs some action when the event is
+          generated. This could, for example, be turning on low level tracing.
+          </p>
+        <p><c><anno>Func</anno></c> is called whenever a system event is
+          generated. This function should return <c>done</c>, or a new
+          func state. In the first case, the function is removed. It is removed 
+          if the function fails.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="remove" arity="2"/>
+      <name name="remove" arity="3"/>
+      <fsummary>Remove a debug function from the process</fsummary>
+      <desc>
+        <p>Removes a previously installed debug function from the
+          process. <c><anno>Func</anno></c> must be the same as previously
+          installed.</p>
+      </desc>
+    </func>
+  </funcs>
+
+  <section>
+    <title>Process Implementation Functions</title>
+    <p>The following functions are used when implementing a
+      special process. This is an ordinary process which does not use a
+      standard behaviour, but a process which understands the standard system messages.</p>
+  </section>
+  <funcs>
+    <func>
+      <name name="debug_options" arity="1"/>
+      <fsummary>Convert a list of options to a debug structure</fsummary>
+      <desc>
+        <p>This function can be used by a process that initiates a debug
+          structure from a list of options. The values of the
+          <c><anno>Opt</anno></c> argument are the same as the corresponding
+          functions.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="get_debug" arity="3"/>
+      <fsummary>Get the data associated with a debug option</fsummary>
+      <desc>
+        <p>This function gets the data associated with a debug option. <c><anno>Default</anno></c> is returned if the
+          <c><anno>Item</anno></c> is not found.  Can be
+          used by the process to retrieve debug data for printing
+          before it terminates.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="handle_debug" arity="4"/>
+      <fsummary>Generate a system event</fsummary>
+      <desc>
+        <p>This function is called by a process when it generates a
+           system event. <c><anno>FormFunc</anno></c> is a formatting
+           function which is called as <c><anno>FormFunc</anno>(Device,
+           <anno>Event</anno>, <anno>Extra</anno>)</c> in order to print
+           the events, which is necessary if tracing is activated.
+           <c><anno>Extra</anno></c> is any extra information which the
+           process needs in the format function, for example the name
+           of the process.</p>
+      </desc>
+    </func>
+    <func>
+      <name name="handle_system_msg" arity="6"/>
+      <fsummary>Take care of system messages</fsummary>
+      <desc>
+        <p>This function is used by a process module that wishes to take care of system
+          messages. The process receives a <c>{system, <anno>From</anno>, <anno>Msg</anno>}</c>
+          message and passes the <c><anno>Msg</anno></c> and <c><anno>From</anno></c> to this
+          function.
+          </p>
+        <p>This function <em>never</em> returns. It calls the function
+          <c><anno>Module</anno>:system_continue(<anno>Parent</anno>, NDebug, <anno>Misc</anno>)</c> where the
+          process continues the execution, or
+          <c><anno>Module</anno>:system_terminate(Reason, <anno>Parent</anno>, <anno>Debug</anno>, <anno>Misc</anno>)</c> if
+          the process should terminate. The <c><anno>Module</anno></c> must export
+          <c>system_continue/3</c>, <c>system_terminate/4</c>, and
+          <c>system_code_change/4</c> (see below).
+          </p>
+        <p>The <c><anno>Misc</anno></c> argument can be used to save internal data
+          in a process, for example its state. It is sent to
+          <c><anno>Module</anno>:system_continue/3</c> or
+          <c><anno>Module</anno>:system_terminate/4</c></p>
+      </desc>
+    </func>
+    <func>
+      <name name="print_log" arity="1"/>
+      <fsummary>Print the logged events in the debug structure</fsummary>
+      <desc>
+        <p>Prints the logged system events in the debug structure
+          using <c>FormFunc</c> as defined when the event was
+          generated by a call to <c>handle_debug/4</c>.</p>
+      </desc>
+    </func>
+    <func>
+      <name>Mod:system_continue(Parent, Debug, Misc) -> none()</name>
+      <fsummary>Called when the process should continue its execution</fsummary>
+      <type>
+        <v>Parent = pid()</v>
+        <v>Debug = [<seealso marker="#type-dbg_opt">dbg_opt()</seealso>]</v>
+        <v>Misc = term()</v>
+      </type>
+      <desc>
+        <p>This function is called from <c>sys:handle_system_msg/6</c> when the process
+          should continue its execution (for example after it has been
+          suspended). This function never returns.</p>
+      </desc>
+    </func>
+    <func>
+      <name>Mod:system_terminate(Reason, Parent, Debug, Misc) -> none()</name>
+      <fsummary>Called when the process should terminate</fsummary>
+      <type>
+        <v>Reason = term()</v>
+        <v>Parent = pid()</v>
+        <v>Debug = [<seealso marker="#type-dbg_opt">dbg_opt()</seealso>]</v>
+        <v>Misc = term()</v>
+      </type>
+      <desc>
+        <p>This function is called from <c>sys:handle_system_msg/6</c> when the process
+          should terminate. For example, this function is called when
+          the process is suspended and its parent orders shut-down.
+          It  gives the process a chance to do a clean-up. This function never
+          returns.</p>
+      </desc>
+    </func>
+    <func>
+      <name>Mod:system_code_change(Misc, Module, OldVsn, Extra) -> {ok, NMisc}</name>
+      <fsummary>Called when the process should perform a code change</fsummary>
+      <type>
+        <v>Misc = term()</v>
+        <v>OldVsn = undefined | term()</v>
+        <v>Module = atom()</v>
+        <v>Extra = term()</v>
+        <v>NMisc = term()</v>
+      </type>
+      <desc>
+        <p>Called from <c>sys:handle_system_msg/6</c> when the process
+          should perform a code change. The code change is used when the
+          internal data structure has changed. This function
+          converts the <c>Misc</c> argument to the new data
+          structure. <c>OldVsn</c> is the <em>vsn</em> attribute of the
+          old version of the <c>Module</c>. If no such attribute was
+          defined, the atom <c>undefined</c> is sent.</p>
+      </desc>
+    </func>
+  </funcs>
+</erlref>
+

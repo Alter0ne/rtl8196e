@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+ 
+Name: libpthsem
+Description: pthsem (enhanced GNU pth replacement)
+Version: 2.0.8
+Libs: -L${libdir} -lpthsem
+Cflags: -I${includedir}

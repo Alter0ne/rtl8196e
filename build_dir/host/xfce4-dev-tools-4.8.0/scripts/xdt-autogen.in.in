@@ -1,0 +1,660 @@
+#!/bin/sh
+#
+# $Id$
+#
+# Copyright (c) 2002-2010
+#         The Xfce development team. All rights reserved.
+#
+# Written for Xfce by Benedikt Meurer <benny@xfce.org>.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2 of the License, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+# more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# xdt-autogen - Part of the Xfce developer tools.
+#
+
+VERSION="@VERSION@"
+
+XDT_AUTOGEN_VERSION_MAJOR="@VERSION_MAJOR@"
+XDT_AUTOGEN_VERSION_MINOR="@VERSION_MINOR@"
+XDT_AUTOGEN_VERSION_MICRO="@VERSION_MICRO@"
+XDT_AUTOGEN_VERSION_NANO="@VERSION_NANO@"
+XDT_AUTOGEN_VERSION_REVISION="@VERSION_REVISION@"
+
+
+##
+## a few portability tests
+##
+
+if test -z "$EGREP"; then
+  if type egrep >/dev/null 2>&1; then
+    EGREP=egrep
+  else
+    EGREP="grep -E"
+  fi
+fi
+
+awk_tests="gawk mawk nawk awk"
+if test -z "$AWK"; then
+  for a in $awk_tests; do
+    if type $a >/dev/null 2>&1; then
+      AWK=$a
+      break
+    fi
+  done
+else
+  if ! type $AWK >/dev/null 2>/dev/null; then
+    unset AWK
+  fi
+fi
+if test -z "$AWK"; then
+  echo "xdt-autogen: The 'awk' program (one of $awk_tests) is" >&2
+  echo "             required, but cannot be found." >&2
+  exit 1
+fi
+
+##
+## figures out any subdirs that should be configured as a part
+## of recursive configure.
+##
+parse_configure_subdirs()
+{
+  test -f "$1" && cat "$1" | tr '\\n\\t\\\\' '   ' | sed -ne 's|.*AC_CONFIG_SUBDIRS(\[\{0,1\}\([[:alnum:]_ @/-]\{1,\}\).*|\1|p'
+}
+
+##
+## Helper function to look up configure.{in,ac} files recursively.
+##
+lookup_configure_ac_files()
+{
+  configure_ac_file=""
+
+  if test -f "$1/configure.ac"; then
+    configure_ac_file="$1/configure.ac";
+  elif test -f "$1/configure.in"; then
+    configure_ac_file="$1/configure.in";
+  else
+    cat >&2 <<EOF
+xdt-autogen: Directory "$1" does not look like a package
+             directory, neither configure.ac nor configure.in is
+             present.
+EOF
+    exit 1
+  fi
+
+  test "x$configure_ac_file" != "x" && printf "%s" "$configure_ac_file "
+
+  subdirs=`parse_configure_subdirs ${configure_ac_file}`
+  for subdir in $subdirs; do
+    lookup_configure_ac_files "$1/$subdir";
+  done
+}
+
+##
+## Helper function to look up configure.{in,ac}.in files recursively.
+##
+lookup_configure_ac_in_files()
+{
+  configure_ac_in_file=""
+
+  if test -f "$1/configure.ac.in"; then
+    configure_ac_in_file="$1/configure.ac.in";
+  elif test -f "$1/configure.in.in"; then
+    configure_ac_in_file="$1/configure.in.in";
+  fi
+
+  test "x$configure_ac_in_file" != "x" && printf "%s" "$configure_ac_in_file "
+
+  subdirs=`parse_configure_subdirs ${configure_ac_in_file}`
+  for subdir in $subdirs; do
+    lookup_configure_ac_in_files "$1/$subdir";
+  done
+}
+
+
+
+##
+## check command-line args
+##
+if test "x$1" = "x--version" -o "x$1" = "x-V"; then
+  echo "`basename $0` $VERSION"
+  exit 0
+fi
+
+##
+## see if the caller is requesting a minimum version
+##
+do_version_check() {
+  test -z "$XDT_AUTOGEN_REQUIRED_VERSION" && return 0
+
+  major=`echo $XDT_AUTOGEN_REQUIRED_VERSION | cut -d. -f1`
+  test "$major" || return 1
+  test $major -le $XDT_AUTOGEN_VERSION_MAJOR || return 1
+  test $XDT_AUTOGEN_VERSION_MAJOR -gt $major && return 0
+
+  minor=`echo $XDT_AUTOGEN_REQUIRED_VERSION | cut -d. -f2`
+  test "$minor" || return 1
+  test $minor -le $XDT_AUTOGEN_VERSION_MINOR || return 1
+  test $XDT_AUTOGEN_VERSION_MINOR -gt $minor && return 0
+
+  micro=`echo $XDT_AUTOGEN_REQUIRED_VERSION | cut -d. -f3`
+  if echo "$micro" | $EGREP -q "svn|git"; then
+    revision=`echo "$micro" | sed -e 's/[[:digit:].]\+\(.*\)/\1/'`
+    micro=`echo "$micro" | sed -e 's/\([[:digit:].]\+\).*/\1/'`
+  fi
+  if echo "$micro" | grep -q '\.'; then
+    nano=`echo "$micro" | cut -d. -f2`
+    micro=`echo "$micro" | cut -d. -f1`
+  fi
+
+  test "$micro" || return 1
+  test $micro -le $XDT_AUTOGEN_VERSION_MICRO || return 1
+  test $XDT_AUTOGEN_VERSION_MICRO -gt $micro && return 0
+
+  # the caller may or may not have specified a nano
+  if test "$nano"; then
+    # and we may or may not have a nano
+    test "$XDT_AUTOGEN_VERSION_NANO" || XDT_AUTOGEN_VERSION_NANO="0"
+
+    test $nano -le $XDT_AUTOGEN_VERSION_NANO || return 1
+    test $XDT_AUTOGEN_VERSION_NANO -gt $nano && return 0
+  fi
+
+  # the caller may or may not have specified a revision
+  if test "$revision"; then
+    # if we don't have a revision, then the check fails
+    test "$XDT_AUTOGEN_VERSION_REVISION" || return 1
+    
+    # version compares are handled differently between svn and git.
+    if echo "$revision" | grep -q "svn"; then
+      # if our revision includes "git", then we must be newer
+      echo "$XDT_AUTOGEN_VERSION_REVISION" | grep -q "git" && return 0
+
+      # figure out the revision numbers
+      rev_num=`echo "$revision" | sed -e 's/svn-r\([[:digit:]]\+\)/\1/'`
+      XDT_AUTOGEN_VERSION_REV_NUM=`echo "$XDT_AUTOGEN_VERSION_REVISION" | sed -e 's/svn-r\([[:digit:]]\+\)/\1/'`
+      test $rev_num -le $XDT_AUTOGEN_VERSION_REV_NUM || return 1
+    elif echo "$revision" | grep -q "git"; then
+      # since git rev info is of the form "git-$SHORT_SHA1", they cannot
+      # be ordered without knowing the full git history.
+      echo "xdt-autogen: Git revision comparison is not reliable.  Continuing anyway." >&2
+      echo "             If you experience problems, upgrade xfce4-dev-tools." >&2
+    fi
+  fi
+
+  return 0
+}
+
+if ! do_version_check; then
+          cat >&2 <<EOF
+xdt-autogen: This version of xdt-autogen ($VERSION) is too old.
+             Version $XDT_AUTOGEN_REQUIRED_VERSION or greater is required.
+EOF
+
+  exit 1
+fi
+
+##
+## Determine XDG data dirs
+##
+test -z "${XDG_DATA_HOME}" && XDG_DATA_HOME="${HOME}/.local/share"
+test -z "${XDG_DATA_DIRS}" && XDG_DATA_DIRS="/usr/local/share:/usr/share"
+test -d "@DATADIR@" && XDG_DATA_DIRS="@DATADIR@:${XDG_DATA_DIRS}"
+XDG_DATA_DIRS="${XDG_DATA_HOME}:${XDG_DATA_DIRS}"
+export XDG_DATA_DIRS XDG_DATA_HOME
+
+
+MASTER_DIR=`pwd`; test -z "${MASTER_DIR}" && MASTER_DIR="."
+
+##
+## Check for documentation submodule
+##
+if test -n "$XDT_AUTOGEN_CHECK_DOCS"; then
+  if test ! -f "$MASTER_DIR/$XDT_AUTOGEN_CHECK_DOCS/Makefile.am"; then
+    # Check for git and needed files, if found, automatically
+    # update the submodule
+    if test -d .git -a -f .gitmodules; then
+      echo "xdt-autogen: Automatically initializing the $XDT_AUTOGEN_CHECK_DOCS submodule."
+
+      # Run git command to get the lastest docs revision
+      res=0 && git submodule sync $XDT_AUTOGEN_CHECK_DOCS && \
+      git submodule update --init $XDT_AUTOGEN_CHECK_DOCS && res=1
+
+      if test $res -eq 0; then
+        cat >&2 <<EOF
+xdt-autogen: Pulling the xfce4-docs git submodule failed. See errors
+             above for more information and take a look at
+             http://wiki.xfce.org/documentation.
+EOF
+        exit 1
+      fi
+    else
+      cat >&2 <<EOF
+xdt-autogen: The directory $XDT_AUTOGEN_CHECK_DOCS does not contain
+             the required files to run configure. See
+             http://wiki.xfce.org/documentation for more information.
+EOF
+      exit 1
+    fi
+  #else
+    # We could warn about out-of-date submodules here.
+  fi
+fi
+
+##
+## First we do some substitutions to generate configure.{ac,in} if necessary
+##
+CONFIGURE_AC_IN_FILES=`lookup_configure_ac_in_files "$MASTER_DIR"`
+for configure_ac_in_file in $CONFIGURE_AC_IN_FILES; do
+  configure_ac_file="`echo $configure_ac_in_file | sed -e 's:\.in$::'`"
+
+  # first generate a revision id
+  if test -d .git/svn; then
+    revision=`git svn find-rev trunk 2>/dev/null ||
+              git svn find-rev origin/trunk 2>/dev/null ||
+              git svn find-rev HEAD 2>/dev/null ||
+              git svn find-rev master 2>/dev/null`
+  elif test -d .git; then
+    revision=`git rev-parse --short HEAD`
+  elif test -d .svn; then
+    revision=`LC_ALL=C svn info $0 | $AWK '/^Revision: / {printf "%05d\n", $2}'`
+  fi
+
+  if test "x$revision" = "x"; then
+    revision="UNKNOWN"
+  fi
+
+  # find out what languages we support
+  conf_dir=`dirname $configure_ac_file`
+  linguas=`cd "$conf_dir/po" 2>/dev/null && ls *.po 2>/dev/null | $AWK 'BEGIN { FS="."; ORS=" " } { print $1 }'`
+
+  # and do the substitution
+  tmp=`basename ${configure_ac_in_file}`
+  cat >"$configure_ac_file" <<EOF
+dnl
+dnl This file was autogenerated from "${tmp}".
+dnl Edit that file instead!
+dnl
+
+EOF
+  sed -e "s/@REVISION@/${revision}/g" \
+      -e "s/@LINGUAS@/${linguas}/g" \
+      < "$configure_ac_in_file" >> "$configure_ac_file"
+
+done
+
+
+##
+## Search for the configure.{ac,in} files
+##
+CONFIGURE_AC_FILES=`lookup_configure_ac_files "$MASTER_DIR"`
+
+
+##
+## Check for a suitable make
+##
+if test x"${MAKE}" = x""; then
+  if (type gmake) >/dev/null 2>/dev/null; then
+    MAKE="gmake"
+  elif (type make) >/dev/null 2>/dev/null; then
+    MAKE="make"
+  else
+    cat >&2 <<EOF
+xdt-autogen: You must have "make" installed on your system.
+EOF
+    exit 1
+  fi
+  export MAKE
+fi
+
+
+##
+## cleanup autogenerated files
+##
+if test x"$1" = x"clean"; then
+  for configure_ac_file in $CONFIGURE_AC_FILES; do
+    directory=`dirname ${configure_ac_file}`
+    
+    echo "Running ${MAKE} distclean in ${directory}..."
+    (cd ${directory} ; ${MAKE} distclean) >/dev/null 2>&1
+
+    echo "Cleaning generated files in ${directory}..."
+
+    # determine the output files used in this package directory
+    output_files=`tr '\\n\\t\\\\' '   ' < ${configure_ac_file} | sed -ne 's|.*AC_OUTPUT(\[\{0,1\}\([[:alnum:]_@/\. -]\{1,\}\).*|\1|p'`;
+    for output_file in $output_files; do
+      if test x`basename $output_file` = x"Makefile"; then
+        rm -f "${directory}/${output_file}.in";
+        rm -f "${directory}/${output_file}.in.in";
+      fi
+      rm -f "${directory}/${output_file}";
+    done
+
+    (cd ${directory} ;
+     rm -f config.* configure configure.lineno aclocal.m4 ;
+     rm -f compile depcomp ltmain.sh missing install-sh ;
+     rm -f po/Makefile.in.in ;
+     rm -f stamp-h1 *.spec ;
+     rm -f mkinstalldirs libtool ;
+     rm -rf autom4te.cache ;
+     rm -f intltool-* gtk-doc.make ;
+     if test -f configure.ac.in -a -f configure.ac; then
+       rm -f configure.ac
+     elif test -f configure.in.in -a -f configure.in; then
+       rm -f configure.in
+     fi)
+
+    # determine translations used in this package directory
+#    translations=`tr '\\n\\\\' '  ' < ${configure_ac_file} | sed -ne 's/.*XDT_I18N(\[\{0,1\}\([a-zA-Z_@ ]\{1,\}\).*/\1/p'`;
+#    for translation in $translations; do
+#      rm -f "${directory}/po/${translation}.gmo";
+#    done
+    rm -f ${directory}/po/*.gmo;
+  done
+
+  exit 0
+fi
+
+
+##
+## Check for autoconf, first trying autoconf-2.59, then autoconf-2.58, then
+## autoconf-2.57, then autoconf-2.53, and finally simply autoconf.
+##
+test -z "${XDT_PROG_AUTOCONF}" &&
+for i in autoconf-2.61 autoconf-2.60 autoconf-2.59 autoconf-2.58 autoconf-2.57 autoconf-2.53 autoconf; do
+  (${i} --version) </dev/null >/dev/null 2>&1 &&
+  XDT_PROG_AUTOCONF=${i} && break
+done
+
+test -z "${XDT_PROG_AUTOCONF}" && {
+  cat >&2 <<EOF
+xdt-autogen: You must have "autoconf" installed on your system.
+             Download the appropriate package for your distribution,
+             or get the source tarball at ftp://ftp.gnu.org/pub/gnu/.
+EOF
+  exit 1
+}
+
+
+##
+## Check for intltoolize
+##
+test -z "${XDT_PROG_INTLTOOLIZE}" && XDT_PROG_INTLTOOLIZE="intltoolize"
+for configure_ac_file in $CONFIGURE_AC_FILES; do
+  if $EGREP -q "^(AC|IT)_PROG_INTLTOOL" "${configure_ac_file}"; then
+    (${XDT_PROG_INTLTOOLIZE} --version) </dev/null >/dev/null 2>&1 || {
+      cat >&2 <<EOF
+xdt-autogen: You must have "intltool" installed on your system.
+             You can download the source tarball from
+             ftp://ftp.gnome.org/pub/GNOME/.
+EOF
+      exit 1
+    };
+    break;
+  fi;
+done
+
+
+##
+## Check for libtoolize
+##
+if test -z "${XDT_PROG_LIBTOOLIZE}"; then
+  if type glibtoolize >/dev/null 2>&1; then
+    XDT_PROG_LIBTOOLIZE="glibtoolize"
+  elif type libtoolize >/dev/null 2>&1; then
+    XDT_PROG_LIBTOOLIZE="libtoolize"
+  fi
+fi
+for configure_ac_file in $CONFIGURE_AC_FILES; do
+  if grep -q "^AC_PROG_LIBTOOL" "${configure_ac_file}"; then
+    (${XDT_PROG_LIBTOOLIZE} --version) </dev/null >/dev/null 2>&0 || {
+      cat >&2 <<EOF
+xdt-autogen: You must have "libtool" installed on your system.
+             Download the appropriate package for your distribution,
+             or get the source tarball at ftp://ftp.gnu.org/pub/gnu/.
+EOF
+      exit 1
+    };
+    break;
+  fi;
+done
+
+
+##
+## Check for glib-gettextize
+##
+test -z "${XDT_PROG_GLIB_GETTEXTIZE}" && XDT_PROG_GLIB_GETTEXTIZE="glib-gettextize"
+for configure_ac_file in $CONFIGURE_AC_FILES; do
+  directory=`dirname ${configure_ac_file}`
+  if test -d "${directory}/po"; then
+    (${XDT_PROG_GLIB_GETTEXTIZE} --version) </dev/null >/dev/null 2>&1 || {
+      cat >&2 <<EOF
+xdt-autogen: You must have "glib2" installed. You can get if from
+             ftp://ftp.gtk.org/pub/gtk/.
+EOF
+      exit 1
+    };
+    break;
+  fi;
+done
+
+
+##
+## Check for gtkdocize
+##
+test -z "${XDT_PROG_GTKDOCIZE}" && XDT_PROG_GTKDOCIZE="gtkdocize"
+for configure_ac_file in $CONFIGURE_AC_FILES; do
+  if grep -q "^GTK_DOC_CHECK" "${configure_ac_file}"; then
+    (${XDT_PROG_GTKDOCIZE} --version) </dev/null >/dev/null 2>&1 || {
+      cat >&2 <<EOF
+xdt-autogen: You must have "gtk-doc" installed. You can get if from
+             http://www.gtk.org/gtk-doc/.
+EOF
+      exit 1
+    };
+    break;
+  fi;
+done
+
+
+##
+## Check for aclocal, first trying aclocal-1.9, then aclocal-1.8, and finally
+## simply aclocal.
+##
+test -z "${XDT_PROG_ACLOCAL}" &&
+for i in aclocal-1.11 aclocal-1.10 aclocal-1.9 aclocal-1.8 aclocal; do
+  (${i} --version) </dev/null >/dev/null 2>&1 &&
+  XDT_PROG_ACLOCAL=${i} && break
+done
+
+test -z "${XDT_PROG_ACLOCAL}" && {
+  cat >&2 <<EOF
+xdt-autogen: You must have "automake" installed (which includes the
+             "aclocal" tool). You can get the source tarball at
+             ftp://ftp.gnu.org/pub/gnu/.
+EOF
+  exit 1
+}
+
+
+##
+## Check for autoheader, first trying autoheader-2.59, then autoheader-2.58,
+## then autoheader-2.57, then autoheader-2.53, and finally simply autoheader.
+##
+test -z "${XDT_PROG_AUTOHEADER}" &&
+for configure_ac_file in $CONFIGURE_AC_FILES; do
+  if $EGREP -q "^A(M|C)_CONFIG_HEADER" "${configure_ac_file}"; then
+    for i in autoheader-2.61 autoheader-2.60 autoheader-2.59 autoheader-2.58 autoheader-2.57 autoheader-2.53 autoheader; do
+      (${i} --version) </dev/null >/dev/null 2>&1 &&
+      XDT_PROG_AUTOHEADER=${i} && break
+    done
+    test -z "${XDT_PROG_AUTOHEADER}" && {
+      cat >&2 <<EOF
+xdt-autogen: You must have "autoconf" installed (which includes the
+             "autoheader" tool). You can get the source tarball at
+             ftp://ftp.gnu.org/pub/gnu/.
+EOF
+      exit 1
+    };
+    break;
+  fi;
+done
+
+
+##
+## Check for automake, first trying automake-1.9, then automake-1.8, and finally
+## simply automake.
+##
+test -z "${XDT_PROG_AUTOMAKE}" &&
+for i in automake-1.11 automake-1.10 automake-1.9 automake-1.8 automake; do
+  (${i} --version) </dev/null >/dev/null 2>&1 &&
+  XDT_PROG_AUTOMAKE=${i} && break
+done
+
+test -z "${XDT_PROG_AUTOMAKE}" && {
+  cat >&2 <<EOF
+xdt-autogen: You must have "automake" installed on your system.
+             You can get the source tarball at
+             ftp://ftp.gnu.org/pub/gnu/.
+EOF
+  exit 1
+}
+
+
+##
+## Check for configure flags
+##
+test -z "${XDT_CONFIGURE_FLAGS}" && XDT_CONFIGURE_FLAGS="--enable-maintainer-mode"
+CONFIGURE_FLAGS="${XDT_CONFIGURE_FLAGS} $@"
+
+
+##
+## Check for aclocal flags
+##
+XDT_ACLOCAL_FLAGS="${ACLOCAL_FLAGS} ${XDT_ACLOCAL_FLAGS}"
+for path in `echo "${XDG_DATA_DIRS}" | sed 's,:, ,g'`; do
+  if test -d "${path}/xfce4/dev-tools/m4macros"; then
+    XDT_ACLOCAL_FLAGS="${XDT_ACLOCAL_FLAGS} -I ${path}/xfce4/dev-tools/m4macros"
+  elif test -d "${path}/xfce4/dev-tools/m4"; then
+    XDT_ACLOCAL_FLAGS="${XDT_ACLOCAL_FLAGS} -I ${path}/xfce4/dev-tools/m4"
+  fi
+done
+
+
+##
+## Do the real work(TM)
+##
+for configure_ac_file in ${CONFIGURE_AC_FILES}; do
+  # figure out the package dir path
+  source_dir=`dirname ${configure_ac_file}`
+  echo "Preparing package directory ${source_dir}..."
+
+  # set aclocal flags
+  ACLOCAL_FLAGS="${XDT_ACLOCAL_FLAGS}"
+  if test -d "${source_dir}/m4macros"; then
+    ACLOCAL_FLAGS="${ACLOCAL_FLAGS} -I ${source_dir}/m4macros";
+  fi
+  if test -d "${source_dir}/m4"; then
+    ACLOCAL_FLAGS="${ACLOCAL_FLAGS} -I ${source_dir}/m4";
+  fi
+
+  if test -d "${source_dir}/po"; then
+    if test ! -f "${source_dir}/aclocal.m4"; then
+      (echo "Creating ${source_dir}/aclocal.m4..." &&
+       echo "dnl Auto-generated by xdt-autogen" > "${source_dir}/aclocal.m4") || exit 1
+    fi
+    (echo "Running ${XDT_PROG_GLIB_GETTEXTIZE} --force --copy..." &&
+     ${XDT_PROG_GLIB_GETTEXTIZE} --force --copy) || exit 1
+    if test -f "${source_dir}/aclocal.m4" -a ! -w "${source_dir}/aclocal.m4"; then
+      (echo "Making ${source_dir}/aclocal.m4 writable..." &&
+       chmod u+w "${source_dir}/aclocal.m4") || exit 1
+    fi
+  fi
+
+  if $EGREP -q "^(AC|IT)_PROG_INTLTOOL" "${configure_ac_file}"; then
+    (echo "Running ${XDT_PROG_INTLTOOLIZE} --automake --copy --force" &&
+     cd "${source_dir}" &&
+     ${XDT_PROG_INTLTOOLIZE} --automake --copy --force) || exit 1
+  fi
+
+  # patch the po/Makefile.in.in to take into account the setting of
+  # XGETTEXT_ARGS properly
+  if test -f "${source_dir}/po/Makefile.in.in"; then
+    grep -q '^XGETTEXT_ARGS[ ]*=[ ]*@XGETTEXT_ARGS@$' \
+      "${source_dir}/po/Makefile.in.in" 2> /dev/null
+    if test $? -ne 0; then
+      echo "Patching file 'po/Makefile.in.in'"
+      sed \
+        -e 's/^\(XGETTEXT[ ]*=[ ]*@XGETTEXT@\)[ ]*$/\1 $(XGETTEXT_ARGS)/' \
+        -e 's/^\(MSGMERGE[ ]*=\)[ ]*\(INTLTOOL_EXTRACT=\)/\1 XGETTEXT_ARGS="$(XGETTEXT_ARGS)" \2/' \
+        -e 's/^\(GENPOT[ ]*=\)[ ]*\(INTLTOOL_EXTRACT=\)/\1 XGETTEXT_ARGS="$(XGETTEXT_ARGS)" \2/' \
+        -e "/^XGETTEXT = @XGETTEXT@/{
+i\\
+XGETTEXT_ARGS = @XGETTEXT_ARGS@
+}" < "${source_dir}/po/Makefile.in.in" > "${source_dir}/po/Makefile.in.in.tmp"
+      if test $? -eq 0; then
+        mv -f "${source_dir}/po/Makefile.in.in.tmp" \
+          "${source_dir}/po/Makefile.in.in" || exit 1
+      fi
+    fi
+  fi
+
+  if grep -q "^AC_PROG_LIBTOOL" "${configure_ac_file}"; then
+    (echo "Running ${XDT_PROG_LIBTOOLIZE} --force --copy..." &&
+     cd "${source_dir}" &&
+     ${XDT_PROG_LIBTOOLIZE} --force --copy) || exit 1
+  fi
+
+  if grep -q "^GTK_DOC_CHECK" "${configure_ac_file}"; then
+    (echo "Running ${XDT_PROG_GTKDOCIZE} --copy..." &&
+     cd ${source_dir} &&
+     ${XDT_PROG_GTKDOCIZE} --copy) || exit 1
+  fi
+
+  (echo "Running ${XDT_PROG_ACLOCAL} ${ACLOCAL_FLAGS}..." &&
+   cd ${source_dir} &&
+   ${XDT_PROG_ACLOCAL} ${ACLOCAL_FLAGS}) || exit 1
+
+  if $EGREP -q "^A(M|C)_CONFIG_HEADER" "${configure_ac_file}"; then
+    (echo "Running ${XDT_PROG_AUTOHEADER}..." &&
+     cd ${source_dir} &&
+     ${XDT_PROG_AUTOHEADER}) || exit 1
+  fi
+
+  (echo "Running ${XDT_PROG_AUTOMAKE} --force-missing --add-missing --copy --gnu..." &&
+   cd ${source_dir} &&
+   ${XDT_PROG_AUTOMAKE} --force-missing --add-missing --copy --gnu) || exit 1
+
+  (echo "Running ${XDT_PROG_AUTOCONF}..." &&
+   cd ${source_dir} &&
+   ${XDT_PROG_AUTOCONF}) || exit 1
+
+  echo
+done
+
+
+##
+## Run configure
+##
+if test x"${NOCONFIGURE}" = x""; then
+  (echo "Running ${MASTER_DIR}/configure ${CONFIGURE_FLAGS}..." &&
+   cd "${MASTER_DIR}" &&
+   ./configure ${CONFIGURE_FLAGS} &&
+   echo "Now type \"make\" to compile.") || exit 1
+else
+  echo "Skipping configure process."
+fi
+
+
+# vi:set ts=2 sw=2 et ai:

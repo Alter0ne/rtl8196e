@@ -1,0 +1,42 @@
+.TH filter_wait 3 "12 July 2007" "ClearSilver" "util/filter.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+filter_wait  - wrap waitpid to decode the exitcode and why
+your filter quit
+.SH SYNOPSIS
+.Ss
+#include <util/filter.h>
+.Se
+.Ss
+NEOERR *filter_wait(pid_t pid, int options, int *exitcode);
+
+.Se
+
+.SH ARGUMENTS
+pid -> the process identifier to wait for
+.br
+options -> the options to pass to waitpid (see wait(2))
+
+.SH DESCRIPTION
+filter_wait wraps the waitpid call and raises an error
+(with description) if the call failed.  Note that if the
+ask for the exitcode and the process exited with a code
+other than zero, we don't raise an error.  If you don't
+ask for the exitcode, and it is non-zero, we raise an
+error
+
+.SH "RETURN VALUE"
+exitcode -> the exitcode if the process existed normally
+
+.SH "SEE ALSO"
+.BR filter_wait "(3), "filter_create_fp "(3), "filter_create_fd

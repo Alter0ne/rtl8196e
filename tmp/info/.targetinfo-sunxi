@@ -1,0 +1,69 @@
+Source-Makefile: target/linux/sunxi/Makefile
+Target: sunxi
+Target-Board: sunxi
+Target-Name: Allwinner A1x/A20/A3x
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: arm
+Target-Arch-Packages: sunxi
+Target-Features: display dt ext4 fpu gpio rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -march=armv7-a -mtune=cortex-a8 -mfpu=vfpv3-d16
+CPU-Type: cortex-a8+vfpv3
+Linux-Version: 3.12.5
+Linux-Release: 1
+Linux-Kernel-Arch: arm
+Target-Description:
+
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target-Profile: Default
+Target-Profile-Name: Default package set
+Target-Profile-Packages: uboot-sunxi-A13-OLinuXino uboot-sunxi-A13-OLinuXino 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target-Profile: A13_OLinuXino
+Target-Profile-Name: A13 OLinuXino
+Target-Profile-Packages: uboot-sunxi-A13-OLinuXino 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set optimized for the Olimex A13 OLinuXino
+@@
+
+Target-Profile: A20-OLinuXino_MICRO
+Target-Profile-Name: A20 OLinuXino Micro
+Target-Profile-Packages: uboot-sunxi-A20-OLinuXino_MICRO 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set optimized for the Olimex A20 OLinuXino micro
+@@
+
+Target-Profile: Cubieboard
+Target-Profile-Name: Cubieboard
+Target-Profile-Packages: uboot-sunxi-Cubieboard 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set optimized for the Cubieboard
+@@
+
+Target-Profile: Cubieboard2
+Target-Profile-Name: Cubieboard2
+Target-Profile-Packages: uboot-sunxi-Cubieboard2 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Package set optimized for the Cubieboard2
+@@
+
+

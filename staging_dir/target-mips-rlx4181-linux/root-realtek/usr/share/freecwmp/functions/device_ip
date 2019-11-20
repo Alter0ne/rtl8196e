@@ -1,0 +1,131 @@
+#!/bin/sh
+# Copyright (C) 2012 Luka Perkov <freecwmp@lukaperkov.net>
+
+get_device_ip() {
+local parameter="$1"
+local rc
+
+freecwmp_check_prefix "Device.IP." "$parameter" "rc"
+if [ $rc -ne 0 ]; then
+	return
+fi
+
+case "$parameter" in
+	Device.IP.IPv4Capable)
+	freecwmp_output "$parameter" "1"
+	return
+	;;
+	Device.IP.IPv4Status)
+	freecwmp_output "$parameter" "Enabled"
+	return
+	;;
+	Device.IP.IPv6Capable)
+	freecwmp_output "$parameter" "0"
+	return
+	;;
+	Device.IP.IPv6Status)
+	freecwmp_output "$parameter" "Disabled"
+	return
+	;;
+	Device.IP.InterfaceNumberOfEntries)
+	local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show network 2> /dev/null | grep '=interface$' | wc -l`
+	freecwmp_output "$parameter" "$val"
+	return
+	;;
+	Device.IP.ActivePortNumberOfEntries)
+	freecwmp_output "$parameter" "0"
+	return
+	;;
+esac
+
+local _static=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show network 2> /dev/null | grep '=route$' | wc -l`
+
+local num
+
+freecwmp_parse_formated_parameter "$parameter" "Device.IP.Interface.{i}.Enable" "rc" "num"
+if [ $rc -eq 0 ]; then
+	local val
+	let local uci_num=$num-1
+	val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get network.@interface[$uci_num].proto 2> /dev/null`
+	if [ "x$val" == "xnone" ]; then
+		val=0
+	else
+		val=1
+	fi
+	freecwmp_value_output "$parameter" "$val"
+	return
+fi
+
+# TODO: Device.IP.Interface.{i}.IPv4Enable
+# TODO: Device.IP.Interface.{i}.IPv6Enable
+# TODO: Device.IP.Interface.{i}.ULAEnable
+
+freecwmp_parse_formated_parameter "$parameter" "Device.IP.Interface.{i}.Status" "rc" "num"
+if [ $rc -eq 0 ]; then
+	local val
+	local _interface
+	local _status
+	let local uci_num=$num-1
+	_interface=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show network.@interface[$uci_num] 2> /dev/null | awk -F"[.,=]" '/=interface$/ {print $2}'`
+	_status=`ubus -S call network.interface.$_interface status 2> /dev/null`
+	json_load "$_status" 2> /dev/null
+	json_get_var val up || return
+	freecwmp_value_output "$parameter" "$val"
+	return
+fi
+
+# TODO: Device.IP.Interface.{i}.Alias (alias support does not exist)
+
+freecwmp_parse_formated_parameter "$parameter" "Device.IP.Interface.{i}.Name" "rc" "num"
+if [ $rc -eq 0 ]; then
+	local val
+	local _interface
+	local _status
+	let local uci_num=$num-1
+	_interface=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show network.@interface[$uci_num] 2> /dev/null | awk -F"[.,=]" '/=interface$/ {print $2}'`
+	_status=`ubus -S call network.interface.$_interface status 2> /dev/null`
+	json_load "$_status"
+	json_get_var val device || return
+	freecwmp_value_output "$parameter" "$val"
+	return
+fi
+
+freecwmp_parse_formated_parameter "$parameter" "Device.IP.Interface.{i}.LastChange" "rc" "num"
+if [ $rc -eq 0 ]; then
+	local val
+	local _interface
+	local _status
+	let local uci_num=$num-1
+	_interface=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show network.@interface[$uci_num] 2> /dev/null | awk -F"[.,=]" '/=interface$/ {print $2}'`
+	_status=`ubus -S call network.interface.$_interface status 2> /dev/null`
+	json_load "$_status"
+	json_get_var val uptime || return
+	freecwmp_value_output "$parameter" "$val"
+	return
+fi
+
+# TODO: Device.IP.Interface.{i}.LowerLayers
+# TODO: Device.IP.Interface.{i}.Router
+# TODO: Device.IP.Interface.{i}.Reset
+# TODO: Device.IP.Interface.{i}.MaxMTUSize
+# TODO: Device.IP.Interface.{i}.Type
+# TODO: Device.IP.Interface.{i}.Loopback
+# TODO: Device.IP.Interface.{i}.IPv4AddressNumberOfEntries
+# TODO: Device.IP.Interface.{i}.IPv6AddressNumberOfEntries
+# TODO: Device.IP.Interface.{i}.IPv6PrefixNumberOfEntries
+# TODO: Device.IP.Interface.{i}.AutoIPEnable
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.Enable
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.Status
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.Alias
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.IPAddress
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.SubnetMask
+# TODO: Device.IP.Interface.{i}.IPv4Address.{i}.AddressingType
+# TODO: Device.IP.Interface.{i}.IPv6Address.{i}.Status
+# TODO: Device.IP.Interface.{i}.IPv6Address.{i}.Status
+# TODO: Device.IP.Interface.{i}.IPv6Prefix.{i}.Status
+# TODO: Device.IP.Interface.{i}.Stats.
+
+}
+
+set_device_ip() { return; }
+add_device_ip() { return; }

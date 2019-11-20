@@ -1,0 +1,61 @@
+# Esperanto translation
+# Copyright (C) 2010, 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the bison package.
+# Felipe Castro <fefcas@gmail.com>, 2010, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bison-runtime 2.7.90\n"
+"Report-Msgid-Bugs-To: bug-bison@gnu.org\n"
+"POT-Creation-Date: 2013-12-05 14:59+0100\n"
+"PO-Revision-Date: 2013-06-04 09:54-0300\n"
+"Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
+"Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/glr.c:770 data/yacc.c:643
+msgid "syntax error: cannot back up"
+msgstr "sintaks-eraro: ne eblas savkopii"
+
+#: data/glr.c:1654
+msgid "syntax is ambiguous"
+msgstr "sintakso estas plursenca"
+
+#: data/glr.c:1975 data/glr.c:2055 data/glr.c:2095 data/glr.c:2359
+#: data/lalr1.cc:1083 data/lalr1.cc:1103 data/yacc.c:1210 data/yacc.c:1710
+#: data/yacc.c:1716
+msgid "syntax error"
+msgstr "sintaks-eraro"
+
+#: data/glr.c:2056 data/lalr1.cc:1084 data/yacc.c:1211
+#, c-format
+msgid "syntax error, unexpected %s"
+msgstr "sintaks-eraro, neatendita %s"
+
+#: data/glr.c:2057 data/lalr1.cc:1085 data/yacc.c:1212
+#, c-format
+msgid "syntax error, unexpected %s, expecting %s"
+msgstr "sintaks-eraro, neatendita %s, ni atendis %s"
+
+#: data/glr.c:2058 data/lalr1.cc:1086 data/yacc.c:1213
+#, c-format
+msgid "syntax error, unexpected %s, expecting %s or %s"
+msgstr "sintaks-eraro, neatendita %s, ni atendis %s aŭ %s"
+
+#: data/glr.c:2059 data/lalr1.cc:1087 data/yacc.c:1214
+#, c-format
+msgid "syntax error, unexpected %s, expecting %s or %s or %s"
+msgstr "sintaks-eraro, neatendita %s, ni atendis %s aŭ %s aŭ %s"
+
+#: data/glr.c:2060 data/lalr1.cc:1088 data/yacc.c:1215
+#, c-format
+msgid "syntax error, unexpected %s, expecting %s or %s or %s or %s"
+msgstr "sintaks-eraro, neatendita %s, ni atendis %s aŭ %s aŭ %s aŭ %s"
+
+#: data/glr.c:2419 data/yacc.c:1295 data/yacc.c:1297 data/yacc.c:1470
+#: data/yacc.c:1867
+msgid "memory exhausted"
+msgstr "memoro estas plenigita"

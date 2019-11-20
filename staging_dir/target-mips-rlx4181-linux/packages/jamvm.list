@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/bin
+./usr/bin/jamvm
+./usr/share
+./usr/share/jamvm
+./usr/share/jamvm/classes.zip
+./usr/lib
+./usr/lib/libjvm.a
+./usr/lib/rt.jar
+./usr/include
+./usr/include/jni.h

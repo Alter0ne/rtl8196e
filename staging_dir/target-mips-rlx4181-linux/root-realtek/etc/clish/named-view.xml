@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+    <VIEW name="root-view">
+        <COMMAND name="named-view"
+                         help="Enter the named view"
+                         view="named-view"
+                         viewid="name=${name};foobar=${other}">
+            <PARAM name="name"
+                   help="The name to used for the named view"
+                   ptype="STRING"/>
+            <PARAM name="other"
+                   help="Another value which can be optionally set"
+                   ptype="STRING"
+                   default="foobar"/>
+        </COMMAND>
+    </VIEW>
+
+    <VIEW name="named-view"
+            prompt="NAME='${name}'&gt; ">
+        <COMMAND name="show"
+                 help="Show the named view details">
+            <ACTION>
+                echo "NAME : ${name}"
+                echo "OTHER: ${foobar}"
+            </ACTION>
+        </COMMAND>
+        <COMMAND name="rename"
+                 help="Enter the named view"
+                 view="named-view"
+               viewid="name=${new_name};foobar=${foobar}">
+            <PARAM name="new_name"
+                   help="The name to used for the named view"
+                   ptype="STRING"/>
+                <ACTION> echo "Changing name to '${new_name}'"</ACTION>
+        </COMMAND>
+        <COMMAND name="exit"
+                 help="Exit the named view"
+                 view="root-view"/>
+    </VIEW>
+</CLISH_MODULE>

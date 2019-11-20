@@ -1,0 +1,95 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * VoiceMail groups
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Voicemail Groups</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_VMGroups_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_VMGroups_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_VMGroups_list tr.frow td{ font-weight:bold; }
+		#table_VMGroups_list tr td{ padding : 3px; }
+		#table_VMGroups_list tr.even { background: #DFDFDF; }
+		#table_VMGroups_list tr.odd{ background: #FFFFFF; }
+		#table_VMGroups_list tr.even:hover, #table_VMGroups_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		 VoiceMail Groups 
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='lite_Heading'> List of VoiceMail Groups </div>
+	<div class='top_buttons' style='margin-top: -22px;'>
+		<span id='new_vmgroup_button' class='guiButtonNew' onclick="vmgroups_miscFunctions.show_NewVMG_form();">New VoiceMail Group</span>
+	</div>
+
+	<table id='table_VMGroups_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="Edit_VMGROUP_DIV" STYLE="width:620; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+			<TR class="dialog_title_tr">
+				<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+					<span id='Edit_dialog_title'></span>
+				</TD>
+				<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+			</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width=100%>
+			<TR>	<TD align="right" width=230><nobr>VoiceMail Group's Extension:</nobr></TD>
+				<TD><input id="edit_vmgroup_exten" size=6  field_name='VoiceMail Group Extension' validation='numeric' required='yes'></TD>
+			</TR>
+			<TR>	<TD align="right" width=230>Label:</TD>
+				<TD><input id="edit_vmgroup_label" size=16  field_name='Label' validation='alphanumeric' required='yes'></TD>
+			</TR>
+			<TR>	<TD align="right" colspan=2 height=7></TD></TR>
+			<TR>	<TD valign=top align="right">User MailBoxes:</TD>
+				<TD><div id='edit_includeCheckboxes_div'></div></TD>
+			</TR>
+			<TR>	<TD align="right" colspan=2 height=7></TD></TR>
+			<TR>	<TD colspan=2 align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='vmgroups_miscFunctions.save_VMGroup();'>Save</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/vmgroups.js"></script>
+</body>
+</html>

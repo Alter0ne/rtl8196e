@@ -1,0 +1,71 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage T1/E1/BRI trunks
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Digital Trunks</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_DigitalTrunks_list {
+			border: 0px solid #666666;
+			margin-top: 8px;
+			padding : 1px;
+			width: 96%;
+		}
+
+		#table_DigitalTrunks_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_DigitalTrunks_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_DigitalTrunks_list tr.frow td{ font-weight:bold; }
+		#table_DigitalTrunks_list tr td{ padding : 3px; }
+		#table_DigitalTrunks_list tr.even { background: #DFDFDF; }
+		#table_DigitalTrunks_list tr.odd{ background: #FFFFFF; }
+		#table_DigitalTrunks_list tr.even:hover, #table_DigitalTrunks_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Digital(T1/E1/BRI) Trunks
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="tabbedMenu"></div>
+
+	<table id='table_DigitalTrunks_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/trunks_digital.js"></script>
+</body>
+</html>

@@ -1,0 +1,641 @@
+Source-Makefile: package/feeds/oldpackages/lxc/Makefile
+Package: lxc
+Menu: 1
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  LXC is the userspace control package for Linux Containers, a lightweight
+ virtual system mechanism sometimes described as "chroot on steroids".
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+Config:
+  source "feeds/oldpackages/utils/lxc/Config.in"
+@@
+
+Package: lxc-common
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC common files
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC common files
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-hooks
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC virtual machine hooks
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC virtual machine hooks
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-configs
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC virtual machine common config files
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC virtual machine common config files
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-templates
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC virtual machine templates
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC virtual machine templates
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: liblxc
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +libcap +libpthread +LXC_SECCOMP:libseccomp
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: libs
+Category: Libraries
+Title: LXC userspace library
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC userspace library
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-lua
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +liblua +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC Lua bindings
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC Lua bindings
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-init
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: LXC Lua bindings
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: LXC Lua bindings
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-auto
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lxc-start +lxc-stop
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: (initscript)
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  LXC is the userspace control package for Linux Containers, a lightweight
+ virtual system mechanism sometimes described as "chroot on steroids".
+ This package adds and initscript for starting and stopping the containers
+ on boot and shutdown.
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-unprivileged
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +shadow-utils +shadow-newuidmap +shadow-newgidmap
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Helper script for unprivileged containers support
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  Support for unprivileged containers requires newuidmap and newguidmap.
+ This package makes sure they are available & have correct permissions.
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-attach
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-attach from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-attach from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-autostart
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-autostart from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-autostart from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-cgroup
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-cgroup from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-cgroup from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-copy
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-copy from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-copy from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-config
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-config from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-config from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-console
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-console from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-console from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-create
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc +lxc-configs +lxc-hooks +lxc-templates +flock
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-create from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-create from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-destroy
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-destroy from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-destroy from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-device
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-device from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-device from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-execute
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-execute from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-execute from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-freeze
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-freeze from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-freeze from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-info
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-info from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-info from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-monitor
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-monitor from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-monitor from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-snapshot
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-snapshot from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-snapshot from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-start
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-start from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-start from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-stop
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-stop from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-stop from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-unfreeze
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-unfreeze from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-unfreeze from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-unshare
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-unshare from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-unshare from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-usernsexec
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-usernsexec from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-usernsexec from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-wait
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-wait from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-wait from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-top
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-top from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-top from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-ls
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-ls from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-ls from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-monitord
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-monitord from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-monitord from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-user-nic
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common +libpthread +libcap +liblxc
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-user-nic from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-user-nic from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+Package: lxc-checkconfig
+Version: 2.1.1-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread lxc +lxc-common
+Menu-Depends: 
+Provides: 
+Build-Depends: lua
+Section: utils
+Category: Utilities
+Title: Utility lxc-checkconfig from the LXC userspace tools
+Maintainer: Marko Ratkaj <marko.ratkaj@sartura.hr>
+Source: lxc-2.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Utility lxc-checkconfig from the LXC userspace tools
+http://lxc.sourceforge.net/
+Marko Ratkaj <marko.ratkaj@sartura.hr>
+@@
+
+

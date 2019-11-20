@@ -1,0 +1,48 @@
+	$ mkdir patches
+
+	$ quilt new snapshot
+	> Patch %{P}snapshot is now on top
+	$ quilt add f.txt
+	> File f.txt added to patch %{P}snapshot
+	$ cat > f.txt
+	< f.txt
+
+	$ quilt add g.txt
+	> File g.txt added to patch %{P}snapshot
+	$ cat > g.txt
+	< g.txt
+
+	$ quilt refresh
+	> Refreshed patch %{P}snapshot
+	$ quilt snapshot
+
+	$ quilt fork
+	> Fork of patch %{P}snapshot created as %{P}snapshot-2
+
+	$ rm g.txt
+	$ quilt add h.txt
+	> File h.txt added to patch %{P}snapshot-2
+
+	$ cat > h.txt
+	< h.txt
+
+	$ cat >> f.txt
+	< more changes
+
+	$ quilt refresh
+	> Refreshed patch %{P}snapshot-2
+
+	$ quilt diff --snapshot | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/f\.txt
+	> ===================================================================
+	> @@ -1 +1,2 @@
+	>  f.txt
+	> +more changes
+	>~ Index: [^/]+/g\.txt
+	> ===================================================================
+	> @@ -1 +0,0 @@
+	> -g.txt
+	>~ Index: [^/]+/h\.txt
+	> ===================================================================
+	> @@ -0,0 +1 @@
+	> +h.txt

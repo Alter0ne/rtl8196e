@@ -1,0 +1,59 @@
+#! @PERL@ -w
+
+#  This script is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License version 2 as
+#  published by the Free Software Foundation.
+#
+#  See the COPYING and AUTHORS files for more details.
+
+use strict;
+use POSIX qw(strftime);
+use Getopt::Long qw(:config gnu_getopt prefix_pattern=(--|-));
+use Date::Parse;
+
+my $spec = '%a %b %e %H:%M:%S %Z %Y';
+my $now  = time();
+my $utc = 0;
+
+sub usage() {
+    print "Usage: date [OPTION]... [+FORMAT]
+Display the current time in the given FORMAT.
+
+  -d, --date=STRING         display time described by STRING, not `now'
+  -f, --file=DATEFILE       like --date once for each line of DATEFILE
+  -R, --rfc-822             output RFC-822 compliant date string
+  -u, --utc, --universal    print or set Coordinated Universal Time
+      --help                display this help and exit
+";
+    exit 1;
+}
+
+sub parse_utc_secs($) {
+    my ($now) = @_;
+
+    if ($now =~ / UTC ([0-9]+) seconds$/) {
+	# This is an heuristic specifically for quilts mail.in invocation:
+	#   date --rfc-822 -d "1970/01/01 UTC nnnnnnnn seconds"
+	return $1;
+    }
+    else {
+	return str2time($now);
+    }
+}
+
+GetOptions('rfc-822|R' => sub() { $spec = '%a, %d %b %Y %H:%M:%S %z' },
+	   'utc|universal|u' => \$utc,
+	   'date|d=s' => sub() { $now = parse_utc_secs($_[1]) },
+	   'reference|r=s' => sub() { my @filestats = stat($_[1]); $now = parse_utc_secs('1970/01/01 UTC ' . $filestats[9] . ' seconds') },
+	   'help|h' => sub() { usage })
+    or usage;
+
+if (@ARGV == 1 && $ARGV[0] =~ /^\+/) {
+    $spec = substr($ARGV[0], 1);
+} elsif (@ARGV > 1) {
+   usage;
+}
+
+my @now = $utc ? gmtime($now) : localtime($now);
+
+print strftime($spec, @now) . "\n";

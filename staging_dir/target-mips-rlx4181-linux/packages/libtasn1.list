@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/bin
+./usr/lib
+./usr/lib/libtasn1.so.6
+./usr/lib/libtasn1.a
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libtasn1.pc
+./usr/lib/libtasn1.so
+./usr/lib/libtasn1.so.6.5.6
+./usr/include
+./usr/include/libtasn1.h

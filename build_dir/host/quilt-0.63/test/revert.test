@@ -1,0 +1,50 @@
+	$ mkdir patches
+
+	$ mkdir sub
+	$ echo f1 > sub/f
+	$ echo g1 > sub/g
+	$ quilt new p.diff
+	> Patch patches/p.diff is now on top
+
+	$ quilt add sub/f sub/g sub/h
+	> File sub/f added to patch patches/p.diff
+	> File sub/g added to patch patches/p.diff
+	> File sub/h added to patch patches/p.diff
+
+	$ rm -f sub/g
+	$ echo h1 > sub/h
+	$ quilt refresh
+	> Refreshed patch patches/p.diff
+
+	$ cd sub
+	$ echo f2 > f
+	$ quilt revert f
+	> Changes to sub/f in patch ../patches/p.diff reverted
+
+	$ quilt diff -z
+	$ quilt pop -qf
+	> Removing patch ../patches/p.diff
+	> No patches applied
+
+	$ quilt push -q
+	> Applying patch ../patches/p.diff
+	> Now at patch ../patches/p.diff
+
+	$ echo g2 > g
+	$ quilt revert g
+	> Changes to sub/g in patch ../patches/p.diff reverted
+
+	$ quilt diff -z
+	$ quilt pop -qf
+	> Removing patch ../patches/p.diff
+	> No patches applied
+
+	$ quilt push -q
+	> Applying patch ../patches/p.diff
+	> Now at patch ../patches/p.diff
+
+	$ echo h2 > h
+	$ quilt revert h
+	> Changes to sub/h in patch ../patches/p.diff reverted
+
+	$ quilt diff -z

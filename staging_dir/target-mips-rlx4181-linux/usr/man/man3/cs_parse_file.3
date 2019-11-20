@@ -1,0 +1,41 @@
+.TH cs_parse_file 3 "12 July 2007" "ClearSilver" "cs/cs.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cs_parse_file  - parse a CS template file
+.SH SYNOPSIS
+.Ss
+#include <cs/cs.h>
+.Se
+.Ss
+NEOERR *cs_parse_file (CSPARSE *parse, const char *path);
+
+.Se
+
+.SH ARGUMENTS
+parse - a CSPARSE structure created with cs_init
+.br
+path - the path to the file to parse
+
+.SH DESCRIPTION
+cs_parse_file will parse the CS template located at
+path.  It will use hdf_search_path() if path does not
+begin with a '/'.  The parsed CS template will be
+appended to the current parse tree stored in the CSPARSE
+structure.  The entire file is loaded into memory and
+parsed in place.
+
+.SH "RETURN VALUE"
+None
+
+.SH "SEE ALSO"
+.BR cs_dump "(3), "cs_destroy "(3), "cs_render "(3), "cs_register_esc_strfunc "(3), "cs_arg_parsev "(3), "cs_register_fileload "(3), "cs_init "(3), "cs_register_strfunc "(3), "cs_arg_parse "(3), "cs_parse_string "(3), "cs_parse_file "(3), "= "(3), "cs_register_function

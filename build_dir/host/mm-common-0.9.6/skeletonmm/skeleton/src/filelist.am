@@ -1,0 +1,11 @@
+## This file is part of skeletonmm.
+
+files_defs =			\
+	skeleton.defs		\
+	skeleton_enum.defs	\
+	skeleton_extra.defs	\
+	skeleton_method.defs	\
+	skeleton_docs.xml
+
+files_hg  = skeleton.hg
+files_ccg = $(files_hg:.hg=.ccg)

@@ -1,0 +1,31 @@
+/*
+ * 	Ejscript web controls layout style sheet
+ */
+
+div.-ejs-tabs {
+    margin-left: 40px;
+}
+
+div.-ejs-tabs ul {
+    margin: 0;
+    padding: 0;
+	white-space: nowrap;
+}
+
+div.-ejs-tabs li {
+    float: left;
+	margin: 4px 4px 0 0;
+	padding: 8px 6px 8px 4px;
+}
+
+div.-ejs-formError {
+    width: 550px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+div.-ejs-flash {
+    width: 500px;
+    margin: 20px;
+    padding: 10px;
+}

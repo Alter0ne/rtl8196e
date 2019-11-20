@@ -1,0 +1,6 @@
+Name: libssh_threads
+Description: The SSH Library Thread Extension
+Version: 0.7.0
+Libs: -L/usr/lib -lssh_threads
+Cflags: -I/usr/include
+

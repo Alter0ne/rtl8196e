@@ -1,0 +1,17 @@
+#!/bin/sh /etc/rc.common
+#
+#   Startup script for Embedthis Appweb
+#   Copyright (c) Embedthis LLC, 2003-2012. All Rights Reserved.
+#
+START=50
+STOP=50
+APPWEB_CMD=/usr/lib/appweb/bin/appweb
+APPWEB_DIR=/etc/appweb
+
+start() {
+    start-stop-daemon -S -b -x "${APPWEB_CMD}" -- --home "$APPWEB_DIR"
+}
+
+stop() {
+    start-stop-daemon -K -x "${APPWEB_CMD}" >/dev/null 2>&1 ; true
+}

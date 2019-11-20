@@ -1,0 +1,107 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Directory Settings
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Directory Preferences</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+<div class="iframeTitleBar"> 
+	Directory Settings
+	<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+</div>
+	<div class='lite_Heading'>Directory Settings</div>
+
+	<center>
+		<div style='text-align:center; 	background-color : #FFFFFF; width: 95%; padding: 5px; margin-left: 1px; margin-top:14px; margin-bottom:20px; border:1px solid #CDCDCD; color: #575757 ' class='lite'>
+		Dialing the 'Directory Extension' would present to the caller, a directory of users listed in the sytem telephone directory - from which they can search by First or Last Name. 
+		To add or remove a user from the system telephone directory, edit the 'In Directory' field of the user.
+		</div>
+	</center>
+
+	<table align="center" cellpadding=2 cellspacing=2 border=0>
+		<tr>	<td align=right> Directory Extension <img src="images/tooltip_info.gif" tip="en,directory,0" class='tooltipinfo'> :</td>
+			<td>&nbsp;<input size=4 type='text' id='dirext'></td>
+		</tr>
+		<tr>	<td align=right>Also read the extension number <img src="images/tooltip_info.gif" tip="en,directory,1" class='tooltipinfo'> :</td>
+			<td>&nbsp;<input type=checkbox id='read_extNo'></td>
+		</tr>
+		<tr>	<td align=right> Use first name instead of last name <img src="images/tooltip_info.gif" tip="en,directory,2" class='tooltipinfo'> :</td>
+			<td>&nbsp;<input type=checkbox id='dir_firstname'></td>
+		</tr>
+		<tr>	<td colspan=2 align=center height=40 valign=bottom>
+				<span class='guiButtonCancel' id='cancel' onclick='window.location.reload();'>Cancel</span>
+				<span class='guiButtonEdit' id='save' onclick='save_changes();'>Save</span>
+			</td>
+		</tr>
+	</table>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script>
+	var DIR_EXT ;
+
+	var localajaxinit = function(){
+		top.document.title = 'Directory Preferences' ;
+		var c = context2json({filename: 'extensions.conf', context: ASTGUI.contexts.Directory, usf: 0});
+		for ( var ci = 0 ; ci < c.length ; ci++ ){
+			if( c[ci].toLowerCase().contains('directory(') &&   c[ci].toLowerCase().contains('default') ){
+				DIR_EXT = ASTGUI.parseContextLine.getExten(c[ci]);
+				ASTGUI.updateFieldToValue( 'dirext',  DIR_EXT );
+				var args = ASTGUI.parseContextLine.getArgs(c[ci]);
+				_$('read_extNo').checked = ( args.length == 3 && args[2].contains('e') ) ? true : false;
+				_$('dir_firstname').checked = ( args.length == 3 && args[2].contains('f') ) ? true : false;
+				break;
+			}
+		}
+	};
+
+	var save_changes= function(){
+		var NEWEXT = ASTGUI.getFieldValue('dirext');
+		if( NEWEXT && NEWEXT != DIR_EXT && parent.miscFunctions.ifExtensionAlreadyExists(NEWEXT) ){
+			ASTGUI.highlightField( 'dirext' , 'Extension already exists');
+			return;
+		}
+		if (!NEWEXT && ($('#read_extNo:checked').val() || $('#dir_firstname:checked').val())) {
+			ASTGUI.highlightField('dirext', 'Extension must exist if options are checked');
+			return;
+		}
+		var dir_ops = '';
+		dir_ops += ( _$('read_extNo').checked ) ? 'e' : '' ;
+		dir_ops += ( _$('dir_firstname').checked ) ? 'f' : '' ;
+		ASTGUI.miscFunctions.delete_LinesLike({ context_name : ASTGUI.contexts.Directory , beginsWithArr: ['exten='] , filename: 'extensions.conf', hasThisString:'1,Directory(default', cb:function(){} });
+		if( NEWEXT ){
+			var dir_string = NEWEXT + ',1,Directory(default,default,' + dir_ops +')' ;
+			var u = new listOfSynActions('extensions.conf');
+			u.new_action('append', ASTGUI.contexts.Directory , 'exten', dir_string );
+			u.callActions();
+		}
+		parent.sessionData.pbxinfo['localextensions']['defaultDirectory'] = NEWEXT ;
+		ASTGUI.feedback({msg:' Saved !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+		window.location.reload();
+	};
+
+	</script>
+</body>
+</html>

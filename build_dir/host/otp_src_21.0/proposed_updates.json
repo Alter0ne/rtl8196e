@@ -1,0 +1,9 @@
+{
+    "proposed_updates_branch": "master-opu",
+    "tip_sha": "a0ae44f324576104760a63fe6cf63e0ca31756fc",
+    "base_sha": "b4cb07a6f618b37109d6bdc21240fbac66f8e078",
+    "build_tag": "build/master-opu/2018-06-19_09.07",
+    "topic_branches": [
+
+    ]
+}

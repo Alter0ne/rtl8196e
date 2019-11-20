@@ -1,0 +1,12 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libucl.a
+./usr/lib/libucl.so
+./usr/lib/libucl.so.1.0.0
+./usr/lib/libucl.so.1
+./usr/include
+./usr/include/ucl
+./usr/include/ucl/uclconf.h
+./usr/include/ucl/ucl.h

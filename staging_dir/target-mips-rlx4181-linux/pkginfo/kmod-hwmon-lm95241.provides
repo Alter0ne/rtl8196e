@@ -1,0 +1,4 @@
+hwmon.ko
+i2c-core.ko
+i2c-dev.ko
+lm95241.ko

@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libplist++
+Description: C++ binding of libplist
+Version: 1.11
+Requires: libplist >= 1.11
+Libs: -L${libdir} -lplist++
+Cflags: -I${includedir}
+

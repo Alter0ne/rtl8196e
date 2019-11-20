@@ -1,0 +1,11 @@
+./
+./host
+./host/bin
+./host/bin/opencdk-config
+./usr
+./usr/lib
+./usr/lib/libopencdk.so
+./usr/lib/libopencdk.so.10
+./usr/lib/libopencdk.so.10.0.6
+./usr/include
+./usr/include/opencdk.h

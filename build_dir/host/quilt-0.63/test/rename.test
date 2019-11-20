@@ -1,0 +1,57 @@
+	$ mkdir patches
+
+	$ cat > announce.txt
+	< A short summary of the fixes are below.
+
+	$ quilt new original-name.diff
+	> Patch %{P}original-name.diff is now on top
+
+	$ quilt add announce.txt
+	> File announce.txt added to patch %{P}original-name.diff
+
+	$ cat > announce.txt
+	< The diffstat and short summary of the fixes are below.
+
+	$ quilt refresh
+	> Refreshed patch %{P}original-name.diff
+
+	$ quilt series -v
+	> = %{P}original-name.diff
+
+	$ quilt rename _tmp_name.diff
+	> Patch %{P}original-name.diff renamed to %{P}_tmp_name.diff
+
+	$ quilt series -v
+	> = %{P}_tmp_name.diff
+
+	$ quilt pop
+	> Removing patch %{P}_tmp_name.diff
+	> Restoring announce.txt
+	>
+	> No patches applied
+
+	$ quilt series -v
+	>   %{P}_tmp_name.diff
+
+	$ quilt rename -P random_name.diff final.name.diff
+	> Patch random_name.diff is not in series
+
+	$ quilt rename final.name.diff
+	> No patches applied
+
+	$ quilt rename -P _tmp_name.diff _tmp_name.diff
+	> Patch %{P}_tmp_name.diff exists already, please choose a different name
+
+	$ quilt rename -P _tmp_name.diff newsubdir/final.name.diff
+	> Patch %{P}_tmp_name.diff renamed to %{P}newsubdir/final.name.diff
+
+	$ quilt series -v
+	>   %{P}newsubdir/final.name.diff
+
+	$ quilt push -q
+	> Applying patch %{P}newsubdir/final.name.diff
+	> Now at patch %{P}newsubdir/final.name.diff
+
+	$ quilt pop -q
+	> Removing patch %{P}newsubdir/final.name.diff
+	> No patches applied

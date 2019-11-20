@@ -1,0 +1,34 @@
+$ mkdir patches subdir
+
+$ cat > editor
+< #! /bin/sh
+< echo Editing $1
+< sed -e 's:foo:bar:' $1 > $1.new
+< mv $1.new $1
+$ chmod +x editor
+$ export EDITOR=%{PWD}/editor
+
+$ quilt new patch
+> Patch patches/patch is now on top
+
+$ echo foobar > foobar
+$ quilt edit foobar
+> File foobar added to patch patches/patch
+> Editing foobar
+
+$ cd subdir
+$ echo foo > foo
+$ quilt edit foo
+> File subdir/foo added to patch ../patches/patch
+> Editing subdir/foo
+
+$ cd ..
+$ cat foobar
+> barbar
+
+$ cat subdir/foo
+> bar
+
+$ quilt files
+> foobar
+> subdir/foo

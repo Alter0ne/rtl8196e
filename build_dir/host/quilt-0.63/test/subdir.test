@@ -1,0 +1,81 @@
+	$ mkdir patches
+
+	$ mkdir subdir
+	$ cat > subdir/file
+	< old file
+
+	$ quilt new test.patch
+	> Patch %{P}test.patch is now on top
+
+	$ quilt add subdir/file
+	> File subdir/file added to patch %{P}test.patch
+
+	$ cat > subdir/file
+	< new contents
+
+	This creates the patches/ directory:
+
+	$ quilt refresh
+	> Refreshed patch %{P}test.patch
+
+	$ cd subdir
+	$ quilt add file2
+	> File subdir/file2 added to patch %{_P}test.patch
+
+	$ cat > file2
+	< another file
+
+	$ cat > file3
+	< yet another file
+
+	$ quilt add file3
+	> File subdir/file3 added to patch %{_P}test.patch
+
+	$ rm -f file3
+	$ quilt files -v
+	>   subdir/file
+	> + subdir/file2
+	> - subdir/file3
+
+	$ quilt diff -p ab
+	> Index: b/subdir/file
+	> ===================================================================
+	> --- a/subdir/file
+	> +++ b/subdir/file
+	> @@ -1 +1 @@
+	> -old file
+	> +new contents
+	> Index: b/subdir/file2
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/subdir/file2
+	> @@ -0,0 +1 @@
+	> +another file
+	> Index: b/subdir/file3
+	> ===================================================================
+	> --- a/subdir/file3
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -yet another file
+
+	# Test diff called with multiple file names, from a subdirectory
+	$ quilt diff --no-index -p ab file file2 no
+	> --- a/subdir/file
+	> +++ b/subdir/file
+	> @@ -1 +1 @@
+	> -old file
+	> +new contents
+	> --- /dev/null
+	> +++ b/subdir/file2
+	> @@ -0,0 +1 @@
+	> +another file
+
+	# Test diff called with "./" file name prefix, from a subdirectory
+	$ quilt diff --no-index -p ab ./file3 ./no
+	> --- a/subdir/file3
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -yet another file
+
+	$ quilt refresh
+	> Refreshed patch %{_P}test.patch

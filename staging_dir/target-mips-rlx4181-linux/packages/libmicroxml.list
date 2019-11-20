@@ -1,0 +1,11 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libmicroxml.so.1.0
+./usr/lib/libmicroxml.so.1
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/microxml.pc
+./usr/lib/libmicroxml.so
+./usr/include
+./usr/include/microxml.h

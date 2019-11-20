@@ -1,0 +1,299 @@
+#
+# Shorewall6 4.2-- /usr/share/shorewall/lib.base
+#
+#     This program is under GPL [http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt]
+#
+#     (c) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008 - Tom Eastep (teastep@shorewall.net)
+#
+#	Complete documentation is available at http://shorewall.net
+#
+#	This program is free software; you can redistribute it and/or modify
+#	it under the terms of Version 2 of the GNU General Public License
+#	as published by the Free Software Foundation.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program; if not, write to the Free Software
+#	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+# This library contains the code common to all Shorewall components.
+#
+# - It is loaded by /sbin/shorewall.
+# - It is loaded by /usr/share/shorewall/firewall.
+# - It is loaded by /usr/share/shorewall-shell/compiler.
+# - It is released as part of Shorewall Lite where it is used by /sbin/shorewall-lite
+#   and /usr/share/shorewall-lite/shorecap.
+# - It is released as part of Shorewall Perl where it is copied into the compiled script
+#   by the compiler.
+#
+
+SHOREWALL_LIBVERSION=40407
+SHOREWALL_CAPVERSION=40421
+
+[ -n "${VARDIR:=/var/lib/shorewall6}" ]
+[ -n "${SHAREDIR:=/usr/share/shorewall6}" ]
+[ -n "${CONFDIR:=/etc/shorewall6}" ]
+
+#
+# Conditionally produce message
+#
+progress_message() # $* = Message
+{
+    local timestamp
+    timestamp=
+
+    if [ $VERBOSITY -gt 1 ]; then
+	[ -n "$g_timestamp" ] && timestamp="$(date +%H:%M:%S) "
+	echo "${timestamp}$@"
+    fi
+}
+
+progress_message2() # $* = Message
+{
+    local timestamp
+    timestamp=
+
+    if [ $VERBOSITY -gt 0 ]; then
+	[ -n "$g_timestamp" ] && timestamp="$(date +%H:%M:%S) "
+	echo "${timestamp}$@"
+    fi
+}
+
+progress_message3() # $* = Message
+{
+    local timestamp
+    timestamp=
+
+    if [ $VERBOSITY -ge 0 ]; then
+	[ -n "$g_timestamp" ] && timestamp="$(date +%H:%M:%S) "
+	echo "${timestamp}$@"
+    fi
+}
+
+#
+# Undo the effect of 'separate_list()'
+#
+combine_list()
+{
+    local f
+    local o
+    o=
+
+    for f in $* ; do
+        o="${o:+$o,}$f"
+    done
+
+    echo $o
+}
+
+#
+# Call this function to assert mutual exclusion with Shorewall. If you invoke the
+# /sbin/shorewall program while holding mutual exclusion, you should pass "nolock" as
+# the first argument. Example "shorewall nolock refresh"
+#
+# This function uses the lockfile utility from procmail if it exists.
+# Otherwise, it uses a somewhat race-prone algorithm to attempt to simulate the
+# behavior of lockfile.
+#
+mutex_on()
+{
+    local try
+    try=0
+    local lockf
+    lockf=${LOCKFILE:=${VARDIR}/lock}
+
+    MUTEX_TIMEOUT=${MUTEX_TIMEOUT:-60}
+
+    if [ $MUTEX_TIMEOUT -gt 0 ]; then
+
+	[ -d ${VARDIR} ] || mkdir -p ${VARDIR}
+
+	if qt mywhich lockfile; then
+	    lockfile -${MUTEX_TIMEOUT} -r1 ${lockf}
+	else
+	    while [ -f ${lockf} -a ${try} -lt ${MUTEX_TIMEOUT} ] ; do
+		sleep 1
+		try=$((${try} + 1))
+	    done
+
+	    if  [ ${try} -lt ${MUTEX_TIMEOUT} ] ; then
+	        # Create the lockfile
+		echo $$ > ${lockf}
+	    else
+		echo "Giving up on lock file ${lockf}" >&2
+	    fi
+	fi
+    fi
+}
+
+#
+# Call this function to release mutual exclusion
+#
+mutex_off()
+{
+    rm -f ${LOCKFILE:=${VARDIR}/lock}
+}
+
+#
+# Find the interface with the passed MAC address
+#
+
+find_interface_by_mac() {
+    local mac
+    mac=$1 
+    local first 
+    local second
+    local rest
+    local dev
+
+    ip link list | while read first second rest; do
+	case $first in
+	    *:)
+                dev=$second
+		;;
+	    *)
+	        if [ "$second" = $mac ]; then
+		    echo ${dev%:}
+		    return
+		fi
+	esac
+    done
+}
+
+#
+# Set default config path
+#
+ensure_config_path() {
+    local F
+    F=${SHAREDIR}/configpath
+    if [ -z "$CONFIG_PATH" ]; then
+	[ -f $F ] || { echo "   ERROR: $F does not exist"; exit 2; }
+	. $F
+    fi
+
+    if [ -n "$SHOREWALL_DIR" ]; then
+	[ "${CONFIG_PATH%%:*}" = "$SHOREWALL_DIR" ] || CONFIG_PATH=$SHOREWALL_DIR:$CONFIG_PATH
+    fi
+}
+
+#
+# Get fully-qualified name of file
+#
+resolve_file() # $1 = file name
+{
+    local pwd
+    pwd=$PWD
+
+    case $1 in
+	/*)
+	    echo $1
+	    ;;
+	.)
+	    echo $pwd
+	    ;;
+	./*)
+	    echo ${pwd}${1#.}
+	    ;;
+	..)
+	    cd ..
+	    echo $PWD
+	    cd $pwd
+	    ;;
+	../*)
+	    cd ..
+	    resolve_file ${1#../}
+	    cd $pwd
+	    ;;
+	*)
+	    echo $pwd/$1
+	    ;;
+    esac
+}
+
+#
+# Determine how to do "echo -e"
+#
+
+find_echo() {
+    local result
+
+    result=$(echo "a\tb")
+    [ ${#result} -eq 3 ] && { echo echo; return; }
+
+    result=$(echo -e "a\tb")
+    [ ${#result} -eq 3 ] && { echo "echo -e"; return; }
+
+    result=$(which echo)
+    [ -n "$result" ] && { echo "$result -e"; return; }
+
+    echo echo 
+}
+
+# Determine which version of mktemp is present (if any) and set MKTEMP accortingly:
+#
+#     None - No mktemp
+#     BSD  - BSD mktemp (Mandrake)
+#     STD  - mktemp.org mktemp
+#
+find_mktemp() {
+    local mktemp
+    mktemp=`mywhich mktemp 2> /dev/null`
+
+    if [ -n "$mktemp" ]; then
+	if qt mktemp -V ; then
+	    MKTEMP=STD
+	else
+	    MKTEMP=BSD
+	fi
+    else
+	MKTEMP=None
+    fi
+}
+
+#
+# create a temporary file. If a directory name is passed, the file will be created in
+# that directory. Otherwise, it will be created in a temporary directory.
+#
+mktempfile() {
+
+    [ -z "$MKTEMP" ] && find_mktemp
+
+    if [ $# -gt 0 ]; then
+	case "$MKTEMP" in
+	    BSD)
+		mktemp $1/shorewall.XXXXXX
+		;;
+	    STD)
+		mktemp -p $1 shorewall.XXXXXX
+		;;
+	    None)
+		> $1/shorewall-$$ && echo $1/shorewall-$$
+		;;
+	    *)
+		error_message "ERROR:Internal error in mktempfile"
+		;;
+	esac
+    else
+	case "$MKTEMP" in
+	    BSD)
+		mktemp /tmp/shorewall.XXXXXX
+		;;
+	    STD)
+		mktemp -t shorewall.XXXXXX
+		;;
+	    None)
+		rm -f /tmp/shorewall-$$
+		> /tmp/shorewall-$$ && echo /tmp/shorewall-$$
+		;;
+	    *)
+		error_message "ERROR:Internal error in mktempfile"
+		;;
+	esac
+    fi
+}
+
+. ${SHAREDIR}/lib.common

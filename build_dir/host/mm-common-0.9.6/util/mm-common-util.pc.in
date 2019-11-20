@@ -1,0 +1,10 @@
+prefix=@prefix@
+datarootdir=@datarootdir@
+datadir=@datadir@
+
+doctooldir=${datadir}/mm-common/doctool
+
+Name: mm-common-util
+Description: mm-common's doctool build utilities for the GNOME C++ bindings.
+Version: @PACKAGE_VERSION@
+URL: http://www.gtkmm.org/

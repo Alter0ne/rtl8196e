@@ -1,0 +1,164 @@
+mm-common 0.9.6 (2012-10-07)
+
+  * Dist .js files that doxygen now generates
+    (Murray Cumming)
+  * Use $(MMDOCTOOLDIR) instead of @MMDOCTOOLDIR@ in Doxyfile.in.
+    (Kjell Ahlstedt) Bug #673984.
+  * Make downloading tags optional.
+    (Krzesimir Nowak)
+  * Don't try to run tar by shell.
+  * Don't use missing for making skeleton tarball.
+    (Krzesimir Nowak)
+  * Fix running doxygen when it is located at a path containing spaces
+    (Armin Burgmeier) Bug #630051
+
+mm-common 0.9.5 (2010-03-30)
+
+  * Distribute doctools if non-empty parameter is passed to
+  MM_CONFIG_DOCTOOL_DIR
+  (Krzesimir Nowak) Bug #645836
+
+mm-common 0.9.4 (2010-03-18)
+
+  * Correct the installation of the mm-common-util.pc file.
+  (Krzesimir Nowak) Bug #645080
+
+mm-common 0.9.3 (2010-03-15)
+
+  * Add an mm-common-util pkg-config file, to be used intead of
+  of glibmm-2.4 to get the location of doctool .pl files, such
+  as doc-install.pl.
+  * MM_CONFIG_DOCTOOL_DIR(): Get the .pl files from mm-common's
+  installed copy instead of from glibmm, which now doesn't install its own
+  copy. Because this macro has been updated, there should be no need for
+  any changes in other *mm modules due to the changes in glibmm or mm-common.
+  * Allow use of GMMPROC_EXTRA_M4_DIR in configure.ac to tell gmmproc about
+  extra -I arguments.
+  For instance, use this in configure.ac:
+  MM_PKG_CONFIG_SUBST([GMMPROC_EXTRA_M4_DIR], [--variable=gmmprocm4dir gtkmm-3.0])
+  (Murray Cumming)
+
+mm-common 0.9.2 "Friends" (2010-02-05)
+
+	Friends don't let friends declare friends.
+
+	* Friend members of a class which are listed in a Doxygen tag
+	  file are now included in the transformation to Devhelp.
+	* The skeleton Doxygen configuration has been updated to avoid
+	  blurry class labels in the hierarchy graphs.
+	* A template for a custom reference documentation main page
+	  has been added to the skeleton binding module.
+
+mm-common 0.9.1 "Dash" (2009-12-31)
+
+	Two years to go!
+
+	* The skeleton Doxygen configuration file has been updated to
+	  further improve the generated reference documentation.
+	* The dash separator before the API version suffix of a module
+	  name is now optional.
+	* The installed skeletonmm source tree is now bundled in a tar
+	  archive.
+	* When installing from source into a different prefix than the
+	  system aclocal, an informational notice will now be shown to
+	  inform about the need to set ACLOCAL_FLAGS.
+
+mm-common 0.9 "Invisible" (2009-12-26)
+
+	The Invisible Book of Invisibility.
+
+	* A number of small mistakes in the skeleton C++ binding files
+	  have been corrected.
+	* The sample XML file for the obsolete documentation override
+	  mechanism has been removed from the skeleton project.
+	* The tranformation from Doxygen to Devhelp has been extended
+	  to produce a hierarchy of class chapters grouped by scope.
+	* The documentation build rules can now be included from the
+	  top-level, without recursion into a sub-directory.
+	* A new MM_PROG_GCC_VISIBILITY Autoconf macro is now available
+	  to facilitate building with explicit symbol visibility.
+
+mm-common 0.8 "STFU!" (2009-09-21)
+
+	Enjoy the silence.
+
+	* Support for Automake 1.11 silent rules has been implemented
+	  in the shared Automake include files.
+	* The base path of the Devhelp file is now correctly translated
+	  at installation time even with Automake 1.11.
+	* A number of output directories are now created automatically
+	  at build time if needed, so that it is no longer necessary to
+	  put dummy files into otherwise empty directories.
+	* The automatically generated ChangeLog file now omits merge
+	  commits.
+	* The skeleton source tree now includes an examples/ directory
+	  and a skeletonmm.h single-include header file.
+	* The skeleton Doxygen configuration file has been corrected
+	  and updated for Doxygen 1.6.1.
+	* The doc-install.pl utility no longer splits glob patterns
+	  with embedded whitespace into multiple patterns.
+
+mm-common 0.7.3 "Skeleton" (2009-09-09)
+
+	The hip bone is connected to the rib bone.
+
+	* A skeleton source tree of a C++ binding based on mm-common
+	  is now provided as a starting point for new binding modules.
+	* The mm-common-prepare utility now comes with a manual page.
+	* Empty documentation groups are no longer shown as chapters
+	  in the Devhelp document.
+	* The reference documentation will be rebuilt when any of the
+	  configuration header files of a module changed.
+	* The Doxygen style sheet has been further refined.
+
+mm-common 0.7.2 "Help" (2009-09-02)
+
+	Get better help from Devhelp with an improved transformation.
+
+	* The transformation from Doxygen to Devhelp no longer treats
+	  documentation groups as C++ namespaces.  Also, documentation
+	  modules are now listed as book chapters.
+	* The shared Doxygen style sheet has been adjusted to work
+	  properly with the new XHTML output of Doxygen.
+
+mm-common 0.7.1 "Lenience" (2009-08-28)
+
+	Be a bit less unfashionably draconian.
+
+	* It is no longer a hard error to build a package based on
+	  mm-common on a system with an older installation of glibmm
+	  which lacks the shared documentation utilities.
+
+mm-common 0.7 "Stylish" (2009-08-28)
+
+	Document with style, using the new shared Doxygen style sheet.
+
+	* A common style sheet for the C++ bindings documentation has
+	  been added, in order to improve and unify the appearance of
+	  the generated reference documentation.
+
+mm-common 0.6.1 "Librarian" (2009-08-25)
+
+	We're on library.gnome.org now, yay!
+
+	* The only change in this release is the new default location
+	  of the public reference documentation, which is now hosted
+	  on library.gnome.org.
+
+mm-common 0.6 "Slash" (2009-08-24)
+
+	To slash or not to slash? This release is all about slashes.
+
+	* The external documentation magic now pleases both Doxygen
+	  and doc-install.pl: no more double slashes or accidentally
+	  concatenated words.
+	* Absolute local paths are converted to file:// URIs for the
+	  XML and HTML documentation output.
+	* The documentation generation is disabled automatically if the
+	  utilities required to build it are missing at configure time.
+	* Add checks for GNU make and Perl.
+
+mm-common 0.5 "RTFM!" (2009-08-17)
+
+	First tarball release of mm-common, the shiny new shared
+	build infrastructure of the GNOME C++ binding modules.

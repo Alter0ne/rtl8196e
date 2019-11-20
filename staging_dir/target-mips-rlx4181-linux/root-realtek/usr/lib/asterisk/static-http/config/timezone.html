@@ -1,0 +1,90 @@
+<!--
+ * Asterisk-GUI	-	an Asterisk configuration interface
+ *
+ * Upload timezone file for the AA50
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ *
+ * All Rights Reserved.
+ *
+ * Distribution of this file is subject to the license
+ * agreement you accepted when obtained and/or activated
+ * the Digium product containing this file.
+-->
+<html>
+<head>
+	<title>Time Zones</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#tzfilesTable {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#tzfilesTable tr.frow { background: #6b79a5; color: #CED7EF; }
+		#tzfilesTable tr.frow td{ font-weight:bold; }
+		#tzfilesTable tr td{ padding : 3px; }
+		#tzfilesTable tr.even { background: #DFDFDF; }
+		#tzfilesTable tr.odd{ background: #FFFFFF; }
+		#tzfilesTable tr.even:hover, #tzfilesTable tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		&nbsp;Manage TimeZones
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >
+			&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;
+		</span>
+	</div>
+
+	<div class='top_buttons'>
+		<span class='guiButton' onclick='call_update_tz();' style='float:left'>Update Timezones</span>
+	</div>
+
+	<div class='lite_Heading'>Manage TimeZones</div>
+	<center><div id="tabbedMenu" style='margin-top:-10px;'></div></center>
+
+	<table width="80%" align=center style='display:none'>
+		<tr><td align=center id="tdupload" height=150>
+			<fieldset>
+				<legend><B>&nbsp;Upload a Timezone file:&nbsp;</B></legend>
+			<IFRAME src="upload_form.html" id="uploadiframe" width="95%" height="130" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+			</fieldset>
+		</td></tr>
+	</table>
+
+	<tr>	<div valign="top" align="center">
+		<label align="center">&nbsp; Default Time Zone &nbsp; </label>
+			<div align="center" id="default_tz"> Loading.... </div>
+		</div>
+	</tr>
+	<table width="80%" align=center>
+	<tr>	<td valign="top" align="center">
+		<fieldset  style="height: 300px; "  id="fieldset2">
+			<legend>&nbsp;List of TimeZone Files&nbsp;</legend>
+			<div id="bkpfilesTable_div" style="height:260px;width=100%; overflow :auto; padding : 0px 0px 0px 0px;">
+				<table id="tzfilesTable" cellpadding=2 cellspacing=1 border=0 align=center width=500></table>
+			</div>
+			<BR>
+		</fieldset>
+		</td>
+	</tr>
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/timezone.js"></script>
+</body>
+</html>

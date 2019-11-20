@@ -1,0 +1,24 @@
+	$ mkdir patches
+
+	$ quilt new test.diff
+	> Patch patches/test.diff is now on top
+
+	$ quilt add foo
+	> File foo added to patch patches/test.diff
+
+	$ echo foo > foo
+	$ quilt refresh
+	> Refreshed patch patches/test.diff
+
+	$ echo bar >> foo
+	$ quilt refresh -z
+	> Fork of patch patches/test.diff created as patches/test-2.diff
+
+	$ echo baz >> foo
+	$ quilt refresh -zbaz.diff
+	> Fork of patch patches/test-2.diff created as patches/baz.diff
+
+	$ quilt series
+	> patches/test.diff
+	> patches/test-2.diff
+	> patches/baz.diff

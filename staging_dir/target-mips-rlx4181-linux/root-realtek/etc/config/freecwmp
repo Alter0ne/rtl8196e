@@ -1,0 +1,53 @@
+# freecwmp uci configuration
+
+config local
+	option interface 'eth0'
+	option port '7547'
+	option ubus_socket '/var/run/ubus.sock'
+	option date_format '%FT%T%z'
+	list event 'bootstrap'
+	list event 'boot'
+
+config acs
+	option scheme 'http'
+	option username 'freecwmp'
+	option password 'freecwmp'
+	option hostname '192.168.1.1'
+	option port '7547'
+	option path '/'
+
+config device
+	option manufacturer 'freecwmp'
+	option oui 'FFFFFF'
+	option product_class 'freecwmp'
+	option serial_number 'FFFFFF123456'
+	option hardware_version 'example_hw_version'
+	option software_version 'example_sw_version'
+
+config scripts
+	# load OpenWrt generic network functions
+	list location '/lib/functions/network.sh'
+	# load freecwmp common functions
+	list location '/usr/share/freecwmp/functions/common'
+	# freecwmp specific functions
+	list location '/usr/share/freecwmp/functions/device_info'
+	list function 'device_info'
+	list function 'device_info_generic'
+	list location '/usr/share/freecwmp/functions/lan_device'
+	list function 'lan_device'
+	list location '/usr/share/freecwmp/functions/management_server'
+	list function 'management_server'
+	list function 'management_server_generic'
+	list location '/usr/share/freecwmp/functions/wan_device'
+	list function 'wan_device'
+	list location '/usr/share/freecwmp/functions/misc'
+	list function 'misc'
+	list location '/usr/share/freecwmp/functions/device_users'
+	list function 'device_users'
+	list location '/usr/share/freecwmp/functions/device_hosts'
+	list function 'device_hosts'
+	list location '/usr/share/freecwmp/functions/device_routing'
+	list function 'device_routing'
+	list location '/usr/share/freecwmp/functions/device_ip'
+	list function 'device_ip'
+

@@ -1,0 +1,386 @@
+
+/*
+ * 	Default theme style sheet
+ */
+
+html {
+}
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: small;
+}
+
+div.top {
+	background-image: url("../images/banner.jpg");
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+
+div.top h1 a {
+    color: #000;
+	text-decoration: none; 
+}
+
+div.bottom {
+	text-align: left;
+}
+
+div.content {
+	color: #000000;
+	text-decoration: none;
+}
+
+div.content a {
+	color: #284898; 
+	text-decoration: none; 
+}
+
+div.content a:hover { 
+	color: #CC4477; 
+	text-decoration: underline; 
+}
+
+div.content ul li {
+	font-size: 100%;
+	line-height: 140%; 
+}
+
+div.content ol li {
+	font-size: 100%;
+	line-height: 140%; 
+}
+
+div.contentLeft {
+	text-decoration: none;
+}
+
+div.contentRight { 
+	text-decoration: none;
+	font-size: 100%;
+	line-height: 145%;
+	text-decoration: none;
+}
+
+div.contentRight ul {
+	list-style-type: none;
+}
+
+div.contentRight h2 {
+	font-size: 120%;
+	color: #284898; 
+	background-color: #f2f2f2;
+}
+
+p { 
+	line-height: 130%; 
+}
+
+h1 {
+	color: #204080; 
+	font-size: 150%;
+	font-weight: bold;
+}
+
+h2 {
+	padding: 12px 0 4px 0;
+	margin: 0;
+}
+
+h2.section {
+	border-bottom: 2px solid #AAAAAA;
+    border-color: #BBBBDD;
+}
+
+h3 {
+    color: #284898; 
+    font-size: 100%;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 100%;
+    font-style: italic;
+    color: #284898; 
+    color: #282828; 
+}
+
+hr {
+	border-style: none;
+	border: 0;
+	height: 0px;
+	width: 0px;
+}
+
+ul { 
+	font-size: 100%;
+}
+
+ul.bare {
+	list-style: none;
+}
+
+ol { 
+	font-size: 100%;
+}
+
+pre { 
+	font-size: 110%;
+	line-height: 140%; 
+	background-color: #EEEEEE;
+	color: #102070;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-webkit-box-shadow: 9px 9px 9px #AAA;
+}
+
+pre a {
+	color: #FFFFFF;
+}
+
+pre a:link, pre a:visited, pre a:hover {
+	color: #FFFFFF;
+}
+
+p.finePrint { 
+	font-size: 80%;
+	color: #313131; 
+}
+
+a:link { 
+	color: #284898; 
+	text-decoration: none; 
+}
+
+a:visited { 
+	color: #000000;
+	text-decoration: none; 
+}
+
+a:hover { 
+	color: #CC4477; 
+}
+
+p.footnote {
+	font-size: 85%;
+	color: #AAAAAA; 
+	line-height: 70%; 
+}
+
+p.footnote a:link, p.footnote a:visited { 
+	color: #AAAAAA; 
+	text-decoration: none;
+}
+
+p.footnote a:hover { 
+	color: #FFFFFF; 
+}
+
+img.screen {
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-webkit-box-shadow: 9px 9px 9px #AAA;
+}
+
+img.shadow {
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-webkit-box-shadow: 5px 5px 9px #888;
+}
+
+table {
+	border: 1px solid #A0A0A0;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	-webkit-box-shadow: 4px 4px 8px #888;
+}
+
+td {
+	border: 1px solid #A0A0A0;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+
+th {
+    background-color: #70A0D0;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(90,80,210,.75)), color-stop(1, #cff));
+	border: 1px solid #9060B0;
+	color: #183878;
+    font-weight: bold;
+    font-size: 100%;
+	text-align: left;
+    border-style: none;
+}
+
+td a {
+	text-decoration: none;
+}
+
+tr:hover { 
+	background: #F2F2F2; 
+}
+
+button {
+	-webkit-box-shadow: 4px 4px 8px #888;
+}
+
+form table {
+	border: 1px solid #A0A0A0;
+	border-collapse: separate;
+}
+
+form td {
+    border-style: none;
+}
+
+
+/*
+ * 	Ejscript web framework controls style sheet
+ */
+.-ejs-fieldError {
+	border: 1px solid #FF0000;
+	-webkit-box-shadow: 3px 3px 3px #AAA;
+}
+
+div.-ejs-formError {
+	border: 2px solid #FF0000;
+	-webkit-box-shadow: 3px 3px 3px #AAA;
+    text-indent: 10px;
+}
+
+div.-ejs-formError h2 {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    font-size: 12pt;
+}
+
+.-ejs-clickable {
+    cursor: pointer;
+}
+
+/*
+ *  Flash web control
+ */
+div.-ejs-flash {
+	-webkit-box-shadow: 4px 4px 4px #BBB;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+    font-size: 110%;
+    text-indent: 10px;
+    color: #FFFFFF;
+}
+
+div.-ejs-flashInform {
+    background-color: #228000;
+}
+
+div.-ejs-flashMessage {
+    background-color: #A0A0A0;
+}
+
+div.-ejs-flashError {
+    background-color: #FF0000;
+    font-weight: bold;
+}
+
+div.-ejs-flashWarning {
+    background-color: #FF8020;
+}
+
+/*
+ *  Tabs control
+ */
+div.-ejs-tabs ul {
+	list-style: none;
+}
+
+div.-ejs-tabs li {
+    background-color: #555;
+    background: -webkit-gradient(linear, left bottom, left top, from(#333), to(#999));
+    -moz-border-radius-topleft: 5px; -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topright: 5px; -webkit-border-top-right-radius: 5px;
+	-webkit-box-shadow: 4px -2px 5px #CCC;
+}
+
+div.-ejs-tabs li, div.-ejs-tabs a {
+    color: #FFF;
+}
+
+div.-ejs-tabs li.selected {
+    background-color: #BBB;
+    background: -webkit-gradient(linear, left bottom, left top, from(#DDD), to(#A77));
+    color: #000;
+}
+
+div.-ejs-tabs ul li:hover { 
+    background-color: #222;
+    background: -webkit-gradient(linear, left bottom, left top, from(#000), to(#777));
+    color: #FFF;
+}
+
+div.-ejs-tabs li {
+    cursor: pointer;
+}
+
+/*
+ *  Table control section
+ */
+div.-ejs-table {
+}
+
+table.-ejs-table {
+    margin-top: 27px;
+    border: 2px solid #686;
+}
+
+table.-ejs-table thead { 
+    background: #A0BB88;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(150,170,120,.95)), color-stop(5, #eff));
+	color: #000;
+	border: 1px solid #666;
+    cursor: pointer;
+}
+
+table.-ejs-table thead tr td {
+	text-align: left;
+	font-weight: bold;
+    padding: 2px 4px 2px 10px;
+    border: none;
+}
+
+table.-ejs-table th {
+    background-color: #C8E0B0;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(150,200,140,.25)), color-stop(1, #eff));
+	color: #106010;
+    font-weight: bold;
+    font-size: 100%;
+	text-align: center;
+	border: 1px solid #666;
+    padding: 6px 4px 6px 10px;
+}
+
+table.-ejs-table tbody { 
+    cursor: pointer;
+}
+
+table.-ejs-table tbody td { 
+    padding: 4px 4px 4px 10px;
+}
+
+table.-ejs-table td {
+    text-align: center;
+}
+
+.-ejs-oddRow {
+    background-color: #F0F0FF;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(220,220,250,.95)), color-stop(1, #eff));
+    color: #000000;
+}
+
+.-ejs-evenRow {
+    background-color: #FFFFFF;
+}
+
+table.-ejs-table .right {
+    text-align: right;
+}

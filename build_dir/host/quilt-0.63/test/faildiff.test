@@ -1,0 +1,38 @@
+	$ mkdir patches
+
+	$ quilt new test.diff
+	> Patch %{P}test.diff is now on top
+
+	$ cat > test.txt
+	< This is test.txt.
+	$ quilt add test.txt
+	> File test.txt added to patch %{P}test.diff
+
+What happens when diff fails because of a permission error?
+
+	$ chmod -r test.txt
+
+	$ quilt refresh
+	> diff: test.txt: Permission denied
+	> Diff failed on file 'test.txt', aborting
+	$ echo %{?}
+	> 1
+
+	$ chmod +r test.txt
+
+What happens on binary files?
+
+	$ printf "\\002\\000\\001" > test.bin
+	$ quilt add test.bin
+	> File test.bin added to patch %{P}test.diff
+
+	$ printf "\\003\\000\\001" > test.bin
+	$ quilt diff -pab --no-index
+	>~ (Files|Binary files) a/test\.bin and b/test\.bin differ
+	$ echo %{?}
+	> 1
+
+	$ quilt refresh
+	> Diff failed on file 'test.bin', aborting
+	$ echo %{?}
+	> 1

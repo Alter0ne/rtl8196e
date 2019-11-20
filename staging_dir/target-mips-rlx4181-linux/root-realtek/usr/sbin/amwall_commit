@@ -1,0 +1,41 @@
+#!/bin/sh
+# $AMSEL: amwall_commit,v 1.3 2004/05/23 13:51:53 reyk Exp $
+
+# Copyright (c) 2004 .vantronix | secure systems GmbH
+# Copyright (c) 2004 SSV Embedded Systems GmbH
+#
+# All rights reserved.
+#
+# Written by Reyk Floeter <reyk@vantronix.net>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version. 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+# USA
+
+#
+# workaround... TODO: implement commit support in amwall:main.c
+#
+
+AM_LINES=$(amwall $@ | sed 's/ /_xxxSPACExxx_/g')
+
+for i in $AM_LINES; do 
+	AM_LINE=$(echo -e "$i" | sed 's/_xxxSPACExxx_/ /g' | sed s/\#.*//g);
+	if [ "$AM_LINE" ]; then
+		$AM_LINE || 
+			(echo -e "\nError in generated line:\n  \"$AM_LINE\""; 
+				exit 1)
+	fi
+done
+
+exit 0

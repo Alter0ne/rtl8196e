@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libosip2
+Description: GNU osip2 core library for sip protocol
+Version: 4.1.0
+Libs: -L${libdir} -losipparser2 -losip2
+Cflags:  -I${includedir} -DOSIP_MONOTHREAD -DHAVE_SEMAPHORE_H
+	 

@@ -1,0 +1,76 @@
+Regresion test case: Empty lines in patch descriptions were
+accidentally removed.
+
+	$ mkdir patches
+
+	$ echo one > f
+	$ cat > patches/test.diff
+	< C1
+	<
+	< C3
+	<
+	< Index: f
+	< ===================================================================
+	< --- f.orig	foo
+	< +++ f	bar
+	< @@ -1 +1 @@
+	< -one
+	< +two
+
+	$ cat > patches/series
+	< test.diff -p0 # What a wonderful patch
+
+	$ quilt push
+	> Applying patch %{P}test.diff
+	>~ patching file `?f'?
+	>
+	> Now at patch %{P}test.diff
+
+	$ quilt refresh
+	> Refreshed patch %{P}test.diff
+	$ cat patches/test.diff
+	> C1
+	>
+	> C3
+	>
+	> Index: f
+	> ===================================================================
+	> --- f.orig
+	> +++ f
+	> @@ -1 +1 @@
+	> -one
+	> +two
+
+	$ quilt refresh -c
+	> Refreshed patch %{P}test.diff
+
+	$ cat patches/test.diff
+	> C1
+	>
+	> C3
+	>
+	> Index: f
+	> ===================================================================
+	> *** f.orig
+	> --- f
+	> ***************
+	> *** 1 ****
+	> ! one
+	> --- 1 ----
+	> ! two
+
+	$ quilt refresh
+	> Refreshed patch %{P}test.diff
+
+	$ cat patches/test.diff
+	> C1
+	>
+	> C3
+	>
+	> Index: f
+	> ===================================================================
+	> --- f.orig
+	> +++ f
+	> @@ -1 +1 @@
+	> -one
+	> +two

@@ -1,0 +1,27 @@
+# Copyright (C) 2010-2012 Free Software Foundation, Inc.
+#
+# Copying and distribution of this file, with or without modification,
+# in any medium, are permitted without royalty provided the copyright
+# notice and this notice are preserved.
+
+# Check whether patch correctly creates directories before creating
+# new files.
+
+. $srcdir/test-lib.sh
+
+use_local_patch
+use_tmpdir
+
+# ==============================================================
+
+cat > f.diff <<EOF
+--- /dev/null
++++ b/newfile
+@@ -0,0 +1,2 @@
++one
++two
+EOF
+
+check 'patch -p0 < f.diff' <<EOF
+patching file b/newfile
+EOF

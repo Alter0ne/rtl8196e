@@ -1,0 +1,133 @@
+#!/bin/sh
+# Copyright (C) 2012-2013 Luka Perkov <freecwmp@lukaperkov.net>
+
+get_wlan_number_of_entries() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} show wireless | fgrep '=wifi-iface' | wc -l`
+eval "export -- \"$1=$val\""
+}
+
+get_wlan_enable() {
+local num="$1"
+local param="$2"
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get wireless.@wifi-iface[$num].disabled`
+if [ "$val" = "1" ]; then
+	val="0"
+else
+	val="1"
+fi
+freecwmp_output "$param" "$val"
+}
+
+set_wlan_enable() {
+local num="$1"
+local val="$2"
+if [ "$val" = "1" ]; then
+	val="0"
+else
+	val="1"
+fi
+delay_command "wifi" "wifi" "45"
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set wireless.@wifi-iface[$num].disabled="$val"
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+}
+
+get_wlan_ssid() {
+local num="$1"
+local param="$2"
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get wireless.@wifi-iface[$num].ssid`
+freecwmp_output "$param" "$val"
+}
+
+set_wlan_ssid() {
+local num="$1"
+local val="$2"
+delay_command "wifi" "wifi" "45"
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set wireless.@wifi-iface[$num].ssid="$val"
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+}
+
+get_lan_device() {
+local parameter="$1"
+local rc
+
+freecwmp_check_prefix "InternetGatewayDevice.LANDevice.1." "$parameter" "rc"
+if [ $rc -ne 0 ]; then
+	return
+fi
+
+local max_num
+get_wlan_number_of_entries "max_num"
+
+case "$parameter" in
+	InternetGatewayDevice.LANDevice.1.LANWLANConfigurationNumberOfEntries)
+	freecwmp_value_output "$parameter" "$max_num"
+	return
+	;;
+esac
+
+local num
+
+freecwmp_parse_formated_parameter "$parameter" "InternetGatewayDevice.LANDevice.1.WLANConfiguration.{i}.Enable" "rc" "num"
+if [ $rc -eq 0 ] && [ $num -gt 0 ] && [ $num -le $max_num ]; then
+	let uci_num=$num-1
+	get_wlan_enable $uci_num "$parameter"
+	return
+fi
+
+freecwmp_parse_formated_parameter "$parameter" "InternetGatewayDevice.LANDevice.1.WLANConfiguration.{i}.SSID" "rc" "num"
+if [ $rc -eq 0 ] && [ $num -gt 0 ] && [ $num -le $max_num ]; then
+	let uci_num=$num-1
+	get_wlan_ssid $uci_num "$parameter"
+	return
+fi
+}
+
+set_lan_device() {
+local parameter="$1"
+local value="$2"
+local rc
+
+freecwmp_check_prefix "InternetGatewayDevice.LANDevice.1." "$parameter" "rc"
+if [ $rc -ne 0 ]; then
+	return
+fi
+
+local max_num
+get_wlan_number_of_entries "max_num"
+
+local num
+
+freecwmp_parse_formated_parameter "$parameter" "InternetGatewayDevice.LANDevice.1.WLANConfiguration.{i}.Enable" "rc" "num"
+if [ $rc -eq 0 ] && [ $num -gt 0 ] && [ $num -le $max_num ]; then
+	let uci_num=$num-1
+	set_wlan_enable $uci_num "$value"
+	return
+fi
+
+freecwmp_parse_formated_parameter "$parameter" "InternetGatewayDevice.LANDevice.1.WLANConfiguration.{i}.SSID" "rc" "num"
+if [ $rc -eq 0 ] && [ $num -gt 0 ] && [ $num -le $max_num ]; then
+	let uci_num=$num-1
+	set_wlan_ssid $uci_num "$value"
+	return
+fi
+}
+
+add_lan_device() {
+local object=$1
+
+if [ "x$object" != "xInternetGatewayDevice.LANDevice.1.WLANConfiguration." ]; then
+	return;
+fi
+
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} add wireless wifi-iface >/dev/null
+
+if [ $? -ne 0 ]; then
+	return;
+fi
+
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+
+local max_num
+get_wlan_number_of_entries "max_num"
+freecwmp_object_output "$object" "$max_num"
+}

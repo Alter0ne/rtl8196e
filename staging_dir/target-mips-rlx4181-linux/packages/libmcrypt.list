@@ -1,0 +1,14 @@
+./
+./host
+./usr
+./usr/bin
+./usr/bin/libmcrypt-config
+./usr/lib
+./usr/lib/libmcrypt.so.4
+./usr/lib/libmcrypt.a
+./usr/lib/libmcrypt.so
+./usr/lib/libmcrypt.so.4.4.8
+./usr/include
+./usr/include/mutils
+./usr/include/mutils/mcrypt.h
+./usr/include/mcrypt.h

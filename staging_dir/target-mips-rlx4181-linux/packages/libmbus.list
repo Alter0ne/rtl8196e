@@ -1,0 +1,16 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libmbus.so.0.0.7
+./usr/lib/libmbus.so
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libmbus.pc
+./usr/lib/libmbus.so.0
+./usr/include
+./usr/include/mbus
+./usr/include/mbus/mbus-serial.h
+./usr/include/mbus/mbus.h
+./usr/include/mbus/mbus-protocol.h
+./usr/include/mbus/mbus-protocol-aux.h
+./usr/include/mbus/mbus-tcp.h

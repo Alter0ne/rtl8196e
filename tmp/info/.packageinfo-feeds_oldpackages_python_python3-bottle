@@ -1,0 +1,45 @@
+Source-Makefile: package/feeds/oldpackages/python/python3-bottle/Makefile
+Package: python3-bottle
+Submenu: Python
+Version: 0.12.17-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Fast and simple WSGI-framework for small web-applications
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: bottle-0.12.17.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  Bottle is a fast, simple and lightweight WSGI micro web-framework for Python.
+ It is distributed as a single file module and has no dependencies other than the
+ Python Standard Library.
+https://bottlepy.org
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-bottle-src
+Submenu: Python
+Version: 0.12.17-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Fast and simple WSGI-framework for small web-applications (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: bottle-0.12.17.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:      Bottle is a fast, simple and lightweight WSGI micro web-framework for Python.
+ It is distributed as a single file module and has no dependencies other than the
+ Python Standard Library..
+    (Contains the Python3 sources for this package).
+https://bottlepy.org
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+

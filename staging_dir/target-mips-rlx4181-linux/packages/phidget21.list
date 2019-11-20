@@ -1,0 +1,7 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libphidget21.so
+./usr/include
+./usr/include/phidget21.h

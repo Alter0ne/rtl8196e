@@ -1,0 +1,14 @@
+$ mkdir patches
+
+$ quilt new test.diff
+> Patch patches/test.diff is now on top
+
+$ echo foo > foo
+$ quilt add foo
+> File foo added to patch patches/test.diff
+
+$ quilt add patches/bar
+> File patches/bar is located below patches/
+
+$ quilt add .pc/baz
+> File .pc/baz is located below .pc/

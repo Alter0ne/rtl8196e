@@ -1,0 +1,112 @@
+	$ mkdir patches
+
+	$ cat > no-subject
+	< Here goes a longer description of the patch, which is
+	< totally useless except as a test case for the quilt mail
+	< command. This paragraph is longer than 150 characters so
+	< that it won't be taken for a subject header itself.
+	<
+	< Index: anything
+
+	$ cat no-subject > patches/1.diff
+	$ ls patches/ > series
+	$ quilt mail --mbox mbox --prefix "test" --subject "This is a test" -m "Message"
+	> Unable to extract a subject header from patches/1.diff
+
+	$ cat - no-subject > patches/1.diff
+	< Subject: Subject of 1.diff
+	<
+	< Acked-by: Dummy <dummy@some.where>
+	<
+
+	$ quilt mail --mbox mbox --prefix "test" -m "Message"
+	> Introduction has no subject header
+
+	$ cat - no-subject > patches/2.diff
+	< DESC
+	< Subject of 2.diff
+	< is: split
+	< into multiple
+	< lines
+	< EDESC
+	<
+	< Signed-off-by: Dummy <dummy@some.where>
+	<
+
+	$ cat - no-subject > patches/3.diff
+	< Subject of 3.diff
+	<
+	< To: John X. Doe <jxd@some.where>
+	<
+
+	$ cat - no-subject > patches/4.diff
+	< First paragraph used as
+	< subject of 4.diff.
+	<
+	< Signed-off-by: Joe R. Hacker <joe@foo.baz>
+	< Cc: "John X. Doe" <jxd@some.where>
+	< Cc: Ü is an umlaut <used@in.german>
+	<
+
+	$ cat - no-subject > patches/5.diff
+	< Subject of 1.diff
+	<
+
+	$ cat - no-subject > patches/6.diff
+	< Subject of 1.diff
+	<
+
+	# Test 3 duplicate headers
+	$ ls patches/ > series
+	$ quilt mail --mbox mbox --prefix "test" --subject "This is a test" -m "Message"
+	> Patches patches/1.diff, patches/5.diff, patches/6.diff have duplicate subject headers.
+
+	# Test 2 duplicate headers
+	$ rm patches/6.diff
+	$ ls patches/ > series
+	$ quilt mail --mbox mbox --prefix "test" --subject "This is a test" -m "Message"
+	> Patches patches/1.diff, patches/5.diff have duplicate subject headers.
+
+	$ cat - no-subject > patches/5.diff
+	< Aw: [patch] Fwd: Re: [patch 5/7] Fw: Subject of 5.diff
+	<
+
+	$ cat - no-subject > patches/6.diff
+	< Subject: Must not expand * ? [abc]
+	<
+
+	$ cat - no-subject > patches/7.diff
+	< Subject of 7.diff
+	<
+	< Signed-off-by: someone@without.name
+	<
+
+	$ ls patches/ > series
+	$ quilt mail --mbox mbox --prefix "test" --subject "This is a test" -m "Message"
+	$ sed -nre "s/^(From [^ ]*).*/\\1/p" -e "/^Subject:/p" -e "/^To:/p" -e "/^Cc:/p" -e "/^ /p" -e "/^Replace-.*:/p" -e "/^Recipient-.*:/p" mbox
+	> From a@b.c
+	> Subject: [test 0/7] This is a test
+	> From a@b.c
+	> Cc: Dummy <dummy@some.where>
+	> Subject: [test 1/7] Subject of 1.diff
+	> From a@b.c
+	> Cc: Dummy <dummy@some.where>
+	> Subject: [test 2/7] Subject of 2.diff is: split into multiple lines
+	> From a@b.c
+	> To: "John X. Doe" <jxd@some.where>
+	> Subject: [test 3/7] Subject of 3.diff
+	> To: John X. Doe <jxd@some.where>
+	> From a@b.c
+	> Cc: "Joe R. Hacker" <joe@foo.baz>,
+	>  "John X. Doe" <jxd@some.where>,
+	>  =?UTF-8?q?=C3=9C=20is=20an=20umlaut?= <used@in.german>
+	> Subject: [test 4/7] First paragraph used as subject of 4.diff.
+	> Cc: "John X. Doe" <jxd@some.where>
+	> Cc: Ü is an umlaut <used@in.german>
+	> From a@b.c
+	> Subject: [test 5/7] Subject of 5.diff
+	> From a@b.c
+	> Subject: [test 6/7] Must not expand * ? [abc]
+	> From a@b.c
+	> Cc: someone@without.name
+	> Subject: [test 7/7] Subject of 7.diff

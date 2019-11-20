@@ -1,0 +1,27 @@
+#
+# Shorewall version 4 - IP Set Modules File
+#
+# /usr/share/shorewall6/modules.ipset
+#
+#	This file loads the modules that may be needed by the firewall.
+#
+#	THE ORDER OF THE COMMANDS BELOW IS IMPORTANT!!!!!! You MUST load in
+#	dependency order. i.e., if M2 depends on M1 then you must load M1
+#	before you load M2.
+#
+#  If you need to modify this file, copy it to /etc/shorewall6 and modify the
+#  copy.
+#
+###############################################################################
+loadmodule xt_set
+loadmodule ip_set
+loadmodule ip_set_iphash
+loadmodule ip_set_ipmap
+loadmodule ip_set_ipporthash
+loadmodule ip_set_iptree
+loadmodule ip_set_iptreemap
+loadmodule ip_set_macipmap
+loadmodule ip_set_nethash
+loadmodule ip_set_portmap
+loadmodule ipt_SET
+loadmodule ipt_set

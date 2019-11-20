@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /etc/sqm/sqm.conf
+. ${SQM_LIB_DIR}/functions.sh
+
+[ -d "${SQM_QDISC_STATE_DIR}" ] || mkdir -p "${SQM_QDISC_STATE_DIR}"
+
+TC=$(which tc)
+IP=$(which ip)
+
+for qdisc in $SQM_CHECK_QDISCS; do
+    [ -f ${SQM_QDISC_STATE_DIR}/$qdisc ] && continue
+    verify_qdisc $qdisc && touch ${SQM_QDISC_STATE_DIR}/$qdisc
+done

@@ -1,0 +1,6 @@
+#! /usr/bin/make -f
+%:
+	dh $@ --builddirectory=build-deb --with autoreconf
+
+override_dh_pysupport:
+	dh_pysupport usr/lib/mklibs

@@ -1,0 +1,19 @@
+Source-Makefile: feeds/routing/oonf-init-scripts/Makefile
+Package: oonf-init-scripts
+Submenu: OLSR.org network framework
+Version: 0.9.1-r3
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Common OONF startup scripts
+Maintainer: Henning Rogge <hrogge@gmail.com>
+Source: 
+Type: ipkg
+Description: Common OONF startup scripts
+http://www.olsr.org/
+Henning Rogge <hrogge@gmail.com>
+@@
+
+

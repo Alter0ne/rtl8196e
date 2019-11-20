@@ -1,0 +1,37 @@
+# Check that duplicate patches in generated series files won't cause havoc
+# See bug #20628 at https://savannah.nongnu.org/bugs/?20628
+
+$ mkdir patches
+$ echo "old line" > file.txt
+
+$ cat > patches/first.patch
+< --- file.txt
+< +++ file.txt
+< @@ -1 +1 @@
+< -old line
+< +new line
+
+$ cat > patches/series
+< first.patch -p0
+< first.patch -p0
+
+$ quilt push
+> Applying patch %{P}first.patch
+> patching file file.txt
+>
+> Now at patch %{P}first.patch
+
+$ quilt push
+> Patch %{P}first.patch is already applied; check your series file
+
+$ quilt pop
+> Removing patch %{P}first.patch
+> Restoring file.txt
+>
+> No patches applied
+
+$ quilt push -qa
+> Patch %{P}first.patch is already applied; check your series file
+
+$ quilt pop -q
+> No patch removed

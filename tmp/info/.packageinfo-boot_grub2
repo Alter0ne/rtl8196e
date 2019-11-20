@@ -1,0 +1,39 @@
+Source-Makefile: package/boot/grub2/Makefile
+Package: grub2
+Submenu: Boot Loaders
+Version: 2.02~beta2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_x86||TARGET_x86_64
+Menu-Depends: 
+Provides: 
+Build-Depends: grub2/host
+Build-Types: host
+Section: utils
+Category: Utilities
+Title: GRand Unified Bootloader
+Maintainer: 
+Source: grub-2.02~beta2.tar.xz
+Type: ipkg
+Description: GRand Unified Bootloader
+http://www.gnu.org/software/grub/
+
+@@
+
+Package: grub2-editenv
+Version: 2.02~beta2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_x86||TARGET_x86_64
+Menu-Depends: 
+Provides: 
+Build-Depends: grub2/host
+Build-Types: host
+Section: utils
+Category: Utilities
+Title: Grub2 Environment editor
+Maintainer: 
+Source: grub-2.02~beta2.tar.xz
+Type: ipkg
+Description: 	Edit grub2 environment files.
+http://www.gnu.org/software/grub/
+
+@@
+
+

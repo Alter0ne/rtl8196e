@@ -1,0 +1,15 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libao.so.4
+./usr/lib/libao.so.4.1.0
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/ao.pc
+./usr/lib/libao.so
+./usr/lib/libao.a
+./usr/include
+./usr/include/ao
+./usr/include/ao/os_types.h
+./usr/include/ao/ao.h
+./usr/include/ao/plugin.h

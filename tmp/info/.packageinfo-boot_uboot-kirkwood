@@ -1,0 +1,172 @@
+Source-Makefile: package/boot/uboot-kirkwood/Makefile
+Package: uboot-kirkwood-dockstar
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: dockstar
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Seagate DockStar
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for Seagate DockStar
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-dockstar_second_stage
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: dockstar_second_stage
+Section: boot
+Category: Boot Loaders
+Title: second stage U-Boot for Seagate DockStar
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: second stage U-Boot for Seagate DockStar
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-goflexhome
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: goflexhome
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for the Seagate GoFlexHome/GoFlexNet
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for the Seagate GoFlexHome/GoFlexNet
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-ib62x0
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: ib62x0
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for RaidSonic ICY BOX NAS6210 and NAS6220
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for RaidSonic ICY BOX NAS6210 and NAS6220
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-ib62x0_second_stage
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: ib62x0_second_stage
+Section: boot
+Category: Boot Loaders
+Title: second stage U-Boot for RaidSonic ICY BOX NAS6210 and NAS6220
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: second stage U-Boot for RaidSonic ICY BOX NAS6210 and NAS6220
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-iconnect
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: iconnect
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Iomega iConnect Wireless
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for Iomega iConnect Wireless
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-iconnect_second_stage
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: iconnect_second_stage
+Section: boot
+Category: Boot Loaders
+Title: second stage U-Boot for Iomega iConnect Wireless
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: second stage U-Boot for Iomega iConnect Wireless
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-pogo_e02
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: pogo_e02
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Cloud Engines Pogoplug E02
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for Cloud Engines Pogoplug E02
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-pogo_e02_second_stage
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: pogo_e02_second_stage
+Section: boot
+Category: Boot Loaders
+Title: second stage U-Boot for Cloud Engines Pogoplug E02
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: second stage U-Boot for Cloud Engines Pogoplug E02
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-kirkwood-sheevaplug
+Version: 2014.04-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_kirkwood
+Menu-Depends: 
+Provides: 
+Build-Variant: sheevaplug
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for SheevaPlug
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: bin
+Description: U-Boot for SheevaPlug
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+

@@ -1,0 +1,40 @@
+.TH cgiwrap_iterenv 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_iterenv  - iterater for env vars
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+NEOERR *cgiwrap_iterenv (int n, char **k, char **v);
+
+.Se
+
+.SH ARGUMENTS
+n - variable to return.  This should start at 0 and increment
+.br
+until you receive a NULL return value.
+
+.SH DESCRIPTION
+cgiwrap_iterenv allows a program to iterate over all the
+environment variables.  This is probably mostly used by
+the default debug output.
+
+.SH "RETURN VALUE"
+k - a malloc'd copy of the variable name
+.br
+v - a malloc'd copy of the variable value
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/ntripcaster/Makefile
+Package: ntripcaster
+Submenu: NTRIP
+Version: 0.1.5-3
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpthread
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Standard Ntrip Broadcaster
+Maintainer: Nuno Goncalves <nunojpg@gmail.com>
+Source: ntripcaster-0.1.5.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   BKG Standard Ntrip Broadcaster
+https://igs.bkg.bund.de/ntrip
+Nuno Goncalves <nunojpg@gmail.com>
+@@
+
+

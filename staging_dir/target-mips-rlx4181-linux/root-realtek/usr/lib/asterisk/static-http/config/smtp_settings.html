@@ -1,0 +1,135 @@
+<!--
+ * Asterisk-GUI	-	an Asterisk configuration interface
+ *
+ * Manage smtp settings on the AA50
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * All Rights Reserved.
+ *
+ * Distribution of this file is subject to the license
+ * agreement you accepted when obtained and/or activated
+ * the Digium product containing this file.
+-->
+<html>
+<head>
+	<title>STMP Settings</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		SMTP Settings for Voicemail notification Emails 
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<table width=95% cellpadding=0 cellspacing=0 border=0><tr><td align=center><div id="tabbedMenu"></div></td></tr></table>
+
+	<div class='lite_Heading'> SMTP Settings </div>
+
+	<table align=center border=0 cellpadding=2 cellspacing=1>
+	<tr>	<td align=right>Smtp server <img src="images/tooltip_info.gif" tip="en,voicemail,16" class='tooltipinfo'>:</td>
+		<td>&nbsp;<input id="smtp_server"></td>
+	</tr>
+	<tr>	<td align=right>Port <img src="images/tooltip_info.gif" tip="en,voicemail,17" class='tooltipinfo'>:</td>
+		<td>&nbsp;<input id="smtp_port"></td>
+	</tr>
+	<tr>	<td align=right>Use SMTP Authentication :</td>
+		<td>&nbsp;<input id="chk_UseAuthentication" type='checkbox'></td>
+	</tr>
+	<tr>	<td align=right>Auth User :</td>
+		<td>&nbsp;<input id="AuthUser"></td>
+	</tr>
+	<tr>	<td align=right>Auth Password :</td>
+		<td>&nbsp;<input id="AuthPass"></td>
+	</tr>
+	<tr>	<td colspan=2 align="center">
+			<div height="10"></div><BR>
+			<span class='guiButtonCancel' onclick='window.location.reload();'>Cancel</span>
+			<span class='guiButtonEdit' onclick='apply_changes();'>Save</span>
+		</td>
+	</tr>
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script>
+
+	var localajaxinit = function(){
+		(function (){
+			var t = [
+				{url:'voicemail.html', desc:'General Settings'} ,
+				{url:'emailsettings.html', desc:'Email Settings for VoiceMails'},
+				{url:'smtp_settings.html', desc:'SMTP Settings', selected:true }
+			];
+			ASTGUI.tabbedOptions( _$('tabbedMenu') , t);
+		})();
+
+		top.document.title = "SMTP Settings";
+
+		ASTGUI.domActions.enableDisableByCheckBox('chk_UseAuthentication', ['AuthUser','AuthPass'] ) ;
+
+		var c = config2json({filename:ASTGUI.globals.configfile , usf:1});
+		if( c['general'] ){
+			_$('smtp_server').value = (c['general']['smtp_server']) ? c['general']['smtp_server'] : '';
+			_$('smtp_port').value = (c['general']['smtp_port']) ? c['general']['smtp_port'] : '';
+
+			if(c['general']['smtp_AuthUser'] ){
+				_$('chk_UseAuthentication').checked = true ;
+				_$('AuthUser').value = c['general']['smtp_AuthUser'] ;
+				_$('AuthPass').value = (c['general']['smtp_AuthPass']) ? c['general']['smtp_AuthPass'] : '';
+			}else{
+				_$('chk_UseAuthentication').checked = false ;
+			}
+			_$('chk_UseAuthentication').updateStatus();
+		}
+
+	}
+
+
+	function apply_changes(){
+		var u = new listOfSynActions(ASTGUI.globals.configfile) ;
+		u.new_action('update', 'general', 'smtp_server', _$('smtp_server').value );
+		u.new_action('update', 'general', 'smtp_port', _$('smtp_port').value );
+		if( _$('chk_UseAuthentication').checked ){
+			u.new_action('update', 'general', 'smtp_AuthUser', _$('AuthUser').value );
+			u.new_action('update', 'general', 'smtp_AuthPass', _$('AuthPass').value );
+		}
+		u.callActions();
+
+		var smtpport = ( parseInt(_$('smtp_port').value, 10 ) ) ? _$('smtp_port').value : '25' ;
+		var cmd1 = "echo \"mailhub=" + _$('smtp_server').value + ":" + smtpport + "\" > /etc/ssmtp/ssmtp.conf ";
+		var cmd2 = "echo \"FromLineOverride=YES\" >> /etc/ssmtp/ssmtp.conf ";
+		var cmd3 = "" , cmd4 = "";
+
+		if( _$('chk_UseAuthentication').checked ){
+			cmd3 = "echo \"AuthUser=" + _$('AuthUser').value + "\" >> /etc/ssmtp/ssmtp.conf ";
+			cmd4 = "echo \"AuthPass=" + _$('AuthPass').value + "\" >> /etc/ssmtp/ssmtp.conf ";
+		}
+
+		parent.ASTGUI.systemCmd( cmd1, function(){
+			parent.ASTGUI.systemCmd( cmd2, function(){
+				if(cmd3){
+					parent.ASTGUI.systemCmd( cmd3, function(){
+						parent.ASTGUI.systemCmd( cmd4, function(){
+							ASTGUI.feedback( { msg:'Changes Saved !! ', showfor:2 });
+							window.location.reload();
+						});
+					});
+				}else{
+					ASTGUI.feedback( { msg:'Changes Saved !! ', showfor:2 });
+					window.location.reload();
+				}
+			});
+		});
+	}
+
+
+	</script>
+</body>
+</html>

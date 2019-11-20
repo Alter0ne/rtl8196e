@@ -1,0 +1,551 @@
+body, td, th, textarea, input, select, h2, h3, h4, h5, h6 {
+	font: 83%/1.4 sans-serif, arial, helvetica;
+}
+
+h2 {
+	font-size : 125%;
+	text-align: center;
+}
+
+input {
+	font-size : 110%;
+	border:1px solid #CDCDCD; 
+	padding : 1px 0px 2px 2px;
+}
+
+input:focus {
+	background-color:#FFC58A;
+}
+
+input.inputValidationFailed, textarea.inputValidationFailed {
+	font-weight:bold;
+	border:2px solid #541B1F; 
+	padding : 1px 0px 2px 2px;
+	background-color:#F3A68F;
+}
+
+input.inputValidationFailed {
+	font-size : 115%;
+}
+
+.input8 {
+	font-size : 85%;
+	border:1px solid #CDCDCD; 
+	padding : 1px 0px 2px 2px;
+}
+
+.mainButton {
+	font-size : 120%;
+	border:1px solid #BCBCBC; 
+	padding : 3px 5px 3px 5px;
+}
+
+.mainButton:hover {
+	background-color:#FFC58A;
+}
+
+
+.regularButton, .boldButton {
+	font-size : 110%;
+	border:1px solid #BCBCBC; 
+	padding : 1px;
+	margin: 0px 20px 0px 0px;
+}
+
+.regularButton:hover, .boldButton:hover {
+	background-color:#FFC58A;
+}
+
+.boldButton{ font-weight: bold; }
+
+
+.iframeTitleBar{
+	font-size : 95%;
+	font-weight:bold;
+	padding             : 2px 2px 2px 5px;
+	border-style        : solid none solid none;
+	border-top-color    : #BDC7E7;
+	border-bottom-color : #182052;
+	border-width        : 1px 0px 1px 0px;
+	background-color : #ef8700;
+	color            : #ffffff;
+	width: 99%;
+}
+
+
+.menuOptions { 
+	/* 
+		<ul id='someMenu' class='menuOptions'>
+			<li><a href='#'>Button 1</a></li>
+		</ul>
+	*/
+	background: #FFFFFF;
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0px 0px 7px 0px;
+	width: 12em;
+	border: 1px solid ;
+	border-top-color : #CDCDCD;
+	border-left-color : #CDCDCD;
+	border-bottom-color : #767676;
+	border-right-color : #767676;
+}
+	.menuOptions li { margin: 0; padding: 0; height: 22px; }
+	.menuOptions li a {
+		background: #FFFFFF; height: 22px;
+		color: #6b79a5; display: block; margin: 0; padding: 3; text-decoration: none;
+		padding: 0px 0px 5px 7px;
+	}
+	.menuOptions a:hover { background: #DEDEDE; color: #000000;}
+
+
+
+/* Tabbed Options */
+	a.tab { 
+		border-bottom: 0px solid #778;
+		font: bold 11px arial,Verdana, sans-serif;
+		margin: 0 12px 0 12px;
+		display: inline;
+		padding: 2px 0.5em;
+		border: 0px solid #778;
+		background: #DDE;
+		text-decoration: none;
+		color: #448;
+	}
+	a.tab:visited { 
+			color: #448; 
+	}
+	a.tab:hover { 
+		color: #000;
+		background: #AAE;
+		border-color: #227;
+		text-decoration: none;
+		border-bottom: 4px solid #AAAAAA;
+	}
+	a.tabselected { 
+		font: bold 15px arial,Verdana, sans-serif;
+		margin: 0 12px 4px 12px;
+		padding: 6px 8px 0px 8px;
+		display: inline;
+		border: 0px solid #778;
+		background: #AAE;
+		text-decoration: none;
+		color: #448; 
+	}
+/* end of Tabbed Options */
+
+#bg_transparent{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width:100%;
+	height:100%;
+	background-color:#EFEFEF;
+	-moz-opacity:.50;
+	opacity:.50;
+	filter: alpha(opacity = 50);
+	border-width: 0px;
+	z-index:99;
+}
+
+.dialog{
+	margin:0;
+	top: 40;
+	left: 100;
+	/*display:none;*/
+	position: absolute;
+	background-color:#F4EFE5;
+	border-width: 1px;
+	border-color: #7E5538;
+	border-style: solid; 
+	z-index: 1000;
+}
+
+.dialog_title_tr {
+	background: #7E5538;
+	background-image: url('../images/title_gradient.gif');
+}
+
+.dialog_title {
+	height:28px;
+	margin:0px;
+	padding-left:5px;
+	cursor: move;
+	color:#FFFFFF;
+	font-size: 13px;
+	font-weight:bold;
+}
+
+.dialog_title_X {
+	margin: 0px;
+	padding: 0px;
+	width: 20px;
+	color:#FFFFFF;
+	font-size: 14px;
+	font-weight:bold;
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+span.button_yn {
+	text-decoration:none;
+	font-size : 85%;
+	padding : 2px 4px 2px 4px;
+	border-style : solid ;
+	border-top-color : #BDC7E7;
+	border-bottom-color : #182052;
+	border-left-color : #BDC7E7;
+	border-right-color : #182052;
+	border-width : 1px 1px 1px 1px;
+	cursor: pointer;
+	cursor: hand;
+	background-color : #EFEFEF;
+	color : #6B79A5;
+	font-weight :normal;
+	margin-left: 10px;
+}
+
+span.button_yn:hover {
+	color : #455172;
+}
+
+span.guiButton, span.guiButtonArrow, span.guiButtonNew, span.guiButtonDelete, span.guiButtonCancel, span.guiButtonEdit{
+	text-decoration:none;
+	font-size : 90%;
+	padding : 2px 4px 2px 4px;
+	border-style : solid ;
+	border-top-color : #BDC7E7;
+	border-bottom-color : #182052;
+	border-left-color : #BDC7E7;
+	border-right-color : #182052;
+	border-width : 1px 1px 1px 1px;
+	cursor: pointer;
+	cursor: hand;
+	background-color : #EFEFEF;
+	color : #6B79A5;
+	font-weight :normal;
+	margin-left: 6px;
+}
+
+span.guiButton:hover, span.guiButtonArrow:hover, span.guiButtonNew:hover, span.guiButtonDelete:hover, span.guiButtonCancel:hover{
+	color : #455172;
+}
+
+span.guiButtonArrow{
+	padding-left : 6px;
+	padding-right:15px;
+	background: #EEEEEE url(../images/down_arr.gif) no-repeat scroll 100% 50%;
+}
+
+span.guiButtonNew{
+	padding-left : 18px;
+	padding-right : 6px;
+	background:#EEEEEE url(../images/add.gif) no-repeat ;
+}
+
+span.guiButtonDelete{
+	padding-left : 18px;
+	padding-right : 6px;
+	background:#EEEEEE url(../images/delete.gif) no-repeat ;
+}
+
+span.guiButtonCancel {
+	padding-left : 20px;
+	padding-right : 6px;
+	background: #EEEEEE url(../images/cancel.gif) no-repeat scroll 7%;
+}
+
+span.guiButtonEdit {
+	padding-left : 21px;
+	padding-right : 9px;
+	color : #875534;
+	background: #EEEEEE url(../images/edit.gif) no-repeat ;
+}
+
+span.guiButtonEdit:hover {
+	color : #C05217;
+}
+
+#tooltip {
+	position: absolute;
+	z-index: 10000;
+	background-color: #FFF;
+	padding: 5px;
+	border-width: 2px;
+	border-color: #7E5538;
+	border-style: solid;
+	max-width: 400px;
+
+}
+
+#tooltip h3, #tooltip div { margin: 0; }
+
+.refresh_icon {	cursor: pointer; cursor: hand; }
+
+.top_buttons{ margin-top: 10px; margin-left: 20px; margin-bottom: 10px; }
+
+
+.splbutton {
+	font-size:12px;
+	background:#FFFFFF none repeat scroll 0%; 
+	border:1px solid #8A8A8A; 
+	padding:1px 5px 1px 5px; text-decoration:none;
+}
+.splbutton:hover {
+	background:#F3640D none repeat scroll 0%;
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+.comboMainDiv{
+	padding		: 2px 2px 2px 2px;
+	border-style 	: none solid solid none;
+	border-color	: #4d7891;
+	border-width	: 0px 1px 1px 0px;
+	background-color	: #ccdfeb;
+	width		: 450px;
+	height		: 160px;
+	overflow		: auto;
+	position		:absolute;
+	z-index		: 1000000;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.comboMainDiv div {
+	padding		: 0px 0px 2px 5px;
+	border-width	: 0px 0px 0px 0px;
+	font-family 	: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size        	: 115%;
+	/*color		: #0c5584;*/
+	color		: #0000CC;
+}
+
+.comboMainDiv div:hover {
+	background: #9ac2db;
+}
+
+
+.nocf { /* NO Compact Flash message */
+	font-size: 13pt;
+	border:1px solid;
+	padding : 10;
+	margin-left : 15;
+	margin-right : 15;
+	margin-top : 25;
+	text-align: center;
+}
+
+.lite { /* to display secondary text like in line tips to the user */
+	color: #ABABAB;
+}
+
+.lite_Heading {
+	width:95%;
+	text-align:center;
+	font-weight:bold;
+	font-size : 125%;
+	padding-top: 10px;
+	padding-bottom: 3px;
+	color: #ABABAB;
+}
+
+.selectRange_notselected{
+	padding : 0px 2px 0px 2px ;
+	margin : 4px ;
+	border-width : 0px;
+	color : #0000CC;
+	font-weight :bold;
+}
+
+.selectRange_selected{
+	padding : 3px 7px 3px 7px;
+	margin : 0px;
+	border: 1px solid;
+	border-width	: 1px 0px 2px 0px;
+	color : #CC0000;
+	font-weight :bold;
+}
+
+.tooltipinfo{ 
+	border:0;
+	width:17px;
+	height:17px;
+	cursor: pointer;
+	cursor: hand;
+}
+
+/* taken from jquery.date_input.js */
+/* Some resets for compatibility with existing CSS */
+
+.date_selector, .date_selector * {
+	width: auto;
+	height: auto;
+	border: none;
+	background: none;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	text-decoration: none;
+}
+
+.date_selector {
+	background: #F2F2F2;
+	border: 1px solid #bbb;
+	padding: 5px;
+	margin: -1px 0 0 0;
+	position: absolute;
+	z-index: 100000;
+	display: none;
+}
+
+.date_selector_ieframe {
+	position: absolute;
+	z-index: 99999;
+	display: none;
+}
+
+.date_selector .month_nav {
+	margin: 0 0 5px 0;
+	padding: 0;
+	display: block;
+}
+
+.date_selector .month_name {
+	font-weight: bold;
+	line-height: 20px;
+	display: block;
+	text-align: center;
+}
+
+.date_selector .month_nav a {
+	display: block;
+	position: absolute;
+	top: 5px;
+	width: 20px;
+	height: 20px;
+	line-height: 17px;
+	font-weight: bold;
+	color: #003C78;
+	text-align: center;
+	font-size: 120%;
+	overflow: hidden;
+}
+
+.date_selector .month_nav a:hover, .date_selector .month_nav a:focus {
+	background: none;
+	color: #003C78;
+	text-decoration: none;
+}
+
+.date_selector .prev {
+	left: 5px;
+}
+
+.date_selector .next {
+	right: 5px;
+}
+
+.date_selector table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.date_selector th, .date_selector td {
+	width: 2.5em;
+	height: 2em;
+	padding: 0;
+	text-align: center;
+}
+
+.date_selector td {
+	border: 1px solid #ccc;
+	line-height: 2em;
+	text-align: center;
+	white-space: nowrap;
+	background: white;
+}
+
+.date_selector td.today {
+	background: #FFFED9;
+}
+
+.date_selector td.unselected_month {
+	color: #ccc;
+}
+
+.date_selector td a {
+	display: block;
+	text-decoration: none !important;
+	width: 100%;
+	height: 100%;
+	line-height: 2em;
+	color: #003C78;
+	text-align: center;
+}
+
+.date_selector td.today a {
+	background: #FFFEB3;
+}
+
+.date_selector td.selected a {
+	background: #D8DFE5;
+	font-weight: bold;
+}
+
+.date_selector td a:hover {
+	background: #003C78;
+	color: white;
+}
+
+/* auto complete */
+.ac_results {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	z-index: 1000000;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: white url('indicator.gif') right center no-repeat;
+}
+
+.ac_odd {
+	background-color: #eee;
+}
+
+.ac_over {
+	background-color: #0A246A;
+	color: white;
+}

@@ -1,0 +1,34 @@
+.TH MKLIBS "1" "October 2005" "mklibs" "User Commands"
+.SH NAME
+mklibs \- prints informations about ELF shared objects and executables
+.SH SYNOPSIS
+.B mklibs-readelf
+[\fIOPTION\fR]... \fIFILE\fR...
+.SH DESCRIPTION
+Prints informations about ELF shared objects and executables.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\fB\-i\fR, \fB\-\-print\-interp\fR
+Print interpreter of executable
+.TP
+\fB\-n\fR, \fB\-\-print\-needed\fR
+Print needed shared libs
+.TP
+\fB\-R\fR, \fB\-\-print\-rpath\fR
+Print rpath setting
+.TP
+\fB\-s\fR, \fB\-\-print\-soname\fR
+Print soname of shared object
+.TP
+\fB\-p\fR, \fB\-\-print\-symbols\-provided\fR
+Print provided symbols
+.TP
+\fB\-u\fR, \fB\-\-print\-symbols\-undefined\fR
+Print undefined symbols
+.TP
+\fB\-\-help\fR
+Display this help and exit
+.TP
+\fB\-\-version\fR
+Output version information and exit

@@ -1,0 +1,21 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+bindir=@bindir@
+includedir=@includedir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+pkgdatadir=@pkgdatadir@
+pkglibdir=@pkglibdir@
+vapidir=@datadir@/vala@PACKAGE_SUFFIX@/vapi
+
+vapigen=@bindir@/vapigen@PACKAGE_SUFFIX@
+gen_introspect=@pkglibdir@/gen-introspect@PACKAGE_SUFFIX@
+vala_gen_introspect=@bindir@/vala-gen-introspect@PACKAGE_SUFFIX@
+
+Name: Vala
+Description: The Vala compiler library
+Version: @VERSION@
+Requires: glib-2.0 gobject-2.0
+Libs: -L${libdir} -lvala@PACKAGE_SUFFIX@
+Cflags: -I${includedir}/vala@PACKAGE_SUFFIX@

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
+#
+#       Copyright (C) 2012-4 Michael D. Taht, Toke Høiland-Jørgensen, Sebastian Moeller
+
+# allow passing in the IFACE as first command line argument
+
+[ -n "$IFACE" ] || exit 1
+
+. /etc/sqm/sqm.conf
+. ${SQM_LIB_DIR}/functions.sh
+STATE_FILE="${SQM_STATE_DIR}/${IFACE}.state"
+
+sqm_logger "${0}: Stopping ${IFACE}"
+
+# make sure to only delete the ifb associated with the current interface
+CUR_IFB=$( get_ifb_associated_with_if ${IFACE} )
+[ -z "$CUR_IFB" ] && CUR_IFB=$( ifb_name ${IFACE} )
+
+if [ ! -f "${SQM_LIB_DIR}/$SCRIPT" ]; then
+    sqm_logger "SQM script ${SCRIPT} not found!"
+    exit 1
+fi
+
+. "${SQM_LIB_DIR}/$SCRIPT"
+
+sqm_stop
+rm -f "${STATE_FILE}"
+
+exit 0

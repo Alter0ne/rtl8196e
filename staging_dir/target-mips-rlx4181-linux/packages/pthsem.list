@@ -1,0 +1,16 @@
+./
+./host
+./host/bin
+./host/bin/pthsem-config
+./usr
+./usr/bin
+./usr/bin/pthsem-config
+./usr/lib
+./usr/lib/libpthsem.a
+./usr/lib/libpthsem.so.20
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/pthsem.pc
+./usr/lib/libpthsem.so
+./usr/lib/libpthsem.so.20.0.28
+./usr/include
+./usr/include/pthsem.h

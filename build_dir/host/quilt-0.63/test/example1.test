@@ -1,0 +1,143 @@
+The text used here was taken from:
+http://the-tech.mit.edu/Shakespeare/midsummer/full.html
+
+	$ mkdir patches
+
+	$ cat > Oberon.txt
+	< Yet mark'd I where the bolt of Cupid fell:
+	< It fell upon a little western flower,
+	< Before milk-white, now purple with love's wound,
+	< And girls call it love-in-idleness.
+
+	$ quilt new flower.diff
+	> Patch %{P}flower.diff is now on top
+
+	$ quilt files
+	$ quilt add Oberon.txt
+	> File Oberon.txt added to patch %{P}flower.diff
+
+	$ cat >> Oberon.txt
+	< The juice of it on sleeping eye-lids laid
+	< Will make a man or woman madly dote
+	< Upon the next live creature that it sees.
+
+Or ``quilt edit Oberon.txt''
+
+	$ quilt refresh -p ab
+	> Refreshed patch %{P}flower.diff
+
+	$ cat patches/flower.diff
+	> Index: b/Oberon.txt
+	> ===================================================================
+	> --- a/Oberon.txt
+	> +++ b/Oberon.txt
+	> @@ -2,3 +2,6 @@
+	>  It fell upon a little western flower,
+	>  Before milk-white, now purple with love's wound,
+	>  And girls call it love-in-idleness.
+	> +The juice of it on sleeping eye-lids laid
+	> +Will make a man or woman madly dote
+	> +Upon the next live creature that it sees.
+
+	$ sed -ne '1,4p' Oberon.txt > Oberon.new
+	$ echo "Fetch me that flower; the herb I shew'd thee once:" >> Oberon.new
+	$ sed -e '1,4d' Oberon.txt >> Oberon.new
+	$ mv Oberon.new Oberon.txt
+	$ quilt diff -z -p ab
+	> Index: b/Oberon.txt
+	> ===================================================================
+	> --- a/Oberon.txt
+	> +++ b/Oberon.txt
+	> @@ -2,6 +2,7 @@
+	>  It fell upon a little western flower,
+	>  Before milk-white, now purple with love's wound,
+	>  And girls call it love-in-idleness.
+	> +Fetch me that flower; the herb I shew'd thee once:
+	>  The juice of it on sleeping eye-lids laid
+	>  Will make a man or woman madly dote
+	>  Upon the next live creature that it sees.
+
+	$ quilt diff -p ab
+	> Index: b/Oberon.txt
+	> ===================================================================
+	> --- a/Oberon.txt
+	> +++ b/Oberon.txt
+	> @@ -2,3 +2,7 @@
+	>  It fell upon a little western flower,
+	>  Before milk-white, now purple with love's wound,
+	>  And girls call it love-in-idleness.
+	> +Fetch me that flower; the herb I shew'd thee once:
+	> +The juice of it on sleeping eye-lids laid
+	> +Will make a man or woman madly dote
+	> +Upon the next live creature that it sees.
+
+	$ quilt refresh
+	> Refreshed patch %{P}flower.diff
+
+	$ quilt top
+	> %{P}flower.diff
+
+	$ quilt files
+	> Oberon.txt
+
+	$ quilt patches Oberon.txt
+	> patches/flower.diff
+	$ quilt pop -f
+	> Removing patch %{P}flower.diff
+	> Restoring Oberon.txt
+	>
+	> No patches applied
+
+	$ sed -e "s/girls/maidens/" Oberon.txt > Oberon.new
+	$ mv Oberon.new Oberon.txt
+	$ quilt push
+	> Applying patch %{P}flower.diff
+	>~ patching file `?Oberon.txt'?
+	> Hunk #1 FAILED at 2.
+	>~ 1 out of 1 hunk FAILED -- rejects in file `?Oberon.txt'?
+	> Patch %{P}flower.diff does not apply (enforce with -f)
+
+	$ quilt push -f
+	> Applying patch %{P}flower.diff
+	>~ patching file `?Oberon.txt'?
+	> Hunk #1 FAILED at 2.
+	>~ 1 out of 1 hunk FAILED -- saving rejects to (file )?`?Oberon.txt.rej'?
+	> Applied patch %{P}flower.diff (forced; needs refresh)
+
+	$ cat >> Oberon.txt
+	< Fetch me that flower; the herb I shew'd thee once:
+	< The juice of it on sleeping eye-lids laid
+	< Will make a man or woman madly dote
+	< Upon the next live creature that it sees.
+
+	$ quilt refresh -p ab
+	> Refreshed patch %{P}flower.diff
+	$ rm -f Oberon.txt.rej
+
+	$ cat Oberon.txt
+	> Yet mark'd I where the bolt of Cupid fell:
+	> It fell upon a little western flower,
+	> Before milk-white, now purple with love's wound,
+	> And maidens call it love-in-idleness.
+	> Fetch me that flower; the herb I shew'd thee once:
+	> The juice of it on sleeping eye-lids laid
+	> Will make a man or woman madly dote
+	> Upon the next live creature that it sees.
+
+	$ cat patches/flower.diff
+	> Index: b/Oberon.txt
+	> ===================================================================
+	> --- a/Oberon.txt
+	> +++ b/Oberon.txt
+	> @@ -2,3 +2,7 @@
+	>  It fell upon a little western flower,
+	>  Before milk-white, now purple with love's wound,
+	>  And maidens call it love-in-idleness.
+	> +Fetch me that flower; the herb I shew'd thee once:
+	> +The juice of it on sleeping eye-lids laid
+	> +Will make a man or woman madly dote
+	> +Upon the next live creature that it sees.
+
+	$ quilt grep love
+	> Oberon.txt:Before milk-white, now purple with love's wound,
+	> Oberon.txt:And maidens call it love-in-idleness.

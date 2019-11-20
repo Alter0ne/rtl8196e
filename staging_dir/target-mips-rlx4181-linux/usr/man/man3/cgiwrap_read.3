@@ -1,0 +1,38 @@
+.TH cgiwrap_read 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_read  - cgiwrap input function
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+void cgiwrap_read (char *buf, int buf_len, int *read_len);
+
+.Se
+
+.SH ARGUMENTS
+buf - a pre-allocated buffer to read the data into
+.br
+buf_len - the size of the pre-allocated buffer
+
+.SH DESCRIPTION
+cgiwrap_read is used to read incoming data from the
+client, usually from a POST or PUT HTTP request.  It
+wraps the part of fread(stdin).
+
+.SH "RETURN VALUE"
+read_len - the number of bytes read into buf
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

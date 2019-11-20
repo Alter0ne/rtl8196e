@@ -1,0 +1,365 @@
+mklibs (0.1.35) unstable; urgency=low
+
+  [ Cyril Brulebois ]
+  * Simplify autoreconfing:
+    - Add dh-autoreconf build-dep.
+    - Add “--with autoreconf” accordingly.
+    - Get rid of the “configure” target accordingly.
+
+  [ Colin Watson ]
+  * Depend on dpkg-dev for dpkg-architecture (LP: #977347).
+
+ -- Christian Perrier <bubulle@debian.org>  Wed, 26 Dec 2012 07:54:02 +0100
+
+mklibs (0.1.34) unstable; urgency=low
+
+  [ Cyril Brulebois ]
+  * Fix FTBFS with gcc 4.7 due to missing <unistd.h> include (closes:
+    #667282).
+
+  [ Adam Conrad ]
+  * Ignore claims of NEEDED *@ld-linux.so.3 symbols, as this completely
+    confuses armhf's double linker situation, and doing so doesn't
+    break armel (or anything else with a linker by that SONAME), as
+    linkers are treated specially and copied anyway (LP: #984007)
+
+ -- Colin Watson <cjwatson@debian.org>  Tue, 08 May 2012 16:17:59 +0100
+
+mklibs (0.1.33) unstable; urgency=low
+
+  * Adjust the libc_pic directory for multiarch as well.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 18 Mar 2011 14:26:36 +0000
+
+mklibs (0.1.32) unstable; urgency=low
+
+  * Add multiarch directories to the default library path if
+    dpkg-architecture provides a DEB_HOST_MULTIARCH variable (LP: #737055).
+
+ -- Colin Watson <cjwatson@debian.org>  Fri, 18 Mar 2011 09:58:18 +0000
+
+mklibs (0.1.31) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Use 'dh $@ --options' rather than 'dh --options $@', for
+    forward-compatibility with debhelper v8.
+
+  [ Bastian Blank ]
+  * Support python 2.6 (closes: #585254)
+  * Don't fail with static binaries (closes: #606621)
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 24 Dec 2010 19:20:29 -0200
+
+mklibs (0.1.30) unstable; urgency=low
+
+  [ Colin Watson ]
+  * Upgrade to debhelper v7.
+
+  [ Bastian Blank ]
+  * Use python-support.
+  
+  [ Aurelien Jarno ]
+  * Add support for STT_GNU_IFUNC symbols.
+
+ -- Aurelien Jarno <aurel32@debian.org>  Wed, 02 Jun 2010 19:46:49 +0200
+
+mklibs (0.1.29) unstable; urgency=low
+
+  [ Aurelien Jarno ]
+  * mklibs: detect libc.so.0.1 (GNU/kFreeBSD) and libc.so.0.3 (GNU Hurd) as
+    well. (closes: #365227)
+  * debian/control: also recommend libc0.1-pic (GNU/kFreeBSD) and libc0.3-pic
+    (GNU Hurd).
+
+ -- Aurelien Jarno <aurel32@debian.org>  Fri, 24 Jul 2009 11:59:23 +0200
+
+mklibs (0.1.28) unstable; urgency=low
+
+  [ Aurelien Jarno ]
+  * mklibs: blacklist all __gnu_local_gp* symbols.
+  * mklibs-copy: depends on python instead of python-minimal.
+  * switch to debhelper 5.
+  * debian/copyright: add a copyright section to make lintian happy.
+  * bump Standards-Version to 3.8.2.0 (no changes).
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 19 Jul 2009 15:07:44 +0200 
+
+mklibs (0.1.27) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Apply patches from Joseph S. Myers (closes: #469070):
+    - mklibs-readelf: Uninitialized data fix
+    - mklibs-readelf: Endian fix
+    - mklibs: Add --sysroot, to locate all libraries and other related input
+      files relative to a specified root directory rather than /.
+    - mklibs: Add --gcc-options and --libdir options as well.
+    - mklibs: Correct diagnostic text when symbol cannot be found.
+    - mklibs: Ignore missing symbols from libthread_db, which are defined
+      in the application that uses it.
+  * Document --root in the man page.
+
+  [ Frans Pop ]
+  * Apply patches from Joseph S. Myers:
+    - Ignore the fact that symbol __gnu_local_gp is undefined for mips as it
+      is defined by the linker. Thanks to Joseph S. Myers. Closes: #499744.
+  * Remove myself as uploader.
+
+  [ Martin Michlmayr ]
+  * mklibs-readelf: add missing header to avoid build error with GCC 4.4.
+    Closes: #505025.
+
+  [ Bastian Blank ]
+  * Support file definitions in version requirements. Based on patch by Andrew
+    Stubbs <ams@codesourcery.com>. (closes: #508929)
+  * Various cleanups.
+  * Ignore symbols with empty names. (closes: #518088)
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 06 May 2009 13:56:04 +0200
+
+mklibs (0.1.26) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Add XS-Vcs-Svn field.
+  * Current standards-version (no changes needed).
+
+  [ Bastian Blank ]
+  * Fix linker name for non-default versions.
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 04 Oct 2007 11:35:55 +0200
+
+mklibs (0.1.25) unstable; urgency=low
+
+  * Support symbol versions. (closes: #433874)
+  * Make it possible to force libraries.
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 01 Oct 2007 11:53:53 +0200
+
+mklibs (0.1.24) unstable; urgency=low
+
+  * Also check for symboles without type. (closes: #433388)
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 16 Jul 2007 21:01:07 +0000
+
+mklibs (0.1.23) unstable; urgency=low
+
+  * Fix ld name detection.
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 11 Jun 2007 07:56:06 +0000
+
+mklibs (0.1.22) unstable; urgency=low
+
+  * Fix missing includes. (closes: #417430)
+  * Always include libgcc on old-abi arm.
+
+ -- Bastian Blank <waldi@debian.org>  Wed,  6 Jun 2007 07:58:40 +0000
+
+mklibs (0.1.21) unstable; urgency=low
+
+  * Use mklibs-readelf in mklibs.
+
+ -- Bastian Blank <waldi@debian.org>  Wed,  9 May 2007 20:54:28 +0000
+ 
+mklibs (0.1.20) unstable; urgency=low
+
+  * Fix readelf output regexp for compatibility with current readelf on
+    alpha
+
+ -- Steve Langasek <vorlon@debian.org>  Tue, 10 Jan 2006 10:25:12 -0800
+
+mklibs (0.1.19) unstable; urgency=high
+
+  * The "what's better than a hard-coded value?  TWO hard-coded values!"
+    upload
+  * The glibc soname on alpha is libc.so.6.1, not libc.so.6; special-case
+    both names so that we can pick up /usr/lib/libc_pic/soinit.o on alpha
+    (and ia64?).
+  * Add myself to Uploaders (ok'ed by Frans).
+
+ -- Steve Langasek <vorlon@debian.org>  Sat,  5 Nov 2005 06:24:10 -0800
+
+mklibs (0.1.18) unstable; urgency=low
+
+  * Do not include rpaths multiple times (closes: #334544).
+  * Add debugging output when adding undefined symbols (closes: #33277).
+  * Add myself to uploaders.
+  * Acknowlegde NMU (closes: #327698).
+
+ -- Frans Pop <fjp@debian.org>  Sat, 22 Oct 2005 21:21:18 +0200
+
+mklibs (0.1.17) unstable; urgency=low
+
+  [ Bastian Blank ]
+  * Use dynamic symbol table.
+  * Add mklibs-copy package.
+
+ -- Bastian Blank <waldi@debian.org>  Fri, 14 Oct 2005 09:56:48 +0200
+
+mklibs (0.1.16.1) unstable; urgency=low
+
+  * NMU
+  * Take into account symbols from libs that are present under the root
+    (mainly ./usr/lib). Closes: #327698.
+
+ -- Frans Pop <fjp@debian.org>  Mon, 12 Sep 2005 15:31:16 +0200
+
+mklibs (0.1.16) unstable; urgency=low
+
+  * Apply patch from ths to not choke on LOCAL UND symbols. Closes: #319620
+  * Add myself to uploaders.
+  * Update standards version (no real changes).
+  * Remove CVS dirs from source tarball.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 23 Jul 2005 14:27:20 -0400
+
+mklibs (0.1.15) unstable; urgency=low
+
+  * Jeff Bailey
+    - Use [^\s@] instead of \w when matching symbol, to cover
+    leading .
+    Thanks to Faulk Hueffner for the suggestion.
+    - Bump standards version to 3.6.1 (no changes required)
+    - Add myself to Uploaders.
+
+ -- Jeff bailey <jbailey@nisa.net>  Fri,  6 Feb 2004 18:23:43 -0500
+
+mklibs (0.1.14) unstable; urgency=low
+
+  * Phil Blundell
+    - Fix corruption of global lib_path introduced in previous version,
+    courtesy Richard Hirst.  (Closes: #225823)
+
+ -- Phil Blundell <pb@debian.org>  Thu,  1 Jan 2004 21:43:40 +0000
+
+mklibs (0.1.13) unstable; urgency=low
+
+  * Phil Blundell
+    - Just delete any symlinks encountered during library filename 
+    canonicalisation, without trying to read their targets.
+
+ -- Phil Blundell <pb@debian.org>  Tue, 30 Dec 2003 21:11:33 +0000
+
+mklibs (0.1.12) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Give tidy error on incorrect arg; not a backtrace dump
+  * Falk Hueffner
+    - Handle weak symbols sensibly (closes: #172828)
+    - Detect unsatisfiable symbols (closes: #178557)
+  * Phil Blundell
+    - fix bug causing no libraries to be reduced if --root not given
+    - add hack to work around missing __dso_handle when reducing new
+      versions (>= 2.3.2) of libc6.
+
+ -- Phil Blundell <pb@debian.org>  Thu, 28 Aug 2003 13:17:01 +0100
+
+mklibs (0.1.11) unstable; urgency=low
+
+  * Alastair McKinstry
+    - Typo; change --no-default-libs to --no-default-lib
+  * Phil Blundell
+    - look at all mentioned objects to see what symbols they provide
+    - new option "--root=DIRECTORY".  Search there for library rpaths.
+    - don't copy libraries to DESTDIR if they are already in the
+    target tree.
+    - don't blow up on libraries with no soname.
+
+ -- Phil Blundell <pb@debian.org>  Wed,  7 May 2003 18:58:50 +0100
+
+mklibs (0.1.10) unstable; urgency=low
+
+  * Petter Reinholdtsen
+    - Remove myself from uploaders list.  I do not really have a clue
+      about this package.
+  * Phil Blundell
+    - scan binaries for rpath strings, and add them to the search path
+      used for shared objects.
+
+ -- Phil Blundell <pb@debian.org>  Mon, 21 Apr 2003 16:03:27 +0200
+
+mklibs (0.1.9) unstable; urgency=low
+
+  * Bastian Blank
+    - fix -D (don't have an argument)
+    - fix so_pattern (we don't want non-lib so files)
+    - fix globs to find pic files
+    - only recommend libc6-pic, aren't always needed.
+    - remove libm hack on request
+  * Petter Reinholdtsen
+    - Accept non-digits after .so in library names. (Closes: #178002)
+    - Add myself as uploader.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sun, 26 Jan 2003 13:33:46 +0100
+
+mklibs (0.1.8) unstable; urgency=low
+
+  * explicitly set LC_ALL=C to get parseable output. (closes: #166803)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 28 Oct 2002 20:35:50 +0100
+
+mklibs (0.1.7) unstable; urgency=low
+
+  * Depend on libc6-pic | libc6.1-pic, for Alpha.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun, 20 Oct 2002 14:55:03 +0200
+
+mklibs (0.1.6) unstable; urgency=low
+  
+  * add -D, --no-default-libs switch to omit default lib path
+  * find dynamic linker by looking at the INTERP header rather
+    than assuming we can infer it from the libc version number.
+    (closes: #155779)
+  * Ensure that the dynamic linker is installed along with the small
+    libs.  In the case of glibc, libc.so has calls into ld-linux.so
+    (glibc dynamic linker) so mklibs will always install ld-linux.so
+    when it resolves external references.  However, uClibc's libc
+    doesn't call it's dynamic linker (ld-uClibc.so).  In that case
+    we have to copy it in manually.
+  * Make sure we install libs under their soname. (closes: #154169)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 17 Oct 2002 04:43:33 +0200
+
+mklibs (0.1.5) unstable; urgency=low
+
+  * made -h work as --help
+  * added Build-Deps on c-compiler, modutils, libc6-dev
+  * install libraries by soname only (closes: #154169).
+
+ -- Eduard Bloch <blade@debian.org>  Sat, 27 Jul 2002 10:07:48 +0200
+
+mklibs (0.1.4) unstable; urgency=low
+
+  * Reinstate lost fix from 0.1.2.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 23 Jul 2002 09:21:09 +0200
+
+mklibs (0.1.3) unstable; urgency=low
+
+  * use debuglevel = debuglevel + 1 instead of += construct, since it
+    seems like some older pythons doesn't like that syntax. 
+    (closes: #153283)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 23 Jul 2002 01:00:59 +0200
+
+mklibs (0.1.2) unstable; urgency=low
+
+  * Add manual page (closes: #152235); thanks to Matt Kraai.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon,  8 Jul 2002 09:51:09 +0200
+
+mklibs (0.1.1) unstable; urgency=low
+
+  * Change mklibs.py to mklibs. (closes: #150586)
+  * s/Build-Depends/Build-Depends-Indep/ in the control file. (shuts up
+    lintian)
+  * Apply patch from Matt Krai, adding help and fixing -L (closes: #150627)
+  * Add myself to uploaders
+  * Make symlinks for the libs as well.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 22 Jun 2002 14:42:29 +0200
+
+mklibs (0.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Phil Blundell <pb@debian.org>  Tue, 11 Jun 2002 20:30:12 +0100
+

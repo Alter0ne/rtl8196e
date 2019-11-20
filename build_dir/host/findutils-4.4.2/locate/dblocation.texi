@@ -1,0 +1,1 @@
+@set LOCATE_DB /home/alter0ne/rtk_openwrt_sdk/staging_dir/host/var/locatedb

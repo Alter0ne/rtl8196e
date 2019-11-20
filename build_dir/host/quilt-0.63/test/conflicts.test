@@ -1,0 +1,163 @@
+This test case creates a patch and then applies that patch to a modified
+source file. The source file is modified until the patch doesn't apply
+anymore, then the patch is fixed.
+
+	$ mkdir patches
+
+	$ cat > one.txt
+	< 1
+	< 2
+	< 3
+	< 4
+	< 5
+	< 6
+	< 7
+	< --
+	< a
+	< b
+	< c
+	< d
+	< e
+	< f
+	< g
+
+	$ quilt new a.diff
+	> Patch %{P}a.diff is now on top
+	$ echo %{?}
+	> 0
+
+	$ quilt add one.txt
+	> File one.txt added to patch %{P}a.diff
+	$ echo %{?}
+	> 0
+
+	$ mv one.txt one.orig
+	$ sed -e "s/4/4+/" -e 's/d/d+/' one.orig > one.txt
+	$ quilt refresh
+	> Refreshed patch %{P}a.diff
+	$ echo %{?}
+	> 0
+
+	$ quilt pop -q
+	> Removing patch %{P}a.diff
+	> No patches applied
+	$ echo %{?}
+	> 0
+
+
+	$ sed -e "s/^\\([17]\\)\$/\\1-/" one.orig > one.txt
+	$ quilt push -q
+	> Applying patch %{P}a.diff
+	> Now at patch %{P}a.diff
+	$ echo %{?}
+	> 0
+
+	$ quilt pop -q
+	> Removing patch %{P}a.diff
+	> No patches applied
+	$ echo %{?}
+	> 0
+
+	$ sed -e "s/^\\([1267]\\)\$/\\1-/" one.orig > one.txt
+	$ quilt push -q
+	> Applying patch %{P}a.diff
+	> Now at patch %{P}a.diff
+	$ echo %{?}
+	> 0
+
+	$ quilt pop -q
+	> Removing patch %{P}a.diff
+	> No patches applied
+	$ echo %{?}
+	> 0
+
+
+	$ sed -e "s/^\\([123567]\\)\$/\\1-/" one.orig > one.txt
+	$ quilt push -q
+	> Applying patch %{P}a.diff
+	> 1 out of 2 hunks FAILED
+	> Patch %{P}a.diff does not apply (enforce with -f)
+	$ echo %{?}
+	> 1
+
+	$ quilt push -qf
+	> Applying patch %{P}a.diff
+	>~ 1 out of 2 hunks FAILED -- saving rejects to (file )?`?one.txt.rej'?
+	> Applied patch %{P}a.diff (forced; needs refresh)
+	$ echo %{?}
+	> 1
+
+	$ mv one.txt one.x
+	$ sed -e "s/4/4+/" one.x > one.txt
+	$ rm -f one.x
+	$ quilt diff -z | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/one\.txt
+	> ===================================================================
+	> @@ -1,7 +1,7 @@
+	>  1-
+	>  2-
+	>  3-
+	> -4
+	> +4+
+	>  5-
+	>  6-
+	>  7-
+	$ echo %{?}
+	> 0
+
+	$ quilt diff | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/one\.txt
+	> ===================================================================
+	> @@ -1,7 +1,7 @@
+	>  1-
+	>  2-
+	>  3-
+	> -4
+	> +4+
+	>  5-
+	>  6-
+	>  7-
+	> @@ -9,7 +9,7 @@
+	>  a
+	>  b
+	>  c
+	> -d
+	> +d+
+	>  e
+	>  f
+	>  g
+	$ echo %{?}
+	> 0
+
+	$ quilt refresh
+	> Refreshed patch %{P}a.diff
+	$ echo %{?}
+	> 0
+
+	$ cat patches/a.diff | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/one\.txt
+	> ===================================================================
+	> @@ -1,7 +1,7 @@
+	>  1-
+	>  2-
+	>  3-
+	> -4
+	> +4+
+	>  5-
+	>  6-
+	>  7-
+	> @@ -9,7 +9,7 @@
+	>  a
+	>  b
+	>  c
+	> -d
+	> +d+
+	>  e
+	>  f
+	>  g
+
+	$ quilt pop -q
+	> Removing patch %{P}a.diff
+	> No patches applied
+	$ echo %{?}
+	> 0

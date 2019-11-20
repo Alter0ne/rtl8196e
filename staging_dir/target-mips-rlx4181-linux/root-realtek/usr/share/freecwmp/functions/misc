@@ -1,0 +1,26 @@
+#!/bin/sh
+# Copyright (C) 2012 Luka Perkov <freecwmp@lukaperkov.net>
+
+get_misc_cpu_usage() {
+local val=`uptime | awk -F'average: ' '{ print $2 }' | awk -F',' '{ print $1 }' | awk -F'.' '{ print $2 }'`
+freecwmp_value_output "Device.DeviceInfo.ProcessStatus.CPUUsage" "$val"
+}
+
+get_misc_process_number() {
+local val=`ps | grep -v COMMAND | wc -l`
+freecwmp_value_output "Device.DeviceInfo.ProcessStatus.ProcessNumberOfEntries" "$val"
+}
+
+get_misc() {
+case "$1" in
+	Device.DeviceInfo.ProcessStatus.CPUUsage)
+	get_misc_cpu_usage
+	;;
+	Device.DeviceInfo.ProcessStatus.ProcessNumberOfEntries)
+	get_misc_process_number
+	;;
+esac
+}
+
+set_misc() { return; }
+add_misc() { return; }

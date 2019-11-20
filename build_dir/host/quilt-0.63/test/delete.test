@@ -1,0 +1,101 @@
+Test the delete command.
+
+	$ mkdir patches
+
+	$ quilt delete
+	> No series file found
+
+	$ cat > test.txt
+	< Calling pci_match_id() would be more feasible.
+
+	$ quilt new test1
+	> Patch %{P}test1 is now on top
+
+	$ quilt add test.txt
+	> File test.txt added to patch %{P}test1
+
+	$ cat > test.txt
+	< Try the following patch instead.
+
+	$ quilt refresh
+	> Refreshed patch %{P}test1
+
+	$ quilt new test2
+	> Patch %{P}test2 is now on top
+
+	$ quilt add test.txt
+	> File test.txt added to patch %{P}test2
+
+	$ cat > test.txt
+	< Ok, that's fine with me if you want to do that instead.
+
+	$ quilt refresh
+	> Refreshed patch %{P}test2
+
+	$ quilt delete test1
+	> Patch %{P}test1 is currently applied
+
+	$ quilt pop
+	> Removing patch %{P}test2
+	> Restoring test.txt
+	>
+	> Now at patch %{P}test1
+
+	$ quilt series
+	> %{P}test1
+	> %{P}test2
+
+	$ quilt delete -n
+	> Removed patch %{P}test2
+
+	$ quilt series
+	> %{P}test1
+
+	$ quilt pop
+	> Removing patch %{P}test1
+	> Restoring test.txt
+	>
+	> No patches applied
+
+	$ quilt delete test1
+	> Removed patch %{P}test1
+
+	$ quilt series
+
+	$ echo "test1" > %{P}series
+	$ quilt delete -n
+	> Removed patch %{P}test1
+
+	$ quilt series
+
+	# Force the pop operaton to fail
+	$ echo "test3" > %{P}series
+	$ echo "test3" > .pc/applied-patches
+	$ mkdir -p .pc/test3/dir
+	$ touch .pc/test3/dir/file
+	$ chmod a-rx .pc/test3/dir
+
+	# Note that this will succeed (instead of the expected failure) if
+	# running as root, but you shouldn't do that anyway.
+	$ quilt delete "test3"
+	> Removing patch %{P}test3
+	>~ .*find: [`']?\./dir'?: Permission denied
+
+	$ chmod a+rx .pc/test3/dir
+
+	$ find .pc/test3
+	> .pc/test3
+	> .pc/test3/dir
+	> .pc/test3/dir/file
+
+	$ quilt applied
+	> No patches applied
+
+	$ quilt series
+	> %{P}test3
+
+	$ quilt delete
+	> No patches applied
+
+	$ quilt delete test3
+	> Removed patch %{P}test3

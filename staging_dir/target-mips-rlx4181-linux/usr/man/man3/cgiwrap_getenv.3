@@ -1,0 +1,43 @@
+.TH cgiwrap_getenv 3 "12 July 2007" "ClearSilver" "cgi/cgiwrap.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cgiwrap_getenv  - the wrapper for getenv
+.SH SYNOPSIS
+.Ss
+#include <cgi/cgiwrap.h>
+.Se
+.Ss
+NEOERR *cgiwrap_getenv (const char *k, char **v);
+
+.Se
+
+.SH ARGUMENTS
+k - the environment variable to lookup
+
+.SH DESCRIPTION
+cgiwrap_getenv wraps the getenv function for access to
+environment variables, which are used to pass data to
+CGI scripts.  This version differs from the system
+getenv in that it makes a copy of the value it returns,
+which gets around problems when wrapping this routine in
+garbage collected/reference counted languages by
+moving the ownership of the data to the calling
+function.
+
+.SH "RETURN VALUE"
+v - a newly allocated copy of the value of that variable, or
+.br
+NULL if not found.
+
+.SH "SEE ALSO"
+.BR cgiwrap_iterenv "(3), "cgiwrap_putenv "(3), "cgiwrap_init_emu "(3), "cgiwrap_writef "(3), "cgiwrap_init_std "(3), "cgiwrap_writevf "(3), "cgiwrap_read "(3), "cgiwrap_write "(3), "cgiwrap_getenv

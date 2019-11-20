@@ -1,0 +1,58 @@
+<!--
+ * Asterisk GUI - upload uImage
+ * Pari Nannapaneni <pari@digium.com>
+ * 
+ * Copyright (C) 2007 - 2008, Digium, Inc.
+ * All Rights Reserved.
+ *
+-->
+<html>
+<head>
+	<title>uImage upload</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+</head>
+<body onunload="hidetheupload()">
+	<div align=center>
+	<FORM method="POST" action="/uploads" enctype="multipart/form-data" id="form22">
+		<BR>
+		<nobr>
+		<font style="font-family:'trebuchet ms',helvetica,sans-serif;">Choose a uImage file:</font> <input name="uImage" type="file" id="uf1">
+		</nobr>
+		<BR><BR>
+		<div align=center><input type="button" value="Upload Image" onclick="beforeupload();"></div>
+	</FORM>
+	</div>
+
+	<script>
+	var starteduploading = 0 ;
+
+	function beforeupload(){
+		
+		var fullpath = document.getElementById("uf1").value ;
+		if(!fullpath){
+			parent.gui_alert("Please select a uImage file to upload");
+			return;
+		}
+		var a = fullpath.lastIndexOf("\\");
+		if (a == -1){
+			a = fullpath.lastIndexOf("/");
+		}
+		parent.uImage_filename = fullpath.substr(a+1);
+		top.ASTGUI.dialog.waitWhile('Uploading firmware.....');
+		top.ASTGUI.feedback({ msg:'File Upload in progress, please wait', showfor: 300 });
+		starteduploading = 1;
+		document.getElementById('form22').submit();
+	}
+
+
+	function hidetheupload(){
+		if(!starteduploading){ return; }
+		parent._$('uploadiframe').style.display="none";
+		top.ASTGUI.dialog.hide();
+		top.ASTGUI.feedback({ msg:'File Uploaded.  Please reboot your system.  Reboot may take 5+ minutes', showfor: 300 });
+		parent.execute_applyuimage("file");
+	}
+
+	</script>
+</body>
+</html>

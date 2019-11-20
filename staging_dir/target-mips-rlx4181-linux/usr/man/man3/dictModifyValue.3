@@ -1,0 +1,48 @@
+.TH dictModifyValue 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictModifyValue  - create/modify an item.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+NEOERR *dictModifyValue(dictCtx dict, const char *id, dictNewValueCB new_cb, 
+                     dictUpdateValueCB update, void *rock);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to add pair to.
+.br
+id - identifier of value
+.br
+new - function to call to create new value (may be NULL)
+.br
+update - function to call to modify value (if NULL, the old
+.br
+value is freed, and <new> is used)
+.br
+rock - context to pass to <new> or <update>.
+
+.SH DESCRIPTION
+Finds <id>'s value and calls <update>.  If <id> is
+not in <dict>, calls <new> to obtain a new value.
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

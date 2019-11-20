@@ -1,0 +1,45 @@
+.TH skipSearch 3 "12 July 2007" "ClearSilver" "util/skiplist.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+skipSearch  - search a skip list.
+.SH SYNOPSIS
+.Ss
+#include <util/skiplist.h>
+.Se
+.Ss
+void *skipSearch(skipList list, UINT32 key, void **plock);
+
+.Se
+
+.SH ARGUMENTS
+list - list to search in.
+.br
+key - key to look for.
+.br
+plock - place for value lock (or NULL).
+
+.SH DESCRIPTION
+Searches for <key> in <list>, and returns value if 
+found, or NULL if not.  If <plock> is non-NULL, then
+the lock returned in <plock> will be associated with
+the returned value.  Until this lock is passed to
+skipRelease(), the value will not be freed with the
+freeValue callback (see skipNewList()).
+
+MT-Level: Safe if <list> thread-safe.
+
+.SH "RETURN VALUE"
+plock - set to value lock.
+
+.SH "SEE ALSO"
+.BR skipDelete "(3), "skipFreeList "(3), "skipRelease "(3), "skipInsert "(3), "skipSearch "(3), "skipNext "(3), "skipNewList

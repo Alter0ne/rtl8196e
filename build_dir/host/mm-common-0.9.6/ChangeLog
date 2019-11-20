@@ -1,0 +1,1494 @@
+2012-09-29  Murray Cumming  <murrayc@murrayc.com>
+
+	Dist .js files that doxygen now generates
+
+2012-07-23  Kjell Ahlstedt  <kjell.ahlstedt@bredband.net>
+
+	Use $(MMDOCTOOLDIR) instead of @MMDOCTOOLDIR@ in Doxyfile.in.
+
+	MM_CONFIG_DOCTOOL_DIR([doc]) defines MMDOCTOOLDIR=${top_srcdir}/doc, which
+	Doxygen does not understand, if it's substituted into Doxyfile. Let 'make' do
+	the necessary recursive substitutions and export the result to Doxygen in the
+	environment variable MMDOCTOOLDIR.
+
+	* build/doc-reference.am: Export MMDOCTOOLDIR to Doxygen.
+	* skeletonmm/configure.ac: Add MM_CONFIG_DOCTOOL_DIR([doc]).
+	* skeletonmm/doc/reference/Doxyfile.in: Replace @MMDOCTOOLDIR@ by
+	$(MMDOCTOOLDIR). Bug #673984.
+
+2011-09-20  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Make downloading tags optional.
+
+	Allow networking to be disabled - may be useful for developers with
+	no connection to Internet. By default networking is paired with
+	maintainer mode, that is - it is enabled/disabled when maintainer mode
+	is enabled/disabled.
+
+	* configure.ac: Check for networking. Check for wget and curl if
+	networking is enabled.
+	* Makefile.am: Use NETWORK_ENABLED condition.
+
+2011-09-16  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Don't try to run tar by shell.
+
+	This was a leftover from removing `missing' script use. `missing'
+	is written in shell so it was possible to run it as `/bin/sh missing'.
+	tar is a binary file and it should be called directly. This fixes
+	skeletonmm tarball creation.
+
+	* Makefile.am: Removed $(SHELL) from command packing skeletonmm
+	into tarball.
+
+2011-09-13  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Don't use missing for making skeleton tarball.
+
+	Missing script is rather intended to be used by maintainers, that
+	is - in maintainer mode, so just look for tar utility and use it
+	directly.
+
+	* configure.ac: Add check for tar utility.
+	* Makefile.am: Don't use missing for packaging skeleton files.
+
+2011-05-18  Armin Burgmeier  <armin@arbur.net>
+
+	Fix running doxygen when it is located at a path containing spaces (#630051)
+
+2011-03-30  Murray Cumming  <murrayc@murrayc.com>
+
+	0.9.5
+
+2011-03-28  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Distribute doctools if non-empty parameter is passed to MM_CONFIG_DOCTOOL_DIR.
+
+	* macros/mm-doc.m4:
+	* build/doc-reference.am: If non-empty parameter is passed to
+	MM_CONFIG_DOCTOOL_DIR then mm-common-prepare will copy doctools
+	to given directory. These files are needed during install stage,
+	so they need to be distributed. This way we don't need to add
+	some lines to Makefile.am in every project using mm-common. Which
+	we did, anyway.
+
+2011-03-18  Murray Cumming  <murrayc@murrayc.com>
+
+	0.9.4
+
+2011-03-18  Kalev Lember  <kalev@smartlink.ee>
+
+	Set datarootdir in mm-common-util.pc
+
+	* util/mm-common-util.pc.in: Set the datarootdir variable now that the
+	file is in ${datadir}/pkgconfig directory.
+
+2011-03-18  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Change installation directory for mm-common-util.pc file.
+
+	* Makefile.am: mm-common-util.pc should be put inside ${datadir}/pkgconfig,
+	instead of ${libdir}/pkgconfig, because it does not contain any arch-specific
+	information.
+
+2011-03-15  Murray Cumming  <murrayc@murrayc.com>
+
+	0.9.3
+
+2011-03-15  Murray Cumming  <murrayc@murrayc.com>
+
+	Add mm-common-util.pc so we can get doc utils from mm-common.
+
+	* util/mm-common-util.pc.in: Added this file, with the path to
+	the installed doctool/*.pl files.
+	* configure.ac:
+	* Makefile.am: Generate and install the .pc file.
+	* macros/mm-doc.m4: Use the mm-common-util .pc file, not the glibmm-2.4 one.
+
+	Previously, glibmm installed a copy that it got from mm-common-prepare
+	and other modules then asked glibmm where to find its copy.
+	That was probably for backwards compatibility.
+	But we break stuff with gtkmm 3 anyway, so now is a good time to
+	avoid the duplication by requiring modules to get it from mm-common instead.
+	Actually this should only require a rerun of autogen.sh, because
+	mm-common's own MM_CONFIG_DOCTOOL_DIR macro is what gets the path to
+	these utils.
+
+	Removing the hard-coding of glibmm-2.4 will also help us when we eventually
+	break the glibmm ABI.
+
+2010-12-10  Murray Cumming  <murrayc@murrayc.com>
+
+	Add support for extra m4 arguments via GMMPROC_EXTRA_M4_DIR.
+
+	* build/generate-binding.am: Use GMMPROC_EXTRA_M4_DIR to provide
+	extra -I arguments to gmmproc. For instance, use this in configure.ac:
+	MM_PKG_CONFIG_SUBST([GMMPROC_EXTRA_M4_DIR], [--variable=gmmprocm4dir gtkmm-3.0])
+
+2010-04-18  Olav Vitters  <olav@vitters.nl>
+
+	Fix doap file
+
+2010-02-05  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Update news for the upcoming release
+
+	* NEWS: Update entry for the upcoming 0.9.2 release.
+
+2010-02-05  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Bump year of copyright in template files to 2010
+
+2010-02-05  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Customize the skeleton documentation main page
+
+	* skeletonmm/skeleton/skeletonmm.h: Demonstrate the use of Doxygen's
+	@mainpage command to customize the generated documentation main page.
+	* skeletonmm/doc/Makefile.am (doc_input): Include the central header
+	in the list of input files for Doxygen.
+	* skeletonmm/doc/reference/Doxyfile.in (PREDEFINED): Extend the list
+	of predefined macros to hide a few more GLib annotations.
+
+2010-01-07  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Skip ACLOCAL_FLAGS notice if it is already set
+
+	* Makefile.am (postinst-acdir-notice): Test whether $ACLOCAL_FLAGS is
+	already set up before showing the informational notice about the need
+	to do so.
+
+2010-01-07  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Avoid leading special character in expr argument
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Be prudent and begin
+	any expression argument to expr with a known non-special character.
+
+2010-01-06  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Bump version to 0.9.2 and prepare news
+
+	* configure.ac (AC_INIT): Increment the package version to 0.9.2.
+	* NEWS: Start preliminary news entry for the next release.
+
+2010-01-06  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Include friend members in Devhelp index
+
+	* util/tagfile-to-devhelp2.xsl (keyword-list): Treat kind "friend" as
+	a synonym for kind "function", so that friend members are included in
+	the Devhelp keyword list.
+
+2010-01-06  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Set non-blurry font in skeleton Doxygen config
+
+	* skeletonmm/doc/reference/Doxyfile.in (DOT_FONTNAME): Change to Sans,
+	as FreeSans appears to be rather badly hinted at least on my system.
+	(TEMPLATE_RELATIONS): Disable to reduce noise.
+
+2009-12-31  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Update news for the mm-common 0.9.1 release
+
+	* NEWS: Update news entry for the upcoming release of mm-common 0.9.1.
+
+2009-12-31  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Display post-install notice about ACLOCAL_FLAGS
+
+	* Makefile.am (install-data-hook): If mm-common has been installed in
+	a different prefix than the system aclocal, print a message to inform
+	the installer that it may be necessary to set ACLOCAL_FLAGS.
+
+2009-12-29  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Do not rely on executable ./missing script
+
+	* Makefile.am (skeletonmm.tar.gz): Just to be safe, invoke ./missing
+	with $(SHELL) instead of relying on its direct executability.
+
+2009-12-29  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Point to skeletonmm tar archive in manual page
+
+	* util/mm-common-prepare.1.in: Adjust reference to the installed
+	skeletonmm/ directory to point to the tar archive instead.
+
+2009-12-29  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Install skeletonmm files as tar archive
+
+	* Makefile.am (skeletonmm.tar.gz): New rule to create a tar archive
+	of skeletonmm as part of the build.
+	(doc_DATA): Install skeletonmm.tar.gz into documentation directory.
+	(dist_noinst_DATA): Ship but do not install skeletonmm/ files.
+	(dist_noinst_SCRIPTS): Ship but do not install skeletonmm/autogen.sh.
+	(CLEANFILES): List skeletonmm.tar.gz.
+
+2009-12-29  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Put placeholder comments into skeleton defs files
+
+	* skeletonmm/skeleton/src/skeleton_{enum,extra,method}.defs: Insert
+	a comment into each defs file template.  These files previously had
+	zero length, which Debian's Lintian did not approve of.
+
+2009-12-28  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Require mm-common 0.9 in skeleton configure.ac
+
+	* skeletonmm/configure.ac (MM_PREREQ): Require mm-common 0.9, just to
+	be sure.
+
+2009-12-28  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Bump version to 0.9.1 and write preliminary news
+
+	* configure.ac (AC_INIT): Increment version to 0.9.1.
+	* NEWS: Write preliminary news entry for mm-common 0.9.1.
+
+2009-12-28  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Allow module API version suffix without a dash
+
+	* macros/mm-module.m4 (MM_INIT_MODULE): Adjust the regular expressions
+	used to extract the API version from the module name, so that the dash
+	separator becomes optional.
+
+2009-12-28  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Fine-tune skeleton Doxygen configuration
+
+	* docs/reference/Doxyfile.in (EXTRACT_ALL): Disable, so that only
+	documented classes and functions will appear in the documentation.
+	(EXTRACT_PRIVATE): Enable.  It is perfectly fine to have private
+	virtual methods, which are of course nonetheless part of the API.
+	Use the Doxygen @internal command to hide members if necessary.
+	(SHOW_INCLUDE_FILES): Enable.  The displayed filename can be adjusted
+	with the @headerfile command if required.
+	(SHOW_USED_FILES): Disable.
+	(WARN_NO_PARAMDOC): Enable.
+	(PREDEFINED): Define G_GNUC_INTERNAL to the empty expansion.
+	(CLASS_DIAGRAMS): Enable.  Contrary to what the Doxygen documentation
+	says, no dot class inheritance graphs will be generated if both
+	CLASS_DIAGRAMS and COLLABORATION_GRAPH are set to NO.
+	(COLLABORATION_GRAPH), (GROUP_GRAPHS): Turn off additional graphs to
+	reduce the noise.
+
+2009-12-26  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Complete news for mm-common 0.9 release
+
+	* NEWS: Update news entry for the upcoming release of mm-common 0.9.
+
+2009-12-24  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Add new MM_PROG_GCC_VISIBILITY Autoconf macro
+
+	* macros/mm-dietlib.m4 (MM_PROG_GCC_VISIBILITY): New Autoconf macro
+	to check whether the compiler supports the GNU C++ symbol visibility
+	attributes.
+	* README: Mention MM_PROG_GCC_VISIBILITY in the M4 file description.
+
+2009-12-14  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Work around incorrect static expansion by Automake
+
+	* build/doc-reference.am (dist_reference_DATA), (dist_noinst_DATA):
+	Wrap the assigned value in a $(strip) function call to stop Automake
+	from expanding the variable statically.  It breaks because the static
+	expansion of conditionally assigned variables is empty.
+
+2009-12-12  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Explicitly depend on generated documentation files
+
+	* build/doc-reference.am (all-local): List the files to be distributed
+	or installed explicitly as dependencies.  It appears that the previous
+	change to assign some variables conditionally hides them from Automake.
+
+2009-12-12  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Work around empty instantiation of $(doc_outdir)
+
+	* build/doc-reference.am (doxytagfile), (devhelpfile): Conditionally
+	assign these variables, thus making them overridable.  For some weird
+	reason this helps to avoid a premature instantiation of $(doc_outdir)
+	with the empty string as content.  (bgo#604222)
+
+2009-12-05  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Increment version to mm-common 0.9
+
+	* configure.ac (AC_INIT): Bump the version number to 0.9 due to the
+	interface additions in doc-reference.am.
+	* NEWS: Change version of the top news entry to mm-common 0.9.
+
+2009-12-05  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Process documentation targets conditionally
+
+	* build/doc-reference.am (dist_reference_DATA), (dist_noinst_DATA):
+	Assign the list of files to install and distribute conditionally,
+	depending on whether ENABLE_DOCUMENTATION is true.  Thus, it is no
+	longer required to skip the entire documentation build directory if
+	the documentation is disabled.
+	(install-data-local), (uninstall-data): As above, but for the phony
+	targets to install and uninstall files to the system.
+	($(doc_config)): Do not add any commands to the rule when building
+	from the top-level directory.  Automake automatically generates rules
+	and commands to rebuild config.status output files at the top level.
+
+2009-12-04  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Make the documentation output directory variable
+
+	* build/doc-reference.am (doc_outdir): New overridable configuration
+	variable for the documentation output directory, set to "reference"
+	by default.
+	(doc_config): New overridable configuration variable for the Doxygen
+	configuration file, set to "$(doc_outdir)/Doxyfile" by default.
+	Throughout the file, make use of the new configuration variables to
+	replace hard-coded path references.
+
+2009-11-17  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Restore original LGPL text in skeletonmm COPYING
+
+	* skeletonmm/COPYING: Replace text file with the original version it
+	was copied from, without every instance of "for example" substituted
+	by "for skeleton".  Oops.
+
+2009-11-04  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Clean up MM_ARG_ENABLE_WARNINGS() documentation
+
+	* macros/mm-warnings.m4 (MM_ARG_ENABLE_WARNINGS): Refine usage example
+	and reduce verbosity.
+
+2009-11-04  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Avoid non-portable whitespace in sed expression
+
+	* build/dist-changelog.am (dist-changelog): According to the Autoconf
+	documentation, POSIX does not allow whitespace between the ! operator
+	and the command that follows it.
+
+2009-10-19  Murray Cumming  <murrayc@murrayc.com>
+
+	MM_ARG_ENABLE_WARNINGS documentation: Add an example call and more clues.
+
+	* macros/mm-warnings.m4: Documentation: Add an example call of this macro,
+	mention how to use the resulting variable in the Makefile.am, and mentino how
+	to force fatal warnings during distcheck.
+
+2009-10-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Bump version to 0.8.1 and update news
+
+	* configure.ac (AC_INIT): Increment version number to 0.8.1.  Change
+	the address for reporting bugs to GNOME Bugzilla, product mm-common.
+	* NEWS: Write news entry for the upcoming mm-common 0.8.1 release.
+
+2009-10-08  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Specify project-specific Bugzilla URL in skeleton
+
+	* skeletonmm/configure.ac (AC_INIT): Expand the bug report address to
+	the project-specific GNOME Bugzilla URL for filing new bugs.
+	(AC_CONFIG_SRCDIR): Specify the central header as file to check for.
+
+2009-10-08  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Remove documentation override file from skeleton
+
+	* skeletonmm/skeleton/src/skeleton_docs_override.xml: Delete file, as
+	gmmproc now allows inherited reference documentation to be overridden
+	directly with Doxygen comments in the source code.
+	* skeletonmm/skeleton/src/filelist.am (files_defs): Remove the file
+	skeleton_docs_override.xml from the list.
+	* Makefile.am (nobase_dist_doc_DATA): Likewise.
+
+2009-10-07  Daniel Elstner  <danielk@openismus.com>
+
+	Properly handle shallow source directory layouts
+
+	* build/generate-binding.am (binding_outputdir): Avoid a superfluous
+	./ component in the concatenated path if the parent directory is the
+	top-level directory of the source tree.
+
+2009-10-07  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Shorten relative path to source output directory
+
+	* build/generate-binding.am (binding_outputdir): Assign a simplified
+	relative path if a separate build directory is not used.
+
+2009-10-06  Daniel Elstner  <danielk@openismus.com>
+
+	Fix skeleton link to public HTML documentation
+
+	* skeletonmm/skeleton/skeletonmm{,-uninstalled}.pc.in (htmlrefpub):
+	Insert missing devel/ path component into library.gnome.org URL.
+
+2009-09-27  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Do not set default Devhelp base path to HTTP URL
+
+	* build/doc-reference.am (dh_xsl_params): Do not set the Devhelp base
+	attribute to the public Web location of the documentation by default.
+	This made it look as though Devhelp supports anything but local paths
+	for the base attribute, which it does not.
+	(htmlref_patterns): Use $(addprefix) function to avoid repetition.
+	(docdir_base_uri): Strip trailing slash from $(datarootdir).
+
+2009-09-27  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Generate a nested hierarchy of Devhelp chapters
+
+	* util/tagfile-to-devhelp2.xsl (chapters): Turn the flat structure of
+	the Doxygen tag file into hierarchies of modules and classes.  At the
+	top-level, select only those compounds which are not a member of any
+	other compound, and then process the nested compounds recursively to
+	create the tree structure.
+	(functions): Refactor and canonicalize the template logic.  No longer
+	attempt to sort the keyword list, because it is not a requirement and
+	unnecessarily complicates the transformation.
+	(xsl:strip-space): Strip excess whitespace from source elements.
+
+2009-09-22  Daniel Elstner  <danielk@openismus.com>
+
+	Call AM_SILENT_RULES in skeleton configure.ac
+
+	* skeletonmm/configure.ac: Call the AM_SILENT_RULES macro if present.
+	(MM_PREREQ): Raise minimum version to mm-common 0.8.
+
+2009-09-22  Daniel Elstner  <danielk@openismus.com>
+
+	Correct libskeletonmm API version substitution
+
+	* skeletonmm/examples/Makefile.am (local_libs): Substitute the value
+	of $(SKELETONMM_API_VERSION) rather than $(GLIBMM_API_VERSION).
+
+2009-09-21  Daniel Elstner  <danielk@openismus.com>
+
+	Remove bogus news entry for phantom 0.7.4 release
+
+	* NEWS: Remove the news entry for mm-common 0.7.4 which I accidentally
+	left in after having merged its content into the mm-common 0.8 entry.
+	There never was an mm-common 0.7.4 release.  We've always been at war
+	with Eastasia.
+
+2009-09-21  Daniel Elstner  <danielk@openismus.com>
+
+	Show GEN notice for libstdc++.tag in silent mode
+
+	* Makefile.am (doctags/libstdc++.tag): Prefix download command with
+	$(AM_V_GEN) rather than $(AM_V_at), to indicate the target that is
+	being built.
+
+2009-09-21  Daniel Elstner  <danielk@openismus.com>
+
+	Document the shared Doxygen style sheet
+
+	* README: In the Documentation utilities section, expand the text and
+	add a paragraph documenting the purpose of the util/doxygen.css file.
+
+2009-09-21  Daniel Elstner  <danielk@openismus.com>
+
+	Bump version to 0.8 and update news
+
+	* configure.ac (AC_INIT): Increment version number to 0.8.
+	* NEWS: Update top news entry for the mm-common 0.8 release.
+
+2009-09-21  Daniel Elstner  <danielk@openismus.com>
+
+	Correct conditional generation of Devhelp chapters
+
+	* util/tagfile-to-devhelp2.xsl (chapters): Assign node sets to the
+	intermediate variables using the select attribute, rather than trying
+	to apply the templates in the element content.  With this change, the
+	test whether there are any child elements now correctly evaluates to
+	false if the node set is empty.
+
+2009-09-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Support Automake silent rules
+
+	* configure.ac: Call the AM_SILENT_RULES macro if it is defined.
+	* Makefile.am: Prefix the commands of custom rules with $(AM_V_at)
+	or $(AM_V_GEN) to quieten the command echoing in silent mode.
+	* build/*.am: Likewise for the common build support files.
+	* build/generate-binding.am (mm_v_gen): Define custom silent output
+	for the gmmproc code generation rule.
+
+2009-09-19  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Fix Devhelp file installation with Automake 1.11
+
+	* build/doc-reference.am (install-htmlref), (uninstall-htmlref): Move
+	commands to install the Doxygen HTML output to separate custom rules.
+	(install-devhelp), (uninstall-devhelp): New custom rules to translate
+	and install the Devhelp file.
+	(install-data-local), (uninstall-local): Depend on the custom install
+	and uninstall rules for the HTML and Devhelp documentation files.
+	(dist_devhelpDATA_INSTALL): Remove variable assignment.  The ability
+	to selectively override the install program was never documented and
+	does not work anymore with Automake 1.11.
+	(dist_devhelp_DATA): Remove variable assignment.
+	(dist_noinst_DATA): Distribute Devhelp file.
+
+2009-09-18  Daniel Elstner  <danielk@openismus.com>
+
+	Refine .gitignore files
+
+2009-09-18  Daniel Elstner  <danielk@openismus.com>
+
+	Remove pointless quotes from build commands
+
+	* Makefile.am: Remove single quotes around variable substitutions
+	where all possible values are known to not contain meta-characters
+	or whitespace.
+
+2009-09-18  Daniel Elstner  <danielk@openismus.com>
+
+	Do not show merge commits in generated ChangeLog
+
+	* build/dist-changelog.am (dist-changelog): Add --no-merge option to
+	exclude merge commits from the output.  The individual merged commits
+	are still shown.
+
+2009-09-18  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Automatically create private/ output directory
+
+	* build/generate-binding.am (binding_mkdirs): In addition to the
+	.stamps/ subdirectory, also create the private headers directory
+	automatically if it does not exist at build time.
+
+2009-09-17  Daniel Elstner  <danielk@openismus.com>
+
+	Do not use dist-changelog by default in skeleton
+
+	* skeletonmm/Makefile.am: Comment-out the include of dist-changelog.am
+	so that it will have to be enabled explicitly.
+
+2009-09-17  Daniel Elstner  <danielk@openismus.com>
+
+	Handle filename argument to mm-common-prepare
+
+	* util/mm-common-prepare.in: Allow the name of the Autoconf source
+	file to be specified on the command-line, so that it works the same
+	way as with autoreconf.  Also, create the directory for the auxiliary
+	build files automatically if it does not exist.
+
+2009-09-15  Daniel Elstner  <danielk@openismus.com>
+
+	Bump version to 0.7.4 and update news
+
+	* configure.ac (AC_INIT): Increment package version to 0.7.4.
+	* NEWS: Start news entry for the mm-common 0.7.4 release.
+
+2009-09-15  Daniel Elstner  <danielk@openismus.com>
+
+	Add examples/ directory to skeletonmm source tree
+
+	* skeletonmm/examples/: New skeleton subdirectory for code examples.
+	* skeletonmm/skeleton/skeletonmm.h: New single include header.
+	* skeletonmm/configure.ac (AC_CONFIG_FILES): List examples/Makefile.
+	* skeletonmm/Makefile.am (skeletonmm_include_HEADERS): Distribute and
+	install the skeleton/skeletonmm.h single include header.
+	* skeletonmm/doc/reference/Doxyfile.in: Update for Doxygen 1.6.1.
+	(EXAMPLE_*): Correct accidentally renamed variables.
+	(EXAMPLE_PATH): Point to skeleton examples subdirectory.
+	(EXAMPLE_RECURSIVE): Enable.
+	(SORT_MEMBERS_CTORS_1ST): Enable.
+	* Makefile.am (nobase_dist_doc_DATA): List new skeleton files.
+
+2009-09-13  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Check for a proper sed program during configure
+
+	* configure.ac: Call AC_PROG_SED to check for a proper sed program.
+	* Makefile.am (subst_manpage): Use $(SED) variable.
+	* build/dist-changelog.am (dist-changelog): ditto, in the expectation
+	that most modules using mm-common already assign $(SED) in one way or
+	another.
+
+2009-09-11  Daniel Elstner  <danielk@openismus.com>
+
+	Treat whitespace in glob patterns literally
+
+	* util/doc-{install,postprocess}.pl: Explicitly call the bsd_glob()
+	subroutine instead of the builtin glob() function.  Although the
+	builtin glob() is implemented in terms of bsd_glob(), it additionally
+	splits its argument into multiple patterns separated by whitespace.
+
+2009-09-10  Daniel Elstner  <danielk@openismus.com>
+
+	Escape $ before {} in M4 more consistently
+
+	* macros/mm-warnings.m4 (MM_ARG_ENABLE_WARNINGS): Apply cosmetics.
+	Put [] quotes around $ before {}.  Remove redundant curly braces.
+
+2009-09-09  Daniel Elstner  <danielk@openismus.com>
+
+	Make skeleton doc_input assignment more generic
+
+	* skeletonmm/doc/Makefile.am (doc_input): Also include non-generated
+	header files listed in $(files_extra_h), excluding wrap_init.h.
+
+2009-09-09  Daniel Elstner  <danielk@openismus.com>
+
+	Elaborate on skeletonmm in the documentation
+
+	* README: Write paragraph to briefly document the need to replace
+	any instances of "skeleton" or variations thereof in the content of
+	files as well as the filenames.
+
+2009-09-09  Daniel Elstner  <danielk@openismus.com>
+
+	Update date of top news entry
+
+	* NEWS: Change date of top entry to today.
+
+2009-09-09  Daniel Elstner  <danielk@openismus.com>
+
+	Increase space between Doxygen member descriptions
+
+	* util/doxygen.css (.memitem): Increase horizontal margins to 0.5em.
+
+2009-09-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Refine wrap_init.cc and documentation dependencies
+
+	* build/compile-binding.am (binding_libprefix): Replace short-hand
+	substitution $(binding_name:lib%=) with an explicit $(filter) call.
+	* build/doc-reference.am (doc_dependencies): In maintainer mode, also
+	depend on Makefile.in in order to trigger a rebuild when the list of
+	input files changed.
+	* build/generate-binding.am (binding_stampfiles): Replace short-hand
+	substitution $(files_hg:%.hg=...) with an explicit $(patsubst) call.
+	(wrap_init.cc): Make Makefile.in a prerequisite so that the file will
+	be rebuilt when the list of source files changed.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Ship and install skeletonmm/build/.gitignore
+
+	* Makefile.am (nobase_dist_doc_DATA): Add skeletonmm/build/.gitignore
+	to the list of documentation files to install.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Exempt skeletonmm/autogen.sh from std-options test
+
+	* Makefile.am (AM_INSTALLCHECK_STD_OPTIONS_EXEMPT): Do not check the
+	skeletonmm/autogen.sh example file for standard options support.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to 0.7.3 and update news
+
+	* configure.ac (AC_INIT): Increment version to mm-common 0.7.3.
+	* NEWS: Write news entry for the mm-common 0.7.3 release.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Set autoreconf verbose mode in skeleton autogen.sh
+
+	* skeletonmm/autogen.sh: Pass --verbose flag to autoreconf.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Rebuild reference doc on config header change
+
+	* build/doc-reference.am (doc_dependencies): Prepend $(CONFIG_HEADER)
+	to make the reference documentation build depend on the generated
+	configuration header files of the module.  This way, the rebuild is
+	triggered when necessary without causing too many spurious rebuilds.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Document source directory argument in manpage
+
+	* util/mm-common-prepare.1.in: Substitute SOURCE-DIR for DIRECTORY.
+	Document the purpose of the SOURCE-DIR argument.  Insert line breaks
+	after sentences as recommended by a manual page style guide.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Substitute variables in the manpage at build time
+
+	* util/mm-common-prepare.1.in: Rename file from mm-common-prepare.1
+	and insert placeholders for the location of the documentation files.
+	* Makefile.am (man1_MANS): Remove "dist_" prefix from variable name.
+	(dist_noinst_DATA): Distribute util/mm-common-prepare.1.in file.
+	(CLEANFILES): Clean generated util/mm-common-prepare.1 file.
+	(util/mm-common-prepare.1): New rule to generate the manual page
+	at build time.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Enable verbose mode of autoreconf
+
+	* autogen.sh: Pass --verbose option to autoreconf.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Install the skeleton project as documentation
+
+	* Makefile.am (nobase_dist_doc_{DATA,SCRIPTS}): Install the skeleton
+	project files below $(docdir).  Also install the README file.
+
+2009-09-08  Daniel Elstner  <danielk@openismus.com>
+
+	Create manual page for mm-common-prepare
+
+	* util/mm-common-prepare.1: New manual page for the mm-common-prepare
+	utility.
+	* Makefile.am (dist_man1_MANS): Install mm-common-prepare manual page.
+
+2009-09-06  Daniel Elstner  <danielk@openismus.com>
+
+	Distribute the skeleton C++ binding source tree
+
+	* Makefile.am (dist_noinst_DATA), (dist_noinst_SCRIPTS): List all
+	files in the skeletonmm/ subdirectory in order to distribute them
+	with the source archive.
+
+2009-09-06  Daniel Elstner  <danielk@openismus.com>
+
+	Document skeleton C++ binding source tree
+
+	* README: Insert a section at the top in order to make readers aware
+	of the skeleton C++ binding source tree, and recommend it as starting
+	point for new modules.
+
+2009-09-04  Daniel Elstner  <danielk@openismus.com>
+
+	Create a skeleton source tree for binding modules
+
+	* skeletonmm/: New skeleton source tree to be used as a base for new
+	GNOME C++ binding modules based on mm-common.  The artificial nature
+	of an explicitly provided skeleton project provides immunity against
+	the proliferation of cruft that is inevitable when copying from real
+	modules.
+
+2009-09-04  Daniel Elstner  <danielk@openismus.com>
+
+	Remove obsolete MAINTAINERS file
+
+	* MAINTAINERS: Remove file, since it is obsolete according to
+	<http://live.gnome.org/MaintainersCorner>.
+
+2009-09-03  Daniel Elstner  <danielk@openismus.com>
+
+	Create Devhelp chapters only for existing content
+
+	* util/tagfile-to-devhelp2.xsl (chapters): Output the <sub> elements
+	only if they will have at least one child node.  This way, there will
+	be no broken chapter link in the Devhelp documentation if the module
+	does not define any Doxygen groups, for instance.
+
+2009-09-03  Daniel Elstner  <danielk@openismus.com>
+
+	Hide the navigation path generated by Doxygen
+
+	* util/doxygen.css (.navpath): Set 'display' to 'none'.
+
+2009-09-03  Daniel Elstner  <danielk@openismus.com>
+
+	Avoid using pixels as a unit in the style sheet
+
+	* util/doxygen.css: Use unit 'em' instead of 'px' where feasible.
+	Merge or split blocks where appropriate to streamline the CSS.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Bump version to mm-common 0.7.2 and update news
+
+	* configure.ac (AC_INIT): Increment version to mm-common 0.7.2.
+	Specify the optional PACKAGE_URL argument used by recent versions
+	of Autoconf.
+	* NEWS: Write news entry for the mm-common 0.7.2 release.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Increase the default font size to 90%
+
+	* util/doxygen.css (body): Change the font height and line spacing to
+	90%/150% in order to better match the default appearance of gtk-doc.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Reduce duplicate logic in the Devhelp transform
+
+	* util/tagfile-to-devhelp2.xsl (functions): Apply the templates to all
+	<compound> elements, and add a catch-all template to filter anything
+	which did not match.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Show Doxygen groups as modules in Devhelp
+
+	* util/tagfile-to-devhelp2.xsl (chapters): Add "Modules" chapter and
+	list all compounds of kind "group" there.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Do not extract keywords from Doxygen groups
+
+	* util/tagfile-to-devhelp2.xsl (functions): Only list members of
+	compounds which correspond to a C++ language construct, i.e. a class
+	or a namespace.  Other Doxygen compounds like groups or files do not
+	exist at the language level, and their names should not be used like
+	namespace prefixes.
+
+2009-09-02  Daniel Elstner  <danielk@openismus.com>
+
+	Concatenate the destination path only when needed
+
+	* util/doc-install.pl: Move the assignment to $out_file into the
+	conditional block where it is actually used.
+
+2009-09-01  Daniel Elstner  <danielk@openismus.com>
+
+	Remove pointless prerequisite from dist-changelog
+
+	* build/dist-changelog.am (dist-changelog): Remove internal git file
+	from the target prerequisites.  If the source directory is not a git
+	repository, the command will fail anyway.
+
+2009-09-01  Daniel Elstner  <danielk@openismus.com>
+
+	Avoid truncating the bottom-most ChangeLog message
+
+	* build/dist-changelog.am (dist-changelog): Always output a blank line
+	after each extracted log entry, in order to avoid tripping up the sed
+	program used to post-process the git output.
+
+2009-08-31  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Collapse blank lines in the generated ChangeLog
+
+	* build/dist-changelog.am (dist-changelog): Modify the sed program to
+	post-process the git output so that it collapses multiple consecutive
+	blank lines into a single one.
+
+2009-08-31  Daniel Elstner  <danielk@openismus.com>
+
+	Limit centering of HTML headings to first heading
+
+	* util/doxygen.css (h[23]): Remove "text-align: center" attribute.
+	(h1 + h3): Center a <h3> element immediately following the centered
+	<h1> element, as generated by Doxygen on the main page.
+
+2009-08-31  Daniel Elstner  <danielk@openismus.com>
+
+	Do not center HTML headings within tables
+
+	* util/doxygen.css (table h[23]): Set "text-align" to "left" for <h2>
+	and <h3> tags with a <table> ancestor.
+
+2009-08-31  Daniel Elstner  <danielk@openismus.com>
+
+	Update style sheet for XHTML output of Doxygen 1.6
+
+	* util/doxygen.css: Refine style definitions to cope with the change
+	in behavior of user agents due to Doxygen's recent adoption of XHTML
+	as default output format.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to 0.7.1 and update news
+
+	* configure.ac (AC_INIT): Increment version to mm-common 0.7.1.
+	* NEWS: Write news entry for mm-common 0.7.1.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Do not fail hard if glibmm doctools are missing
+
+	* macros/mm-doc.m4 (_MM_CONFIG_DOCTOOL_DIR): Do not yet verify at this
+	point whether the directory returned by pkg-config is valid.
+	(_MM_ARG_ENABLE_DOCUMENTATION): Check the value of $MMDOCTOOLDIR here,
+	but do do not abort even if not set, unless --enable-documentation has
+	been explicitly requested.
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Write news entry for mm-common 0.7 release
+
+2009-08-28  Daniel Elstner  <danielk@openismus.com>
+
+	Improve Doxygen HTML style sheet
+
+	* util/doxygen.css: Tweak the styles a bit to improve the look of the
+	Doxygen HTML output.  Most importantly, get the text size right.
+
+2009-08-27  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to mm-common 0.7
+
+	* configure.ac (AC_INIT): Increment version number to 0.7 to signify
+	the addition of the shared Doxygen style sheet.
+
+2009-08-27  Daniel Elstner  <danielk@openismus.com>
+
+	Add shared Doxygen stylesheet for the C++ bindings
+
+	* util/doxygen.css: New file, defining the common style of the C++
+	binding reference documentation.
+	* util/mm-common-prepare.in: Copy doxygen.css into the documentation
+	tools directory of the source tree if requested.
+	* Makefile.am (dist_doctool_DATA): Distribute and install doxygen.css.
+
+2009-08-25  Daniel Elstner  <danielk@openismus.com>
+
+	Update NEWS for mm-common 0.6.1 release
+
+2009-08-25  Daniel Elstner  <danielk@openismus.com>
+
+	Bump version number to mm-common 0.6.1
+
+	* configure.ac (AC_INIT): Bump version number to 0.6.1 to signify the
+	change of the default location of the public reference documentation.
+
+2009-08-25  Daniel Elstner  <danielk@openismus.com>
+
+	Change default doc location to library.gnome.org
+
+	* build/doc-reference.am (pubdocbase): Point to library.gnome.org.
+	(htmlrefpub): Adjust to directory layout on library.gnome.org.
+
+2009-08-24  Daniel Elstner  <danielk@openismus.com>
+
+	Update NEWS for 0.6 release
+
+	* NEWS: Bump release date of mm-common 0.6.  Mention new Autoconf
+	macros for particular program checks.
+
+2009-08-24  Daniel Elstner  <danielk@openismus.com>
+
+	Mention new Autoconf macros in README
+
+	* README: Mention the new Autoconf macros added to mm-pkg.m4.  Also,
+	elaborate on how exactly ACLOCAL_FLAGS will have to be prepared when
+	not using a system package of mm-common or a jhbuild environment.
+
+2009-08-23  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Implement check for GNU make features
+
+	* macros/mm-pkg.m4 (MM_CHECK_GNU_MAKE): New Autoconf macro to ensure
+	that the installed make program is compatible with GNU make.
+	* macros/mm-module.m4 (MM_INIT_MODULE): Require MM_CHECK_GNU_MAKE.
+	* macros/mm-doc.m4 (MM_CONFIG_DOCTOOL_DIR): ditto.
+
+2009-08-23  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Smoothen documentation magic complexity
+
+	* macros/mm-doc.m4 (_MM_CONFIG_DOCTOOL_DIR): Collapse redundant
+	indirection through $mm_doctooldir.
+	(_MM_ARG_ENABLE_DOCUMENTATION): Reorganize the error handling logic.
+	Report all utilities which are missing, not just the first one.
+	(_MM_TR_URI): New internal helper macro, defining the shell construct
+	used to create a file:// URI from a native filesystem path.
+	(_MM_ARG_WITH_TAGFILE_DOC): Use new _MM_TR_URI() macro.
+	* build/doc-reference.am (docdir_base_uri): Split expression into two
+	variable assignments for clarity.  Use $(subst ,, ) trick instead of
+	auxiliary variables to define a literal space character.
+
+2009-08-21  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Add missing backslash escape
+
+	* util/mm-common-prepare.in: Insert a missing backslash to escape
+	another backslash within a double-quoted sed script.  Apparently it
+	accidentally worked even without proper escaping.
+
+2009-08-21  Daniel Elstner  <danielk@openismus.com>
+
+	Remove mistaken M4 assertion
+
+	* macros/mm-pkg.m4 (MM_CHECK_PERL): Remove the bogus m4_assert() on
+	the number of arguments being at least two.  Since a default action
+	is implemented, it is perfectly valid to call MM_CHECK_PERL() with
+	less than two arguments.
+
+2009-08-21  Daniel Elstner  <danielk@openismus.com>
+
+	Refactor Perl checks into separate Autoconf macros
+
+	* macros/mm-pkg.m4 (MM_PATH_PERL): New Autoconf macro to locate the
+	Perl interpreter executable.
+	(MM_CHECK_PERL): New Autoconf macro to require a minimum version of
+	the Perl interpreter.
+	* macros/mm-doc.m4 (_MM_ARG_ENABLE_DOCUMENTATION): Remove Perl check.
+	(MM_ARG_ENABLE_DOCUMENTATION): Require MM_PATH_PERL.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Prepare for mm-common 0.6 release
+
+	* configure.ac (AC_INIT): Bump version number to 0.6.
+	* NEWS: Summarize changes since mm-common 0.5.
+
+2009-08-20  Daniel Elstner  <danielk@openismus.com>
+
+	Make version components available as substitutions
+
+	* macros/mm-module.m4 (_MM_INIT_MODULE_VERSION): Make the major, minor
+	and micro version number components available as substitutions through
+	AC_SUBST(), in addition to defining the preprocessor macros.
+	(MM_INIT_MODULE): Document the new substitutions.
+
+2009-08-19  Daniel Elstner  <danielk@openismus.com>
+
+	Disable documentation if utilities are missing
+
+	* macros/mm-doc.m4 (_MM_ARG_ENABLE_DOCUMENTATION): If one of the
+	required utilities for the documentation build is missing, display
+	a warning message and disable the documentation build, but otherwise
+	continue execution.  However, do abort with an error if the configure
+	option --enable-documentation was used explicitly.
+
+2009-08-19  Daniel Elstner  <danielk@openismus.com>
+
+	Use URIs instead of OS path names in markup files
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Translate local path
+	names to file:// URIs, since these path names end up in XML and HTML
+	files.  The canonical representation also simplifies the translation
+	from absolute to relative path names during installation.
+	* build/doc-reference.am (htmlref_install): Take the new file:// URI
+	prefix into account when translating from absolute to relative links.
+
+2009-08-19  Daniel Elstner  <danielk@openismus.com>
+
+	Bump mm-doc.m4 #serial
+
+2009-08-19  Daniel Elstner  <danielk@openismus.com>
+
+	Turn doc-postprocess.pl into a good Unix citizen
+
+	* util/doc-postprocess.pl: Implement rudimentary error reporting and
+	minimal command-line option handling, so that at least --help works.
+	Also, refine some of the substitutions performed and add new ones to
+	translate entity references to numerical code points.
+
+2009-08-18  Daniel Elstner  <danielk@openismus.com>
+
+	Pass the gmmproc module directory to Perl
+
+	* build/generate-binding.am (gmmproc): Pass -I"$(GMMPROC_DIR)/pm" to
+	the Perl interpreter in the default command line to invoke gmmproc.
+
+2009-08-18  Daniel Elstner  <danielk@openismus.com>
+
+	Do not append slash to DOXYGEN_TAGFILES locations
+
+	* build/doc-reference.am (dist_devhelpDATA_INSTALL): Strip trailing
+	slash from $(htmlrefdir), if there is one.
+	(dh_xsl_params): Strip trailing slash from $(htmlrefpub).
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Strip the trailing
+	slash from $mm_htmlrefdir and $mm_htmlrefpub if there is one, instead
+	of appending one.  Do append the slash to the locations listed in the
+	DOCINSTALL_FLAGS output variable, but omit it for DOXYGEN_TAGFILES.
+	Apparently Doxygen is not trying to be smart when it automatically
+	appends a trailing slash to the external documentation base paths.
+	Rather, it just mindlessly appends it no matter what, ending up with
+	a double slash if there already was one.
+
+2009-08-18  Daniel Elstner  <danielk@openismus.com>
+
+	Correct spelling and grammar in README
+
+	* README: Fix typing and spelling mistakes and improve the wording.
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Write news entry for mm-common 0.5
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Increment version to mm-common 0.5
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Put overview documentation into README file
+
+	* README: Compile the overview sent to the gtkmm mailing list into
+	a proper document.  Make the text slightly more formal and provide
+	explanations for some things not covered in the original mail.
+	Mention that the shipped libstdc++.tag file was not created by us.
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Flesh out AUTHORS file for release
+
+2009-08-17  Daniel Elstner  <danielk@openismus.com>
+
+	Implement generic --disable-deprecated-api macro
+
+	* macros/mm-dietlib.m4: New Autoconf macro file for configuration
+	macros that have the effect of reducing the size of the compiled
+	binding library.
+	(MM_ARG_DISABLE_DEPRECATED_API): New M4 macro for use by C++ bindings
+	in order to allow deprecated API to be omitted from the library build.
+
+2009-08-17  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Strip '+' from tag file name for configure option
+
+	* macros/mm-doc.m4 (MM_ARG_WITH_TAGFILE_DOC): Correct the regular
+	expression used to strip off the suffix of the tag file name in order
+	to produce a suitable name for the configure option.  Specifically,
+	properly handle the case of both '++' and '-d.d' occuring together.
+
+2009-08-16  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Be more consistent about trailing slashes
+
+	* build/doc-reference.am (htmlrefpub): Do append a trailing slash
+	after all, and say so in the documentation comment (Hi David!).
+	Although Doxygen adds the slash implicitly, doc-install.pl currently
+	does not, and explicit use of the slash is more consistent anyway.
+	(dist_devhelpDATA_INSTALL): Append a slash after $(htmlrefdir) for
+	consistency with the default $(htmlrefpub) value for --book-base.
+	* doctags/mm-common-libstdc++.pc.in (htmlrefpub): Append a slash.
+	* doctags/mm-common-libstdc++-uninstalled.pc.in (htmlrefpub): ditto.
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Briefly document _MM_ARG_ENABLE_WARNINGS_OPTION
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Bump version to mm-common 0.4
+
+	* configure.ac (AC_INIT): Increment version number to 0.4.
+	* NEWS: Change top entry to mention version 0.4, but state that
+	there has not actually been a release yet.
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Make MM_INIT_MODULE version argument optional
+
+	* macros/mm-module.m4 (MM_INIT_MODULE): If no version argument has
+	been specified, use the expansion of AC_PACKAGE_VERSION as default
+	value.
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Reorganize and clean up MM_ARG_ENABLE_WARNINGS
+
+	* macros/mm-warnings.m4 (_MM_ARG_ENABLE_WARNINGS_OPTION): Move the
+	AC_ARG_ENABLE() call from MM_ARG_ENABLE_WARNINGS() to this separate
+	macro, in order to use it via AC_REQUIRE().  Although Autoconf deals
+	correctly with duplicated calls to AC_ARG_ENABLE(), it is made more
+	explicit this way and avoids repeating the variable assignment.
+	(MM_ARG_ENABLE_WARNINGS): Require _MM_ARG_ENABLE_WARNINGS_OPTION and
+	_MM_PRE_INIT.  If the current language could not be detected as C or
+	C++ at runtime, bail out with an error message instead of silently
+	ignoring the request to gather compiler warning flags.  Also, avoid
+	emitting dead shell commands if the deprecation-prefixes argument is
+	not used.
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Restructure and comment MM_ARG_WITH_TAGFILE_DOC
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Add a fourth parameter
+	pkg-variable to avoid repeating the M4 expression to select between
+	the ${htmlrefdir} and ${htmlrefpub} values for @DOXYGEN_TAGFILES@.
+	Simplify the AS_CASE logic used to test for a trailing slash.  Move
+	the code which appends a trailing slash to ${htmlrefpub} to a later
+	point in the shell execution, in order to correctly append the slash
+	to a user-supplied local path as well.
+	(MM_ARG_WITH_TAGFILE_DOC): Pass the additional pkg-variable argument
+	to _MM_ARG_WITH_TAGFILE_DOC().
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Require _MM_PRE_INIT in MM_PKG_CONFIG_SUBST
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Remove _MM_PRE_INIT from mm-module.m4
+
+2009-08-15  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Implement MM_PREREQ() Autoconf macro
+
+	* macros/mm-common.m4.in: New configure input file.
+	(_MM_PRE_INIT): Move macro from mm-module.m4 to mm-common.m4.
+	(MM_PREREQ): Implement a version check macro akin to AC_PREREQ() and
+	similar macros.  This may be used to ensure the presence of a minimum
+	version of the mm-common package at the time the configure script is
+	generated, should the need ever arise.
+	* configure.ac (AC_CONFIG_FILES): Add output file macros/mm-common.m4.
+	* Makefile.am (aclocal_macro_DATA): Install macros/mm-common.m4.
+
+2009-08-14  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Rename tags/ to doctags/ to avoid name clash
+
+	* doctags/: Rename tags/ subdirectory to avoid clashing with the make
+	tags target automatically generated by Automake.  This has not caused
+	any problems so far, but there is no reason to ask for it.
+	* doctags/mm-common-libstdc++*.pc.in: Change the install location of
+	the tag files as well, to minimize confusion.
+	* configure.ac (AC_CONFIG_FILES): Adjust output file locations.
+	* Makefile.am (doctagsdir): Rename variable from $(doxygen_tagsdir)
+	and adjust value to point to the new install location of tag files.
+
+2009-08-13  Daniel Elstner  <danielk@openismus.com>
+
+	Correctly append / to local links as well
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Correct the previous
+	change and also append a trailing slash to directories retrieved via
+	pkg-config.
+
+2009-08-13  Daniel Elstner  <danielk@openismus.com>
+
+	Correct mangled links to external documentation
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Append a trailing slash
+	to $mm_htmlrefdir and $mm_htmlrefpub if the path does not end in a slash
+	already and is not empty.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Do not substitute zero-length documentation prefix
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Correctly test whether
+	the location prefix given for a tag file is set, and do not assign an
+	empty prefix to a tag file in the @DOXYGEN_TAGFILES@ output variable.
+	For the $(DOCINSTALL_FLAGS) list, omit the flag altogether if no path
+	can be substituted.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Bump version to mm-common 0.3
+
+	* configure.ac (AC_INIT): Increment version number to 0.3.
+	(AM_INIT_AUTOMAKE): Add check-news option and remove tar-ustar.
+	* NEWS: Write news entry for mm-common 0.3.
+
+2009-08-11  Daniel Elstner  <danielk@openismus.com>
+
+	Fix test for already set MMDOCTOOLDIR variable
+
+	* macros/mm-doc.m4 (_MM_CONFIG_DOCTOOL_DIR): Replace the completely
+	bogus condition, intended to check whether MMDOCTOOLDIR is already
+	set, by a test which actually does that.
+	(MM_ARG_ENABLE_DOCUMENTATION): Require MM_CONFIG_DOCTOOL_DIR().
+	(MM_ARG_WITH_TAGFILE_DOC): ditto.
+
+2009-08-10  Daniel Elstner  <danielk@openismus.com>
+
+	Switch back from Autoconf tracing to sed
+
+	* util/mm-common-prepare.in: Go back to the old method of using the
+	sed stream editor to extract the macro arguments from configure.ac.
+	Unfortunately, it turns out that Autoconf tracing fails to extract
+	the arguments of custom macros when building from a clean tree.
+
+2009-08-10  Daniel Elstner  <danielk@openismus.com>
+
+	Make mm-doc.m4 macros call _MM_PRE_INIT if needed
+
+	* macros/mm-doc.m4: Add AC_REQUIRE([_MM_PRE_INIT]) calls to public
+	macros to ensure that the initialization is always expanded first.
+
+2009-08-10  Daniel Elstner  <danielk@openismus.com>
+
+	Make mm-common-prepare copy doc tools on request
+
+	* Makefile.am (dist_doctool_DATA): Install documentation utilities
+	to the $(pkgdatadir)/doctool directory.
+	* macros/mm-doc.m4 (MM_CONFIG_DOCTOOL_DIR): New Autoconf macro for
+	locating the documentation utilities.  Either a local directory in
+	the source tree can be used, or alternatively pkg-config will be
+	invoked and request the install location from the glibmm-2.4 module.
+	* util/mm-common-prepare.in: Scan configure.ac for calls to the new
+	MM_CONFIG_DOCTOOL_DIR() macro.  If a local directory name was given,
+	copy the documentation utilities into the source tree.
+
+2009-08-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Implement filename globbing within doc-install.pl
+
+	* util/doc-install.pl: Add a new --glob flag, which tells the script
+	to interpret the source arguments as glob patterns instead of literal
+	filenames.  Performing the filename glob expansion internally avoids
+	excessively long argument lists, which can unfortunately be a problem
+	with some platforms.  Also, remember the basename of every installed
+	file, and use that information to skip over files whose basename has
+	already been seen.
+	* util/doc-postprocess.pl: Also perform globbing internally to avoid
+	excessively long command lines.
+	* build/doc-reference.am (MMDOCTOOLDIR): Use this separate variable
+	instead of GMMPROC_DIR for the default location of the documentation
+	utility scripts.
+	(doc_postprocess), (doc_install), (tagfile_to_devhelp2): Derive
+	default values from $(MMDOCTOOLDIR).  Include the interpreter command
+	$(PERL) as part of the variable value, just in case someone needs to
+	override the Perl interpreter as well.
+	(install-data-local): Use the new --glob feature of doc-install.pl
+	instead of having make expand the entire list of filenames into the
+	shell command-line.
+	(uninstall-local): Do not rely on globbing at the shell level for
+	producing the list of files to delete, since it would probably exceed
+	the command line length limits of some platforms.  Do not go back to
+	rm -rf either, but use a combination of 'find' and 'rm -f' to restrict
+	the deletion to those files that match the same glob pattern as the
+	one used to select the files to install.
+
+2009-08-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Add implicit pre-initialization to mm-module
+
+	* macros/mm-module.m4 (_MM_PRE_INIT): New private pre-initialization
+	macro.  For now, it does not do much except for installing a forbidden
+	token pattern in order to catch unexpanded MM_ macros.
+	(MM_INIT_MODULE): Invoke _MM_PRE_INIT through AC_REQUIRE().
+
+2009-08-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Allow code generator locations to be overridden
+
+	* build/generate-binding.am (gmmproc): New overridable variable,
+	pointing by default to the gmmproc installed by glibmm.
+	(gen_wrap_init): Likewise for generate_wrap_init.pl.
+	(gmmproc_flags): New overridable variable for specifying the flags
+	passed to gmmproc on the command line.
+
+2009-08-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Handle extra private headers in compile-binding
+
+	* build/compile-binding.am (binding_private_HEADERS): Substitute the
+	value of variable $(files_extra_ph) in addition to $(files_built_ph).
+
+2009-08-09  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Query auxiliary directory via Autoconf trace mode
+
+	* util/mm-common-prepare.in: Instead of using a sed program to parse
+	configure.ac manually, invoke Autoconf in trace mode to collect the
+	first argument to the AC_CONFIG_AUX_DIR() macro.
+
+2009-08-08  Daniel Elstner  <danielk@openismus.com>
+
+	Split MM_ARG_ENABLE_DOCUMENTATION for AC_REQUIRE
+
+	* macros/mm-doc.m4 (MM_ARG_ENABLE_DOCUMENTATION): Move the macro body
+	to a separate implementation macro, pulled in by means of AC_REQUIRE.
+	The indirection ensures the consistent use of AC_REQUIRE, so that the
+	macro is always expanded only once.
+
+2009-08-08  Daniel Elstner  <danielk@openismus.com>
+
+	Fix handling of mm-common-prepare --force
+
+	* util/mm-common-prepare.in: Simply check whether $forceflag is empty
+	instead of doing a string comparison and getting it wrong.  Also, for
+	improved robustness, use a fixed list of files to install instead of
+	a wildcard pattern.  Make the sed expression to extract the auxiliary
+	build directory skip over both spaces and tabs.
+
+2009-08-07  Daniel Elstner  <danielk@openismus.com>
+
+	Handle relative path to tag file correctly
+
+	* macros/mm-doc.m4 (_MM_ARG_WITH_TAGFILE_DOC): Prepend the absolute
+	path of the current directory to the tag file path if the path given
+	to the --with-MODULE-tags option has a leading "." or ".." component.
+
+2009-08-06  Daniel Elstner  <danielk@openismus.com>
+
+	Turn '+' in module name into 'X' for identifier
+
+	* macros/mm-module.m4 (_MM_INIT_MODULE_BASENAME): Insert a call to
+	m4_translit() to change '+' characters in the module name into 'X'
+	for the preprocessor identifier.
+
+2009-08-06  Daniel Elstner  <danielk@openismus.com>
+
+	Bump package version to mm-common 0.2
+
+2009-08-06  Daniel Elstner  <danielk@openismus.com>
+
+	Fix typo in shell parameter substitution
+
+	* util/mm-common-prepare.in (progname): It's ${0##*/}, not ${0##/*}.
+
+2009-08-06  Daniel Elstner  <danielk@openismus.com>
+
+	Handle multiple make targets correctly
+
+	* Makefile.am (check_updates): Modify the conditional expression so
+	that it will trigger the update if any of the make targets specified
+	on the command line starts with "all".
+
+2009-08-06  Daniel Elstner  <daniel.kitta@gmail.com>
+
+	Skip the check for remote updates on make install
+
+	* Makefile.am: Clean up and add a few more comments.
+	(check_updates): Declare the download targets phony only when building
+	the default make target.  This avoids triggering the download again on
+	make install.
+	* configure.ac (CURL), (WGET): Call AC_ARG_VAR() on these variables.
+	(AC_CONFIG_SRCDIR): Check for the file util/mm-common-prepare.in since
+	it is more likely to be unique to this module.
+
+2009-08-05  Daniel Elstner  <danielk@openismus.com>
+
+	Check libstdc++.tag for updates on every build
+
+	* Makefile.am (tags/libstdc++.tag): Make the tag file a phony target
+	if maintainer mode is enabled, so that its commands will always run.
+	Use the time-stamping features of curl and wget to avoid downloading
+	the tag file again if it has not changed.
+
+2009-08-05  Daniel Elstner  <danielk@openismus.com>
+
+	Only show commands actually executed by make
+
+	* Makefile.am (tags/libstdc++.tag): Use $(if ...) construct to handle
+	the condition at the make level, instead of using shell conditionals.
+	This way, the make output only displays the command that was actually
+	executed.
+	(.DELETE_ON_ERROR): Enable delete-on-error mode for reliability.
+	* configure.ac (AM_INIT_AUTOMAKE): Add -Wno-portability to suppress
+	warnings about GNU make extensions being used.
+
+2009-08-05  Daniel Elstner  <danielk@openismus.com>
+
+	Download and install the libstdc++ Doxygen tags
+
+	* tags/mm-common-libstdc++.pc.in: New pkg-config data file with meta
+	information about the libstdc++ Doxygen documentation, in particular
+	where to find the tag file.
+	* tags/mm-common-libstdc++-uninstalled.pc.in: Likewise, but for use
+	without installing.
+	* configure.ac: Check for the presence of the curl and wget utilities,
+	and make it mandatory in maintainer mode that at least one of them is
+	available.  Add the pkg-config files to the output file list.
+	* Makefile.am (tags/libstdc++.tag): New custom rule for downloading
+	the libstdc++ tag file from the gcc.gnu.org website.  Install the
+	pkg-config data files so that dependent modules can find the tag file
+	and the location of the libstdc++ online documentation.
+
+2009-08-04  Daniel Elstner  <danielk@openismus.com>
+
+	Create mm-common module
+

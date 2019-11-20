@@ -1,0 +1,100 @@
+	$ mkdir patches
+
+	$ quilt new sort.diff
+	> Patch patches/sort.diff is now on top
+
+	$ quilt add b f
+	> File b added to patch patches/sort.diff
+	> File f added to patch patches/sort.diff
+
+	$ echo b > b
+	$ echo f > f
+	$ quilt refresh
+	> Refreshed patch patches/sort.diff
+
+	$ quilt add c
+	> File c added to patch patches/sort.diff
+
+	$ echo c > c
+	$ quilt refresh
+	> Refreshed patch patches/sort.diff
+
+	$ quilt files
+	> b
+	> c
+	> f
+
+	$ quilt diff | grep '^Index'
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/c
+
+	$ quilt add z x
+	> File z added to patch patches/sort.diff
+	> File x added to patch patches/sort.diff
+
+	$ echo z > z
+	$ echo x > x
+	$ quilt files
+	> b
+	> c
+	> f
+	> x
+	> z
+
+	$ quilt diff | grep '^Index'
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/c
+	>~ Index: [^/]+/x
+	>~ Index: [^/]+/z
+
+	$ quilt add a
+	> File a added to patch patches/sort.diff
+
+	$ echo a > a
+	$ quilt files
+	> a
+	> b
+	> c
+	> f
+	> x
+	> z
+
+	$ quilt diff | grep '^Index'
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/c
+	>~ Index: [^/]+/a
+	>~ Index: [^/]+/x
+	>~ Index: [^/]+/z
+
+	$ quilt refresh
+	> Refreshed patch patches/sort.diff
+
+	$ grep '^Index' patches/sort.diff
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/c
+	>~ Index: [^/]+/a
+	>~ Index: [^/]+/x
+	>~ Index: [^/]+/z
+
+	$ quilt diff --sort | grep '^Index'
+	>~ Index: [^/]+/a
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/c
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/x
+	>~ Index: [^/]+/z
+
+	$ quilt refresh --sort
+	> Refreshed patch patches/sort.diff
+
+	$ grep '^Index' patches/sort.diff
+	>~ Index: [^/]+/a
+	>~ Index: [^/]+/b
+	>~ Index: [^/]+/c
+	>~ Index: [^/]+/f
+	>~ Index: [^/]+/x
+	>~ Index: [^/]+/z

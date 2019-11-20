@@ -1,0 +1,11 @@
+./
+./host
+./usr
+./usr/bin
+./usr/bin/uclient-fetch
+./usr/lib
+./usr/lib/libuclient.so
+./usr/include
+./usr/include/libubox
+./usr/include/libubox/uclient.h
+./usr/include/libubox/uclient-utils.h

@@ -1,0 +1,38 @@
+.TH dictRemove 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictRemove  - remove item from dictionary.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+BOOL dictRemove(dictCtx dict, const char *id);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to search in.
+.br
+id - identifier of item to remove.
+
+.SH DESCRIPTION
+Removes item identified by <id> from <dict>.
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

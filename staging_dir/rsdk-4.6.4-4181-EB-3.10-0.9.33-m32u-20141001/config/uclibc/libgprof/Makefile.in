@@ -1,0 +1,72 @@
+# Makefile for uClibc
+#
+# Copyright (C) 2000-2008 Erik Andersen <andersen@uclibc.org>
+#
+# Licensed under the LGPL v2.1, see the file COPYING.LIB in this tarball.
+#
+
+
+CFLAGS-libgprof := -DNOT_IN_libc -DIS_IN_libgprof
+CFLAGS-libgprof += -Ilibgprof -Ilibgprof/$(TARGET_ARCH) -Ilibc/string/$(TARGET_ARCH)/ \
+                   -Ilibpthread/linuxthreads/sysdeps/pthread $(SSP_ALL_CFLAGS)
+
+LDFLAGS-libgprof.so := $(LDFLAGS)
+LIBS-libgprof.so := $(LIBS)
+
+libgprof_DIR := $(top_srcdir)libgprof
+libgprof_OUT := $(top_builddir)libgprof
+
+ifeq ($(UCLIBC_HAS_GPROF),y)
+CSRC := mcount.c gmon.c fxprintf.c profil.c prof-freq.c
+ARCH_SSRC :=
+endif
+
+libgprof_SRC :=
+libgprof_SSRC:=
+
+-include $(top_srcdir)libgprof/$(TARGET_ARCH)/Makefile.arch
+
+libgprof_SRC += $(addprefix $(libgprof_DIR)/,$(CSRC))
+libgprof_SSRC+= $(addprefix $(libgprof_DIR)/$(TARGET_ARCH)/,$(ARCH_SSRC))
+libgprof_OBJ := $(patsubst $(libgprof_DIR)/%.c,$(libgprof_OUT)/%.o,$(libgprof_SRC)) \
+                $(patsubst $(libgprof_DIR)/$(TARGET_ARCH)/%.S,$(libgprof_OUT)/$(TARGET_ARCH)/%.o,$(libgprof_SSRC))
+
+ifeq ($(DOPIC),y)
+libgprof-a-y := $(libgprof_OBJ:.o=.os)
+else
+libgprof-a-y := $(libgprof_OBJ)
+endif
+libgprof-so-y := $(libgprof_OBJ:.o=.os)
+
+ifeq ($(UCLIBC_HAS_GPROF),y)
+lib-a-y += $(top_builddir)lib/libgprof.a
+endif
+objclean-y += libgprof_clean
+
+ifeq ($(DOMULTI),n)
+ifeq ($(DOPIC),y)
+$(top_builddir)lib/libgprof.so: $(top_builddir)lib/libgprof.a $(libc.depend)
+else
+$(top_builddir)lib/libgprof.so: $(libgprof_OUT)/libgprof_so.a $(libc.depend)
+endif
+	$(call link.so,$(libgprof_FULL_NAME),$(MAJOR_VERSION))
+else
+$(top_builddir)lib/libgprof.so: $(libgprof_OUT)/libgprof.oS | $(libc.depend)
+	$(call linkm.so,$(libgprof_FULL_NAME),$(MAJOR_VERSION))
+endif
+
+$(libgprof_OUT)/libgprof_so.a: $(libgprof-so-y)
+	$(Q)$(RM) $@
+	$(do_ar)
+
+$(libgprof_OUT)/libgprof.oS: $(libgprof_SRC) $(libgprof_SSRC)
+	$(Q)$(RM) $@
+	$(compile-m)
+
+$(top_builddir)lib/libgprof.a: $(libgprof-a-y)
+	$(Q)$(INSTALL) -d $(dir $@)
+	$(Q)$(RM) $@
+	$(do_ar)
+
+libgprof_clean:
+	$(do_rm) $(addprefix $(libgprof_OUT)/*., o os oS a)

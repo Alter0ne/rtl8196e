@@ -1,0 +1,34 @@
+.TH nerr_register 3 "12 July 2007" "ClearSilver" "util/neo_err.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+nerr_register 
+.SH SYNOPSIS
+.Ss
+#include <util/neo_err.h>
+.Se
+.Ss
+NEOERR *nerr_register (NERR_TYPE *err, const char *name);
+
+.Se
+
+.SH ARGUMENTS
+err - pointer to a NERR_TYPE
+.br
+name - pretty name for the error type
+
+.SH DESCRIPTION
+register an error type.  This will assign a numeric value
+to the type, and keep track of the "pretty name" for it.
+
+.SH "SEE ALSO"
+.BR nerr_error_traceback "(3), "nerr_pass "(3), "nerr_error_string "(3), "defined "(3), "nerr_pass_ctx "(3), "nerr_passf "(3), "nerr_init "(3), "nerr_match "(3), "nerr_log_error "(3), "nerr_ignore "(3), "nerr_register "(3), "nerr_handle

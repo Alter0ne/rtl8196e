@@ -1,0 +1,41 @@
+.TH wdb_keys 3 "12 July 2007" "ClearSilver" "util/wdb.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+wdb_keys 
+.SH SYNOPSIS
+.Ss
+#include <util/wdb.h>
+.Se
+.Ss
+NEOERR * wdb_keys (WDB *wdb, char **primary_key, ULIST **data);
+
+.Se
+
+.SH ARGUMENTS
+wdb - open database
+
+.SH DESCRIPTION
+this function returns the key and column names for the
+current database
+
+.SH "RETURN VALUE"
+primary_key - pointer to the primary key
+.br
+data - pointer to a ULIST of the columns.
+.br
+both of these are allocated structures, you can clear data
+.br
+with uListDestroy (data, ULIST_FREE)
+
+.SH "SEE ALSO"
+.BR wdb_destroy "(3), "wdbr_delete "(3), "wdb_update "(3), "wdbr_dump "(3), "wdb_save "(3), "wdbr_create "(3), "wdbr_destroy "(3), "wdb_attr_set "(3), "wdb_attr_next "(3), "wdb_open "(3), "wdb_column_exchange "(3), "wdbr_set "(3), "wdb_column_insert "(3), "wdbr_save "(3), "wdbr_next "(3), "wdb_keys "(3), "wdb_column_delete "(3), "wdbc_create "(3), "wdbr_get "(3), "wdb_attr_get "(3), "wdbr_find "(3), "wdbr_lookup "(3), "wdb_create "(3), "wdbc_destroy "(3), "wdb_column_update

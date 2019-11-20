@@ -1,0 +1,18 @@
+Source-Makefile: package/feeds/oldpackages/watchcat/Makefile
+Package: watchcat
+Version: 1-7
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Enable the configuration of programed reboots
+Maintainer: Roger D <rogerdammit@gmail.com>
+Source: 
+Type: ipkg
+Feed: oldpackages
+Description: Allows to configure a periodically reboot, or after losing internet connectivity. Configured trough UCI /etc/config/system.
+Roger D <rogerdammit@gmail.com>
+@@
+
+

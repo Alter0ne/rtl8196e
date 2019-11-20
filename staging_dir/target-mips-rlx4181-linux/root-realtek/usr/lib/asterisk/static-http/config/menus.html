@@ -1,0 +1,332 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Voice Menus
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Voice Menus</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_VoiceMenuslist {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_VoiceMenuslist tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_VoiceMenuslist tr.frow td{ font-weight:bold; }
+		#table_VoiceMenuslist tr td{ padding : 3px; }
+		#table_VoiceMenuslist tr.even { background: #DFDFDF; }
+		#table_VoiceMenuslist tr.odd{ background: #FFFFFF; }
+		#table_VoiceMenuslist tr.even:hover, #table_VoiceMenuslist tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+		#tr_keypressactions tr td div{
+			padding : 3px 5px 3px 25px;
+			min-height:10px;
+		}
+
+		#tr_keypressactions tr td div:hover {
+			background:#e5ac79;
+			cursor: pointer;
+			cursor: hand;
+		}
+
+		#newstep_comment_span{
+			color: #6277f0 ;
+			font-weight:bold;
+		}
+
+		#sqSteps{
+			height:120px ;
+			background-color:#FFFFFF;
+			padding: 5px;
+			border-width: 1px;
+			border-color: #7E5538;
+			border-style: solid;
+			cursor: default;
+			font: 83%/1.4 arial, helvetica, sans-serif;
+			overflow :auto;
+		}
+
+		#sqSteps div {
+			clear :both;
+			padding : 3px 5px 0px 5px;
+			min-height: 20px;
+		}
+		#sqSteps div:hover {
+			background-color:#DEDEDE;
+		}
+
+		#sqSteps div span.step_desc {
+			float: left;
+			/* max-width: 300px; */
+			background: transparent;
+		}
+		#sqSteps div span.step_desc:hover{
+			background-color:#DEDEDE;
+		}
+
+		#sqSteps div span.step_up {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/asterisk-arrow-up.png") no-repeat;
+		}
+
+		#sqSteps div span.step_down {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/asterisk-arrow-down.png") no-repeat;
+		}
+
+		#sqSteps div span.step_delete {
+			float: right;
+			width: 20px;
+			background: transparent url("./images/delete_circle.png") no-repeat;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Manage Voice Menus <span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='lite_Heading'> Voice Menus </div>
+
+	<div class='top_buttons'  style='margin-top: -23px;'>
+		<span class='guiButtonNew' onclick="show_createNewMenu_Form();" id='createNewVM'>Create New VoiceMenu</span>
+	</div>
+
+	<table id='table_VoiceMenuslist' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="div_vmenu_edit" STYLE="width:750; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id="div_vmenu_edit_title"></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<tr>	<td align=right width=100>Name:</td>
+				<td>	<input id='vmenu_name' size=32  field_name='Menu Name' validation='alphanumericUndSpace' required='yes'>
+					<img src="images/tooltip_info.gif" tip="en,menus,0" class='tooltipinfo'>
+					<span class='guiButton' onclick='VoiceMenus_miscFunctions.show_VMenuEdit_Advanced();' style='margin-left: 150px'>Advanced Edit</span>
+				</td>
+			</tr>
+
+			<tr>	<td align=right>Extension:</td>
+				<td>	<input id='vmenu_ext' size=5  field_name='Extension' validation='numeric'>
+					<img src="images/tooltip_info.gif" tip="en,menus,5" class='tooltipinfo'>
+				</td>
+			</tr>
+
+			<tr>	<td align=right>
+					<input type=checkbox id='vmenu_dialOther'>
+					<img src="images/tooltip_info.gif" tip="en,menus,3" class='tooltipinfo'>
+				</td>
+				<td>	<label for='vmenu_dialOther'>Allow Dialing Other Extensions</label>	</td>
+			</tr>
+
+			<tr>	<td align=right valign=top>Actions 
+					<img src="images/tooltip_info.gif" tip="en,menus,1" class='tooltipinfo'>
+				</td>
+				<td>	<div id='sqSteps'></div>	</td>
+			</tr>
+
+			<tr>	<td align=right valign=top>Add new Step:</td>
+				<td valign=top>
+					<table cellpadding=0 cellspacing=0 border=0>
+					<tr>    <td  id='newStep_select_tr' colspan=2>
+							<select onChange="VoiceMenus_miscFunctions.show_newstep_tds(true);" id='newStep_select_action'>
+								<option value=""> -- Select an Option --</option>
+								<option value="Answer">Answer</option>
+								<option value="Authenticate">Authenticate</option>
+								<option value="Background">Background</option>
+								<option value="Busy">Busy Tone</option>
+								<option value="Congestion">Congestion</option>
+								<option value="DigitTimeout">DigitTimeout</option>
+								<option value="DISA">DISA</option>
+								<option value="ResponseTimeout">ResponseTimeout</option>
+								<option value="Macro">Macro</option>
+								<option value="Playback">Playback</option>
+								<option value="Ringing">Ringing</option>
+								<option value="SetMusicOnHold">Set MusicOhHold Class</option>
+								<option value="SayAlpha">SayAlpha</option>
+								<option value="SayDigits">SayDigits</option>
+								<option value="SayNumber">SayNumber</option>
+								<option value="Wait">Wait</option>
+								<option value="WaitExten">WaitExten</option>
+								<option value="WaitForRing">WaitForRing</option>
+								<option value="toDestination">Goto Destination</option>
+								<option value="toDestinationByCallerId">Goto Destination by CallerId</option>
+								<option value="setLanguage">Set Language</option>
+								<option value="GotoDirecotry">Goto Directory</option>
+								<option value="DialViaTrunk">Dial a Number via Trunk</option>
+								<option value="AGI">AGI</option>
+								<option value="UserEvent">User Event</option>
+	<!--							<option value="CheckOwnVoiceMail">Check Voicemail for Own Extension</option>-->
+								<option value="Hangup">Hangup</option>
+							</select>
+						</td>
+					</tr>
+					<tr id='newStep_details_tr' style='display:none;'>
+						<td>
+							<span id='newstep_comment_span'></span>
+							<input  class='class_newStep_details_td' id="newstep_seconds" size=2>
+							<input  class='class_newStep_details_td' id="newstep_pwd" size=6>
+							<input  class='class_newStep_details_td' id="newstep_sound" size=24>
+							<select class='class_newStep_details_td' id="newstep_mohClass"></select>
+							<select class='class_newStep_details_td' id="newstep_disaContext"></select>
+							<select class='class_newStep_details_td' id="newstep_gotoDestination"></select>
+							<select class='class_newStep_details_td' id="newstep_gotoDestinationByCallerId"></select>
+							<select class='class_newStep_details_td' id="newstep_setlanguage">
+								<option value='en'>English</option>
+								<option value='es'>Spanish</option>
+								<option value='fr'>French</option>
+							</select>
+							<input  class='class_newStep_details_td' id="newstep_custom" size=24>
+							<input  class='class_newStep_details_td' id="newstep_agi" size=16>
+							<input class='class_newStep_details_td' id="newstep_dial_ThisNumber" size=10 validation="numeric_pound_star" field_name="This number" required="yes">
+							<select class='class_newStep_details_td' id="newstep_dial_ViaTrunk"></select>
+							<input class='class_newStep_details_td' id="newstep_UserEvent_eventname" size=5>
+							<span  class='class_newStep_details_td' id='newstep_UserEvent_body_lbl'>Body:</span>
+							<input class='class_newStep_details_td' id="newstep_UserEvent_body" size=5>
+							<select class='class_newStep_details_td' id="newstep_gtalkpeers"></select>
+						</td>
+						<td>
+							<span class='guiButton' onclick='VoiceMenus_miscFunctions.push_newstep();'>&uarr; Add new Step</span>
+							<span class='guiButton' onclick='VoiceMenus_miscFunctions.show_newstep_tds(false);'>&larr; Back</span>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<tr style='color:#635a5a'>
+				<td></td>
+				<td id='tip_chosenStep'></td>
+			</tr>
+			<tr>	<td align=center width=75><input type=checkbox id='vmenu_allowKeyPressEvents'></td>
+				<td>
+					<label for='vmenu_allowKeyPressEvents'> <img src="images/tooltip_info.gif" tip="en,menus,4" class='tooltipinfo'> Allow KeyPress Events</label>
+				</td>
+			</tr>
+			<tr> 	<td align=center valign=bottom colspan=2>
+					<table border=0 cellpadding=3 cellspacing=0 width='100%' id='tr_keypressactions'>
+						<tr>	<td align=right valign=top  width='50'>0</td>
+							<td><div class='voicemenuClass_Action' id='keyPress_0'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>1</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_1'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>2</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_2'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>3</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_3'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>4</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_4'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>5</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_5'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>6</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_6'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>7</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_7'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>8</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_8'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>9</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_9'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>#</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_#'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>*</td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_*'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>t <img src="images/tooltip_info.gif" tip="en,menus,6" class='tooltipinfo'></td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_t'>&nbsp;</div>	</td>
+						</tr>
+						<tr>	<td align=right valign=top>i <img src="images/tooltip_info.gif" tip="en,menus,7" class='tooltipinfo'></td>
+							<td>	<div class='voicemenuClass_Action' id='keyPress_i'>&nbsp;</div>	</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>	<td align=center valign=bottom colspan=2>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='voiceMenu_saveChanges();'>Save</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="edit_VM_Advanced_DIV" STYLE="width:650; max-height:450;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span>Edit VoiceMenu - Advanced</span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<TR>	<TD align="center">
+					<span id='edit_VM_Advanced_DIV_Title'></span>
+				</TD>
+			</TR>
+			<TR>	<TD align="center">
+					<textarea id='edit_VM_Advanced_details' rows=5 cols=80></textarea>
+				</TD>
+			</TR>
+			<TR>	<TD align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='VoiceMenus_miscFunctions.show_VMenuEdit_normal();'>Cancel</span>
+					<span class='guiButtonEdit' onclick='VoiceMenus_miscFunctions.save_VMenu_Advanced();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+
+
+	<div id='div_vmenu_keyPressActions_edit' style='display:none'>
+		<select id='kpe_destinations'></select>
+		<span class='guiButton' id='kpe_destinations_updatebutton' onclick='update_a_keyPressEvent();'>Update</span>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/menus.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.autocomplete.js"></script>
+</body>
+</html>

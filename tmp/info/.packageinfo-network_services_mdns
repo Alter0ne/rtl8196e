@@ -1,0 +1,17 @@
+Source-Makefile: package/network/services/mdns/Makefile
+Package: mdns
+Version: 2014-09-02-b7e5cb7ab91a9487ec71a14b706b5589cefe9052
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox +libubus +libblobmsg-json
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: OpenWrt Multicast DNS Daemon
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: mdns-2014-09-02.tar.bz2
+Type: ipkg
+Description: OpenWrt Multicast DNS Daemon
+John Crispin <blogic@openwrt.org>
+@@
+
+

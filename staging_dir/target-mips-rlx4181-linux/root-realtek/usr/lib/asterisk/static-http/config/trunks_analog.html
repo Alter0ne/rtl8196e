@@ -1,0 +1,240 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage Analog trunks
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Analog Trunks</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_ATRUNKS_list { border: 1px solid #666666; margin-top: 5px; margin-bottom:10px; width: 96%; text-align: center; padding : 1px; }
+		#table_ATRUNKS_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_ATRUNKS_list tr.frow td { font-weight:bold; }
+		#table_ATRUNKS_list tr td { padding : 3px; }
+		#table_ATRUNKS_list tr.even { background: #DFDFDF; }
+		#table_ATRUNKS_list tr.odd { background: #FFFFFF; }
+		#table_ATRUNKS_list tr.even:hover, #table_ATRUNKS_list tr.odd:hover { background: #a8b6e5; cursor: default; }
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Manage Analog trunks
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="tabbedMenu"></div>
+
+	<div class='top_buttons' style="margin-top: -10px;">
+		<span id='new_agtrnk_button' class='guiButtonNew' onclick='new_analogTrunk_form();'>New Analog Trunk</span>
+	</div>
+
+	<table id='table_ATRUNKS_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="new_ATRNK_DIV" STYLE="width:700;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id='new_ATRNK_DIV_title'></span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+		<TR>	<TD align="right">Channels:</TD>
+			<TD><span id='new_ATRNK_cls_container'></span></TD>
+ 		<TD rowspan=2>
+ 			<b>Groups <img src="images/tooltip_info.gif" tip="en,trunks,43" class='tooltipinfo'> : </b><br> 
+ 			<select id='edit_groups' size=5 multiple='multiple'>
+ 				<option value='New'>New</option>
+ 			</select>
+ 		</TD>
+		</TR>
+		<TR>	<TD align="right" valign=top> <b>Trunk Name <img src="images/tooltip_info.gif" tip="en,trunks,38" class='tooltipinfo'> :</b></TD>
+			<TD align="left"> <input id='edit_trunkName' size=20> </TD>
+		</TR>
+		<TR id='HIDE_OnNEW_0'>
+			<TD align="right" valign=top> <b>CallerID :</b></TD>
+			<TD align="left">
+				<input id='trunk_obcid' size=10>
+			</TD>
+		</TR>
+		<tr id='HIDE_OnNEW_1'>
+			<td class="field_text" colspan=3 align="center">
+				<div><B>Audio Tuning</B></div>
+				The analog ports that you have chosen should be calibrated for optimum performance. Please ensure that your analog lines are plugged in and proceed with calibration.
+				<div style='margin:10px;'>
+					<span class='guiButton' onclick='calibrate_ports();'>Easy Calibrate</span>
+					<span class='guiButton' onclick='reset_calibration();'>Reset Calibration</span>
+				</div>
+			</td>
+		</tr>
+
+		<tr id='HIDE_OnNEW_2'>
+			<td class="field_text" colspan=3 align="center">
+				<table align=center width="100%">
+					<tr>	<td class="field_text" align="center" valign=top>
+							Normally you should not have to adjust your analog ports beyond the initial calibration. 
+							Should you still need to fine tune your audio settings, please use the adjustments at the right:
+						</td>
+						<td align=center valign=top width=150>
+							<table id="TABLE_PORTS_VOLUME" align=center></table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr id='HIDE_OnNEW_3'>
+			<td class="field_text" colspan=3 align="center">
+					<div><B>Advanced Options</B></div>
+					<table align=center cellpadding=8 cellspacing=0>
+					<tr>	<td align=right>
+							<nobr>Busy Detection <img src="images/tooltip_info.gif" tip="en,trunks,21" class='tooltipinfo'> : </nobr>
+						</td>
+						<td><select id="busydetect" dfalt='yes'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+						<td align=right>
+							<nobr>Busy Count <img src="images/tooltip_info.gif" tip="en,trunks,22" class='tooltipinfo'> : </nobr>
+						</td>
+						<td>	<input type=text size=4 id="busycount" dfalt='3'>
+						</td>
+					</tr>
+			
+					<tr>	<td align=right>
+							<nobr>Busy Pattern <img src="images/tooltip_info.gif" tip="en,trunks,23" class='tooltipinfo'> : </nobr>
+						</td>
+						<td>	<input type=text size=10 id="busypattern" dfalt='500,500'>
+						</td>
+						<td align=right valign=top><nobr>Ring Timeout <img src="images/tooltip_info.gif" tip="en,trunks,24" class='tooltipinfo'> : </nobr></td>
+						<td valign=top><input type=text size=6 id="ringtimeout" dfalt='8000'></td>
+					</tr>
+			
+					<tr>	<td align=right>Answer on <BR>Polarity Switch <img src="images/tooltip_info.gif" tip="en,trunks,25" class='tooltipinfo'> : </td>
+						<td valign=top>	<select id="answeronpolarityswitch" dfalt='no'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+							
+						</td>
+						<td align=right>Hangup on <BR> Polarity Switch <img src="images/tooltip_info.gif" tip="en,trunks,26" class='tooltipinfo'> :</td>
+						<td valign=top>
+							<select id="hanguponpolarityswitch" dfalt='no'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+					</tr>
+			
+					<tr>
+						<td align=right><nobr>Call Progress <img src="images/tooltip_info.gif" tip="en,trunks,27" class='tooltipinfo'> : </nobr></td>
+						<td>	<select id="callprogress" dfalt='no'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+			
+						<td align=right><nobr>Progress Zone <img src="images/tooltip_info.gif" tip="en,trunks,28" class='tooltipinfo'> : </nobr></td>
+						<td>	<select id="progzone" dfalt='us'>
+								<option value="us">US</option>
+								<option value="ca">CA</option>
+								<option value="cr">CR</option>
+								<option value="br">BR</option>
+								<option value="uk">UK</option>
+							</select>
+						</td>
+					</tr>
+			
+					<tr>	<td align=right><nobr>Use CallerID <img src="images/tooltip_info.gif" tip="en,trunks,29" class='tooltipinfo'> : </nobr></td>
+						<td>	<select id="usecallerid" dfalt='yes'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+			
+						<td align=right><nobr>Caller ID Start <img src="images/tooltip_info.gif" tip="en,trunks,30" class='tooltipinfo'> : </nobr></td>
+						<td><select id="cidstart" dfalt='ring'>
+								<option value="ring">Ring</option>
+								<option value="polarity">Polarity</option>
+							</select>
+							
+						</td>
+			
+					</tr>
+			
+					<tr>	<td align=right>CallerID <img src="images/tooltip_info.gif" tip="en,trunks,31" class='tooltipinfo'> : </td>
+						<td><select id="dummy_callerid" class="input8" dfalt='asreceived'>
+								<option value="asreceived">As Received</option>
+								<option value="custom">Custom</option>
+							</select>&nbsp;<input type='text' size=7 id='dummy_customCid'>
+							
+						</td>
+						<td align=right><nobr>Pulse Dial <img src="images/tooltip_info.gif" tip="en,trunks,32" class='tooltipinfo'> : </nobr></td>
+						<td>	<select id="pulsedial" dfalt='no'>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+							</select>
+						</td>
+					</tr>
+			
+					<tr>	<td align=right><nobr>CID Signalling <img src="images/tooltip_info.gif" tip="en,trunks,33" class='tooltipinfo'> : </nobr></td>
+						<td><select id="cidsignalling" dfalt='bell'>
+								<option value='bell'>Bell - USA</option>
+								<option value='v23'>v23 - UK</option>
+								<option value='v23_jp'>v23 - Japan</option>
+								<option value='dtmf'>DTMF (Denmark,Sweden,Holland)</option>
+							</select>
+						</td>
+						<TD align="right" valign=top> mailbox : </TD>
+						<TD align="left">
+							<select id='mailbox'></select>
+						</TD>
+					</tr>
+			
+			
+					<tr>	<td align=right>Flash Timing <img src="images/tooltip_info.gif" tip="en,trunks,34" class='tooltipinfo'> : </td>
+						<td><input type=text size=6 id="flash" dfalt='750'></td>
+						<td align=right><nobr>Receive Flash Timing <img src="images/tooltip_info.gif" tip="en,trunks,35" class='tooltipinfo'> :</nobr></td>
+						<td><input type=text size=6 id="rxflash" dfalt='1250'> </td>
+					</tr>
+
+					</TABLE>
+			</td>
+		</tr>
+		<TR>	<TD colspan=3 align=center valign=middle>
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' onclick='new_ATRNK_save_go();' id='new_ATRNK_addUpdateButton'>Update</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/object.customs.js"></script>
+	<script src="js/trunks_analog.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

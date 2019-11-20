@@ -1,0 +1,7 @@
+#!/bin/sh
+for arg in "$@"; do
+ case "$arg" in -l*|-L*|-shared|-static)
+  exec "/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001/bin/mips-linux-xgcc" -Os -pipe -march=4181 -muclibc  -I/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//include -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//lib ${STAGING_DIR:+-idirafter "$STAGING_DIR/usr/include" -L "$STAGING_DIR/usr/lib" -Wl,-rpath-link,"$STAGING_DIR/usr/lib"} "$@" ;;
+ esac
+done
+exec "/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001/bin/mips-linux-xgcc" -Os -pipe -march=4181 -muclibc  -I/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//include -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//lib ${STAGING_DIR:+-idirafter "$STAGING_DIR/usr/include"} "$@"

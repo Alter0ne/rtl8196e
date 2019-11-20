@@ -1,0 +1,407 @@
+Source-Makefile: target/linux/lantiq/Makefile
+Target: lantiq
+Target-Board: lantiq
+Target-Name: Lantiq GPON/XWAY/SVIP
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: 
+Target-Arch-Packages: lantiq
+Target-Features: dt gpio pci squashfs
+Target-Depends: 
+Target-Optimization: -Os -pipe
+CPU-Type: mips32r2
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: 
+Target-Description:
+	Build firmware images for Lantiq SoC
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target: lantiq/xway
+Target-Board: lantiq
+Target-Name: XWAY
+Target-Path: target/linux/lantiq
+Target-Arch: mips
+Target-Arch-Packages: lantiq
+Target-Features: atm dt gpio mips16 pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=34kc -mdsp
+CPU-Type: 34kc+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Lantiq XWAY
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools kmod-leds-gpio kmod-gpio-button-hotplug dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target-Profile: ARV4525PW
+Target-Profile-Name: Speedport W502V Typ A - ARV4525PW
+Target-Profile-Packages: kmod-ath5k wpad-mini kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV7525PW
+Target-Profile-Name: Speedport W303V Typ A - ARV7525PW
+Target-Profile-Packages: kmod-rt2800-pci wpad-mini kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV4518PWR01
+Target-Profile-Name: ARV4518PWR01
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-a kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-ath5k wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV4518PWR01A
+Target-Profile-Name: ARV4518PWR01A
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-a kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-ath5k wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV4510PW
+Target-Profile-Name: Wippies Homebox - ARV4510PW
+Target-Profile-Packages: kmod-ledtrig-usbdev kmod-usb2 kmod-usb-uhci kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-rt61 wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV4519PW
+Target-Profile-Name: Vodafone, Pirelli - ARV4519PW
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-a kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV7518PW
+Target-Profile-Name: Astoria - ARV7518PW
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-a kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-ath9k wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV4520PW
+Target-Profile-Name: Easybox 800, WAV-281 - ARV4520PW
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-rt61-pci wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV452CQW
+Target-Profile-Name: Easybox 801 - ARV452CQW
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ath5k wpad-mini kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV752DPW
+Target-Profile-Name: Easybox 802 - ARV752DPW
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-ltq-tapi kmod-ltq-vmmc kmod-rt2800-pci wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ARV752DPW22
+Target-Profile-Name: Easybox 803 - ARV752DPW22
+Target-Profile-Packages: kmod-usb2-pci kmod-usb-uhci kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoa kmod-ltq-tapi kmod-ltq-vmmc kmod-rt2800-pci wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: ACMP252
+Target-Profile-Name: AudioCodes MediaPack MP-252
+Target-Profile-Packages: kmod-rt2x00 wpad-mini kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-a kmod-ltq-ptm-danube ltq-adsl-app iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: FRITZ7320
+Target-Profile-Name: 1&1 HomeServer - FRITZ7320
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-b kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoa kmod-ltq-deu-ar9 kmod-ltq-hcd-ar9 iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: GR7000
+Target-Profile-Name: Aztech GR7000
+Target-Profile-Packages: kmod-ltq-deu-ar9 kmod-ltq-hcd-ar9 swconfig 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: WBMRA
+Target-Profile-Name: Buffalo WBMR-HP-G300H (A) - WBMR
+Target-Profile-Packages: kmod-ltq-hcd-ar9 kmod-ledtrig-usbdev kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-a kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoa kmod-ath9k wpad hostapd-utils swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: WBMRB
+Target-Profile-Name: Buffalo WBMR-HP-G300H (B) - WBMR
+Target-Profile-Packages: kmod-ltq-hcd-ar9 kmod-ledtrig-usbdev kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-b kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoa kmod-ath9k wpad hostapd-utils swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: GIGASX76X
+Target-Profile-Name: Gigaset sx76x
+Target-Profile-Packages: kmod-ltq-hcd-danube kmod-ledtrig-usbdev kmod-ltq-adsl-danube-mei kmod-ltq-adsl-danube kmod-ltq-adsl-danube-fw-b kmod-ltq-atm-danube ltq-adsl-app ppp-mod-pppoe kmod-ath5k wpad-mini swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: EASY50712
+Target-Profile-Name: Lantiq Danube - EASY50712
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: DGN3500
+Target-Profile-Name: Netgear DGN3500
+Target-Profile-Packages: kmod-ltq-hcd-ar9 kmod-ledtrig-usbdev kmod-ath9k wpad-mini kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-a kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoa kmod-ltq-deu-ar9 iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: DGN3500B
+Target-Profile-Name: Netgear DGN3500B
+Target-Profile-Packages: kmod-ltq-hcd-ar9 kmod-ledtrig-usbdev kmod-ath9k wpad-mini kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-b kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoa kmod-ltq-deu-ar9 iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: H201L
+Target-Profile-Name: ZTE H201L - H201L
+Target-Profile-Packages: kmod-ath9k-htc wpad-mini kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-b kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoe kmod-ltq-deu-ar9 kmod-ltq-hcd-ar9 kmod-ltq-tapi kmod-ltq-vmmc swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: P2601HNFX
+Target-Profile-Name: ZyXEL P-2601HN-Fx
+Target-Profile-Packages: kmod-rt2800-usb wpad-mini kmod-ltq-adsl-ar9-mei kmod-ltq-adsl-ar9 kmod-ltq-adsl-ar9-fw-b kmod-ltq-atm-ar9 ltq-adsl-app ppp-mod-pppoe kmod-ltq-deu-ar9 kmod-ltq-hcd-ar9 swconfig iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target: lantiq/xrx200
+Target-Board: lantiq
+Target-Name: XRX200
+Target-Path: target/linux/lantiq
+Target-Arch: mips
+Target-Arch-Packages: lantiq
+Target-Features: atm dt gpio jffs2 mips16 pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=34kc -mdsp
+CPU-Type: 34kc+dsp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Lantiq XRX200
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools kmod-leds-gpio kmod-gpio-button-hotplug dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target-Profile: VG3503J
+Target-Profile-Name: BT Openreach - ECI VDSL Modem
+Target-Profile-Packages: kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-ptm-vr9 ltq-vdsl-app 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: VGV7519NOR
+Target-Profile-Name: Experiabox 8 VGV7519
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: VGV7519BRN
+Target-Profile-Name: Experiabox 8 VGV7519 (BRN)
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: FRITZ3370
+Target-Profile-Name: Fritz!Box WLan - FRITZ3370
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: EASY80920NOR
+Target-Profile-Name: Lantiq VR9 - EASY80920NOR
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: EASY80920NAND
+Target-Profile-Name: Lantiq VR9 - EASY80920NAND
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: TDW8970
+Target-Profile-Name: TP-LINK TD-W8970
+Target-Profile-Packages: kmod-ath9k wpad-mini kmod-ltq-deu-vr9 kmod-ltq-hcd-vr9 kmod-ltq-vdsl-vr9-mei kmod-ltq-vdsl-vr9 kmod-ltq-atm-vr9 ltq-vdsl-vr9-fw-installer ltq-vdsl-app ppp-mod-pppoa kmod-ledtrig-usbdev iwinfo
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target: lantiq/ase
+Target-Board: lantiq
+Target-Name: Amazon-SE
+Target-Path: target/linux/lantiq
+Target-Arch: mips
+Target-Arch-Packages: lantiq
+Target-Features: atm dt gpio pci squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=mips32r2
+CPU-Type: mips32r2
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Lantiq ASE
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools kmod-pppoa ppp-mod-pppoa linux-atm atm-tools br2684ctl kmod-ltq-dsl-ase ltq-dsl-app dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target-Profile: DGN1000B
+Target-Profile-Name: Netgear DGN1000B
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target: lantiq/falcon
+Target-Board: lantiq
+Target-Name: Falcon
+Target-Path: target/linux/lantiq
+Target-Arch: mips
+Target-Arch-Packages: lantiq
+Target-Features: dt gpio pci squashfs
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32r2 -mtune=mips32r2
+CPU-Type: mips32r2
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Lantiq Falcon
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools kmod-ifxos gpon-base-files kmod-leds-gpio kmod-ledtrig-heartbeat kmod-gpon-optic-drv gpon-optic-drv kmod-gpon-onu-drv gpon-onu-drv gpon-pe-firmware gpon-omci-api gpon-omci-onu gpon-luci  
+Target-Profile: EASY98000NOR
+Target-Profile-Name: Lantiq Falcon - EASY98000NOR
+Target-Profile-Packages: kmod-dm9000 kmod-i2c-core kmod-i2c-algo-bit kmod-i2c-gpio kmod-eeprom-at24 kmod-spi-bitbang kmod-spi-gpio kmod-eeprom-at25 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+Target-Profile: EASY98000SFLASH
+Target-Profile-Name: Lantiq Falcon - EASY98000SFLASH
+Target-Profile-Packages: kmod-dm9000 kmod-i2c-core kmod-i2c-algo-bit kmod-i2c-gpio kmod-eeprom-at24 kmod-spi-bitbang kmod-spi-gpio kmod-eeprom-at25 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+
+@@
+
+

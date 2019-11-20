@@ -1,0 +1,55 @@
+Bug tracking system
+===================
+
+Please use the Xfce bugtracking system at http://bugzilla.xfce.org/ to report
+bugs and post feature requests.
+
+
+Notes to developers
+===================
+
+If you are a Xfce developer with write access to the Xfce SVN repository,
+and you feel like you want or need to change something in this module,
+do not simply commit your changes, unless its really a trivial fix. If it's
+a non-trivial change, discuss the change on xfce4-dev@xfce.org first. In
+either case, don't forget to update the ChangeLog file before you commit!
+
+
+Patches
+=======
+
+Please submit patches to the Xfce bugtracking system or the xfce4-dev@xfce.org
+mailinglist. Your patch should be in unified diff format (the -u option to
+GNU diff) and it should follow the coding style used by the maintainer.
+
+Please send a patch against a recent version of this package. Patches against
+the HEAD branch are most preferable.
+
+
+Feature requests
+================
+
+Please send your feature requests to the Xfce bugtracking system
+(http://bugzilla.xfce.org, product Xfce developer tools) with a Severity of
+enhancement. Make sure that your feature request wasn't reported already
+before; requesting a feature several times won't increase the chance that
+it gets added.
+
+
+Coding Style
+============
+
+ - Be sure to use the same indentation rules as the maintainer (esp. important:
+   expand tabs).
+ - Don't follow the philosophy "If it works, it's right" that most open source
+   projects follow. Instead, follow the philosphy "It doesn't work unless it's
+   right".
+ - If you don't follow the rules above, your patches will be rejected or - in
+   case you have write access to the Xfce repository - your changes will be
+   reverted!
+
+
+Release process
+===============
+
+ No procedure yet, we have to figure out how to handle this module best.

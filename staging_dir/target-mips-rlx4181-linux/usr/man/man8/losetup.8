@@ -1,0 +1,164 @@
+.TH LOSETUP 8 "July 2003" "util-linux" "System Administration"
+.SH NAME
+losetup \- set up and control loop devices
+.SH SYNOPSIS
+.ad l
+Get info:
+.sp
+.in +5
+.B losetup
+.I loopdev
+.sp
+.B losetup -l
+.RB [ \-a ]
+.sp
+.B losetup -j
+.I file
+.RB [ \-o
+.IR offset ]
+.sp
+.in -5
+Delete loop:
+.sp
+.in +5
+.B "losetup \-d"
+.IR loopdev ...
+.sp
+.in -5
+Delete all used loop devices:
+.sp
+.in +5
+.B "losetup \-D"
+.sp
+.in -5
+Print name of first unused loop device:
+.sp
+.in +5
+.B "losetup \-f"
+.sp
+.in -5
+Setup loop device:
+.sp
+.in +5
+.B losetup
+.RB [ \-o
+.IR offset ]
+.RB [ \-\-sizelimit
+.IR size ]
+.in +8
+.RB [ \-p
+.IR pfd ]
+.RB [ \-rP ]
+.RB { \-f [ \-\-show ]| \fIloopdev\fP }
+.I file
+.sp
+.in -13
+Resize loop device:
+.sp
+.in +5
+.B "losetup \-c"
+.I loopdev
+.in -5
+.ad b
+.SH DESCRIPTION
+.B losetup
+is used to associate loop devices with regular files or block devices,
+to detach loop devices and to query the status of a loop device. If only the
+\fIloopdev\fP argument is given, the status of the corresponding loop
+device is shown.
+
+Note that the old output format (e.g. losetup -a) with comma delimited strings is
+deprecated in favour of the --list output format (e.g. losetup -a -l).
+.SH OPTIONS
++The \fIsize\fR and \fIoffset\fR arguments may be followed by the multiplicative
++suffixes KiB=1024, MiB=1024*1024, and so on for GiB, TiB, PiB, EiB, ZiB and YiB
++(the "iB" is optional, e.g. "K" has the same meaning as "KiB") or the suffixes
++KB=1000, MB=1000*1000, and so on for GB, TB, PB, EB, ZB and YB.
+
+.IP "\fB\-a, \-\-all\fP"
+show status of all loop devices. Note that not all information are accessible
+for non-root users. See also \fB\-\-list\fP. The old output format (as printed
+without --list) is deprecated.
+.IP "\fB\-c, \-\-set-capacity\fP \fIloopdev\fP
+force loop driver to reread size of the file associated with the specified loop device
+.IP "\fB\-d, \-\-detach\fP \fIloopdev\fP..."
+detach the file or device associated with the specified loop device(s)
+.IP "\fB\-D, \-\-detach-all\fP"
+detach all associated loop devices
+.IP "\fB\-f, \-\-find\fP"
+find the first unused loop device. If a
+.I file
+argument is present, use this device. Otherwise, print its name
+.IP "\fB\-h, \-\-help\fP"
+print help
+.IP "\fB\-j, \-\-associated \fIfile\fP"
+show status of all loop devices associated with given
+.I file
+.IP "\fB\-l, \-\-list"
+if a loop device or the -a option is specified, print default columns for
+either the specified loop device or all loop devices, default is to print info
+about all devices.  See also \fB\-\-output\fP, \fB\-\-noheadings\fP
+and \fB\-\-raw\fP.
+.IP "\fB\-n, \fB\-\-noheadings\fP"
+don't print headings for \fB\-\-list\fP output format
+.IP "\fB\-o, \-\-offset \fIoffset\fP"
+the data start is moved \fIoffset\fP bytes into the specified file or
+device
+.IP "\fB\-O, \-\-output \fIcolumns\fP"
+specify which columns are to be printed for the \fB\-\-list\fP output
+.IP "\fB\-\-sizelimit \fIsize\fP"
+the data end is set to no more than \fIsize\fP bytes after the data start
+.IP "\fB\-P, \-\-partscan\fP"
+force kernel to scan partition table on newly created loop device
+.IP "\fB\-\-raw\fP"
+use raw \fB\-\-list\fP output format
+.IP "\fB\-r, \-\-read-only\fP"
+setup read-only loop device
+.IP "\fB\-\-show\fP"
+print device name if the
+.I -f
+option and a
+.I file
+argument are present.
+.IP "\fB\-v, \-\-verbose\fP"
+verbose mode
+
+.SH ENCRYPTION
+.B Cryptoloop is no longer supported in favor of dm-crypt. For more details see
+.B cryptsetup(8).
+
+.SH RETURN VALUE
+.B losetup
+returns 0 on success, nonzero on failure. When
+.B losetup
+displays the status of a loop device, it returns 1 if the device
+is not configured and 2 if an error occurred which prevented
+from determining the status of the device.
+
+.SH FILES
+.TP
+.I /dev/loop[0..N]
+loop block devices
+.TP
+.I /dev/loop-control
+loop control device
+
+.SH EXAMPLE
+The following commands can be used as an example of using the loop device.
+.nf
+.IP
+# dd if=/dev/zero of=~/file.img bs=1MiB count=10
+# losetup --find --show ~/file.img
+/dev/loop0
+# mkfs -t ext2 /dev/loop0
+# mount /dev/loop0 /mnt
+ ...
+# umount /dev/loop0
+# losetup --detach /dev/loop0
+.fi
+.SH AUTHORS
+Karel Zak <kzak@redhat.com>, based on original version from
+Theodore Ts'o <tytso@athena.mit.edu>
+.SH AVAILABILITY
+The losetup command is part of the util-linux package and is available from
+ftp://ftp.kernel.org/pub/linux/utils/util-linux/.

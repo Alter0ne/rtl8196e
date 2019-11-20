@@ -1,0 +1,22 @@
+Source-Makefile: package/feeds/oldpackages/graphicsmagick/Makefile
+Package: graphicsmagick
+Version: 1.3.33-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libltdl +libpthread +zlib +libfreetype +libpng +libjpeg +libtiff
+Menu-Depends: 
+Provides: 
+Build-Depends: zlib freetype libpng libjpeg tiff
+Section: multimedia
+Category: Multimedia
+Title: Graphics manipulation tools
+Maintainer: Val Kulkov <val.kulkov@gmail.com>
+Source: GraphicsMagick-1.3.33.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description: GraphicsMagick is a free and open-source software suite for displaying,
+converting, and editing raster image and vector image files. It is a fork
+of GraphicsMagick.
+https://www.graphicsmagick.org/
+Val Kulkov <val.kulkov@gmail.com>
+@@
+
+

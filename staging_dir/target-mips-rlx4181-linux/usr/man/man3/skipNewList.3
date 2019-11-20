@@ -1,0 +1,56 @@
+.TH skipNewList 3 "12 July 2007" "ClearSilver" "util/skiplist.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+skipNewList  - create a skip list.
+.SH SYNOPSIS
+.Ss
+#include <util/skiplist.h>
+.Se
+.Ss
+NEOERR *skipNewList(skipList *skip, int threaded, int root, int maxLevel,
+                     int flushLimit, skipFreeValue freeValue, void *ctx);
+
+.Se
+
+.SH ARGUMENTS
+threaded - true if list should be thread-safe.
+.br
+root - performance parameter (see above).
+.br
+maxLevel - performance parameter (see above).
+.br
+flushLimit - max deleted items to keep cached before
+.br
+forcing a flush.
+.br
+freeValue - callback made whenever a value is flushed.
+.br
+ctx - context to pass to <freeValue>.
+
+.SH DESCRIPTION
+Returns a new skip list.  If <threaded> is true, list is
+multi-thread safe.  <root> and <maxLevel> determine 
+performance and expected size (see discussion above).
+<flushLimit> is for threaded lists and determines the
+maximum number of deleted items to keep cached during
+concurrent searches.  Once the limit is reached, new 
+concurrent reads are blocked until all deleted items are 
+flushed.
+
+MT-Level: Safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR skipDelete "(3), "skipFreeList "(3), "skipRelease "(3), "skipInsert "(3), "skipSearch "(3), "skipNext "(3), "skipNewList

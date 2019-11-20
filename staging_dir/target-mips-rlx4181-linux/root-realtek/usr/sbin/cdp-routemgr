@@ -1,0 +1,199 @@
+#!/usr/bin/perl
+#     cdp-listen is part of cdp-tools.
+#     cdp-tools is (c) 2003-2006 Internet Connection, Inc.
+#
+#     cdp-listen is free software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation; either version 2, or (at your option)
+#     any later version.
+#
+#     cdp-listen is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with cdp-tools; see the file LICENSE.  If not, write to
+#     the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# this script emulates a mode on certain cisco routers whereby it can build
+# it's routing table using the cisco discovery protocol.
+#
+# it's (unfortunately) linux specific...
+#
+# pipe output into |sh to actually make it do stuff.
+#
+use IO::Select;
+use vars qw($nextc %routes $maxtimeout);
+
+$maxtimeout = 360;
+if (-t) {
+	die "Usage: cdp-listen ... | $0\n";
+}
+
+open(PI, "/sbin/route -n |");
+while (<PI>) {
+	/^(\d+\.\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+\.\d+)\s+([UHGRDMAC\!]+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\S+)/
+			or next;
+	my ($dest, $gw, $mask, $flags, $metric, $refs, $uses, $iface)=($1,$2,$3,$4,$5,$6,$7,$8);
+	my $j = {
+		dev => $iface,
+	};
+	if ($gw =~ /[1-9]/) {
+		$j->{gw} = $gw;
+	}
+	if ($flags =~ /D/) {
+		$j->{expires} = $maxtimeout;
+	} else {
+		$j->{static} = 1;
+	}
+	if ($flags =~ /H/) {
+		$j->{host} = $dest;
+	} else {
+		$j->{net} = "$dest/$mask";
+	}
+
+	$routes{"$dest/$mask"} = $j;
+}
+close PI;
+
+my $sel = IO::Select->new(0);
+
+my $address = undef;
+my @networks = ();
+my $ttl = undef;
+my $caps = undef;
+my $interface = undef;
+for (;;) {
+	$|=1;
+	my @r;
+	if (defined($nextc)) {
+		@r = $sel->can_read($nextc+1);
+	} else {
+		@r = $sel->can_read();
+	}
+
+	my $now = time;
+	foreach my $i (keys(%routes)) {
+		my $j = $routes{$i};
+
+		if (exists $j->{expires} && $now > $j->{expires}) {
+			next if ($j->{static});
+			&inactive($i, %{ $routes{$i} });
+		}
+	}
+	&remake_nextc;
+
+	next if (scalar(@r) == 0);
+
+	for (;;) {
+		local $_ = <STDIN>;
+		die "EOF $!\n" if (!defined($_));
+
+		chomp;
+		if (/^$/) {
+			if (defined($interface) && defined($ttl) && $address && scalar(@networks)) {
+				my %arg = ();
+				if ($caps =~ /L3R/) {
+					$arg{gw} = $address;
+				}
+				foreach my $i (@networks) {
+					&active(%arg, net => $i, ttl => $ttl,
+						dev => $interface);
+				}
+				if ($caps =~ /L3TXRX/) {
+					&active(host => $address, ttl => $ttl,
+						dev => $interface);
+				}
+			}
+			$address = undef;
+			@networks = ();
+			$ttl = undef;
+			$caps = undef;
+			$interface = undef;
+			last;
+		} elsif (/^# TimeToLive:.*(\d+)/) {
+			$ttl = $1;
+		} elsif (/^# Interface:\s*(.*)/) {
+			$interface = $1;
+		} elsif (/^# Capabilities:\s*(.*)/) {
+			$caps = $1;
+		} elsif (/^# Address:.*?(\d+\.\d+\.\d+\.\d+)/) {
+			$address = $1;
+		} elsif (/^# Networks:.*?(\d+\.\d+\.\d+\.\d+)\/(\d+)/) {
+			push(@networks, "$1/$2");
+		} elsif (scalar(@networks) && /^.*(\d+\.\d+\.\d+\.\d+)\/(\d+)/) {
+			push(@networks, "$1/$2");
+		}
+	}
+}
+sub remake_nextc {
+	$nextc = undef;
+	foreach my $i (values %routes) {
+		next unless (exists($i->{expires}));
+		my $ttl = $i->{expires} - time();
+		if ($ttl < 0) {
+			$nextc = 0;
+			last;
+		}
+		$nextc = $ttl if (!defined($nextc) || $nextc > $ttl);
+	}
+}
+sub inactive {
+	my ($key, %arg)=(@_);
+	print "route del ";
+	print "" . (exists($arg{net})) ? "-net" : "-host";
+	my ($a, $b)=(split /\//, $key);
+	print " $a";
+	print "" . (exists($arg{net})) ? " netmask $b" : "";
+	print " gw " . $arg{gw}	if (exists $arg{gw});
+	print " dev " . $arg{dev};
+	print "\n";
+	delete $routes{$key};
+}
+sub active {
+	my (%arg)=(@_);
+
+	$arg{ttl} ||= $maxtimeout;
+	$arg{ttl} = $maxtimeout if ($arg{ttl} > $maxtimeout);
+
+	my $key;
+	if (exists $arg{net}) {
+		if (exists $arg{mask}) {
+			$arg{net} .= "/" . $arg{mask};
+		}
+		my ($n,$s)=(split /\//, $arg{net});
+		if ($s !~ /\./) {
+			$s = join(".",
+				unpack(C4 => pack(N =>
+				(~0 << (32 - $s)))));
+		}
+		$key = "$n/$s";
+		$arg{net} = $n;
+		$arg{mask} = $s;
+	} else {
+		return undef unless (exists $arg{host});
+		$key = $arg{host} . "/255.255.255.255";
+	}
+
+	$nextc = $arg{ttl} if (!defined($nextc) || $nextc > $arg{ttl});
+	$arg{expires} = time + $arg{ttl};
+	if (exists $routes{$key}) {
+		$routes{$key}{expires} = $arg{expires};
+		return;
+	}
+
+	print "route add ";
+	print "" . (exists($arg{net})) ? "-net" : "-host";
+	my ($a, $b)=(split /\//, $key);
+	print " $a";
+	print "" . (exists($arg{net})) ? " netmask $b" : "";
+	if (exists $arg{gw}) {
+		print " gw " . $arg{gw};
+	}
+	print " dyn dev " . $arg{dev};
+	print "\n";
+
+	$routes{$key} = \%arg;
+
+}

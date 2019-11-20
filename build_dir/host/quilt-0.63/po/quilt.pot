@@ -1,0 +1,1197 @@
+#: bin/quilt.in:46
+msgid "Usage: quilt [--trace[=verbose]] [--quiltrc=XX] command [-h] ..."
+msgstr ""
+
+#: bin/quilt.in:47
+msgid "       quilt --version"
+msgstr ""
+
+#: bin/quilt.in:49
+msgid "Commands are:"
+msgstr ""
+
+#: bin/quilt.in:54
+msgid ""
+"\n"
+"Global options:\n"
+"\n"
+"--trace\n"
+"\tRuns the command in bash trace mode (-x). For internal debugging.\n"
+"\n"
+"--quiltrc file\n"
+"\tUse the specified configuration file instead of ~/.quiltrc (or\n"
+"\t@ETCDIR@/quilt.quiltrc if ~/.quiltrc does not exist).  See the pdf\n"
+"\tdocumentation for details about its possible contents.  The\n"
+"\tspecial value \\\"-\\\" causes quilt not to read any configuration\n"
+"\tfile.\n"
+"\n"
+"--version\n"
+"\tPrint the version number and exit immediately."
+msgstr ""
+
+#: quilt/add.in:22
+msgid "Usage: quilt add [-P patch] {file} ...\\n"
+msgstr ""
+
+#: quilt/add.in:25
+msgid ""
+"\n"
+"Add one or more files to the topmost or named patch.  Files must be\n"
+"added to the patch before being modified.  Files that are modified by\n"
+"patches already applied on top of the specified patch cannot be added.\n"
+"\n"
+"-P patch\n"
+"\tPatch to add files to.\n"
+msgstr ""
+
+#: quilt/add.in:48 quilt/add.in:54
+msgid "File %s is located below %s\\n"
+msgstr ""
+
+#: quilt/add.in:103
+msgid "File %s is already in patch %s\\n"
+msgstr ""
+
+#: quilt/add.in:111 quilt/remove.in:82 quilt/revert.in:84
+msgid "File %s modified by patch %s\\n"
+msgstr ""
+
+#: quilt/add.in:119
+msgid "Cannot add symbolic link %s\\n"
+msgstr ""
+
+#: quilt/add.in:126
+msgid "Failed to back up file %s\\n"
+msgstr ""
+
+#: quilt/add.in:137
+msgid "File %s added to patch %s\\n"
+msgstr ""
+
+#: quilt/annotate.in:22
+msgid "Usage: quilt annotate [-P patch] {file}\\n"
+msgstr ""
+
+#: quilt/annotate.in:25
+msgid ""
+"\n"
+"Print an annotated listing of the specified file showing which\n"
+"patches modify which lines. Only applied patches are included.\n"
+"\n"
+"-P patch\n"
+"\tStop checking for changes at the specified rather than the\n"
+"\ttopmost patch.\n"
+msgstr ""
+
+#: quilt/applied.in:22
+msgid "Usage: quilt applied [patch]\\n"
+msgstr ""
+
+#: quilt/applied.in:25
+msgid ""
+"\n"
+"Print a list of applied patches, or all patches up to and including the\n"
+"specified patch in the file series.\n"
+msgstr ""
+
+#: quilt/delete.in:22
+msgid "Usage: quilt delete [-r] [--backup] [patch|-n]\\n"
+msgstr ""
+
+#: quilt/delete.in:25
+msgid ""
+"\n"
+"Remove the specified or topmost patch from the series file.  If the\n"
+"patch is applied, quilt will attempt to remove it first. (Only the\n"
+"topmost patch can be removed right now.)\n"
+"\n"
+"-n\tDelete the next patch after topmost, rather than the specified\n"
+"\tor topmost patch.\n"
+"\n"
+"-r\tRemove the deleted patch file from the patches directory as well.\n"
+"\n"
+"--backup\n"
+"\tRename the patch file to patch~ rather than deleting it.\n"
+"\tIgnored if not used with \\`-r'.\n"
+msgstr ""
+
+#: quilt/delete.in:89
+msgid "No next patch\\n"
+msgstr ""
+
+#: quilt/delete.in:102 quilt/scripts/patchfns.in:608
+msgid "Patch %s is currently applied\\n"
+msgstr ""
+
+#: quilt/delete.in:114
+msgid "Removed patch %s\\n"
+msgstr ""
+
+#: quilt/delete.in:116
+msgid "Failed to remove patch %s\\n"
+msgstr ""
+
+#: quilt/delete.in:127
+msgid "Failed to backup patch file %s\\n"
+msgstr ""
+
+#: quilt/delete.in:134
+msgid "Failed to remove patch file %s\\n"
+msgstr ""
+
+#: quilt/diff.in:24
+msgid ""
+"Usage: quilt diff [-p n|-p ab] [-u|-U num|-c|-C num] [--combine patch|-z] [-"
+"R] [-P patch] [--snapshot] [--diff=utility] [--no-timestamps] [--no-index] "
+"[--sort] [--color[=always|auto|never]] [file ...]\\n"
+msgstr ""
+
+#: quilt/diff.in:28
+msgid ""
+"\n"
+"Produces a diff of the specified file(s) in the topmost or specified\n"
+"patch.  If no files are specified, all files that are modified are\n"
+"included.\n"
+"\n"
+"-p n\tCreate a -p n style patch (-p0 or -p1 are supported).\n"
+"\n"
+"-p ab\tCreate a -p1 style patch, but use a/file and b/file as the\n"
+"\toriginal and new filenames instead of the default\n"
+"\tdir.orig/file and dir/file names.\n"
+"\n"
+"-u, -U num, -c, -C num\n"
+"\tCreate a unified diff (-u, -U) with num lines of context. Create\n"
+"\ta context diff (-c, -C) with num lines of context. The number of\n"
+"\tcontext lines defaults to 3.\n"
+"\n"
+"--no-timestamps\n"
+"\tDo not include file timestamps in patch headers.\n"
+"\n"
+"--no-index\n"
+"\tDo not output Index: lines.\n"
+"\n"
+"-z\tWrite to standard output the changes that have been made\n"
+"\trelative to the topmost or specified patch.\n"
+"\n"
+"-R\tCreate a reverse diff.\n"
+"\n"
+"-P patch\n"
+"\tCreate a diff for the specified patch.  (Defaults to the topmost\n"
+"\tpatch.)\n"
+"\n"
+"--combine patch\n"
+"\tCreate a combined diff for all patches between this patch and\n"
+"\tthe patch specified with -P. A patch name of \\`-' is equivalent\n"
+"\tto specifying the first applied patch.\n"
+"\n"
+"--snapshot\n"
+"\tDiff against snapshot (see \\`quilt snapshot -h').\n"
+"\n"
+"--diff=utility\n"
+"\tUse the specified utility for generating the diff. The utility\n"
+"\tis invoked with the original and new file name as arguments.\n"
+"\n"
+"--color[=always|auto|never]\n"
+"\tUse syntax coloring (auto activates it only if the output is a tty).\n"
+"\n"
+"--sort\tSort files by their name instead of preserving the original order.\n"
+msgstr ""
+
+#: quilt/diff.in:226
+msgid ""
+"Options \\`--combine', \\`--snapshot', and \\`-z' cannot be combined.\\n"
+msgstr ""
+
+#: quilt/diff.in:240
+msgid ""
+"Cannot diff patches with -p%s, please specify -p0, -p1, or -pab instead\\n"
+msgstr ""
+
+#: quilt/diff.in:249
+msgid "No snapshot to diff against\\n"
+msgstr ""
+
+#: quilt/diff.in:283 quilt/files.in:105 quilt/mail.in:422
+msgid "Patch %s not applied before patch %s\\n"
+msgstr ""
+
+#: quilt/diff.in:351
+msgid "File %s is not being modified\\n"
+msgstr ""
+
+#: quilt/diff.in:370
+msgid "Diff failed, aborting\\n"
+msgstr ""
+
+#: quilt/diff.in:377
+msgid "Warning: more recent patches modify files in patch %s\\n"
+msgstr ""
+
+#: quilt/edit.in:24
+msgid "Usage: quilt edit file ...\\n"
+msgstr ""
+
+#: quilt/edit.in:27
+msgid ""
+"\n"
+"Edit the specified file(s) in \\$EDITOR (%s) after adding it (them) to\n"
+"the topmost patch.\n"
+msgstr ""
+
+#: quilt/files.in:22
+msgid "Usage: quilt files [-v] [-a] [-l] [--combine patch] [patch]\\n"
+msgstr ""
+
+#: quilt/files.in:25
+msgid ""
+"\n"
+"Print the list of files that the topmost or specified patch changes.\n"
+"\n"
+"-a\tList all files in all applied patches.\n"
+"\n"
+"-l\tAdd patch name to output.\n"
+"\n"
+"-v\tVerbose, more user friendly output.\n"
+"\n"
+"--combine patch\n"
+"\tCreate a listing for all patches between this patch and\n"
+"\tthe topmost or specified patch. A patch name of \\`-' is\n"
+"\tequivalent to specifying the first applied patch.\n"
+"\n"
+msgstr ""
+
+#: quilt/fold.in:22
+msgid "Usage: quilt fold [-R] [-q] [-f] [-p strip-level]\\n"
+msgstr ""
+
+#: quilt/fold.in:25
+msgid ""
+"\n"
+"Integrate the patch read from standard input into the topmost patch:\n"
+"After making sure that all files modified are part of the topmost\n"
+"patch, the patch is applied with the specified strip level (which\n"
+"defaults to 1).\n"
+"\n"
+"-R\tApply patch in reverse.\n"
+"\n"
+"-q\tQuiet operation.\n"
+"\n"
+"-f\tForce apply, even if the patch has rejects. Unless in quiet mode,\n"
+"\tapply the patch interactively: the patch utility may ask questions.\n"
+"\n"
+"-p strip-level\n"
+"\tThe number of pathname components to strip from file names\n"
+"\twhen applying patchfile.\n"
+msgstr ""
+
+#: quilt/fold.in:131
+msgid "File %s may be corrupted\\n"
+msgstr ""
+
+#: quilt/fork.in:22
+msgid "Usage: quilt fork [new_name]\\n"
+msgstr ""
+
+#: quilt/fork.in:25
+msgid ""
+"\n"
+"Fork the topmost patch.  Forking a patch means creating a verbatim copy\n"
+"of it under a new name, and use that new name instead of the original\n"
+"one in the current series.  This is useful when a patch has to be\n"
+"modified, but the original version of it should be preserved, e.g.\n"
+"because it is used in another series, or for the history.  A typical\n"
+"sequence of commands would be: fork, edit, refresh.\n"
+"\n"
+"If new_name is missing, the name of the forked patch will be the current\n"
+"patch name, followed by \\`-2'.  If the patch name already ends in a\n"
+"dash-and-number, the number is further incremented (e.g., patch.diff,\n"
+"patch-2.diff, patch-3.diff).\n"
+msgstr ""
+
+#: quilt/fork.in:84
+msgid "Patch %s exists already, please choose a new name\\n"
+msgstr ""
+
+#: quilt/fork.in:96
+msgid "Fork of patch %s to patch %s failed\\n"
+msgstr ""
+
+#: quilt/fork.in:102 quilt/refresh.in:347
+msgid "Fork of patch %s created as %s\\n"
+msgstr ""
+
+#: quilt/graph.in:22
+msgid ""
+"Usage: quilt graph [--all] [--reduce] [--lines[=num]] [--edge-labels=files] "
+"[-T ps] [patch]\\n"
+msgstr ""
+
+#: quilt/graph.in:26
+msgid ""
+"\n"
+"Generate a dot(1) directed graph showing the dependencies between\n"
+"applied patches. A patch depends on another patch if both touch the same\n"
+"file or, with the --lines option, if their modifications overlap. Unless\n"
+"otherwise specified, the graph includes all patches that the topmost\n"
+"patch depends on.\n"
+"When a patch name is specified, instead of the topmost patch, create a\n"
+"graph for the specified patch. The graph will include all other patches\n"
+"that this patch depends on, as well as all patches that depend on this\n"
+"patch.\n"
+"\n"
+"--all\tGenerate a graph including all applied patches and their\n"
+"\tdependencies. (Unapplied patches are not included.)\n"
+"\n"
+"--reduce\n"
+"\tEliminate transitive edges from the graph.\n"
+"\n"
+"--lines[=num]\n"
+"\tCompute dependencies by looking at the lines the patches modify.\n"
+"\tUnless a different num is specified, two lines of context are\n"
+"\tincluded.\n"
+"\n"
+"--edge-labels=files\n"
+"\tLabel graph edges with the file names that the adjacent patches\n"
+"\tmodify.\n"
+"\n"
+"-T ps\tDirectly produce a PostScript output file.\n"
+msgstr ""
+
+#: quilt/grep.in:22
+msgid "Usage: quilt grep [-h|options] {pattern}\\n"
+msgstr ""
+
+#: quilt/grep.in:25
+msgid ""
+"\n"
+"Grep through the source files, recursively, skipping patches and quilt\n"
+"meta-information. If no filename argument is given, the whole source\n"
+"tree is searched. Please see the grep(1) manual page for options.\n"
+"\n"
+"-h\tPrint this help. The grep -h option can be passed after a\n"
+"\tdouble-dash (--). Search expressions that start with a dash\n"
+"\tcan be passed after a second double-dash (-- --).\n"
+msgstr ""
+
+#: quilt/header.in:24
+msgid ""
+"Usage: quilt header [-a|-r|-e] [--backup] [--strip-diffstat] [--strip-"
+"trailing-whitespace] [patch]\\n"
+msgstr ""
+
+#: quilt/header.in:28
+msgid ""
+"\n"
+"Print or change the header of the topmost or specified patch.\n"
+"\n"
+"-a, -r, -e\n"
+"\tAppend to (-a) or replace (-r) the exiting patch header, or\n"
+"\tedit (-e) the header in \\$EDITOR (%s). If none of these options is\n"
+"\tgiven, print the patch header.\n"
+"\n"
+"--strip-diffstat\n"
+"\tStrip diffstat output from the header.\n"
+"\n"
+"--strip-trailing-whitespace\n"
+"\tStrip trailing whitespace at the end of lines of the header.\n"
+"\n"
+"--backup\n"
+"\tCreate a backup copy of the old version of a patch as patch~.\n"
+msgstr ""
+
+#: quilt/header.in:169
+msgid "Replaced header of patch %s\\n"
+msgstr ""
+
+#: quilt/header.in:172
+msgid "Appended text to header of patch %s\\n"
+msgstr ""
+
+#: quilt/import.in:22
+msgid ""
+"Usage: quilt import [-p num] [-R] [-P patch] [-f] [-d {o|a|n}] patchfile ..."
+"\\n"
+msgstr ""
+
+#: quilt/import.in:25
+msgid ""
+"\n"
+"Import external patches.  The patches will be inserted following the\n"
+"current top patch, and must be pushed after import to apply them.\n"
+"\n"
+"-p num\n"
+"\tNumber of directory levels to strip when applying (default=1)\n"
+"\n"
+"-R\n"
+"\tApply patch in reverse.\n"
+"\n"
+"-P patch\n"
+"\tPatch filename to use inside quilt. This option can only be\n"
+"\tused when importing a single patch.\n"
+"\n"
+"-f\tOverwrite/update existing patches.\n"
+"\n"
+"-d {o|a|n}\n"
+"\tWhen overwriting in existing patch, keep the old (o), all (a), or\n"
+"\tnew (n) patch header. If both patches include headers, this option\n"
+"\tmust be specified. This option is only effective when -f is used.\n"
+msgstr ""
+
+#: quilt/import.in:73
+msgid "Patch %s does not exist\\n"
+msgstr ""
+
+#: quilt/import.in:96
+msgid "Patch headers differ:\\n"
+msgstr ""
+
+#: quilt/import.in:99
+msgid "Please use -d {o|a|n} to specify which patch header(s) to keep.\\n"
+msgstr ""
+
+#: quilt/import.in:164
+msgid "Option \\`-P' can only be used when importing a single patch\\n"
+msgstr ""
+
+#: quilt/import.in:194
+msgid "Patch %s is applied\\n"
+msgstr ""
+
+#: quilt/import.in:203
+msgid "Patch %s already exists in series.\\n"
+msgstr ""
+
+#: quilt/import.in:209
+msgid "Patch %s exists. Replace with -f.\\n"
+msgstr ""
+
+#: quilt/import.in:220
+msgid "Replacing patch %s with new version\\n"
+msgstr ""
+
+#: quilt/import.in:224
+msgid "Importing patch %s\\n"
+msgstr ""
+
+#: quilt/import.in:226
+msgid "Importing patch %s (stored as %s)\\n"
+msgstr ""
+
+#: quilt/import.in:239
+msgid "Failed to import patch %s\\n"
+msgstr ""
+
+#: quilt/import.in:248 quilt/refresh.in:334
+msgid "Failed to insert patch %s into file series\\n"
+msgstr ""
+
+#: quilt/mail.in:24
+msgid ""
+"Usage: quilt mail {--mbox file|--send} [-m text] [-M file] [--prefix prefix] "
+"[--sender ...] [--from ...] [--to ...] [--cc ...] [--bcc ...] [--"
+"subject ...] [--reply-to message] [first_patch [last_patch]]\\n"
+msgstr ""
+
+#: quilt/mail.in:27
+msgid ""
+"\n"
+"Create mail messages from a specified range of patches, or all patches in\n"
+"the series file, and either store them in a mailbox file, or send them\n"
+"immediately. The editor is opened with a template for the introduction.\n"
+"Please see %s for details.\n"
+"When specifying a range of patches, a first patch name of \\`-' denotes the\n"
+"first, and a last patch name of \\`-' denotes the last patch in the series.\n"
+"\n"
+"-m text\n"
+"\tText to use as the text in the introduction. When this option is\n"
+"\tused, the editor will not be invoked, and the patches will be\n"
+"\tprocessed immediately.\n"
+"\n"
+"-M file\n"
+"\tLike the -m option, but read the introduction from file.\n"
+"\n"
+"--prefix prefix\n"
+"\tUse an alternate prefix in the bracketed part of the subjects\n"
+"\tgenerated. Defaults to \\`patch'.\n"
+"\n"
+"--mbox file\n"
+"\tStore all messages in the specified file in mbox format. The mbox\n"
+"\tcan later be sent using formail, for example.\n"
+"\n"
+"--send\n"
+"\tSend the messages directly.\n"
+"\n"
+"--sender\n"
+"\tThe envelope sender address to use. The address must be of the form\n"
+"\t\\`user@domain.name'. No display name is allowed.\n"
+"\n"
+"--from, --subject\n"
+"\tThe values for the From and Subject headers to use. If no --from\n"
+"\toption is given, the value of the --sender option is used.\n"
+"\n"
+"--to, --cc, --bcc\n"
+"\tAppend a recipient to the To, Cc, or Bcc header.\n"
+"\n"
+"--signature file\n"
+"\tAppend the specified signature to messages (defaults to ~/.signature\n"
+"\tif found; use \\`-' for no signature).\n"
+"\n"
+"--reply-to message\n"
+"\tAdd the appropriate headers to reply to the specified message.\n"
+msgstr ""
+
+#: quilt/mail.in:192 quilt/mail.in:200
+msgid "Introduction message already specified"
+msgstr ""
+
+#: quilt/mail.in:262
+msgid "You have to install 'formail' to use 'quilt mail'"
+msgstr ""
+
+#: quilt/mail.in:305
+msgid "Could not determine the envelope sender address. Please use --sender."
+msgstr ""
+
+#: quilt/mail.in:450
+msgid "Unable to extract a subject header from %s\\n"
+msgstr ""
+
+#: quilt/mail.in:474
+msgid "Patches %s have duplicate subject headers.\\n"
+msgstr ""
+
+#: quilt/mail.in:483
+msgid "File %s does not exist\\n"
+msgstr ""
+
+#: quilt/mail.in:543
+msgid "Introduction has no subject header (saved as %s)\\n"
+msgstr ""
+
+#: quilt/mail.in:546
+msgid "Introduction has no subject header\\n"
+msgstr ""
+
+#: quilt/mail.in:660
+msgid "Introduction saved as %s\\n"
+msgstr ""
+
+#: quilt/new.in:22
+msgid "Usage: quilt new [-p n|-p ab] {patchname}\\n"
+msgstr ""
+
+#: quilt/new.in:25
+msgid ""
+"\n"
+"Create a new patch with the specified file name, and insert it after the\n"
+"topmost patch. The name can be prefixed with a sub-directory name, allowing\n"
+"for grouping related patches together.\n"
+"\n"
+"-p n\tCreate a -p n style patch (-p0 or -p1 are supported).\n"
+"\n"
+"-p ab\tCreate a -p1 style patch, but use a/file and b/file as the\n"
+"\toriginal and new filenames instead of the default\n"
+"\tdir.orig/file and dir/file names.\n"
+"\n"
+"Quilt can be used in sub-directories of a source tree. It determines the\n"
+"root of a source tree by searching for a %s directory above the\n"
+"current working directory. Create a %s directory in the intended root\n"
+"directory if quilt chooses a top-level directory that is too high up\n"
+"in the directory tree.\n"
+msgstr ""
+
+#: quilt/new.in:76
+msgid ""
+"Cannot create patches with -p%s, please specify -p0, p1, or -pab instead\\n"
+msgstr ""
+
+#: quilt/new.in:89
+msgid "QUILT_PATCHES(%s) must differ from QUILT_PC(%s)\\n"
+msgstr ""
+
+#: quilt/new.in:97 quilt/refresh.in:185
+msgid "Patch %s exists already\\n"
+msgstr ""
+
+#: quilt/new.in:108
+msgid "Patch %s is now on top\\n"
+msgstr ""
+
+#: quilt/new.in:110 quilt/refresh.in:343
+msgid "Failed to create patch %s\\n"
+msgstr ""
+
+#: quilt/next.in:22
+msgid "Usage: quilt next [patch]\\n"
+msgstr ""
+
+#: quilt/next.in:25
+msgid ""
+"\n"
+"Print the name of the next patch after the specified or topmost patch in\n"
+"the series file.\n"
+msgstr ""
+
+#: quilt/patches.in:24
+msgid ""
+"Usage: quilt patches [-v] [--color[=always|auto|never]] {file} [files...]\\n"
+msgstr ""
+
+#: quilt/patches.in:27
+msgid ""
+"\n"
+"Print the list of patches that modify any of the specified files. (Uses a\n"
+"heuristic to determine which files are modified by unapplied patches.\n"
+"Note that this heuristic is much slower than scanning applied patches.)\n"
+"\n"
+"-v\tVerbose, more user friendly output.\n"
+"\n"
+"--color[=always|auto|never]\n"
+"\tUse syntax coloring (auto activates it only if the output is a tty).\n"
+msgstr ""
+
+#: quilt/pop.in:22
+msgid "Usage: quilt pop [-afRqv] [num|patch]\\n"
+msgstr ""
+
+#: quilt/pop.in:25
+msgid ""
+"\n"
+"Remove patch(es) from the stack of applied patches.  Without options,\n"
+"the topmost patch is removed.  When a number is specified, remove the\n"
+"specified number of patches.  When a patch name is specified, remove\n"
+"patches until the specified patch end up on top of the stack.  Patch\n"
+"names may include the patches/ prefix, which means that filename\n"
+"completion can be used.\n"
+"\n"
+"-a\tRemove all applied patches.\n"
+"\n"
+"-f\tForce remove. The state before the patch(es) were applied will\n"
+"\tbe restored from backup files.\n"
+"\n"
+"-R\tAlways verify if the patch removes cleanly; don't rely on\n"
+"\ttimestamp checks.\n"
+"\n"
+"-q\tQuiet operation.\n"
+"\n"
+"-v\tVerbose operation.\n"
+msgstr ""
+
+#: quilt/pop.in:100 quilt/scripts/patchfns.in:884
+msgid "Failed to copy files to temporary directory\\n"
+msgstr ""
+
+#: quilt/pop.in:125
+msgid "Patch %s does not remove cleanly (refresh it or enforce with -f)\\n"
+msgstr ""
+
+#: quilt/pop.in:150
+msgid "Patch %s appears to be empty, removing\\n"
+msgstr ""
+
+#: quilt/pop.in:155
+msgid "Removing patch %s\\n"
+msgstr ""
+
+#: quilt/pop.in:226
+msgid "Patch %s needs to be refreshed first.\\n"
+msgstr ""
+
+#: quilt/pop.in:236
+msgid "No patch removed\\n"
+msgstr ""
+
+#: quilt/pop.in:252 quilt/scripts/patchfns.in:517
+msgid "No patches applied\\n"
+msgstr ""
+
+#: quilt/pop.in:259 quilt/push.in:422
+msgid "Now at patch %s\\n"
+msgstr ""
+
+#: quilt/previous.in:22
+msgid "Usage: quilt previous [patch]\\n"
+msgstr ""
+
+#: quilt/previous.in:25
+msgid ""
+"\n"
+"Print the name of the previous patch before the specified or topmost\n"
+"patch in the series file.\n"
+msgstr ""
+
+#: quilt/push.in:24
+msgid ""
+"Usage: quilt push [-afqv] [--merge[=merge|diff3]] [--leave-rejects] [--"
+"color[=always|auto|never]] [num|patch]\\n"
+msgstr ""
+
+#: quilt/push.in:27
+msgid ""
+"\n"
+"Apply patch(es) from the series file.  Without options, the next patch\n"
+"in the series file is applied.  When a number is specified, apply the\n"
+"specified number of patches.  When a patch name is specified, apply\n"
+"all patches up to and including the specified patch.  Patch names may\n"
+"include the patches/ prefix, which means that filename completion can\n"
+"be used.\n"
+"\n"
+"-a\tApply all patches in the series file.\n"
+"\n"
+"-q\tQuiet operation.\n"
+"\n"
+"-f\tForce apply, even if the patch has rejects. Unless in quiet mode,\n"
+"\tapply the patch interactively: the patch utility may ask questions.\n"
+"\n"
+"-v\tVerbose operation.\n"
+"\n"
+"--fuzz=N\n"
+"\tSet the maximum fuzz factor (default: 2).\n"
+"\n"
+"-m, --merge[=merge|diff3]\n"
+"\tMerge the patch file into the original files (see patch(1)).\n"
+"\n"
+"--leave-rejects\n"
+"\tLeave around the reject files patch produced, even if the patch\n"
+"\tis not actually applied.\n"
+"\n"
+"--color[=always|auto|never]\n"
+"\tUse syntax coloring (auto activates it only if the output is a tty).\n"
+msgstr ""
+
+#: quilt/push.in:68
+msgid "Interrupted by user; patch %s was not applied.\\n"
+msgstr ""
+
+#: quilt/push.in:181
+msgid "Applying patch %s\\n"
+msgstr ""
+
+#: quilt/push.in:215
+msgid "Patch %s does not exist; applied empty patch\\n"
+msgstr ""
+
+#: quilt/push.in:219
+msgid "Patch %s appears to be empty; applied\\n"
+msgstr ""
+
+#: quilt/push.in:223
+msgid "Applied patch %s (forced; needs refresh)\\n"
+msgstr ""
+
+#: quilt/push.in:233
+msgid "Patch %s can be reverse-applied\\n"
+msgstr ""
+
+#: quilt/push.in:236
+msgid "Patch %s does not apply (enforce with -f)\\n"
+msgstr ""
+
+#: quilt/push.in:291
+msgid "Patch %s is already applied; check your series file\\n"
+msgstr ""
+
+#: quilt/push.in:396
+msgid "The topmost patch %s needs to be refreshed first.\\n"
+msgstr ""
+
+#: quilt/refresh.in:22
+msgid ""
+"Usage: quilt refresh [-p n|-p ab] [-u|-U num|-c|-C num] [-z[new_name]] [-f] "
+"[--no-timestamps] [--no-index] [--diffstat] [--sort] [--backup] [--strip-"
+"trailing-whitespace] [patch]\\n"
+msgstr ""
+
+#: quilt/refresh.in:26
+msgid ""
+"\n"
+"Refreshes the specified patch, or the topmost patch by default.\n"
+"Documentation that comes before the actual patch in the patch file is\n"
+"retained.\n"
+"\n"
+"It is possible to refresh patches that are not on top.  If any patches\n"
+"on top of the patch to refresh modify the same files, the script aborts\n"
+"by default.  Patches can still be refreshed with -f.  In that case this\n"
+"script will print a warning for each shadowed file, changes by more\n"
+"recent patches will be ignored, and only changes in files that have not\n"
+"been modified by any more recent patches will end up in the specified\n"
+"patch.\n"
+"\n"
+"-p n\tCreate a -p n style patch (-p0 or -p1 supported).\n"
+"\n"
+"-p ab\tCreate a -p1 style patch, but use a/file and b/file as the\n"
+"\toriginal and new filenames instead of the default\n"
+"\tdir.orig/file and dir/file names.\n"
+"\n"
+"-u, -U num, -c, -C num\n"
+"\tCreate a unified diff (-u, -U) with num lines of context. Create\n"
+"\ta context diff (-c, -C) with num lines of context. The number of\n"
+"\tcontext lines defaults to 3.\n"
+"\n"
+"-z[new_name]\n"
+"\tCreate a new patch containing the changes instead of refreshing the\n"
+"\ttopmost patch. If no new name is specified, \\`-2' is added to the\n"
+"\toriginal patch name, etc. (See the fork command.)\n"
+"\n"
+"--no-timestamps\n"
+"\tDo not include file timestamps in patch headers.\n"
+"\n"
+"--no-index\n"
+"\tDo not output Index: lines.\n"
+"\n"
+"--diffstat\n"
+"\tAdd a diffstat section to the patch header, or replace the\n"
+"\texisting diffstat section.\n"
+"\n"
+"-f\tEnforce refreshing of a patch that is not on top.\n"
+"\n"
+"--backup\n"
+"\tCreate a backup copy of the old version of a patch as patch~.\n"
+"\n"
+"--sort\tSort files by their name instead of preserving the original order.\n"
+"\n"
+"--strip-trailing-whitespace\n"
+"\tStrip trailing whitespace at the end of lines.\n"
+msgstr ""
+
+#: quilt/refresh.in:171
+msgid "Can only refresh the topmost patch with -z currently\\n"
+msgstr ""
+
+#: quilt/refresh.in:202
+msgid ""
+"Cannot refresh patches with -p%s, please specify -p0, -p1, or -pab instead\\n"
+msgstr ""
+
+#: quilt/refresh.in:235
+msgid "Diff failed on file '%s', aborting\\n"
+msgstr ""
+
+#: quilt/refresh.in:241
+msgid ""
+"More recent patches modify files in patch %s. Enforce refresh with -f.\\n"
+msgstr ""
+
+#: quilt/refresh.in:247
+msgid ""
+"Cannot use --strip-trailing-whitespace on a patch that has shadowed files.\\n"
+msgstr ""
+
+#: quilt/refresh.in:253 quilt/refresh.in:355
+msgid "Nothing in patch %s\\n"
+msgstr ""
+
+#: quilt/refresh.in:325
+msgid "Patch %s is unchanged\\n"
+msgstr ""
+
+#: quilt/refresh.in:353
+msgid "Refreshed patch %s\\n"
+msgstr ""
+
+#: quilt/remove.in:22
+msgid "Usage: quilt remove [-P patch] {file} ...\\n"
+msgstr ""
+
+#: quilt/remove.in:25
+msgid ""
+"\n"
+"Remove one or more files from the topmost or named patch.  Files that\n"
+"are modified by patches on top of the specified patch cannot be removed.\n"
+"\n"
+"-P patch\n"
+"\tRemove named files from the named patch.\n"
+msgstr ""
+
+#: quilt/remove.in:73 quilt/revert.in:75
+msgid "File %s is not in patch %s\\n"
+msgstr ""
+
+#: quilt/remove.in:91
+msgid "Failed to remove file %s from patch %s\\n"
+msgstr ""
+
+#: quilt/remove.in:105
+msgid "File %s removed from patch %s\\n"
+msgstr ""
+
+#: quilt/rename.in:22
+msgid "Usage: quilt rename [-P patch] new_name\\n"
+msgstr ""
+
+#: quilt/rename.in:25
+msgid ""
+"\n"
+"Rename the topmost or named patch.\n"
+"\n"
+"-P patch\n"
+"\tPatch to rename.\n"
+msgstr ""
+
+#: quilt/rename.in:84
+msgid "Patch %s exists already, please choose a different name\\n"
+msgstr ""
+
+#: quilt/rename.in:98
+msgid "Renaming of patch %s to %s failed\\n"
+msgstr ""
+
+#: quilt/rename.in:104
+msgid "Patch %s renamed to %s\\n"
+msgstr ""
+
+#: quilt/revert.in:22
+msgid "Usage: quilt revert [-P patch] {file} ...\\n"
+msgstr ""
+
+#: quilt/revert.in:25
+msgid ""
+"\n"
+"Revert uncommitted changes to the topmost or named patch for the specified\n"
+"file(s): after the revert, 'quilt diff -z' will show no differences for "
+"those\n"
+"files. Changes to files that are modified by patches on top of the "
+"specified\n"
+"patch cannot be reverted.\n"
+"\n"
+"-P patch\n"
+"\tRevert changes in the named patch.\n"
+msgstr ""
+
+#: quilt/revert.in:103 quilt/revert.in:112
+msgid "File %s is unchanged\\n"
+msgstr ""
+
+#: quilt/revert.in:120
+msgid "Failed to revert changes to %s in patch %s\\n"
+msgstr ""
+
+#: quilt/revert.in:124
+msgid "Changes to %s in patch %s reverted\\n"
+msgstr ""
+
+#: quilt/scripts/edmail.in:96
+#, perl-format
+msgid "Display name `%s' contains unpaired parentheses\n"
+msgstr ""
+
+#: quilt/scripts/edmail.in:114
+#, perl-format
+msgid "Delivery address `%s' is invalid\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:236 quilt/scripts/patchfns.in:530
+msgid "%s is not a regular file\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:484 quilt/scripts/patchfns.in:501
+msgid "No patches in series\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:486 quilt/scripts/patchfns.in:503
+msgid "No series file found\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:559
+msgid "Patch %s is not in series\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:587
+msgid "Patch %s is not applied\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:624
+msgid "File series fully applied, ends at patch %s\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:902
+msgid "Failed to patch temporary files\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:945
+msgid ""
+"The quilt meta-data in this tree has version %s, but this version of quilt "
+"can only handle meta-data formats up to and including version %s. Please pop "
+"all the patches using the version of quilt used to push them before "
+"downgrading.\\n"
+msgstr ""
+
+#: quilt/scripts/patchfns.in:1098
+msgid ""
+"The working tree was created by an older version of quilt. Please run 'quilt "
+"upgrade'.\\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:43
+#, perl-format
+msgid "SYNOPSIS: %s [-p num] [-n] [patch]\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:66
+#, perl-format
+msgid "%s: I'm confused.\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:114
+#, perl-format
+msgid "Warning: trailing whitespace in line %s of %s\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:117
+#, perl-format
+msgid "Warning: trailing whitespace in lines %s of %s\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:121
+#, perl-format
+msgid "Removing trailing whitespace from line %s of %s\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:124
+#, perl-format
+msgid "Removing trailing whitespace from lines %s of %s\n"
+msgstr ""
+
+#: quilt/scripts/remove-trailing-ws.in:144
+#, perl-format
+msgid "Renaming %s to %s: %s\n"
+msgstr ""
+
+#: quilt/series.in:22
+msgid "Usage: quilt series [--color[=always|auto|never]] [-v]\\n"
+msgstr ""
+
+#: quilt/series.in:25
+msgid ""
+"\n"
+"Print the names of all patches in the series file.\n"
+"\n"
+"--color[=always|auto|never]\n"
+"\tUse syntax coloring (auto activates it only if the output is a tty).\n"
+"\n"
+"-v\tVerbose, more user friendly output.\n"
+msgstr ""
+
+#: quilt/setup.in:35 quilt/setup.in:55
+msgid "Directory %s exists\\n"
+msgstr ""
+
+#: quilt/setup.in:61
+msgid "File %s exists\\n"
+msgstr ""
+
+#: quilt/setup.in:102
+msgid ""
+"Usage: quilt setup [-d path-prefix] [-v] [--sourcedir dir] [--fuzz=N] "
+"{specfile|seriesfile}\\n"
+msgstr ""
+
+#: quilt/setup.in:105
+msgid ""
+"\n"
+"Initializes a source tree from an rpm spec file or a quilt series file.\n"
+"\n"
+"-d\tOptional path prefix for the resulting source tree.\n"
+"\n"
+"--sourcedir\n"
+"\tDirectory that contains the package sources. Defaults to \\`.'.\n"
+"\n"
+"-v\tVerbose debug output.\n"
+"\n"
+"--fuzz=N\n"
+"\tSet the maximum fuzz factor (needs rpm 4.6 or later).\n"
+msgstr ""
+
+#: quilt/setup.in:176
+msgid "The %%prep section of %s failed; results may be incomplete\\n"
+msgstr ""
+
+#: quilt/setup.in:179
+msgid "The -v option will show rpm's output\\n"
+msgstr ""
+
+#: quilt/setup.in:231 quilt/setup.in:243
+msgid "File %s not found\\n"
+msgstr ""
+
+#: quilt/setup.in:234 quilt/setup.in:246
+msgid "Unpacking archive %s\\n"
+msgstr ""
+
+#: quilt/setup.in:255
+msgid "Trying alternative patches and series names..."
+msgstr ""
+
+#: quilt/snapshot.in:22
+msgid "Usage: quilt snapshot [-d]\\n"
+msgstr ""
+
+#: quilt/snapshot.in:25
+msgid ""
+"\n"
+"Take a snapshot of the current working state.  After taking the snapshot,\n"
+"the tree can be modified in the usual ways, including pushing and\n"
+"popping patches.  A diff against the tree at the moment of the\n"
+"snapshot can be generated with \\`quilt diff --snapshot'.\n"
+"\n"
+"-d\tOnly remove current snapshot.\n"
+msgstr ""
+
+#: quilt/top.in:22
+msgid "Usage: quilt top\\n"
+msgstr ""
+
+#: quilt/top.in:25
+msgid ""
+"\n"
+"Print the name of the topmost patch on the current stack of applied\n"
+"patches.\n"
+msgstr ""
+
+#: quilt/unapplied.in:22
+msgid "Usage: quilt unapplied [patch]\\n"
+msgstr ""
+
+#: quilt/unapplied.in:25
+msgid ""
+"\n"
+"Print a list of patches that are not applied, or all patches that follow\n"
+"the specified patch in the series file.\n"
+msgstr ""
+
+#: quilt/upgrade.in:25
+msgid "Usage: quilt upgrade\\n"
+msgstr ""
+
+#: quilt/upgrade.in:28
+msgid ""
+"\n"
+"Upgrade the meta-data in a working tree from an old version of quilt to the\n"
+"current version. This command is only needed when the quilt meta-data "
+"format\n"
+"has changed, and the working tree still contains old-format meta-data. In "
+"that\n"
+"case, quilt will request to run \\`quilt upgrade'.\n"
+msgstr ""
+
+#: quilt/upgrade.in:67
+msgid ""
+"The quilt meta-data in %s are already in the version %s format; nothing to do"
+"\\n"
+msgstr ""
+
+#: quilt/upgrade.in:71
+msgid "Converting meta-data to version %s\\n"
+msgstr ""
+
+#: quilt/upgrade.in:102
+msgid "Conversion failed\\n"
+msgstr ""
+
+#: quilt/upgrade.in:103
+msgid ""
+"\n"
+"Please remove all patches using \\`quilt pop -a' from the quilt version used "
+"to create this working tree, or remove the %s directory and apply the "
+"patches from scratch.\\n"
+msgstr ""

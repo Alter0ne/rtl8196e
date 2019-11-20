@@ -1,0 +1,35 @@
+.TH nerr_pass 3 "12 July 2007" "ClearSilver" "util/neo_err.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+nerr_pass 
+.SH SYNOPSIS
+.Ss
+#include <util/neo_err.h>
+.Se
+.Ss
+nerr_pass()
+.Se
+
+.SH ARGUMENTS
+with the macro, the function name, file and lineno are
+.br
+automagically recorded.  Just pass the error.
+
+.SH DESCRIPTION
+this function is used to pass an error up a level in the
+call chain (ie, if the error isn't handled at the
+current level).  This allows us to track the traceback
+of the error.
+
+.SH "SEE ALSO"
+.BR nerr_error_traceback "(3), "nerr_pass "(3), "nerr_error_string "(3), "defined "(3), "nerr_pass_ctx "(3), "nerr_passf "(3), "nerr_init "(3), "nerr_match "(3), "nerr_log_error "(3), "nerr_ignore "(3), "nerr_register "(3), "nerr_handle

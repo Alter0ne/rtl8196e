@@ -1,0 +1,37 @@
+.TH fLock 3 "12 July 2007" "ClearSilver" "util/ulocks.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+fLock  - acquire file lock.
+.SH SYNOPSIS
+.Ss
+#include <util/ulocks.h>
+.Se
+.Ss
+NEOERR *fLock(int lock);
+
+.Se
+
+.SH ARGUMENTS
+lock - Lock to acquire.
+
+.SH DESCRIPTION
+Acquires the lock identified by <lock>.  This call
+blocks until the lock is acquired.
+
+MT-Level: Safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR mCreate "(3), "fCreate "(3), "mUnlock "(3), "fUnlock "(3), "cBroadcast "(3), "cSignal "(3), "fFind "(3), "cDestroy "(3), "cCreate "(3), "mDestroy "(3), "cWait "(3), "fLock "(3), "fDestroy "(3), "mLock

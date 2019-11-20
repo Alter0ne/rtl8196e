@@ -1,0 +1,176 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Set Date on the Digium Appliance - AA50
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+ *
+-->
+<html>
+<head>
+	<title>Update Date & Time</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body>
+	<div class="iframeTitleBar"> Update Date & Time <span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span> </div>
+
+	<div class='lite_Heading'> Update Date & Time </div>
+
+	<table width=700 border=0 align=left>
+	<tr>	<td align=right><B>NTP server :</B></td>
+		<td>
+			<span id='NTPSERVER'></span>
+			&nbsp;&nbsp;&nbsp;<A href='#' class='splbutton' title='Edit NTP server' onclick="parent.miscFunctions.click_panel('networking.html');"><B>Edit</B></A>
+		</td>
+	</tr>
+
+	<tr>	<td height=15></td><td></td></tr>
+
+	<tr>	<td valign=top align=right><B>Current System Date :</B></td>
+		<td id='current_date'></td>
+	</tr>
+	<tr class='lite'>
+		<td valign=top align=right><B>Current System Date in Local Time :</B></td>
+		<td id='current_date_local'></td>
+	</tr>
+
+	<tr>	<td height=15></td><td></td></tr>
+
+	<tr>	<td valign=top align=right>
+			<B>Set New Date & Time :</B><BR>
+			<span class='lite'>Enter Date & Time in your Local time&nbsp;&nbsp;</span>
+		</td>
+		<td>	<TABLE cellpadding=6 cellspacing=1 border=0>
+			<TR>	<TD width=70 align=right>Date </TD>
+				<TD><input size=10 id="date_day"></TD>
+			</TR>
+			<TR>	<TD width=70 align=right>Time</TD>
+				<TD>	<!-- Time -->
+					<select id="hod"></select>:
+					<select id="minute"></select>&nbsp;
+					<select id="ampm">
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+					</select>
+					<!-- Time -->
+				</TD>
+			</TR>
+			<TR>
+				<TD colspan=2 align=center>
+					<span class='guiButton' onclick='update_systemdate();'>Update</span>
+				</TD>
+			</TR>
+			</TABLE>
+		</td>
+	</tr>
+	</table>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.date_input.js"></script>
+	<script>
+
+	function localajaxinit(){
+		top.document.title = 'Set Date & Time' ;
+		parent.ASTGUI.dialog.waitWhile('Loading...');
+		$("#date_day").date_input();
+
+		(function(){
+			var x;
+			var hod = _$('hod');
+			var minute = _$('minute');
+			for(var i=1; i < 13; i++){
+				x = i.addZero();
+				ASTGUI.selectbox.append(hod, x , x);
+			}
+			for(var i=0; i < 60; i++){
+				x = i.addZero();
+				ASTGUI.selectbox.append(minute, x , x);
+			}
+			hod.selectedIndex = -1;
+			minute.selectedIndex = -1;
+		})();
+
+		(function(){
+			var c = context2json({ filename:'networking.conf' , context : 'general' , usf:1 });
+			_$('NTPSERVER').innerHTML = (c && c['NTP_ADDRESS']) || '&nbsp;&nbsp;--';
+		})();
+
+		ASTGUI.systemCmdWithOutput( "date ", function(output){
+			_$('current_date').innerHTML = '&nbsp;&nbsp;' + output.bold_X('UTC') ;
+			_$('current_date_local').innerHTML = '&nbsp;&nbsp;' + ASTGUI.toLocalTime(output);
+			parent.ASTGUI.dialog.hide();
+		});
+	};
+
+
+	function update_systemdate(){
+		parent.ASTGUI.dialog.waitWhile('Updating Date & Time ...');
+		try{
+			// convert local time to UTC
+			var lt_minutes = _$('minute').value ; // 0 to 59
+			var date_day = _$("date_day").value ;
+			if( !date_day || (_$('hod').selectedIndex == -1 )  || ( _$('minute').selectedIndex == -1) ){
+				parent.ASTGUI.dialog.hide(); 
+				return;
+			}
+
+			var date_day_split = date_day.split(' ');
+			var lt_month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(date_day_split[1]); // 0 to 11
+			var lt_dom = date_day_split[0] ; // 1 to 31
+			lt_dom = lt_dom.addZero() ;
+			var lt_year = date_day_split[2] ; // 2007
+			// prepare commands to set the date 
+			if( _$('ampm').value == "AM"  ){
+				var lt_hours = (_$('hod').value == "12" )? "00" : _$('hod').value;
+			}else if( _$('ampm').value == "PM"){
+				var lt_hours = ( _$('hod').value == "12") ? parseInt( _$('hod').value) : parseInt( _$('hod').value) + 12 ;
+			}
+			var lt = new Date();
+			lt.setFullYear ( lt_year, lt_month, lt_dom );
+			lt.setHours ( lt_hours, lt_minutes );
+			var utc_hours = lt.getUTCHours(); // 0 to 23
+			var utc_minutes = lt.getUTCMinutes(); // 0 to 59
+			var utc_month = lt.getUTCMonth(); // 0 to 11
+			var utc_dom = lt.getUTCDate(); // 1 to 31
+			var utc_year = lt.getUTCFullYear() ; // 2007
+			if (utc_month < 10) { utc_month = "0"+ String(utc_month+1); }else{utc_month = String(utc_month+1) ;}
+			if (utc_dom < 10) { utc_dom = "0"+ String(utc_dom) ; }
+			if (utc_hours < 10) { utc_hours = "0"+ String(utc_hours) ; }
+			if (utc_minutes < 10) { utc_minutes = "0"+ String(utc_minutes) ; }
+			var newdate =  utc_month + utc_dom + utc_hours + utc_minutes + utc_year ;
+		}catch(err){
+			parent.ASTGUI.dialog.hide();
+			return false;
+		}
+		parent.ASTGUI.systemCmd( "date -s " + newdate , function(){ 
+			parent.ASTGUI.dialog.hide();
+			var after = function(){
+				alert("You will be now logged out of the gui.\n Please login again !!");
+				var f = makeSyncRequest({ action :'logoff'});
+				top.window.location.reload();
+			};
+			ASTGUI.feedback( { msg:'updated date & time', showfor:2 });
+			setTimeout( after, 1000 );
+		});
+	}
+
+	</script>
+</body>
+</html>

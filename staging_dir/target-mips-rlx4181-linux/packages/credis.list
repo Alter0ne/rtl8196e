@@ -1,0 +1,8 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libcredis.a
+./usr/lib/libcredis.so
+./usr/include
+./usr/include/credis.h

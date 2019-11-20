@@ -1,0 +1,203 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage Time Intervals
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Time Intervals</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		body {
+			background-color: #efefef;
+		}
+
+		#table_tilist {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+
+		#table_tilist tr.frow { 
+			background: #6b79a5; 
+			color: #ced7ef; 
+		}
+
+		#table_tilist tr.frow td { 
+			font-weight:bold;
+		}
+
+		#table_tilist tr td { 
+			padding : 3px; 
+		}
+
+		#table_tilist tr.even { 
+			background: #dfdfdf; 
+		}
+
+		#table_tilist tr.odd { 
+			background: #ffffff; 
+		}
+
+		#table_tilist tr.even:hover, #table_tilist tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+		.top_buttons span.lite_Heading {
+			margin-left: 80px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="iframeTitleBar">
+		Time Intervals
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+	
+	<div class='top_buttons'>
+		<span class='guiButtonNew' onclick='ti_miscFunctions.new_TI_form();'>New Time Interval</span>
+		<span class='lite_Heading'> Time Intervals </span>
+	</div>
+
+	<table id='table_tilist' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+
+	<div id="div_ti_edit" STYLE="width:610; height:300;display:none;" class='dialog'>
+		<table width="100%" cellpadding=0 cellspacing=0>
+		<tr class="dialog_title_tr">
+			<td class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id="div_ti_edit_title"></span></td>
+			<td class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </td>
+		</tr>
+		</table>
+
+		<table	align=center cellpadding=2 cellspacing=2 border=0 width='100%' bgcolor='#FAF7F1'>
+		<tr>	<td align="right"><nobr>Time Interval Name :</nobr></td>
+			<td><input id='edit_ti_name' size=32 validation='alphanumeric' required=yes></td>
+		</tr>
+		<tr>	<td align="right">
+				<input type="radio" name="titype_radio" id="ti_type_byDayofWeek">
+			</td>
+			<td>&nbsp;<LABEL FOR="ti_type_byDayofWeek">By day of week</LABEL></td>
+		</tr>
+		<tr>	<td align="right"></td>
+			<td>
+				<select id='edit_ti_dayofweek_start'>
+					<option value='mon'>Mon</option>
+					<option value='tue'>Tue</option>
+					<option value='wed'>Wed</option>
+					<option value='thu'>Thu</option>
+					<option value='fri'>Fri</option>
+					<option value='sat'>Sat</option>
+					<option value='sun'>Sun</option>
+				</select>
+				&nbsp;&nbsp;to&nbsp;&nbsp;
+				<select id='edit_ti_dayofweek_end'>
+					<option value='mon'>Mon</option>
+					<option value='tue'>Tue</option>
+					<option value='wed'>Wed</option>
+					<option value='thu'>Thu</option>
+					<option value='fri'>Fri</option>
+					<option value='sat'>Sat</option>
+					<option value='sun'>Sun</option>
+				</select>
+			</td>
+		</tr>
+		<tr>	<td align="right">
+				<input type="radio" name="titype_radio" id="ti_type_byGroupofDates">
+			</td>
+			<td>&nbsp;<LABEL FOR="ti_type_byGroupofDates">By Days of a Month</LABEL></td>
+		</tr>
+		<tr>	<td></td>
+			<td>
+				Date : <input size=5 id="edit_ti_from_date" class="input8">
+				Month : <select id='edit_ti_month'>
+						<option value='jan'>January</option>
+						<option value='feb'>February</option>
+						<option value='mar'>March</option>
+						<option value='apr'>April</option>
+						<option value='may'>May</option>
+						<option value='jun'>June</option>
+						<option value='jul'>July</option>
+						<option value='aug'>August</option>
+						<option value='sep'>September</option>
+						<option value='oct'>October</option>
+						<option value='nov'>November</option>
+						<option value='dec'>December</option>
+						<option value='*'>All</option>
+					</select>
+
+			</td>
+		</tr>
+		<tr>	<td align="right" colspan=2 height=10> </td>	</tr>
+		<tr>	<td align="right"><b>Time: </b></td>
+			<td>&nbsp;<label><input type=checkbox id='edit_ti_entireday'> Entire Day</label></td>
+		</tr>
+		<tr>	<td align="right"></td>
+			<td>&nbsp;Start Time : <input size=8 id="edit_ti_starttime" class="input8">&nbsp;End Time : <input size=8 id="edit_ti_endtime" class="input8"></td>
+		</tr>
+		<tr>	<td align="right" colspan=2 height=10>		</td>	</tr>
+		</table>
+
+		<table	align=center cellpadding=1 cellspacing=1 border=0 width='100%'>
+		<tr>	<td>&nbsp;</td> </tr>
+		<tr>	<td align=center valign=middle>
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' onclick='ti_miscFunctions.update_TI();' >Update</span>
+			</td>
+		</tr>
+		</table>
+
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/object.customs.js"></script>
+	<script src="js/timeintervals.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.date_input.js"></script>
+	<script src="js/jquery.autocomplete.js"></script>
+	<script type="text/javascript">
+	$(document).ready( function() {
+		top.document.title = 'Manage Time Intervals' ;
+		TI_LIST = parent.miscFunctions.getTimeIntervals();
+		ti_miscFunctions.showTable();
+
+		ASTGUI.COMBOBOX.call( _$('edit_ti_starttime') , RMP_TBR_timeIntervals , 95 );
+		ASTGUI.COMBOBOX.call( _$('edit_ti_endtime') , RMP_TBR_timeIntervals , 95 );
+
+		ASTGUI.domActions.enableDisableByCheckBox ('ti_type_byGroupofDates', ['edit_ti_from_date', 'edit_ti_month']);
+		ASTGUI.domActions.enableDisableByCheckBox ('ti_type_byDayofWeek', ['edit_ti_dayofweek_start', 'edit_ti_dayofweek_end']);
+		ASTGUI.domActions.enableDisableByCheckBox ('edit_ti_entireday', ['edit_ti_starttime', 'edit_ti_endtime'] , true); // _$('edit_ti_entireday').updateStatus();
+
+		ASTGUI.events.add( 'ti_type_byGroupofDates', 'click' , function(){ _$('ti_type_byDayofWeek').updateStatus(); } ); 
+		ASTGUI.events.add( 'ti_type_byDayofWeek', 'click' , function(){ _$('ti_type_byGroupofDates').updateStatus(); } );
+	});
+	</script>
+</body>
+</html>

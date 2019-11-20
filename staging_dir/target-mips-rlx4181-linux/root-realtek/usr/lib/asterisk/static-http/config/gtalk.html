@@ -1,0 +1,155 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Google Talk/Jabber Configuration
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_BuddiesList {
+			border: 1px solid #666666;
+			margin: 0px;
+			width: 95% ;
+			text-align: center;
+			padding : 1px;
+		}
+
+		#table_BuddiesList tr.heading { background: #FFFFFF; }
+		#table_BuddiesList tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_BuddiesList tr.frow td{ font-weight:bold; }
+		#table_BuddiesList tr td{ padding : 3px; }
+		#table_BuddiesList tr.even { background: #DFDFDF; }
+		#table_BuddiesList tr.odd{ background: #FFFFFF; }
+		#table_BuddiesList tr.even:hover, #table_BuddiesList tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+		#table_AccountsList {
+			border: 1px solid #666666;
+			margin: 0px;
+			text-align: center;
+			padding : 1px;
+			width: 95% ;
+		}
+		#table_AccountsList tr.heading { background: #FFFFFF;}
+		#table_AccountsList tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_AccountsList tr.frow td{ font-weight:bold; }
+		#table_AccountsList tr td { padding : 3px; }
+		#table_AccountsList tr.even { background: #DFDFDF; }
+		#table_AccountsList tr.odd { background: #FFFFFF; }
+		#table_AccountsList tr.even:hover, #table_AccountsList tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Google Talk Settings
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center><div id="tabbedMenu" style="margin-bottom: 0px;"></div></center>
+
+	<div id='table_BuddiesList_DIV' style='margin-left:50px; margin-top: 0px; margin-right: 50px; padding: 0px'>
+		<div style="margin-bottom: 10px; margin-top:0px">
+			<span class='guiButtonNew' onclick='MANAGE_BUDDIES.new_buddy_form();'>New Peer</span>
+			<!--<span class='lite_Heading' style="margin-left: 50px">Peers</span>-->
+		</div>
+		<div><table id='table_BuddiesList' cellpadding=0 cellspacing=0 border=0 align=center></table></div>
+	</div>
+	<div  id='table_AccountsList_DIV' style='margin-left:50px; margin-top: 0px; margin-right: 50px; padding: 0px'>
+		<div style="margin-bottom: 10px; margin-top:0px">
+			<span class='guiButtonNew' onclick='MANAGE_ACCOUNTS.new_Account_form();'>New gtalk Account</span>
+			<!--<span class='lite_Heading' style="margin-left: 50px">gtalk Accounts</span>-->
+		</div>
+		<table id='table_AccountsList' cellpadding=0 cellspacing=0 border=0 align=center></table>
+	</div>
+
+	<div id="buddy_editdiv" STYLE="width:500px; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0 width="100%" align="center">
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=right>Username:&nbsp;</td>
+				<td colspan=2><input id="edit_buddyName_text" size=25></td>
+			</tr>
+			<tr>	<td align=right>Connection:&nbsp;</td>
+				<td colspan=2><select id="edit_buddyConnection_select"></select></td>
+			</tr>
+
+			<tr>	<td align=right>Incoming Calls to :&nbsp;</td>
+				<td colspan=2><select id="edit_buddyIncomingCalls_select"></select></td>
+			</tr>
+
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=center colspan=3>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='MANAGE_BUDDIES.addBuddy();'>Save</span>
+				</td>
+			</tr>
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+		</table>
+	</div>
+
+
+	<div id="account_editdiv" STYLE="width:500px; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<table cellpadding=2 cellspacing=2 border=0 width="100%" align="center">
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=right>Username:&nbsp;</td>
+				<td colspan=2><input id="edit_account_text" size=25></td>
+			</tr>
+			<tr>	<td align=right>Password:&nbsp;</td>
+				<td colspan=2><input id="edit_account_secret" size=16></td>
+			</tr>
+			<tr>	<td align=right>Status Message:&nbsp;</td>
+				<td colspan=2><input id="edit_account_status" size=25></td>
+			</tr>
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+			<tr>	<td align=center colspan=3>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='MANAGE_ACCOUNTS.saveAccount();'>Save</span>
+				</td>
+			</tr>
+			<tr>	<td align="right" colspan=2 height=10></td></tr>
+		</table>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/gtalk.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

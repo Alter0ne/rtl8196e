@@ -1,0 +1,10 @@
+doxytagfile=${pc_top_builddir}/doc/reference/@SKELETONMM_MODULE_NAME@.tag
+htmlrefpub=http://library.gnome.org/devel/@PACKAGE_TARNAME@/unstable/
+
+Name: skeletonmm
+Description: C++ binding for skeleton, not installed
+Version: @SKELETONMM_VERSION@
+URL: http://www.gtkmm.org/
+Requires: @SKELETONMM_MODULES@
+Libs: ${pc_top_builddir}/${pcfiledir}/skeletonmm/libskeletonmm-@SKELETONMM_API_VERSION@.la
+Cflags: -I${pc_top_builddir}/${pcfiledir} -I${pc_top_builddir}/${pcfiledir}/@srcdir@

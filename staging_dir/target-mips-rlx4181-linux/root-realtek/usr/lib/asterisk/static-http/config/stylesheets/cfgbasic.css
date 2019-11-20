@@ -1,0 +1,322 @@
+body, td, th, textarea, input, select, h2, h3, h4, h5, h6 {
+	font: 83%/1.4 arial, helvetica, sans-serif;
+}
+
+/*header_row*/
+	.header_row{
+		min-width: 950px;
+	}
+		div.main_logo{ float: left; width: 170px;}
+	
+		div.feedback_parent {
+			float: left;
+			position:absolute;
+			margin-top: 2px; 
+			margin-left: 180px;
+			width:525px;
+			height: 40px;
+			text-align:center;
+		}
+			span.feedback {
+				padding: 4px 0px 0px 3px ;
+				text-align: center;
+				font-family: Arial,sans-serif,Helvetica,Trebuchet MS;
+				font-size: 13px;
+				font-weight: bold;
+				z-index:9001;
+				display: none;
+				margin: 2px auto;
+			}
+		
+		div.parentTopButtons{
+			float: right; 
+			margin-top: 10px; 
+			margin-right: 3px; 
+			margin-left: 3px; 
+			display:none;
+		}	
+
+/* End of header_row*/
+
+/* Accordion */
+	div.accordionAndActive_div{
+		clear: both; 
+		border-top: 1px solid #5481ac;
+		/* border-right: 1px solid #5481ac; */
+		text-align: center;
+	}
+
+	#accordion_div{
+		float: left;
+		text-align: left;
+		min-height: 600px;
+		background-color : #bcbdc2;
+	}
+		#accordion_div div{
+			padding : 0px;
+			margin: 0px;
+			background-color : #6B79A5;
+		}
+
+		#accordion_div div div.ui-accordion-link{
+			background-image: url(../images/accordion-icon.gif);
+			background-repeat: no-repeat;
+			background-position: 3px;
+			text-decoration:none;
+			/*font-size : 12.5px;*/
+			padding : 2px 0px 3px 18px;
+			margin: 0px 0px 0px 0px;
+			border-style : solid;
+			border-width : 0px;
+			border-top: 1px solid #bdc7e7;
+			border-bottom: 1px solid #182052;
+			height : 18px;
+			cursor: pointer;
+			cursor: hand;
+			background-color : #6B79A5;
+			color : #CED7EF;
+			font-weight :normal;
+		}
+	
+		#accordion_div div div.ui-accordion-link:hover {
+			/*font-weight:bold;*/
+			font: 95%/1.3 arial, helvetica, sans-serif;
+			color: #FFFFFF;
+			background-color : #63699c;
+		}
+
+		#accordion_div div div.ui-accordion-desc{/* Panel description */
+			background-color: #FFFFFF;
+			background-image: url(../images/panel.png);
+			background-position: bottom;
+			height: 150px;
+			margin: 0px 0px 0px 0px;
+			padding : 1px 2px 2px 5px;
+			cursor: default;
+		}
+/* end of Accordion */
+
+
+span.button_t1{
+	text-decoration:none;
+	font-size : 105%;
+	padding : 2px 5px 2px 5px;
+	border-style : solid ;
+	border-top-color : #BDC7E7;
+	border-bottom-color : #182052;
+	border-left-color : #BDC7E7;
+	border-right-color : #182052;
+	border-width : 1px 1px 1px 1px;
+	cursor: pointer;
+	cursor: hand;
+	background-color : #EFEFEF;
+	color : #6B79A5;
+	font-weight :normal;
+}
+
+span.button_t1:hover {
+	font-size : 115%;
+	color : #455172;
+}
+
+
+#ACTIVE_CONTENT{ 
+	float: left;
+	text-align: center;
+	padding-top: 50px;
+	padding-left: 150px;
+	font-size: 150%;
+	font-weight :bold;
+	/*
+	margin: 0px 0px 0px 0px;
+	border: 1px solid #DEDEDE;
+	text-align: center;
+	min-width: 400px;
+	*/
+}
+
+div.copyrights {
+	clear: both;
+	text-align: center;
+	font-size: 85%;
+	height: 35px;
+	padding: 12px 0 0 0;
+	background-color: #FFFFFF;
+	border-top: 1px solid #5481ac;
+}
+
+#bg_transparent {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width:100%;
+	height:100%;
+	background-color:#EFEFEF;
+	-moz-opacity:.30;
+	filter:alpha(opacity=30);
+	opacity:.30;
+	border-width: 1px;
+	border-color: #EFEFEF;
+	border-style: solid;
+	z-index:99;
+}
+
+
+#noResponseFromServer {
+	position : absolute;
+	top : 0;
+	left : 0;
+	z-index : 10000;
+	font-size : 150%;
+	text-align : center;
+	padding-top : 50px;
+	padding-left : 150px;
+	font-weight :bold;
+	border-width : 0px;
+	background-color : #F4EFE5;
+}
+
+
+div.debugWindow{
+	width:97%;
+	min-width:950px;
+	background-color:#CDCDCD;
+	left: 0;
+	top: 0;
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+
+
+#debug_messages {
+	margin-left: 10px;
+	height:170px ;
+	background-color:#FFFFFF;
+	padding: 5px;
+	border-width: 1px;
+	border-color: #7E5538;
+	border-style: solid;
+	cursor: default;
+	font: 83%/1.4 arial, helvetica, sans-serif;
+	overflow :auto;
+}
+
+#ajaxstatus {
+	z-index: 100000;
+	position: absolute;
+	top: 0;
+	width:65;
+	height:20;
+	background-color: #FF0000;
+	color:#FFFFFF;
+	padding-left:4px;
+	left: 10px;
+}
+
+
+.dialog{
+	margin:0;
+	top: 40;
+	left: 100;
+	/*display:none;*/
+	position: absolute;
+	background-color:#F4EFE5;
+	border-width: 1px;
+	border-color: #7E5538;
+	border-style: solid; 
+	z-index: 1000;
+}
+
+.dialog_title_tr {
+	background: #7E5538;
+	background-image: url('../images/title_gradient.gif');
+}
+
+.dialog_title {
+	height:28px;
+	margin:0px;
+	padding-left:5px;
+	cursor: move;
+	color:#FFFFFF;
+	font-size: 13px;
+	font-weight:bold;
+}
+
+.dialog_title_X {
+	margin: 0px;
+	padding: 0px;
+	width: 20px;
+	color:#FFFFFF;
+	font-size: 14px;
+	font-weight:bold;
+	cursor: pointer;
+	cursor: hand;
+}
+
+
+span.button_yn{
+	text-decoration:none;
+	font-size : 85%;
+	padding : 2px 4px 2px 4px;
+	border-style : solid ;
+	border-top-color : #BDC7E7;
+	border-bottom-color : #182052;
+	border-left-color : #BDC7E7;
+	border-right-color : #182052;
+	border-width : 1px 1px 1px 1px;
+	cursor: pointer;
+	cursor: hand;
+	background-color : #EFEFEF;
+	color : #6B79A5;
+	font-weight :normal;
+	margin-left: 10px;
+}
+
+span.button_yn:hover {
+	color : #455172;
+}
+
+.lite { /* to display secondary text like in line tips to the user */
+	color: #ABABAB;
+}
+
+.dbw_flip_show {
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	margin-top: 10px;
+	margin-left: 20px;
+	cursor: pointer;
+	cursor: hand;
+	background-image: url(../images/ar_down.png);
+}
+
+.dbw_flip_hide {
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	margin-top: 10px;
+	margin-left: 20px;
+	cursor: pointer;
+	cursor: hand;
+	background-image: url(../images/ar_right.png);
+}
+
+
+span.guiButton {
+	text-decoration:none;
+	font-size : 90%;
+	padding : 2px 4px 2px 4px;
+	border-style : solid ;
+	border-top-color : #BDC7E7;
+	border-bottom-color : #182052;
+	border-left-color : #BDC7E7;
+	border-right-color : #182052;
+	border-width : 1px 1px 1px 1px;
+	cursor: pointer;
+	cursor: hand;
+	background-color : #EFEFEF;
+	color : #6B79A5;
+	font-weight :normal;
+	margin-left: 6px;
+}
+

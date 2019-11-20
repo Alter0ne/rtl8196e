@@ -1,0 +1,14 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/liblxc.so.1.3.0
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/lxc.pc
+./usr/lib/liblxc.so
+./usr/lib/liblxc.so.1
+./usr/include
+./usr/include/lxc
+./usr/include/lxc/lxccontainer.h
+./usr/include/lxc/version.h
+./usr/include/lxc/attach_options.h

@@ -1,0 +1,36 @@
+.TH mCreate 3 "12 July 2007" "ClearSilver" "util/ulocks.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+mCreate  - initialize a mutex.
+.SH SYNOPSIS
+.Ss
+#include <util/ulocks.h>
+.Se
+.Ss
+NEOERR *mCreate(pthread_mutex_t *mutex);
+
+.Se
+
+.SH ARGUMENTS
+mutex - mutex to initialize.
+
+.SH DESCRIPTION
+Initializes the mutex <mutex>.
+
+MT-Level: Safe for unique <mutex>.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR mCreate "(3), "fCreate "(3), "mUnlock "(3), "fUnlock "(3), "cBroadcast "(3), "cSignal "(3), "fFind "(3), "cDestroy "(3), "cCreate "(3), "mDestroy "(3), "cWait "(3), "fLock "(3), "fDestroy "(3), "mLock

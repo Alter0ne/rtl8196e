@@ -1,0 +1,29 @@
+	$ mkdir patches
+
+	$ cat > test.txt
+	< This is test.txt.
+
+	$ quilt new test.diff
+	> Patch %{P}test.diff is now on top
+	$ echo %{?}
+	> 0
+
+	$ quilt add test.txt
+	> File test.txt added to patch %{P}test.diff
+	$ echo %{?}
+	> 0
+
+	$ cat >> test.txt
+	< Line two.
+
+	$ quilt refresh
+	> Refreshed patch %{P}test.diff
+	$ echo %{?}
+	> 0
+
+	$ sed -e "s/ /_/g" patches/test.diff > patches/test.new
+	$ mv patches/test.new patches/test.diff
+	$ quilt pop
+	> Patch %{P}test.diff does not remove cleanly (refresh it or enforce with -f)
+	$ echo %{?}
+	> 1

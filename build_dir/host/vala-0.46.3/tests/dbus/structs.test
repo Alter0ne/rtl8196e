@@ -1,0 +1,89 @@
+Packages: gio-2.0
+D-Bus
+
+Program: client
+
+struct FooStruct {
+	int i;
+	string s;
+
+	public FooStruct (int i, string s) {
+		this.i = i;
+		this.s = s;
+	}
+}
+
+[DBus (name = "org.example.Test")]
+interface Test : Object {
+	public abstract FooStruct test_property { owned get; set; }
+
+	public abstract FooStruct test_struct (FooStruct f, out FooStruct g) throws IOError;
+}
+
+void main () {
+	// client
+	Test test = Bus.get_proxy_sync (BusType.SESSION, "org.example.Test", "/org/example/test", DBusProxyFlags.DO_NOT_LOAD_PROPERTIES);
+
+	FooStruct f, g, h;
+	f = FooStruct (42, "hello");
+	h = test.test_struct (f, out g);
+	assert (g.i == 23);
+	assert (g.s == "world");
+	assert (h.i == 11);
+	assert (h.s == "vala");
+
+	test.test_property = f;
+	g = test.test_property;
+	assert (g.i == 42);
+	assert (g.s == "hello");
+}
+
+Program: server
+
+struct FooStruct {
+	int i;
+	string s;
+
+	public FooStruct (int i, string s) {
+		this.i = i;
+		this.s = s;
+	}
+}
+
+[DBus (name = "org.example.Test")]
+class Test : Object {
+	public FooStruct test_property { owned get; set; }
+
+	public FooStruct test_struct (FooStruct f, out FooStruct g) {
+		assert (f.i == 42);
+		assert (f.s == "hello");
+		g = FooStruct (23, "world");
+		return FooStruct (11, "vala");
+	}
+}
+
+MainLoop main_loop;
+
+void client_exit (Pid pid, int status) {
+	// client finished, terminate server
+	assert (status == 0);
+	main_loop.quit ();
+}
+
+void main () {
+	var conn = Bus.get_sync (BusType.SESSION);
+	conn.register_object ("/org/example/test", new Test ());
+
+	// try to register service in session bus
+	var request_result = conn.call_sync ("org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus", "RequestName",
+	                                      new Variant ("(su)", "org.example.Test", 0x4), null, 0, -1);
+	assert ((uint) request_result.get_child_value (0) == 1);
+
+	// server ready, spawn client
+	Pid client_pid;
+	Process.spawn_async (null, { "dbus_structs_client" }, null, SpawnFlags.DO_NOT_REAP_CHILD, null, out client_pid);
+	ChildWatch.add (client_pid, client_exit);
+
+	main_loop = new MainLoop ();
+	main_loop.run ();
+}

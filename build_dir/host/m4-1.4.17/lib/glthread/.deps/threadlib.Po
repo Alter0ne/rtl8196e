@@ -1,0 +1,6 @@
+glthread/threadlib.o: glthread/threadlib.c /usr/include/stdc-predef.h \
+ config.h
+
+/usr/include/stdc-predef.h:
+
+config.h:

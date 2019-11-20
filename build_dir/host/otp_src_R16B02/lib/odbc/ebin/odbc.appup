@@ -1,0 +1,8 @@
+%% -*- erlang -*-
+{"2.10.17",
+ [
+  {<<"2\\.*">>,  [{restart_application, odbc}]}
+ ],
+ [
+  {<<"2\\.*">>,  [{restart_application, odbc}]}
+ ]}.

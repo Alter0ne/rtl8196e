@@ -1,0 +1,10 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/liboping.so
+./usr/lib/liboping.so.0
+./usr/lib/liboping.a
+./usr/lib/liboping.so.0.2.9
+./usr/include
+./usr/include/oping.h

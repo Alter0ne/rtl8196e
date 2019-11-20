@@ -1,0 +1,95 @@
+<!--
+ * Asterisk GUI - Upload gui overlay tar files
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * 
+ * Copyright (C) 2008, Digium, Inc.
+ * All Rights Reserved.
+ *
+-->
+<html>
+<head>
+	<title>GUI Overlay Upload</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Upload GUI overlay file
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<tr  id='uploadOVERLAY_iframe_container'>
+		<td align=center>
+			<div style='margin-top: 20px; margin-left:30px'><B>&nbsp;Upload a overlay file&nbsp;</B></div>
+			<IFRAME id="uploadOVERLAY_iframe" src='upload_form.html' width="480" height="100" frameborder="0" border="0" marginheight="0" marginwidth="0"></IFRAME>
+		</td>
+	</tr>
+
+	</table>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script>
+
+	starteduploading = 0;
+	var overlay_upload_Path ;
+	var overlay_disk_Path = '/var/lib/asterisk/gui-overlay/';
+
+	var localajaxinit = function(){
+		top.document.title = 'Upload GUI overlay file' ;
+	};
+
+	var onUploadForm_load = function(){
+		if(!top.sessionData.httpConf.postmappings_defined || !top.sessionData.httpConf.uploadPaths['backups'] ){
+			top.log.error('AG102');
+			$('#uploadOVERLAY_iframe_container').hide();
+			return ;
+		}
+
+		overlay_upload_Path = top.sessionData.httpConf.uploadPaths['backups'] ;
+		var upload_action_path = (top.sessionData.httpConf.prefix) ? '/' + top.sessionData.httpConf.prefix + '/backups' : '/backups' ;
+		_$('uploadOVERLAY_iframe').contentWindow.document.getElementById('form22').action =  upload_action_path ;
+		_$('uploadOVERLAY_iframe').contentWindow.document.getElementById('UploadFORM_UPLOAD_BUTTON').value =  'Upload OverLay file' ;
+	};
+
+
+	var onUploadForm_beforeUploading = function(){
+		if( !upload_Filename || !upload_Filename.toLowerCase().endsWith('.tar') ){
+			alert('overlay file needs to be a tar file !');
+			return false;
+		}
+
+		starteduploading = 1;
+		parent.ASTGUI.dialog.waitWhile('File Upload in progress, please wait ..');
+		return true;
+	};
+
+
+	var onUploadForm_unload = function(){
+		if(!starteduploading){ return; }
+		if ( overlay_upload_Path.endsWith('/') ){ overlay_upload_Path = overlay_upload_Path.rChop('/'); }
+
+		ASTGUI.feedback({ msg:'Overlay File Uploaded !!', showfor: 3 });
+		$('#uploadOVERLAY_iframe_container').hide();
+		parent.ASTGUI.dialog.waitWhile('unpacking overlay file');
+
+
+		ASTGUI.systemCmd( 'rm '+ overlay_disk_Path + '* -rf' , function(){
+			ASTGUI.systemCmd( 'tar -xf '+ overlay_upload_Path + '/' + upload_Filename + ' -C ' + overlay_disk_Path, function(){
+				ASTGUI.systemCmd( 'rm -f '+ overlay_upload_Path + '/' + upload_Filename , function(){
+					ASTGUI.feedback({ msg:'Done !!', showfor: 3 });
+					var t = top.window.location.href;
+					top.window.location.replace(t,true);
+				});
+			});
+		});
+		return;
+	};
+
+
+	</script>
+</body>
+</html>

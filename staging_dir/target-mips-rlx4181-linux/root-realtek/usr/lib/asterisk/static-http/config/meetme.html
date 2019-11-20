@@ -1,0 +1,154 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Configuration for Conference Bridges
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Manage Conference Rooms</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		#table_meetmelist {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+
+		#table_meetmelist tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_meetmelist tr.frow td{ font-weight:bold; }
+		#table_meetmelist tr td{ padding : 3px; }
+		#table_meetmelist tr.even { background: #DFDFDF; }
+		#table_meetmelist tr.odd{ background: #FFFFFF; }
+		#table_meetmelist tr.even:hover, #table_meetmelist tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	</style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		Manage Conference Rooms 
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='top_buttons'>
+		<span class='guiButtonNew' onclick='newMeetme_form();'>New Conference Bridge</span>
+		<span class='lite_Heading'  style='margin-left: 80px'> Conference Rooms </span>
+	</div>
+
+	<table id='table_meetmelist' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="edit_MeetMeDiv" STYLE="width:630; height:310;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span id="edit_MeetMe_title"></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<TR>	<TD align="right" width=100>Extension : </TD>
+				<TD>	<input id="edit_Ext" size=5 field_name='Extension' validation='numeric' required='yes'> 
+					<img src="images/tooltip_info.gif" tip="en,meetme,0" class='tooltipinfo'>
+				</TD>
+				<TD align="right">Marked/Admin user Extension : </TD>
+				<TD>	<input id="edit_adminExtension" size=5 field_name='Marked/Admin user Extension' validation='numeric'> 
+					<img src="images/tooltip_info.gif" tip="en,meetme,10" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<tr>	<td align="center" colspan=4>
+					<fieldset>
+						<legend>&nbsp;Password Options:&nbsp;</legend>
+						<table align='center'>
+						<TR>	<TD align="right" width=90>Pin Code:</TD>
+							<TD>	<input id="edit_PinCode" size=5  field_name='Pin Code' validation='numeric'>
+								<img src="images/tooltip_info.gif" tip="en,meetme,1" class='tooltipinfo'>
+							</TD>
+								<TD align="right" width=130>Admin PinCode:</TD>
+								<TD><input id="edit_AdminPinCode" size=5  field_name='Admin PinCode' validation='numeric'>
+									<img src="images/tooltip_info.gif" tip="en,meetme,2" class='tooltipinfo'>
+								</TD>
+						</TR>
+						</table>
+					</fieldset>
+				</td>
+			</tr>
+			<tr>	<td align="center" colspan=4>
+				<fieldset>
+					<legend>&nbsp;Conference Room Options:&nbsp;</legend>
+					<table align='center'>
+					<tr>	<td align=right><input type='checkbox' id='edit_moh_firstcaller'>
+							<img src="images/tooltip_info.gif" tip="en,meetme,3" class='tooltipinfo'>
+						&nbsp;</td>
+						<td><label for='edit_moh_firstcaller'>Play hold music for first caller</label></td>
+						<td align=right><input type='checkbox' id='edit_closeLastMarkedUser'>
+							<img src="images/tooltip_info.gif" tip="en,meetme,12" class='tooltipinfo'>
+						&nbsp;</td>
+						<td><label for='edit_closeLastMarkedUser'>Close conference when last marked user exits</label></td>
+					</tr>
+					<tr>	<td align=right><input type='checkbox' id='edit_callerMenu'>
+							<img src="images/tooltip_info.gif" tip="en,meetme,4" class='tooltipinfo'>
+						&nbsp;</td>
+							<td><label for='edit_callerMenu'>Enable caller menu</label></td>
+							<td align=right><input type='checkbox' id='edit_announceCallers'>
+							<img src="images/tooltip_info.gif" tip="en,meetme,5" class='tooltipinfo'>
+						&nbsp;</td>
+							<td><label for='edit_announceCallers'>Announce callers</label></td>
+					</tr>
+					<tr>	<td align=right><input type='checkbox' id='edit_quietMode'>
+						<img src="images/tooltip_info.gif" tip="en,meetme,8" class='tooltipinfo'>
+						&nbsp;</td>
+							<td><label for='edit_quietMode'>Quiet Mode</label></td>
+							<td align=right><input type='checkbox' id='edit_waitMarked'>
+							<img src="images/tooltip_info.gif" tip="en,meetme,9" class='tooltipinfo'>
+						&nbsp;</td>
+							<td><label for='edit_waitMarked'>Wait for marked user</label></td>
+					</tr>
+					<tr>	<td align=right><input type='checkbox' id='edit_recording'>
+						<img src="images/tooltip_info.gif" tip="en,meetme,11" class='tooltipinfo'>
+						&nbsp;</td>
+							<td><label for='edit_recording'>Record conference</label></td>
+							<td align=right>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+					</table>
+				</fieldset>
+				</td>
+			</tr>
+
+			<TR>	<TD colspan=4 align=center valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='edit_meetMe_apply();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/meetme.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

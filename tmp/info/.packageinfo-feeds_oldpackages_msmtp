@@ -1,0 +1,97 @@
+Source-Makefile: package/feeds/oldpackages/msmtp/Makefile
+Package: msmtp
+Version: 1.8.6-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUILD_NLS:libintl-full +libgnutls +ca-bundle
+Menu-Depends: 
+Provides: 
+Build-Variant: ssl
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: mail
+Category: Mail
+Title: Simple sendmail SMTP forwarding (with SSL support)
+Maintainer: Rosen Penev <rosenp@gmail.com>
+Source: msmtp-1.8.6.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description:  msmtp is an SMTP client. In the default mode, it transmits a mail to
+ an SMTP server (for example at a free mail provider) which does the
+ delivery. To use this program with your mail user agent (MUA), create
+ a configuration file with your mail account(s) and tell your MUA to
+ call msmtp instead of /usr/sbin/sendmail.
+ This package is built with SSL support.
+https://marlam.de/msmtp
+Rosen Penev <rosenp@gmail.com>
+@@
+
+Package: msmtp-nossl
+Version: 1.8.6-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUILD_NLS:libintl-full
+Menu-Depends: 
+Provides: msmtp
+Build-Variant: nossl
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: mail
+Category: Mail
+Title: Simple sendmail SMTP forwarding (without SSL support)
+Maintainer: Rosen Penev <rosenp@gmail.com>
+Source: msmtp-1.8.6.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description:  msmtp is an SMTP client. In the default mode, it transmits a mail to
+ an SMTP server (for example at a free mail provider) which does the
+ delivery. To use this program with your mail user agent (MUA), create
+ a configuration file with your mail account(s) and tell your MUA to
+ call msmtp instead of /usr/sbin/sendmail.
+ This package is built without SSL support.
+https://marlam.de/msmtp
+Rosen Penev <rosenp@gmail.com>
+@@
+
+Package: msmtp-queue
+Version: 1.8.6-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUILD_NLS:libintl-full +bash +msmtp
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: mail
+Category: Mail
+Title: Simple sendmail SMTP forwarding (queue scripts)
+Maintainer: Rosen Penev <rosenp@gmail.com>
+Source: msmtp-1.8.6.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description:  msmtp is an SMTP client. In the default mode, it transmits a mail to
+ an SMTP server (for example at a free mail provider) which does the
+ delivery. To use this program with your mail user agent (MUA), create
+ a configuration file with your mail account(s) and tell your MUA to
+ call msmtp instead of /usr/sbin/sendmail.
+ This package contains the msmtp queue scripts.
+https://marlam.de/msmtp
+Rosen Penev <rosenp@gmail.com>
+@@
+
+Package: msmtp-mta
+Version: 1.8.6-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUILD_NLS:libintl-full +msmtp
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: mail
+Category: Mail
+Title: Simple sendmail SMTP forwarding (as MTA)
+Maintainer: Rosen Penev <rosenp@gmail.com>
+Source: msmtp-1.8.6.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description:  msmtp is an SMTP client. In the default mode, it transmits a mail to
+ an SMTP server (for example at a free mail provider) which does the
+ delivery. To use this program with your mail user agent (MUA), create
+ a configuration file with your mail account(s) and tell your MUA to
+ call msmtp instead of /usr/sbin/sendmail.
+ This package add a link from sendmail to msmtp
+ and is built with SSL support.
+https://marlam.de/msmtp
+Rosen Penev <rosenp@gmail.com>
+@@
+
+

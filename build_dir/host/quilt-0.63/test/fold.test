@@ -1,0 +1,69 @@
+	$ mkdir patches
+
+	$ cat > patches/series
+	< patch1.diff
+
+	$ cat > patches/patch1.diff
+	< --- q.orig/file1.txt
+	< +++ q/file1.txt
+	< @@ -0,0 +1 @@
+	< +This is file1.txt.
+	< --- q.orig/file2.txt
+	< +++ q/file2.txt
+	< @@ -0,0 +1 @@
+	< +This is file2.txt.
+
+	$ quilt push -q
+	> Applying patch %{P}patch1.diff
+	> Now at patch %{P}patch1.diff
+
+	$ quilt files
+	> file1.txt
+	> file2.txt
+
+	$ quilt fold -q
+	< --- q.orig/file2.txt
+	< +++ q/file2.txt
+	< @@ -1 +0,0 @@
+	< -This is file2.txt.
+	< --- q.orig/dir/file3.txt
+	< +++ q/dir/file3.txt
+	< @@ -0,0 +1 @@
+	< +This is file3.txt.
+
+	$ quilt diff -p ab
+	> Index: b/file1.txt
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/file1.txt
+	> @@ -0,0 +1 @@
+	> +This is file1.txt.
+	> Index: b/dir/file3.txt
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/dir/file3.txt
+	> @@ -0,0 +1 @@
+	> +This is file3.txt.
+
+	$ cd dir
+	$ quilt fold -q
+	< --- dir.orig/file3.txt
+	< +++ dir/file3.txt
+	< @@ -1 +1 @@
+	< -This is file3.txt.
+	< +This is file3.txt, now modified.
+
+	$ cd ..
+	$ quilt diff -p ab
+	> Index: b/file1.txt
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/file1.txt
+	> @@ -0,0 +1 @@
+	> +This is file1.txt.
+	> Index: b/dir/file3.txt
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/dir/file3.txt
+	> @@ -0,0 +1 @@
+	> +This is file3.txt, now modified.

@@ -1,0 +1,129 @@
+Source-Makefile: target/linux/at91/Makefile
+Target: at91
+Target-Board: at91
+Target-Name: Atmel AT91
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: arm
+Target-Arch-Packages: at91
+Target-Features: dt ext2 gpio rtc squashfs targz usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -march=armv5te -mtune=arm926ej-s
+CPU-Type: arm926ej-s
+Linux-Version: 3.8.13
+Linux-Release: 1
+Linux-Kernel-Arch: arm
+Target-Description:
+
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-usb-ohci 
+Target-Profile: Default
+Target-Profile-Name: Default Profile
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Default package set compatible with most boards.
+@@
+
+Target-Profile: AT91SAM9263EK
+Target-Profile-Name: Atmel AT91SAM9263-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9263-EK eval board
+@@
+
+Target-Profile: AT91SAM9G15EK
+Target-Profile-Name: Atmel AT91SAM9G15-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9G15-EK eval board
+@@
+
+Target-Profile: AT91SAM9G20EK
+Target-Profile-Name: Atmel AT91SAM9G20-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9G20-EK eval board
+@@
+
+Target-Profile: AT91SAM9G20EK-2MMC
+Target-Profile-Name: Atmel AT91SAM9G20-EK 2MMC
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9G20-EK eval board with 2 MMC
+@@
+
+Target-Profile: AT91SAM9G25EK
+Target-Profile-Name: Atmel AT91SAM9G25-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9G25-EK eval board
+@@
+
+Target-Profile: AT91SAM9G35EK
+Target-Profile-Name: Atmel AT91SAM9G35-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9G35-EK eval board
+@@
+
+Target-Profile: AT91SAM9M10G45EK
+Target-Profile-Name: Atmel AT91SAM9M10G45-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9M10G45-EK eval board
+@@
+
+Target-Profile: AT91SAM9X25EK
+Target-Profile-Name: Atmel AT91SAM9X25-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9X25-EK eval board
+@@
+
+Target-Profile: AT91SAM9X35EK
+Target-Profile-Name: Atmel AT91SAM9X35-EK
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	Atmel AT91SAM9X35-EK eval board
+@@
+
+Target-Profile: LMU5000
+Target-Profile-Name: CalAmp LMU5000
+Target-Profile-Packages: kmod-rtc-pcf2123 kmod-usb-acm kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-sierrawireless kmod-gpio-mcp23s08 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	CalAmp LMU5000
+@@
+
+

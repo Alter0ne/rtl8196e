@@ -1,0 +1,1 @@
+/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/../host/share/aclocal/ltversion.m4

@@ -1,0 +1,21 @@
+Source-Makefile: package/feeds/oldpackages/setserial/Makefile
+Package: setserial
+Version: 2.17-3
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Serial port attribute utility
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Source: setserial-2.17.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  Setserial is a program which allows you to look at and change various
+ attributes of a serial device, including its port, its IRQ, and other
+ serial port options.
+http://setserial.sourceforge.net/
+Jo-Philipp Wich <jo@mein.io>
+@@
+
+

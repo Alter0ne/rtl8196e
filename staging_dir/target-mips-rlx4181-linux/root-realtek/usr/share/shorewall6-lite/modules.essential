@@ -1,0 +1,27 @@
+#
+# Shorewall6 version 4 - Essential Modules File
+#
+# /usr/share/shorewall6/modules.essential
+#
+#	This file loads the modules that may be needed by the firewall.
+#
+#	THE ORDER OF THE COMMANDS BELOW IS IMPORTANT!!!!!! You MUST load in
+#	dependency order. i.e., if M2 depends on M1 then you must load M1
+#	before you load M2.
+#
+#  If you need to modify this file, copy it to /etc/shorewall and modify the
+#  copy.
+#
+###############################################################################
+loadmodule nfnetlink
+loadmodule x_tables
+loadmodule ip6_tables 
+loadmodule ip6table_filter 
+loadmodule ip6table_mangle 
+loadmodule ip6table_raw
+loadmodule xt_conntrack
+loadmodule nf_conntrack_ipv6
+loadmodule xt_state
+loadmodule xt_tcpudp
+loadmodule ip6t_REJECT
+loadmodule ip6t_LOG

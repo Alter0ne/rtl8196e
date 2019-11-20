@@ -1,0 +1,42 @@
+#!/bin/sh -e
+#
+#    mem: grab the current memory and usage
+#    Copyright (C) 2008 Canonical Ltd.
+#
+#    Authors: Dustin Kirkland <kirkland@canonical.com>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+PKG="byobu"
+color 2>/dev/null || color() { true; }
+
+if [ "$1" = "--detail" ]; then
+	free
+	exit 0
+fi
+
+. "$HOME/.$PKG/status"
+[ "$mem_used" = "1" ] && comma="," || whitespace=" "
+
+mem=`head -n1 /proc/meminfo  | awk '{print $2}'`
+if [ $mem -ge 1048576 ]; then
+	mem=$(echo "$mem" | awk '{ printf "%.1f", $1 / 1048576 }')
+	unit="GB"
+elif [ $mem -ge 1024 ]; then
+	mem=$(echo "$mem" | awk '{ printf "%.0f", $1 / 1024 }')
+	unit="MB"
+else
+	mem="$mem"
+	unit="KB"
+fi
+printf "$(color b g W)%s$(color -)$(color g W)$unit%s$(color -)%s" "$mem" "$comma" "$whitespace"

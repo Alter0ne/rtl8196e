@@ -1,0 +1,117 @@
+The scripts in this package simplify working with a series of patches.
+The usual tasks like applying, refreshing and reversing are supported.
+
+Please see the paper "How To Survive With Many Patches /or/
+Introduction to Quilt" for an introduction.
+
+
+Command reference
+=================
+@REFERENCE@
+
+
+Typical Usages:  New patches; Importing patches; Patch management
+======================================================================
+
+Add new patches:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.  create a new patch:		quilt new {patchname, e.g., sysctl_fix.patch}
+
+2.  add/edit file(s):		quilt edit filepath
+or:
+2a. add file(s) to patch:	quilt add {filepath}
+2b. manual edit file(s)		use your $editor
+
+3.  update the patch:		quilt refresh
+3b. list the patch description:		quilt header [patch]
+3c. update the patch description:	quilt header -e [patch]
+
+4.  list files in the patch:	quilt files
+
+5.  show current patch contents:	quilt diff
+
+6.  apply current, ready for next:	quilt push
+
+7.  remove file(s) from patch:	quilt remove {filepath}
+
+Importing patches:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.  import a patch:		quilt import patchfile
+
+2.  apply it:			quilt push
+
+3.  update the patch:		quilt refresh
+3b. list the patch description:		quilt header [patch]
+3c. update the patch description:	quilt header -e [patch]
+
+4.  list files in the patch:	quilt files
+
+5.  show current patch contents:	quilt diff
+
+Import/Apply a series file + patches to a tree:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.  cp(1) the patches directory ('series' file + all patch files) to
+    the expected patches location (as specified in your .quiltrc file)
+
+2.  apply all of series:	quilt push -a
+
+Other patch management:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.  remove files from a patch:	quilt remove {filepath}
+
+2.  remove unapplied patch:	quilt delete {patchname}
+
+3.  list all patch names:	quilt series
+
+4.  list all applied/unapplied:	quilt applied | unapplied
+
+5.  list top/previous/next patch name:	quilt top | previous | next
+
+6.  list patches modifying file:	quilt patches {filepath}
+
+7.  rename a patch:		quilt rename {patchname}
+
+8.  duplicate a patch:		quilt fork {patchname}
+
+9.  prepare or send mails:	quilt mail ...
+
+10. search in source files:	quilt grep ...
+
+11. create snapshot:		quilt snapshot
+
+12. init from RPM spec or series file:	quilt setup
+
+13. distribution of patches:	quilt diff --combine
+		and distribute the combined diff file,
+	or distribute the patches/ directory content
+
+
+Helper files/scripts
+====================
+
+backup-files
+	A simple utility that creates / restores / removes
+	backup files.
+
+dependency-graph
+	A utility to compute patch dependencies from the QUILT_PC
+	metadata.
+
+edmail
+	A utility to manipulate the headers of an Internet mail message.
+
+guards
+	Convert a series file with conditional statements into a series
+	file as expected; see the guards(1) manual page.
+
+inspect
+	A script to create a series file from an rpm spec file (including
+	a list of tar files).
+
+patchfns
+utilfns
+	Collections of functions.
+
+remove-trailing-ws
+	A utility to report trailing whitespace, and remove trailing
+	whitespace from files.

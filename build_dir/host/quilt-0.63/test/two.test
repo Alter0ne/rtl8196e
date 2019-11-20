@@ -1,0 +1,183 @@
+	$ mkdir patches d
+
+	$ quilt new patch1.diff
+	> Patch %{P}patch1.diff is now on top
+
+	$ cd d
+	$ mkdir dir
+	$ echo "This is file one." > dir/file1
+	$ quilt add dir/file1
+	> File d/dir/file1 added to patch %{_P}patch1.diff
+
+	$ quilt add file2
+	> File d/file2 added to patch %{_P}patch1.diff
+
+	$ quilt diff
+	$ quilt diff -z
+	$ quilt refresh
+	> Nothing in patch %{_P}patch1.diff
+
+	$ echo "This is file two." > file2
+	$ quilt diff -p ab
+	> Index: b/d/file2
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/d/file2
+	> @@ -0,0 +1 @@
+	> +This is file two.
+
+	$ quilt diff -z -p ab
+	> Index: b/d/file2
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/d/file2
+	> @@ -0,0 +1 @@
+	> +This is file two.
+
+	$ quilt refresh
+	> Refreshed patch %{_P}patch1.diff
+
+	$ quilt diff -z
+	$ echo "Another line has been added." >> dir/file1
+	$ quilt diff -z -p ab
+	> Index: b/d/dir/file1
+	> ===================================================================
+	> --- a/d/dir/file1
+	> +++ b/d/dir/file1
+	> @@ -1 +1,2 @@
+	>  This is file one.
+	> +Another line has been added.
+
+	$ cd dir
+	$ quilt diff -z file1 -p ab
+	> Index: b/d/dir/file1
+	> ===================================================================
+	> --- a/d/dir/file1
+	> +++ b/d/dir/file1
+	> @@ -1 +1,2 @@
+	>  This is file one.
+	> +Another line has been added.
+
+	$ cd ..
+
+	$ quilt refresh
+	> Refreshed patch %{_P}patch1.diff
+
+	$ cd ..
+	$ quilt new patch2.diff
+	> Patch %{P}patch2.diff is now on top
+
+	$ cd d
+	$ quilt add dir/file3
+	> File d/dir/file3 added to patch %{_P}patch2.diff
+
+	$ echo "This is file three." > dir/file3
+	$ quilt refresh
+	> Refreshed patch %{_P}patch2.diff
+
+	$ quilt add -P patch1 dir/file3
+	> File d/dir/file3 modified by patch %{_P}patch2.diff
+
+	$ quilt pop -R
+	> Removing patch %{_P}patch2.diff
+	> Removing d/dir/file3
+	>
+	> Now at patch %{_P}patch1.diff
+
+	$ quilt add file4
+	> File d/file4 added to patch %{_P}patch1.diff
+
+	$ echo "This is file 4." > file4
+	$ quilt refresh
+	> Refreshed patch %{_P}patch1.diff
+
+	$ quilt push
+	> Applying patch %{_P}patch2.diff
+	>~ patching file `?d/dir/file3'?
+	>
+	> Now at patch %{_P}patch2.diff
+
+	$ cd ..
+	$ quilt new subdir/patch3.diff
+	> Patch %{P}subdir/patch3.diff is now on top
+
+	$ cd d
+	$ quilt add file4
+	> File d/file4 added to patch %{_P}subdir/patch3.diff
+
+	$ rm -f file4
+	$ quilt diff -p ab
+	> Index: b/d/file4
+	> ===================================================================
+	> --- a/d/file4
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -This is file 4.
+
+	$ quilt add -P patch2 file4
+	> File d/file4 modified by patch %{_P}subdir/patch3.diff
+
+	$ quilt refresh
+	> Refreshed patch %{_P}subdir/patch3.diff
+
+	$ echo "Another line here, too." >> dir/file3
+	$ quilt refresh patch2
+	> Refreshed patch %{_P}patch2.diff
+
+	$ echo "Another line added." >> file2
+	$ quilt diff -z -P patch1 -p ab
+	> Index: b/d/file2
+	> ===================================================================
+	> --- a/d/file2
+	> +++ b/d/file2
+	> @@ -1 +1,2 @@
+	>  This is file two.
+	> +Another line added.
+	> Warning: more recent patches modify files in patch %{_P}patch1.diff
+
+	$ quilt refresh patch1
+	> More recent patches modify files in patch %{_P}patch1.diff. Enforce refresh with -f.
+
+	$ quilt refresh -f patch1
+	> Refreshed patch %{_P}patch1.diff
+
+	$ echo "Another line here, too." >> dir/file3
+	$ quilt pop -R
+	> Removing patch %{_P}subdir/patch3.diff
+	> Restoring d/file4
+	>
+	> Now at patch %{_P}patch2.diff
+
+	$ quilt refresh patch2
+	> Refreshed patch %{_P}patch2.diff
+
+	$ quilt grep -- two
+	> d/file2:This is file two.
+
+	$ quilt pop -qaR
+	> Removing patch %{_P}patch2.diff
+	> Removing patch %{_P}patch1.diff
+	> No patches applied
+
+	$ quilt patches file4
+	> %{_P}patch1.diff
+	> %{_P}subdir/patch3.diff
+
+	$ quilt push -qa
+	> Applying patch %{_P}patch1.diff
+	> Applying patch %{_P}patch2.diff
+	> Applying patch %{_P}subdir/patch3.diff
+	> Now at patch %{_P}subdir/patch3.diff
+
+	$ quilt patches file4
+	> %{_P}patch1.diff
+	> %{_P}subdir/patch3.diff
+
+	$ quilt pop -q patch2.diff
+	> Removing patch %{_P}subdir/patch3.diff
+	> Now at patch %{_P}patch2.diff
+
+	$ quilt patches -v dir/file3 file4
+	> + %{_P}patch1.diff
+	> = %{_P}patch2.diff
+	>   %{_P}subdir/patch3.diff

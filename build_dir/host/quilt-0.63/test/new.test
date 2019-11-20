@@ -1,0 +1,49 @@
+	$ mkdir patches
+
+	$ echo reject > f
+	$ echo p.diff > patches/series
+	$ cat > patches/p.diff
+	< --- d.orig/f
+	< +++ d/f
+	< @@ -1 +1 @@
+	< -old
+	< +new
+	< --- d.orig/g
+	< +++ d/g
+	< @@ -0,0 +1 @@
+	< +added
+
+
+	$ quilt push
+	> Applying patch %{P}p.diff
+	>~ patching file `?f'?
+	> Hunk #1 FAILED at 1.
+	>~ 1 out of 1 hunk FAILED -- rejects in file `?f'?
+	>~ patching file `?g'?
+	> Patch %{P}p.diff does not apply (enforce with -f)
+
+	$ quilt push -f
+	> Applying patch %{P}p.diff
+	>~ patching file `?f'?
+	> Hunk #1 FAILED at 1.
+	>~ 1 out of 1 hunk FAILED -- saving rejects to (file )?`?f.rej'?
+	>~ patching file `?g'?
+	> Applied patch %{P}p.diff (forced; needs refresh)
+
+	$ echo new > f
+	$ quilt refresh -p ab
+	> Refreshed patch %{P}p.diff
+	$ cat patches/p.diff
+	> Index: b/f
+	> ===================================================================
+	> --- a/f
+	> +++ b/f
+	> @@ -1 +1 @@
+	> -reject
+	> +new
+	> Index: b/g
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/g
+	> @@ -0,0 +1 @@
+	> +added

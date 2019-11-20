@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0041)http://localhost:8144/admin?page=settings -->
+<html><!-- InstanceBegin template="/Templates/peercast.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="title" -->
+<title>PeerCast on {$servMgr.serverIP}:{$servMgr.serverPort}</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="peercast.css" rel="stylesheet" type="text/css">
+<!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+</head>
+
+<body bgcolor="#DDDDDD">
+<div align="center">
+  <table width="100%" height="100%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#999999" bgcolor="#FFFFFF">
+    <tr> 
+      <td align="center" valign="top">
+<div align="center">
+<div align="center">
+            <table width="100%" border="0">
+              <tr> 
+                <td nowrap>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td valign="middle" nowrap> <table border="0" align="center" cellpadding="1" cellspacing="0">
+                          <tr> 
+                            <td rowspan="2" valign="middle"><a href="http://www.peercast.org"><img src="images/small-logo.png" alt="www.peercast.org" border="0"></a></td>
+                            <td valign="bottom"><div align="left"><span class="titlelinksBig">peercast</span></div></td>
+                          </tr>
+                          <tr> 
+                            <td valign="top"><div align="center"><span class="normal-small">{$servMgr.version}</span> 
+                              </div></td>
+                          </tr>
+                        </table>
+                        <div align="center"><span class="titlelinksBig"> </span> 
+                        </div></td>
+                      <td>
+					  {@if servMgr.upgradeURL} 
+	  				    <div align="center" class="normal">
+                        <a href="{$servMgr.upgradeURL}" target="_blank"><strong><font color="#FF0000">Please 
+                          upgrade your client, click here to download the latest 
+                          version. </font></strong></a>
+						</div>
+					  {@else}
+	  				    <div align="center" class="normal-small">
+					  	{$servMgr.rootMsg}
+						</div>						
+                      {@end} 
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div align="center"></div>
+          <table width="100%" border="1" cellpadding="1" cellspacing="0">
+            <tr class="normal"> 
+              <td><div align="center"><a href="index.html">Information</a></div></td>
+              <td><div align="center"><a href="http://yp.peercast.org/?host={$servMgr.serverLocalIP}:{$servMgr.serverPort1}" target="_blank">Yellow 
+                  Pages</a></div></td>
+              <td><div align="center"><a href="relays.html">Relays</a></div></td>
+              <td><div align="center"><a href="broadcast.html">Broadcast</a></div></td>
+              <td><div align="center"><a href="connections.html">Connections</a></div></td>
+              <td><div align="center"><a href="settings.html">Settings</a></div></td>
+              <td><div align="center"><a href="viewlog.html">View Log</a></div></td>
+              <td><div align="center"><a href="logout.html">Logout</a></div></td>
+            </tr>
+          </table>
+          <br>
+          <!-- InstanceBeginEditable name="content" --> 
+          <DIV align=center></DIV>
+          <table width="279" height="313" border=0 align=center>
+              <tr align=middle> 
+                <td width="185" height="301" colspan="2" valign=top><div align="center"> 
+                  <table width="100%" align=center border=0>
+                    <form action=/admin method=get>
+                      <input type=hidden value=add_bcid name=cmd>
+                      <tbody>
+                        <tr align=left bgcolor="#cccccc" class="normal"> 
+                          <td colspan="2"><div align="center"><b>New BCID</b></div></td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td width="10%" bgcolor="#eeeeee">ID</td>
+                          <td bgcolor="#eeeeee"><input name=id size="40"></td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#dddddd">Name</td>
+                          <td bgcolor="#dddddd"><input name=name size="32"></td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#eeeeee">Email</td>
+                          <td bgcolor="#eeeeee"><input name=email size="32"></td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#dddddd">URL</td>
+                          <td bgcolor="#dddddd"><input name=url size="32"></td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td colspan="2" bgcolor="#dddddd" align="center"><INPUT type=submit value="Add" name=submit></td>
+                        </tr>
+                    </form>
+                  </table>
+                  <p>&nbsp;</p>
+                  <table width="100%" align=center border=0>
+                      <tbody>
+                        <tr align=middle bgcolor="#cccccc" class="normal"> 
+                          <td colspan=2><div align="center"><b>Current BCIDs</b></div></td>
+                        </tr>
+ 						{@loop servMgr.numValidBCID}
+                         <tr align=left class="normal"> 
+                          <td width="50%" bgcolor="#eeeeee">ID</td>
+                          <td bgcolor="#eeeeee">{$loop.bcid.id}</td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#dddddd">Name</td>
+                          <td bgcolor="#dddddd">{$loop.bcid.name}</td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#eeeeee">Email</td>
+                          <td bgcolor="#eeeeee">{$loop.bcid.email}</td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#dddddd">URL</td>
+                          <td bgcolor="#dddddd">{$loop.bcid.url}</td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td bgcolor="#eeeeee">Valid</td>
+                          <td bgcolor="#eeeeee">{$loop.bcid.valid}</td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td colspan="2" bgcolor="#dddddd" align="center">
+						  <a href="/admin?cmd=edit_bcid&id={$loop.bcid.id}&del">Delete</a> | 
+						  <a href="/admin?cmd=edit_bcid&id={$loop.bcid.id}&valid=1">Enable</a> | 
+						  <a href="/admin?cmd=edit_bcid&id={$loop.bcid.id}&valid=0">Disable</a>  
+						  </td>
+                        </tr>
+                        <tr align=left class="normal"> 
+                          <td colspan="2">&nbsp;</td>
+                        </tr>
+						{@end}
+                      </tbody>
+                    </table>
+                    
+                  <p>&nbsp;</p>
+                  </div></td>
+              </tr>
+            <tr> 
+              <td width="185"> 
+          </table>
+          <!-- InstanceEndEditable --> 
+          <hr size="1">
+          <div align="center" class="normal-small"> &copy; 2005<a href="http://www.peercast.org" target="_blank"> 
+            peercast.org</a> </div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+</body>
+<!-- InstanceEnd --></html>

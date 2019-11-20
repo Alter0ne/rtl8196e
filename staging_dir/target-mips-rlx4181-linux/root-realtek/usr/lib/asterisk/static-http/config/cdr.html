@@ -1,0 +1,113 @@
+<!--
+ * Asterisk-GUI	-	an Asterisk configuration interface
+ *
+ * CDR Reader - show cdr entries from Master.csv
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Brett Bryant <bbryant@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>CDR Viewer</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		div#cdr_content_container {
+			overflow: auto;
+		}
+
+		.table_CDR {
+			border: 1px solid #666666;
+			border-collapse: collapse;
+			margin-top: 0px;
+			margin-bottom:10px;
+			width: 100%;
+			text-align: left;
+			padding: 3px;
+			overflow: hidden;
+		}
+		.table_CDR thead { background: #6b79a5; color: #CED7EF;}
+		.table_CDR thead th{ font-weight:bold; cursor: pointer; cursor: hand;}
+		.table_CDR tr td{ padding : 3px; }
+		.table_CDR tr.even { background: #DFDFDF; }
+		.table_CDR tr.odd{ background: #FFFFFF; }
+		.table_CDR tr.even:hover, .table_CDR tr.odd:hover {
+			background: #a8b6e5;
+			cursor: pointer; cursor: hand;
+		}
+
+		.info {
+			font-size: small;
+			color: #6b79a5;
+		}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		CDR Viewer (<span id="engine"></span>) <span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div class='lite_Heading'>Call Detail Report</div>
+	  <div style="float: right; font-size: medium; color: #6b79a5;">
+	    View:
+	    <select id="selectViewCount">
+		<option value="25">25</option>
+		<option value="100">100</option>
+		<option value="500">500</option>
+		<option value="-1">all</option>
+	    </select>
+	  </div> 
+	<div style='margin-left: 10px; overflow:auto;'>
+	<input type='checkbox' id='showInbound'>Inbound calls<img src="images/tooltip_info.gif" tip="en,CDR,1" class='tooltipinfo'>
+	<input type='checkbox' id='showOutbound'>Outbound calls<img src="images/tooltip_info.gif" tip="en,CDR,2" class='tooltipinfo'>
+	<input type='checkbox' id='showInternal'>Internal calls<img src="images/tooltip_info.gif" tip="en,CDR,3" class='tooltipinfo'>
+	<input type='checkbox' id='showExternal'>External calls<img src="images/tooltip_info.gif" tip="en,CDR,4" class='tooltipinfo'>
+	<br>
+	<input type='checkbox' id='longFields'>Show all fields<img src="images/tooltip_info.gif" tip="en,CDR,5" class='tooltipinfo'>
+	<input type='checkbox' id='showSystem'>Show system calls<img src="images/tooltip_info.gif" tip="en,CDR,0" class='tooltipinfo'>
+	</div>
+	<!-- <a href="cdr_conf.html" target="_self">Configure CDRs</a></div> -->
+	<div class='top_buttons' style="color: #6b79a5;">
+	<div id="info" class="info"></div>
+	<span id='prevPageBtn' class='guiButton' onclick="javascript: prevPage();">Previous</span>
+	<span id='nextPageBtn' class='guiButton' onclick="javascript: nextPage();">Next</span>
+	Click on column header to sort by that column. Click on row to display full record.
+	</div>
+	<div id='cdr_content_container' style='margin-left: 10px; overflow:auto;'>
+	</div>
+	<div id="cdr_calldetail_DIV" STYLE="width:620; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+		<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id='cdr_calldetail_Title'>Call Detail Record</span>
+		</TD>
+		<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE align=left cellpadding=2 cellspacing=2 border=0>
+		<TR id='cdr_calldetail_table'>
+		<TD id='cdr_calldetail_text'>Text here</TD>
+		</TR>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/cdr.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.fixedheader.js"></script> <!-- OPTIONAL, for fixed table header. Need not be present -->
+</body>
+</html>

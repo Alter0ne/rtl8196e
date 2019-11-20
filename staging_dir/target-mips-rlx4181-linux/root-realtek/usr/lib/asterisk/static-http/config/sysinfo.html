@@ -1,0 +1,174 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Display key system information
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+ -->
+<html>
+<head>
+	<title>System Information</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> System Information <span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span> </div>
+
+	<div id="tabbedMenu"></div>
+
+	<div id="information" style="margin-left: 20px; margin-top: 10px; width: 95%">
+		<div id="osversion_div" style="display:none" class='hideall'>
+			<B>OS Version:</B> <div id="osversion" style="font-family:courier; font-size:10pt;"></div><BR>
+		</div>
+		<div id="uptime_div" style="display:none" class='hideall'>
+			<B>Uptime:</B> <div id="uptime" style="font-family:courier; font-size:10pt;"></div><BR>
+		</div>
+		<div id="asterisk_div" style="display:none" class='hideall'>
+			<B>Asterisk Build:</B> <div id="asterisk" style="font-family:courier; font-size:10pt;"></div><BR>
+		</div>
+		<div id="today_div" style="display:none" class='hideall'>
+			<B>Server Date & TimeZone:</B><span id="today" style="font-family:courier; font-size:10pt; padding:0px 0px 5px 5px;"></span><BR><BR>
+		</div>
+		<div id="hostname_div" style="display:none" class='hideall'>
+			<B>Hostname:</B> <div id="hostname" style="font-family:courier; font-size:10pt;"></div><BR>
+		</div>
+		<div id="ifconfig_div" style="display:none;" class='hideall'>
+			<div id="ifconfig" style="font-family:courier; font-size:9pt;overflow :auto;"></div>
+		</div>
+		<div id="df_div" style="display:none;" class='hideall'>
+			<B>Disk Usage:</B><div id="diskusage" style="font-family:courier; font-size:10pt;"></div>
+			<div id="CF_Usage" style="display:none; width: 430px">
+				<table border=0>
+					<tr>	<td><b><nobr>CompactFlash&reg; : </b></nobr></td>
+						<td id="CF_Usage_td" width="300"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="memory_div" style="display:none;" class='hideall'>
+			<B>Memory Usage:</B><div id="memoryusage" style="font-family:courier; font-size:9.5pt;"></div>
+		</div>
+		<div id="s800i_div" style="display:none;" class='hideall'>
+			<table>
+				<tr>	<td colspan=2 height=30 valign=middle align=center><B>s800i Product Configuration</B></td>
+				</tr>
+				<tr>	<td valign=middle width=210 align=center>
+						<img src='images/aa50.png' border=0 width=165 height=88>
+					</td>
+					<td id="s800i_config" style="font-family:courier; font-size:8.5pt;">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="s800i_dhcpClients_div" style="display:none;" class='hideall'>
+			<B>DHCP Leases:</B>
+			<div id="s800i_dhcpClients_output" style="font-family:courier; font-size:10pt;"></div>
+		</div>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/sysinfo.js"></script>
+	<script type="text/javascript">
+	var localajaxinit = function(){
+		top.document.title = 'System Information' ;
+		parent.ASTGUI.dialog.waitWhile('Loading system Information ...');
+
+		(function(){
+			var t = [{	url:'#',
+					desc:'General',
+					click_function: function(){
+						$('.hideall').hide();
+						$('#osversion_div').show();
+						$('#uptime_div').show();
+						$('#asterisk_div').show();
+						$('#today_div').show();
+						$('#hostname_div').show();
+					}
+				},{	url: '#',
+					desc: 'Network',
+					click_function: function(){
+						$('.hideall').hide();
+						ASTGUI.systemCmdWithOutput( 'ifconfig' , function(output){
+							_$('ifconfig').innerHTML = '<pre>' + output +'</pre>' ;
+							$('.hideall').hide();
+							$('#ifconfig_div').show();
+						});
+					}
+				},{	url: '#',
+					desc: 'Disk Usage',
+					click_function: function(){
+						$('.hideall').hide();
+						ASTGUI.systemCmdWithOutput( 'df -k' , function(output){
+							_$('diskusage').innerHTML = '<pre>' + output +'</pre>';
+							if(parent.sessionData.PLATFORM.isAA50) {
+								try{
+									percentage_usage(output);
+								}catch(err){
+									top.log.debug( '<B>Error Trying to calculate CF usage %');
+								}
+							}
+							$('.hideall').hide();
+							$('#df_div').show();
+						});
+					}
+				},{	url: '#',
+					desc: 'Memory Usage',
+					click_function: function(){
+						$('.hideall').hide();
+						ASTGUI.systemCmdWithOutput( 'free' , function(free){
+							_$('memoryusage').innerHTML = '<pre>' + free +'</pre>';
+							$('.hideall').hide();
+							$('#memory_div').show();
+						});
+					}
+				}];
+			if( parent.sessionData.PLATFORM.isAA50 ) {
+				t.push({	url:'#',
+						desc:'S800i Config',
+						click_function: function(){
+							$('.hideall').hide();
+							ASTGUI.systemCmdWithOutput( 's800iconfig' , function(output){
+								_$('s800i_config').innerHTML = '<PRE>' + output.replace(/S800i Product Configuration/, '') + '</PRE>';
+								$('.hideall').hide();
+								$('#s800i_div').show();
+							});
+						}
+					});
+				t.push({	url:'#',
+						desc:'DHCP Leases',
+						click_function: function(){
+							$('.hideall').hide();
+							ASTGUI.systemCmdWithOutput( 'dhcp_dump' , function(output){
+								$('#s800i_dhcpClients_output').html('<PRE>' + output + '</PRE>');
+								$('.hideall').hide();
+								$('#s800i_dhcpClients_div').show();
+							});
+						}
+					});
+			}
+			ASTGUI.tabbedOptions( _$('tabbedMenu') , t );
+		})();
+		parent.ASTGUI.systemCmd( top.sessionData.directories.script_SysInfo, function(){ parent.ASTGUI.dialog.hide(); getsysinfohtml(); } );
+		parent.ASTGUI.dialog.hide();
+		getsysinfohtml();
+	}
+	</script>
+</body>
+</html>

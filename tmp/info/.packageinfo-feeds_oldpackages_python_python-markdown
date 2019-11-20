@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/python-markdown/Makefile
+Package: python3-markdown
+Submenu: Python
+Version: 3.1.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-setuptools +python3-logging
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Markdown implementation in Python
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: Markdown-3.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   A fast and complete Python implementation of Markdown.
+https://python-markdown.github.io/
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-markdown-src
+Submenu: Python
+Version: 3.1.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Markdown implementation in Python (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: Markdown-3.1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       A fast and complete Python implementation of Markdown..
+    (Contains the Python3 sources for this package).
+https://python-markdown.github.io/
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+

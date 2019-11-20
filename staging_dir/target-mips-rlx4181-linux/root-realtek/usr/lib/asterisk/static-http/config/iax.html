@@ -1,0 +1,337 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Global IAX settings
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>IAX Settings</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+ 	#callNumberLimits div span.callnumber_delete {
+ 		float: right;
+ 		width: 20px;
+ 		background: transparent url("./images/delete_circle.png") no-repeat;
+ 	}
+ 	#callNumberLimits{
+ 		height:120px ;
+ 		background-color:#FFFFFF;
+ 		padding: 5px;
+ 		border-width: 1px;
+ 		border-color: #7E5538;
+ 		border-style: solid;
+ 		cursor: default;
+ 		font: 83%/1.4 arial, helvetica, sans-serif;
+ 		overflow :auto;
+ 	}
+ 	
+ 	#callNumberLimits div {
+ 		clear :both;
+ 		padding : 3px 5px 0px 5px;
+ 		min-height: 20px;
+ 	}
+ 	#callNumberLimits div:hover {
+ 		background-color:#DEDEDE;
+ 	}
+ 	
+ 	#callNumberLimits div span.step_desc {
+ 		float: left;
+ 		/* max-width: 300px; */
+ 		background: transparent;
+ 	}
+ 	#callNumberLimits div span.step_desc:hover{
+ 		background-color:#DEDEDE;
+ 	}
+ 	
+ 	#callNumberLimits div span.step_up {
+ 		float: right;
+ 		width: 20px;
+ 		background: transparent url("./images/asterisk-arrow-up.png") no-repeat;
+ 	}
+ 	
+ 	#callNumberLimits div span.step_down {
+ 		float: right;
+ 		width: 20px;
+ 		background: transparent url("./images/asterisk-arrow-down.png") no-repeat;
+ 	}
+ 	
+ 	#callNumberLimits div span.step_delete {
+ 		float: right;
+ 		width: 20px;
+ 		background: transparent url("./images/delete_circle.png") no-repeat;
+ 	}
+	
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		IAX (Inter Asterisk Exchange Protocol) Configuration
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center>
+		<div id="tabbedMenu"></div>
+		
+		<div style='width: 800px;'>
+		
+			<div id='iaxoptions_general' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>	<td align=right tip="en,iax_general,0" width="50%">Bind Port:</td>
+						<td>&nbsp;<input type='text' size=4 id='bindport' dfalt='4569' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,1">Bind Address:</td>
+						<td>&nbsp;<input type='text' size=14 dfalt='' id='bindaddr' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,2">IAX1 Compatibility:</td>
+						<td><input type='checkbox' id='iaxcompat' dfalt='n'></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,3">No Checksums:</td>
+						<td><input type='checkbox' id='nochecksums' dfalt='n'></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,4">Delay Reject:</td>
+						<td><input type='checkbox' id='delayreject' dfalt='n'></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,5">ADSI:</td>
+						<td><input type='checkbox' dfalt='n' id='adsi'></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,8">Music On Hold Interpret:</td>
+						<td>&nbsp;<input type='text' size=14 id='mohinterpret' dfalt='default' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,9">Music On Hold Suggest:</td>
+						<td>&nbsp;<input type='text' size=14 id='mohsuggest' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,10">Language:</td>
+						<td>&nbsp;<input type='text' size=3 dfalt='en' id='language' class="input8"></td>
+				</tr>	
+				<tr>	<td align=right tip="en,iax_general,11">Bandwidth:</td>
+						<td>&nbsp;<select id="bandwidth" class="input8">
+							<option value="low">low</option>
+							<option value="medium">medium</option>
+							<option value="high">high</option>
+						</select>
+						</td>
+				</tr>
+				</table>
+			</div>
+		
+		
+		
+	<!--		<div id='iaxoptions_cdr' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>	<td align=right tip="en,iax_general,6"  width="50%">AMA Flags:</td>
+						<td>&nbsp;<input type='text' size=14 id='amaflags' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,7">Accountcode:</td>
+						<td>&nbsp;<input type='text' size=14 id='accountcode' class="input8"></td>
+				</tr>
+				</table>
+			</div>-->
+			
+			
+			
+			
+			<div id='iaxoptions_jitterBuffer' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>	<td align=right tip="en,iax_general,12" width="50%">Enable Jitter Buffer:</td>
+						<td><input type='checkbox' id='jitterbuffer'></td>
+				</tr>
+				
+				<tr>	<td align=right tip="en,iax_general,13">Force Jitter Buffer:</td>
+						<td><input type='checkbox' id='forcejitterbuffer'></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,14">Drop Count:</td>
+						<td>&nbsp;<input type='text' size=4 id='dropcount' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,15">Max Jitter Buffer:</td>
+						<td>&nbsp;<input type='text' size=4 id='maxjitterbuffer' dfalt='1000' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,16">Max Interpolation Frames:</td>
+						<td>&nbsp;<input type='text' size=4 id='maxjitterinterps' dfalt='10' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,17">Resync Threshold:</td>
+						<td>&nbsp;<input type='text' size=4 id='resyncthreshold' dfalt='1000' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,18">Max Excess Buffer:</td>
+						<td>&nbsp;<input type='text' size=4 id='maxexcessbuffer' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,19">Min Excess Buffer:</td>
+						<td>&nbsp;<input type='text' size=4 id='minexcessbuffer' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,20">Jitter Shrink Rate:</td>
+						<td>&nbsp;<input type='text' size=4 id='jittershrinkrate' pattern='^\d*$' class="input8"></td>
+				</tr>
+				</table>
+			</div>
+		
+		
+		
+			<div id='iaxoptions_trunkregistration' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>	<td colspan=2 align=center><B>IAX Registration Options</B></td></tr>
+				<tr>	<td align=right tip="en,iax_general,23"  width="50%">Min Reg Expire:</td>
+						<td>&nbsp;<input type='text' size=4 id='minregexpire' dfalt='60'  pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,24">Max Reg Expire:</td>
+						<td>&nbsp;<input type='text' size=4 id='maxregexpire' dfalt='60' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,25">IAX ThreadCount:</td>
+						<td>&nbsp;<input type='text' size=4 id='iaxthreadcount' dfalt='10' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,26">IAX Max ThreadCount:</td>
+						<td>&nbsp;<input type='text' size=4 id='iaxmaxthreadcount' dfalt='100' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,29">Auto Kill:</td>
+						<td>&nbsp;<input size=3 type='text' id='autokill' class="input8"></td>
+				</tr>
+				
+				<tr>	<td align=right tip="en,iax_general,30"><NOBR>Authentication Debugging:</NOBR></td>
+						<td><input type='checkbox' id='authdebug'></td>
+				</tr>
+				<tr>	<td align=right  tip="en,iax_general,31">Codec Priority:</td>
+						<td>&nbsp;<select id="codecpriority" dfalt='reqonly' class="input8">
+								<option value="caller">caller</option>
+								<option value="disabled">disabled</option>
+								<option value="reqonly">reqonly</option>
+							</select>
+						</td>
+				</tr>
+				<tr>	<td align=right  tip="en,iax_general,32">Type of Service:</td>
+						<td>&nbsp;<select size=1 id="tos" class="input8">
+							<option value='ef'>ef</option>
+							<option value='CS0'>CS0</option>
+							<option value='CS1'>CS1</option>
+							<option value='CS2'>CS2</option>
+							<option value='CS3'>CS3</option>
+							<option value='CS4'>CS4</option>
+							<option value='CS5'>CS5</option>
+							<option value='CS6'>CS6</option>
+							<option value='CS7'>CS7</option>
+							<option value='AF11'>AF11</option>
+							<option value='AF12'>AF12</option>
+							<option value='AF13'>AF13</option>
+							<option value='AF21'>AF21</option>
+							<option value='AF22'>AF22</option>
+							<option value='AF23'>AF23</option>
+							<option value='AF31'>AF31</option>
+							<option value='AF32'>AF32</option>
+							<option value='AF33'>AF33</option>
+							<option value='AF41'>AF41</option>
+							<option value='AF42'>AF42</option>
+							<option value='AF43'>AF43</option>
+							</select>
+						</td>
+				</tr>
+				<tr>	<td colspan=2 align=center><BR><B>IAX Trunking Options</B></td></tr>
+				<tr>	<td align=right tip="en,iax_general,21">Trunk Freq:</td>
+						<td>&nbsp;<input type='text' size=4 id='trunkfreq' dfalt='20' pattern='^\d*$' class="input8"></td>
+				</tr>
+				<tr>	<td align=right tip="en,iax_general,22">Trunk Time Stamps:</td>
+						<td><input type='checkbox' id='trunktimestamps' dfalt='n'></td>
+				</tr>
+				</table>
+			</div>
+		
+		
+			
+			<!--<div id='iaxoptions_realtime' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>	<td align=right  tip="en,iax_general,33"  width="50%">Cache Friends:</td>
+						<td><input type='checkbox' id='rtcachefriends'></td>
+				</tr>
+				<tr>	<td align=right  tip="en,iax_general,34">Send Registry Updates:</td>
+						<td><input type='checkbox' id='rtupdate'></td>
+				</tr>
+				<tr>	<td align=right  tip="en,iax_general,35">Auto-Expire Friends:</td>
+						<td><input type='checkbox' id='rtautoclear'></td>
+				</tr>
+				<tr>	<td align=right  tip="en,iax_general,36">Ignore Expired Peers:</td>
+						<td><input type='checkbox' id='rtignoreexpire'></td>
+				</tr>
+				</table>
+			</div>-->
+			
+			<div id='iaxoptions_Codecs' style='display: none;'>
+				<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+				<tr>
+					<td align=right>Allowed Codecs:</td>
+					<td>&nbsp;<span id='allow'></span></td>
+				</tr>
+				</table>
+			</div>
+		
+ 		<div id='iaxoptions_security' style='display: none;'>
+ 			<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+ 			<tr>
+ 				<td align=right width="50%">Call Token Optional: <img src='images/tooltip_info.gif' alt='' class='tooltipinfo' tip='en,iax_general,40'></td>
+ 				<td>&nbsp;<input type='text' size=20 id='calltokenoptional' dfalt='' class="input8" validation='iporrange'></td>
+ 			</tr>
+ 			<tr>
+ 				<td align=right  tip="en,iax_general,41"  width="50%">Max Call Numbers:</td>
+ 				<td>&nbsp;<input type='text' size=4 id='maxcallnumbers' dfalt='' validation='numeric' class="input8"></td>
+ 			</tr>
+ 			<tr>
+ 				<td align=right  tooltip="en,iax_general,42"  width="50%">Max Nonvalidated Call Numbers:</td>
+ 				<td>&nbsp;<input type='text' size=4 id='maxcallnumbers_nonvalidated' dfalt='' validation='numeric' class="input8"></td>
+ 			</tr>
+ 			<tr>
+ 				<td align=right valign=top>Call Number Limits: <img src="images/tooltip_info.gif" tip="en,iax_general,43" class='tooltipinfo'></td>
+ 				<td><div id='callNumberLimits'></div></td>
+ 			</tr>
+ 			<tr class='form_newCallNumberLimit' >
+ 				<td align=right width="50%"></td>
+ 				<td>
+ 					<span class='guiButton' onclick=" showCallNumberLimitsForm(); "><B>Add Call Number Limit</B></span>
+ 				</td>
+ 			</tr>
+ 			<tr class='form_newCallNumberLimit'>
+ 				<td align=right valign=top></td>
+ 				<td align=left width="50%">IP or IP Range: <img src='images/tooltip_info.gif' alt='' class='tooltipinfo' tip='en,iax_general,40'>
+ 				&nbsp;<input type='text' size=20 id='form_newCallNumberLimit_ip' class="input8" validation='iporrange'></td>
+ 			</tr>
+ 			<tr class='form_newCallNumberLimit'>
+ 				<td align=right valign=top></td>
+ 				<td align=left width="50%">Max Call Numbers:
+ 				&nbsp;<input type='text' size=4 id='form_newCallNumberLimit_maxcallnumbers' dfalt='512' validation='numeric' class="input8"></td>
+ 			</tr>
+ 			<tr class='form_newCallNumberLimit'>
+ 				<td align=right width="50%"></td>
+ 				<td>
+ 					<span class='guiButtonCancel' onclick='hideCallNumberLimitsForm();'>Cancel</span>
+ 					<span class='guiButton' onclick='pushNewCallNumberLimit();'> &uarr; Add</span>
+ 				</td>
+ 			</tr>
+ 			</table>
+ 		</div>
+			
+			<div style='margin-top:15px; width:100%; text-align:center;'>
+				<span class='guiButtonCancel' onclick='window.location.reload();' style='margin-left:10px'>Cancel</span>
+				<span class='guiButtonEdit' onclick='saveChanges();'>Save</span>
+			</div>
+		
+		</div>
+
+	</center>
+	<script src="js/jquery.js"></script>
+ 	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/iax.js"></script>
+ 	<script type='text/javascript'>hideCallNumberLimitsForm();</script>
+</body>
+</html>

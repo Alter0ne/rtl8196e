@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libugpio
+Description: Library for using the sysfs gpio api
+Version: 0.0.6
+Libs: -L${libdir} -lugpio
+Cflags: -I${includedir}/ugpio

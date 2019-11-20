@@ -1,0 +1,7 @@
+#
+# Shorewall Lite version 4.1 - Default Config Path
+#
+# /usr/share/shorewall-lite/configpath
+#
+
+CONFIG_PATH=/etc/shorewall-lite:/usr/share/shorewall-lite

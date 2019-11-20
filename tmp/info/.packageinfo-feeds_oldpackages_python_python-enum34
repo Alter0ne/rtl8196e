@@ -1,0 +1,43 @@
+Source-Makefile: package/feeds/oldpackages/python/python-enum34/Makefile
+Package: python-enum34
+Submenu: Python
+Version: 1.1.6-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-enum34:python-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Backported Python 3.4 enum
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: enum34-1.1.6.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: enum34 is the new Python stdlib enum module available in Python 3.4
+backported for previous versions of Python from 2.4 to 3.3.
+https://bitbucket.org/stoneleaf/enum34
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python-enum34-src
+Submenu: Python
+Version: 1.1.6-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Backported Python 3.4 enum (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: enum34-1.1.6.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     enum34 is the new Python stdlib enum module available in Python 3.4
+backported for previous versions of Python from 2.4 to 3.3..
+    (Contains the Python sources for this package).
+https://bitbucket.org/stoneleaf/enum34
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+

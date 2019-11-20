@@ -1,0 +1,5135 @@
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.7 release
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/fuse.deps:
+	* vapi/fuse.vapi:
+	* vapi/posix.vapi:
+
+	Add FUSE bindings, patch by John Carr, fixes bug 571187
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_io_add_watch_full binding, patch by Michael Lauer
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Complete GByteArray binding, patch by Michael Lauer
+
+2009-02-20  Ryan Lortie  <desrt@desrt.ca>
+
+	* vapi/gio-2.0.vapi
+	* vapi/gio-unix-2.0.vapi
+	* vapi/packages/gio-2.0/gio-2.0.gi
+	* vapi/packages/gio-unix-2.0/gio-unix-2.0.gi
+
+	Generate gio GIDL on a machine with my gresolver glib branch
+	installed. Regenerate vapi. Fixes bug 572474.
+
+2009-02-20  Ryan Lortie  <desrt@desrt.ca>
+
+	* configure.ac:
+	* vala-1.0.pc.in:
+
+	Output 'vapigen' 'gen_introspect' and 'vala_gen_introspect' variables
+	into the vala-1.0.pc file if --enable-vapigen, fixes bug 572554
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Support error handling when dynamically calling void methods,
+	patch by Frederik Sdun, fixes bug 571258
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* gobject-introspection/scanner.c:
+
+	Include unistd.h to support compilation with
+	-Werror-implicit-function-declaration, patch by Tobias Müller,
+	fixes bug 571544
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valascope.vala:
+
+	Add Scope.get_symbol_table method, patch by Abderrahim Kitouni
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* vala/valareport.vala:
+
+	Support context-specific error reporting and add a context stack,
+	based on patch by Abderrahim Kitouni, fixes bug 542920
+
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+	* gobject/valaccodebasemodule.vala:
+	* compiler/valacompiler.vala:
+	* vapigen/valavapigen.vala:
+
+	Adapt to interface changes
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/libdaemon.vapi:
+
+	Add libdaemon bindings, patch by Jukka-Pekka Iivonen,
+	fixes bug 568758
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add GDateDMY binding, patch by Frederik, fixes bug 568691
+
+2009-02-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gdk-2.0/:
+
+	Fix gdk_event_handler_set binding
+
+	* vapi/gdk-2.0.vapi: regenerated
+
+2009-02-19  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10-custom.vala:
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Various ownership and missing type parameters fixes
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-02-19  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapigen/valagidlparser.vala:
+
+	Support to_string attribute for enums
+
+2009-02-19  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/packages/gstreamer-rtp-0.10/:
+
+	Fix gst_rtp_buffer_get_extension_data binding
+
+	* vapi/gstreamer-rtp-0.10.vapi: regenerated
+
+2009-02-19  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/glib-2.0.vapi:
+
+	Add byte order conversion methods to int types
+
+2009-02-19  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/pango/:
+
+	Fix pango_font_description_from_string binding and support implicit
+	copies of PangoFontDescription
+
+	* vapi/pango.vapi: regenerated
+
+2009-02-18  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valaassignment.vala:
+	* vala/valacodevisitor.vala:
+	* vala/valacodewriter.vala:
+	* vala/valagenieparser.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valaparser.vala:
+	* vala/valasymbolresolver.vala:
+	* vala/valaunaryexpression.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Remove ParenthesizedExpression to simmplify AST
+
+2009-02-18  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_tree_view_insert_column_with_data_func binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-02-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Support chaining up to constructors in generic classes,
+	fixes bug 567319
+
+2009-02-17  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapigen/valagidlparser.vala:
+
+	Support takes_ownership attribute for delegate parameters
+
+2009-02-17  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/gstreamer-rtp-0.10.vapi: regenerated
+
+2009-02-16  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vala/valacodewriter.vala: escape the dynamic keyword, and identifiers
+	starting with a digit
+
+2009-02-17  Ryan Lortie  <desrt@desrt.ca>
+
+	* gobject/valaccodebasemodule.vala:
+	* vala/valacodewriter.vala:
+	* vala/valastruct.vala:
+	* vapigen/valagidlparser.vala:
+
+	Add support for a 'use_const' CCode attribute and GIDL XML attribute
+	that, when set to false, causes Vala not to emit the 'const' modifier
+	on structure type input arguments.  This is useful for structure types
+	that, by convention, are not used with const (eg: GtkTreeIter).
+
+	* vapi/packages/gtk+-2.0/gtk+-2.0.metadata:
+	* vapi/gtk+-2.0.vapi:
+
+	Add 'use_const' for GtkTreeIter to the gtk+-2.0 metadata.  Regenerate
+	vapi.
+
+2009-02-16  Ryan Lortie  <desrt@desrt.ca>
+
+	* vala/valaclass.vala: only use g_value_set_pointer if the GType of a
+	class is G_TYPE_POINTER; else use g_value_set_boxed.
+
+2009-02-16  Ryan Lortie  <desrt@desrt.ca>
+
+	* gobject/valagasyncmodule.vala: remove the dummy-object hack since
+	gio now supports NULL source objects for GSimpleAsyncResult
+
+2009-02-14  Ryan Lortie  <desrt@desrt.ca>
+
+	* gobject/valagasyncmodule.vala:
+
+	Split method code generation into many smaller functions.  Enable
+	experimental generation of synchronous code.
+
+2009-02-14  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gdk-2.0/:
+	* vapi/packages/gtk+-2.0/:
+	* vapi/packages/libsoup-2.4/:
+
+	Nullable fixes, patch by Mark Lee, fixes bug 571407
+
+	* vapi/gdk-2.0.vapi:
+	* vapi/gtk+-2.0.vapi:
+	* vapi/libsoup-2.4.vapi:
+
+	Regenerated
+
+2009-02-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Add error domains to VAPI files, fixes bug 571692
+
+2009-02-13  Ryan Lortie  <desrt@desrt.ca>
+
+	* gobject/valamethodmodule.vala:
+
+	Emit 'default:' label with g_assert_not_reached() for async state
+	switch statement (to avoid GCC warning).  Don't emit virtual functions
+	or vtable entries for synchronous functions when emitting async code.
+
+2009-02-13  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug 571484 – free owned result even if _finish isn't called
+
+	* gobject/valagasyncmodule.vala:
+
+	Emit code to free the result in the result in the event that _finish
+	was not called.
+
+2009-02-12  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valaconstant.vala:
+	* vala/valafield.vala:
+	* vala/valamember.vala:
+	* vala/valamethod.vala:
+	* vala/valaproperty.vala:
+	* vala/valastruct.vala:
+
+	Warn when hiding members, support `new' keyword to suppress
+	warning, based on patch by Andreas Brauchli, fixes bug 567743
+
+	* vala/valacodenode.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valaenum.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valanamespace.vala:
+	* ccode/valaccodelinedirective.vala:
+
+	Avoid hidden members
+
+2009-02-12  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+	* vala/valasymbolresolver.vala:
+
+	Add base_struct property to Struct class, patch by Andreas Brauchli
+
+2009-02-12  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamember.vala:
+	* vala/valaparser.vala:
+
+	Support `new' as member modifier in parser to prepare support for
+	hiding members, patch by Andreas Brauchli
+
+2009-02-12  Ryan Lortie  <desrt@desrt.ca>
+
+	* vala/valamethod.vala:
+
+	For now, just forbid ref/out paramters on yielding functions since
+	they are hard to deal with.
+
+2009-02-12  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valagenieparser.vala:
+
+	Fix else if parsing, fixes bug 562632
+
+2009-02-12  Ryan Lortie  <desrt@desrt.ca>
+
+	* gobject/valagasyncmodule.vala:
+
+	Store the Data structure as the op_res gpointer of the
+	GSimpleAsyncResult.  Emit a function to free it and hook it in.
+
+2009-02-12  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+
+	Keep arrays NULL-terminated when appending
+
+2009-02-11  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug 571263 – make yielding functions dispatch results to mainloop
+
+	* gobject/valaccodemethodmodule.vala:
+	* valagasyncmodule.vala:
+	
+	Create simple async result from _async entry function and use it when
+	doing return; throw; or at the end of the function.  Fix return
+	statements for the async case.  Dispatch via idle handler in the case
+	that we are returning without having yielded.
+
+2009-02-11  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug 566363 – yielding functions that throw don't work
+
+	* gobject/valagerrormodule.vala:
+	* gobject/valagasyncmodule.vala:
+
+	Refactor GErrorModule to remove some common code and introduce a
+	separate (virtual) function 'return_with_exception' to create
+	the code for returning exceptions from functions.
+
+	In GAsyncModule, override the new virtual function to call
+	g_simple_async_report_gerror_in_idle().
+
+2009-02-11  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug 571256 – [CCode (async_only = true)] formal parameter annotation
+
+	* vala/valacodewriter.vala:
+	* vala/valaformalparameter.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Allow emitting some C code arguments only in the case that we are
+	calling the asynchronous version of a yielding function.  This helps
+	with the io_priority oddity in GIO.
+
+2009-02-11  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaenum.vala:
+	* vala/valainterface.vala:
+	* vala/valastruct.vala:
+	* vapigen/valagirparser.vala:
+
+	Recognize c:type attributes in .gir
+
+2009-02-10  Ryan Lortie  <desrt@desrt.ca>
+
+	Bug 571169 – make floating references generic
+
+	* gobject/valaccodebasemodule.vala:
+	* vala/valainterface.vala:
+	* vala/valaclass.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valatypesymbol.vala:
+
+	Add support for 'ref_sink_function' CCode attribute on classes. 
+	Use this instead of hardcoding g_object_ref_sink() for
+	GInitiallyUnowned.
+
+	* vapi/gobject-2.0.vapi:
+
+	Set ref_sink_function on InitiallyUnowned class.
+
+2009-02-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodedelegatemodule.vala:
+
+	Emit delegate documentation to the C header files
+
+2009-02-08  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valanamespace.vala:
+
+	Drop experimental support for partial classes
+
+2009-02-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/posix.vapi:
+
+	Add bindings for signal functions and constants,
+	patch by Michael Lauer
+
+2009-02-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Remove D-Bus message filter when disposing proxy object
+
+2009-02-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusmodule.vala:
+
+	NULL-terminate arrays when demarshalling
+
+2009-02-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Do not handle signals of irrelevant object paths
+
+2009-02-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add GTestCase and GTestSuite bindings, patch by John Carr,
+	fixes bug 570518
+
+2009-02-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Write type_id attribute for GBoxed compact classes
+
+	* vapi/gdk-2.0.vapi:
+	* vapi/gtk+-2.0.vapi:
+	* vapi/pango.vapi:
+
+	Regenerated
+
+2009-02-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valathrowstatement.vala:
+
+	Fix crash on invalid error expressions
+
+2009-02-01  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaproperty.vala:
+
+	Support overriding members in .vapi files
+
+2009-01-31  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+
+	Use `internal' modifier in class declarations to fix build with
+	Vala older than r2411
+
+2009-01-31  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagobjectmodule.vala:
+
+	Fix struct construct properties
+
+2009-01-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaflowanalyzer.vala:
+	* vala/valasymbol.vala:
+
+	Report unused internal methods
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+
+	Mark modules as internal
+
+2009-01-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valanamespace.vala:
+	* vala/valaparser.vala:
+
+	Ensure that classes in implicit namespaces are not private as
+	namespaces cannot have private members
+
+2009-01-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/posix.vapi:
+
+	Add more bindings, patch by Matías De la Puente
+
+2009-01-29  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Support transfer_ownership attribute for signal parameters
+
+2009-01-29  Philip Van Hoof  <philip@codeminded.be>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Checking for vstore in vala_dbus_register_object. Fixes a crash when
+	you use conn.register_object with an instance that isn't a DBus one
+
+2009-01-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valapropertyaccessor.vala:
+
+	Honor lower_case_cprefix attribute for property accessors,
+	fixes bug 569646
+
+2009-01-27  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/posix.vapi:
+
+	Add bindings for open and associated functions and constants,
+	patch by Michael Lauer
+
+2009-01-27  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+	* vala/valamethod.vala:
+
+	Add overriding members to .vapi files, fixes bug 569219
+
+2009-01-27  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamemberaccess.vala:
+
+	Skip overriding methods and properties in member access,
+	fixes default arguments when calling virtual methods
+
+2009-01-27  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gdk-pixbuf-2.0/gdk-pixbuf-2.0.metadata:
+
+	Fix binding for gdk_pixbuf_scale_simple
+
+	* vapi/gdk-pixbuf-2.0.vapi: regenerated
+
+2009-01-26  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/posix.vapi:
+
+	Add bindings for ioctl and associated constants
+
+2009-01-26  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Revert incorrect code generation change for constants, will need to
+	use `extern' to properly export constants
+
+2009-01-25  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Support signals in static D-Bus client
+
+2009-01-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+
+	Fix type of implicit `this' parameter when using generics
+
+2009-01-23  Jürg Billeter  <j@bitron.ch>
+
+	* ccode/valaccodefunction.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Refactor method parameter and result code generation
+
+2009-01-23  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Add virtual generate_parameter method. Move array and delegate type
+	specific parameter generation to corresponding modules.
+
+2009-01-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support struct methods
+
+2009-01-20  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Do not declare public constants as `static'
+
+2009-01-19  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gsl.vapi:
+
+	More fixes, patch by Matías De la Puente
+
+2009-01-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodedelegatemodule.vala:
+
+	Use correct C identifier for delegate target of static fields
+
+2009-01-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix assigning to properties in lambda expressions in creation
+	methods, patch by Yu Feng, fixes bug 568267
+
+2009-01-18  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix binding for gst_pad_chain
+
+	* vapi/gstreamer-0.10.vapi: Regenerated
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecompiler.vala:
+
+	Do not generate legacy header files when using -H
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.6 release
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Add Log.FILE, Log.LINE, and Log.METHOD constants as replacements
+	for __FILE__ and __LINE__ as they are used in C
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/posix.vapi:
+
+	Add stub POSIX binding
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Accept `params' as identifier after cast parentheses
+
+2009-01-18  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix sincos binding, patch by Jukka-Pekka Iivonen, fixes bug 568038
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Fix crash when using lambda expressions with owned delegate
+	parameters, fixes bug 566344
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaenumvalue.vala:
+	* vala/valasourcefile.vala:
+
+	Add missing include for enum values, fixes bug 531724
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaconstant.vala:
+	* vala/valafield.vala:
+
+	Fix symbol lookup in constant and field initializers,
+	fixes bug 567760
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodedelegatemodule.vala:
+
+	Fix wrapper for delegates returning arrays, fixes bug 564474
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/lua.vapi:
+
+	Add Lua binding, patch by pancake and Phil Housley,
+	fixes bug 540820
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gsl.vapi:
+
+	Fix delegate bindings, patch by Matías De la Puente
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Parse callback parameter annotations
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valamarkupreader.vala:
+
+	Fix infinite loop when reading entity references
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valamarkupreader.vala:
+
+	Read comments
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_widget_create_pango_* bindings
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaobjectcreationexpression.vala:
+
+	Set formal_target_type to fix constructors using generic parameter
+	types, fixes bug 543477
+
+2009-01-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Do not try to convert from generic pointer twice when accessing
+	generic field
+
+	* vala/valaassignment.vala:
+
+	Set formal_target_type to fix assignment to generic fields,
+	fixes bug 543486
+
+2009-01-17  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10-custom.vala:
+
+	Add missing bindings for GstValue. fixes bug 530812
+
+	* vapi/gstreamer-0.10.vapi: Regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasymbol.vala:
+
+	Fix determining relative accessibility, fixes bug 559798
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacreationmethod.vala:
+
+	Fix bogus errors about missing return type in creation methods,
+	fixes bug 564178
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Use correct cname when calling property set accessor,
+	fixes bug 562172
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaassignment.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Do not require libgee to support element access in custom types
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaexpression.vala:
+	* vala/valareturnstatement.vala:
+
+	Report error when returning owned variable in method or property
+	with unowned return value, fixes bug 547102
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gconf-2.0/:
+
+	Remove gconf_init binding, it is broken and deprecated,
+	fixes bug 548435
+
+	* vapi/gconf-2.0.vapi: regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+	* vapigen/valagidlparser.vala:
+
+	Support vfunc_name attribute
+
+	* vapi/packages/gio-2.0/:
+
+	Fix g_seekable_truncate binding, fixes bug 564448
+
+	* vapi/gio-2.0.vapi: regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix GtkTreePath binding, fixes bug 566274
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabaseaccess.vala:
+	* vala/valacodewriter.vala:
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valastruct.vala:
+	* vala/valasymbolresolver.vala:
+	* vapigen/valagirparser.vala:
+
+	Do not allow structs to have more than one base type and detect
+	cycles, patch by Andreas Brauchli, fixes bug 556063 and bug 567661
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_text_iter_forward_find_char binding,
+	patch by Nicolas Joseph, fixes bug 567543
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valablock.vala:
+
+	Detect local variables conflicting with parameters,
+	patch by Andreas Brauchli, fixes bug 523189
+
+	* vala/valaflowanalyzer.vala:
+	* vala/valaparser.vala:
+
+	Fix conflicts
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/mysql.vapi:
+
+	Add MySQL bindings, patch by Jukka-Pekka Iivonen, fixes bug 567342
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+
+	Fix struct base type error message, patch by Carlos Cadete,
+	fixes bug 567366
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix g_datalist*_get bindings, patch by Yu Feng, fixes bug 567324
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+	* gobject/valaccodearraymodule.vala:
+
+	Add array_length_cexpr CCode attribute for fields with constant
+	array length, patch by Andreas Brauchli, fixes bug 567301
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Support void ref functions
+
+	* vapigen/valagidlparser.vala:
+
+	Detect void ref functions, patch by Andreas Brauchli,
+	fixes bug 549061
+
+	* vapi/gconf-2.0.vapi: regenerated
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Fix typedef generation for private types, patch by Yu Feng,
+	fixes bug 567237
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Warn about possibly missing GLib.Object prerequisite,
+	patch by Andreas Brauchli, fixes bug 554329
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* tests/Makefile.am:
+	* tests/dbus/basic-types.test:
+
+	Test marshalling of basic types over D-Bus
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+	* vala/valaparser.vala:
+
+	Use `internal' accessibility for namespace members by default
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* tests/:
+
+	Rearrange test cases
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* tests/Makefile.am:
+	* tests/basic-types/arrays.test:
+
+	Improve array tests
+
+2009-01-16  Jürg Billeter  <j@bitron.ch>
+
+	* tests/basic-types/strings.test:
+
+	Improve string tests
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Ignore BusName sender parameters in marshalling code
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Fix accessor detection for properties
+
+	* vapi/: regenerated
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/sdl-mixer.vapi:
+
+	Fix syntax error, patch by Frederik
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaobjectcreationexpression.vala:
+
+	Track usage of creation methods to avoid bogus warnings from the
+	flow analyzer
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusservermodule.vala:
+
+	Fix generated introspection information when using DBus.BusName
+	sender parameter
+
+2009-01-15  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Accept numbers with characters as identifiers where possible
+
+2009-01-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Improve output for owned property getters
+
+	* vapigen/valagidlparser.vala:
+
+	Getters of properties without accessor have to return owned value
+
+	* vapi/: regenerated
+
+2009-01-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Report error when using getters of properties with unowned return
+	value and without accessor, fixes bug 567750
+
+2009-01-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Improve syntax error message when expecting declaration
+
+2009-01-13  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/vala.h:
+
+	Remove obsolete vala.h
+
+2009-01-13  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* gobject/valaccodebasemodule.vala:
+	* compiler/valacompiler.vala:
+
+	Add -H command-line option to generate C header file for public
+	API, stub implementation
+
+2009-01-13  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix binding of gst_caps_from_string
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-12  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/gdk-pixbuf-2.0.vapi: regenerated
+
+2009-01-11  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Ownership fixes  in gst_bin_* bindings, patch by Sebastian Pölsterl
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-11  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix GMarkupParser binding, patch by Ali Sabil
+
+2009-01-11  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodedelegatemodule.vala:
+
+	Support null-terminated array parameters in delegates,
+	patch by Ali Sabil
+
+2009-01-11  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix GstMessage ownership in gst_bus_* bindings,
+	patch by Sebastian Pölsterl
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-11  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamemberaccess.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Fix crash when assigning to dynamic properties
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodenode.vala:
+	* vala/valaparser.vala:
+	* vala/valapointertype.vala:
+
+	Fix pointer properties
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.5 release
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+	* vapigen/valagidlparser.vala:
+
+	Support methods returning null-terminated arrays
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_selection_data_get_uris binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+	* vala/valagenieparser.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valaparser.vala:
+	* vala/valapropertyaccessor.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* vapigen/valagidlparser.vala:
+	* vapigen/valagirparser.vala:
+
+	Replace `#' in property declarations by `owned' modifier
+	before `get'
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valalocalvariable.vala:
+
+	Warn when using result variable with incompatible type to prepare
+	possible introduction of implicit result variable
+
+	* vala/valageniescanner.vala:
+	* vala/valascanner.vala:
+	* vala/valasymbol.vala:
+
+	Fix new warnings
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* compiler/valacompiler.vala:
+
+	Add --enable-deprecated and --enable-experimental command-line
+	options to disable warnings when using deprecated and experimental
+	features, respectively
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valareturnstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* compiler/valacompiler.vala:
+
+	Remove --disable-non-null option after transition period
+	of 9 months
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valalocalvariable.vala:
+	* vala/valamethod.vala:
+
+	Fix compile errors when using postconditions
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Use dbus-glib types for dynamic D-Bus signals, fixes bug 561545
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Use correct C type for set accessors of properties whose get
+	accessor returns owned value, fixes bug 538666
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+
+	Fix critical and generated code for static delegate fields,
+	fixes bug 563016
+
+2009-01-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+
+	Report error when field type is less accessible than field
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+
+	Fix memory leak when retrieving values from property getters
+	returning owned values, fixes bug 564081
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Do not free values returned via g_object_get prematurely, require
+	properties without accessor methods to return an owned value,
+	fixes bug 559644
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaunaryexpression.vala:
+
+	Fix critical when trying to access instance member,
+	fixes bug 566337
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodenode.vala:
+
+	Add CodeNode.get_type_name method
+
+	* vapi/gobject-2.0.vapi:
+
+	Add G_TYPE_FROM_INSTANCE binding
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-netbuffer-0.10/:
+
+	Fix GstNetAddress binding, fixes bug 564924
+
+	* vapi/gstreamer-netbuffer-0.10.vapi: regenerated
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-base-0.10/:
+
+	Fix gst_base_transform_get_unit_size bindings, fixes bug 565978
+
+	* vapi/gstreamer-base-0.10.vapi: regenerated
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_uri_handler_get_protocols* bindings, fixes bug 566375
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_object_get_name, gst_object_get_name_prefix, and
+	gst_object_get_path_string bindings, fixes bug 566353
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Do not accept `ref' and `out' expressions outside of arguments,
+	fixes bug 548418
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valalambdaexpression.vala:
+
+	Support lambda expressions throwing errors, fixes bug 563018
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Do not allow empty enums and errordomains, fixes bug 543564
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaflowanalyzer.vala:
+
+	Perform flow analysis on code in creation methods, fixes bug 566000
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valascanner.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Fix some type suffix issues with real literals
+
+	* tests/basic-types/floats.test:
+
+	Improve float tests
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* tests/Makefile.am:
+	* tests/basic-types/integers.test:
+
+	Improve integer tests
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix error handling in try statements nested across method
+	boundaries (using lambda expressions)
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* compiler/valacompiler.vala:
+
+	Do not pass null as option to CCodeCompiler
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Fix critical in compiled applications using null-terminated arrays,
+	fixes bug 567025
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* ccode/valaccodevariabledeclarator.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Simplify CCodeVariableDeclarator construction with initializer
+
+2009-01-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gsl.vapi:
+
+	Fix gsl_error_set_error_handler binding
+
+2009-01-08  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_selection_data_set_uris binding, fixes bug 566742
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-08  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadelegate.vala:
+
+	Visit declared error types to resolve symbols
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.4 release
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix critical when using immutable classes without copy function
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasymbolresolver.vala:
+
+	Fix critical when using invalid `using' directive
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagerrormodule.vala:
+
+	Handle errors that occur within a try block but are not handled
+	by a catch clause, fixes bug 533929
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/taglib_c.vapi:
+
+	Fix TagLib_AudioProperties binding, patch by Andreas Brauchli,
+	fixes bug 566919
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix GtkStockItem binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-07  Étienne BERSAC  <bersace03@laposte.net>
+
+	* vapi/gtk+-2.0.vapi:
+
+	Use struct instead of compact class for GtkStockItem.
+
+	Added binding for gtk_stock_lookup().
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valaparser.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valainterfaceregisterfunction.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Add support for static destructors, patch by Sebastian Dröge,
+	fixes bug 564011
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/taglib_c.vapi:
+
+	Update to taglib_c 1.5, patch by Andreas Brauchli, fixes bug 566919
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gobject-2.0.vapi:
+
+	Fix g_object_class_find_property binding,
+	patch by Zeeshan Ali Khattak, fixes bug 566889
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valainterface.vala:
+	* vala/valastruct.vala:
+
+	Check base types of classes, interfaces, and structs,
+	patch by Andreas Brauchli, fixes bug 566592
+
+2009-01-07  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Do not break ABI when using private class fields,
+	patch by Sebastian Dröge, fixes bug 561469
+
+2009-01-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Support [CCode (ref_function_void = true)] attribute for bindings,
+	based on patch by Andreas Brauchli, fixes bug 566078
+
+2009-01-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraytype.vala:
+	* gobject/valadbusmodule.vala:
+
+	Support marshalling multi-dimensional arrays,
+	based on patch by Didier Villevalois, fixes bug 565792
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix array out parameters in static D-Bus clients
+
+2009-01-05  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Do not accidentally generate stacked arrays
+
+	* vapi/packages/gdk-2.0/:
+
+	Fix gdk_keymap_get_entries_for_keyval, gdk_threads_add_idle, and
+	gdk_window_remove_filter bindings, patch by Mark Lee,
+	fixes bug 566679
+
+	* vapi/gdk-2.0.vapi: regenerated
+
+2009-01-05  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix GtkWidget::style_set and gtk_rc_get_style_by_paths bindings
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valathrowstatement.vala:
+
+	Fix crash when using invalid throw expressions, fixes bug 565571
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_init_with_args binding, fixes bug 547135
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethodcall.vala:
+
+	Fix potential crash when argument check of method call fails,
+	fixes bug 566077
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valainitializerlist.vala:
+	* gobject/valaccodearraymodule.vala:
+
+	Support initializers for multi-dimensional arrays, fixes bug 541256
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/curses.vapi:
+	* vapi/enchant.vapi:
+	* vapi/gnome-keyring-1.vapi:
+	* vapi/gobject-2.0.vapi:
+	* vapi/goocanvas.vapi:
+	* vapi/gsl.vapi:
+	* vapi/hildon-1.vapi:
+	* vapi/libftdi.vapi:
+	* vapi/libpanelapplet-2.0.vapi:
+	* vapi/libusb.vapi:
+	* vapi/libxml-2.0.vapi:
+	* vapi/packages/unique-1.0/:
+	* vapi/sdl-gfx.vapi:
+	* vapi/sdl-mixer.vapi:
+	* vapi/sdl-net.vapi:
+	* vapi/sdl-ttf.vapi:
+	* vapi/sqlite3.vapi:
+	* vapi/tiff.vapi:
+	* vapi/unique-1.0.vapi:
+
+	Array length attribute fixes
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Fix array length handling for get_attributes method
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodecontrolflowmodule.vala:
+
+	Drop obsolete foreach support for null-terminated arrays
+
+	* gobject/valaccodearraymodule.vala:
+
+	Fix array length C expression for null-terminated array fields,
+	drop obsolete array_free support for null-terminated arrays
+
+	* gobject/valaccodeassignmentmodule.vala:
+
+	Correctly obey no_array_length when assigning to fields
+
+	* vala/valacodecontext.vala:
+	* gobject/valaccodecompiler.vala:
+	* compiler/valacompiler.vala:
+	* vapi/glib-2.0.vapi:
+	* vapigen/valavapigen.vala:
+
+	Use array_null_termianted attribute where appropriate
+
+2009-01-04  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/vte/vte.metadata:
+
+	Fix fork_command binding
+
+	* vapi/vte.vapi: Regenerated
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadelegate.vala:
+	* vala/valafield.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valamethod.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Support [CCode (array_null_terminated = true)] attribute to fix
+	length handling of null terminated arrays, fixes bug 514186
+
+	* vapi/glib-2.0.vapi:
+
+	Fix g_strsplit binding
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/cairo.vapi:
+	* vapi/packages/gdk-2.0/:
+	* vapi/packages/gdk-pixbuf-2.0/:
+	* vapi/packages/gstreamer-netbuffer-0.10/:
+	* vapi/packages/gtk+-2.0/:
+
+	Fix parameters without array length
+
+	* vapi/gdk-2.0.vapi:
+	* vapi/gdk-pixbuf-2.0.vapi:
+	* vapi/gio-2.0.vapi:
+	* vapi/gstreamer-0.10.vapi:
+	* vapi/gstreamer-audio-0.10.vapi:
+	* vapi/gstreamer-net-0.10.vapi:
+	* vapi/gstreamer-netbuffer-0.10.vapi:
+	* vapi/gtk+-2.0.vapi:
+
+	Regenerated
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+	* vala/valadelegate.vala:
+	* vala/valafield.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valamethod.vala:
+
+	Replace [NoArrayLength] by [CCode (array_length = false)], which
+	can also be applied to single parameters, fixes bug 532486
+
+	* gobject/valaccodecompiler.vala:
+	* compiler/valacompiler.vala:
+	* vapi/glib-2.0.vapi:
+	* vapigen/valagidlparser.vala:
+	* vapigen/valavapigen.vala:
+
+	Adapt to attribute changes
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Support += to efficiently append elements to arrays,
+	fixes part of bug 566425
+
+2009-01-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix generated code for static array and delegate fields,
+	based on patch by Andreas Brauchli, fixes bug 521246
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-netbuffer-0.10/:
+
+	Fix gst_netaddress_*_ip6_address bindings, patch by Andrew Feren,
+	fixes bug 566068
+
+	* vapi/gstreamer-netbuffer-0.10.vapi: regenerated
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gio-2.0/:
+
+	Fix g_file_load_contents bindings, patch by Zeeshan Ali Khattak,
+	fixes bug 565779
+
+	* vapi/gio-2.0.vapi: regenerated
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+	* gobject/valaccodearraymodule.vala:
+
+	Add array_length_cname attribute for fields,
+	patch by Andreas Brauchli, fixes bug 565793
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_parse_* bindings, patch by Zeeshan Ali Khattak,
+	fixes bug 539817
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valafield.vala:
+	* vala/valagenieparser.vala:
+	* vala/valainitializerlist.vala:
+	* vala/valalocalvariable.vala:
+	* vala/valaparser.vala:
+
+	Support short-form of array creation expressions not just in
+	local variable initializers, fixes bug 547410
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Support writing array creation expressions and initializer lists
+
+2009-01-03  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valaarraytype.vala:
+	* vala/valabinaryexpression.vala:
+	* vala/valabooleantype.vala:
+	* vala/valacharacterliteral.vala:
+	* vala/valadostatement.vala:
+	* vala/valaenum.vala:
+	* vala/valaenumvaluetype.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valafloatingtype.vala:
+	* vala/valaintegerliteral.vala:
+	* vala/valaintegertype.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valarealliteral.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valastruct.vala:
+	* vala/valastructvaluetype.vala:
+	* vala/valasymbolresolver.vala:
+	* vala/valavaluetype.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Add BooleanType, EnumValueType, FloatingType, and StructValueType
+	as ValueType subclasses
+
+2009-01-02  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gdk-2.0/gdk-2.0.metadata:
+
+	Bind GdkXEvent as compact class, it is an opaque pointer
+
+	* vapi/gdk-2.0.vapi: regenerated
+
+2009-01-02  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Drop gconstpointer binding
+
+2009-01-01  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Do not use g_warn_if_fail to not require glib 2.16
+
+2009-01-01  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_{list,tree}_store_newv bindings,
+	based on patch by Michael Lawrence, fixes bug 565462
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2009-01-01  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagerrormodule.vala:
+
+	Fix memory leaks when handling errors, patch by Philip Van Hoof,
+	fixes bug 557856
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* doc/valac.1:
+
+	Fix dashes in option descriptions, patch by Andrew Feren,
+	fixes bug 565479
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gnome-vfs-2.0/:
+
+	Fix gnome_vfs_*xfer* bindings, patch by Michael Terry,
+	fixes bug 565412
+
+	* vapi/gnome-vfs-2.0.vapi: regenerated
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/sdl-mixer.vapi:
+	* vapi/sdl-net.vapi:
+	* vapi/sdl-ttf.vapi:
+	* vapi/sdl.vapi:
+
+	Various enum and struct fixes, patch by Levi Bard, fixes bug 565359
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+
+	More closure fixes for array variables
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix g_printerr binding
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_element_get_static_pad and gst_regitry_* bindings,
+	patch by Zeeshan Ali Khattak, fixes bug 539817
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valalambdaexpression.vala:
+
+	Support instance access in lambda expressions in property accessors
+
+2008-12-26  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Don't notify struct properties without type id
+
+2008-12-26  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadatatype.vala:
+	* gobject/valadbusservermodule.vala:
+
+	Fix crash when using unsupported types in D-Bus servers
+
+2008-12-25  Étienne Bersac  <bersace03@laposte.net>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Don't prevent notifying struct property.
+
+2008-12-22  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Use copy function in generated dup function for structs if
+	necessary
+
+2008-12-22  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+
+	Fix type id for library structs registered as boxed types
+
+2008-12-22  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_remove binding
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix typo
+
+2008-12-22  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+
+	Use BOXED as marshaller name for structs with type id
+
+2008-12-21  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Support boxed structs as GObject properties,
+	based on patch by Étienne Bersac, fixes bug 520001
+
+2008-12-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Use `const' for struct input parameters, fixes bug 548413
+
+2008-12-21  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-base-0.10/:
+
+	Fix GstBaseSrc and GstBaseTransform bindings,
+	patch by Evan Nemerson, fixes bug 552562
+
+	* vapi/gstreamer-base-0.10.vapi: regenerated
+
+2008-12-20  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagerrormodule.vala:
+
+	More closure fixes
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/atk.vapi:
+	* vapi/gdk-2.0.vapi:
+	* vapi/gdk-pixbuf-2.0.vapi:
+	* vapi/gio-2.0.vapi:
+	* vapi/gio-unix-2.0.vapi:
+	* vapi/gstreamer-0.10.vapi:
+	* vapi/gstreamer-audio-0.10.vapi:
+	* vapi/gstreamer-base-0.10.vapi:
+	* vapi/gstreamer-check-0.10.vapi:
+	* vapi/gstreamer-controller-0.10.vapi:
+	* vapi/gstreamer-dataprotocol-0.10.vapi:
+	* vapi/gstreamer-fft-0.10.vapi:
+	* vapi/gstreamer-interfaces-0.10.vapi:
+	* vapi/gstreamer-net-0.10.vapi:
+	* vapi/gstreamer-pbutils-0.10.vapi:
+	* vapi/gstreamer-riff-0.10.vapi:
+	* vapi/gstreamer-rtp-0.10.vapi:
+	* vapi/gstreamer-rtsp-0.10.vapi:
+	* vapi/gstreamer-sdp-0.10.vapi:
+	* vapi/gstreamer-tag-0.10.vapi:
+	* vapi/gstreamer-video-0.10.vapi:
+	* vapi/gtk+-2.0.vapi:
+	* vapi/pango.vapi:
+	* vapi/pangocairo.vapi:
+
+	Regenerated
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagasyncmodule.vala:
+
+	Fix temporary async idle support
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix async method calls in simple expression statements
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valagerrormodule.vala:
+
+	Redirect more variable access to closure struct
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix generated finish function for static D-Bus client methods
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Fix disposing local variables in coroutines
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Generate async and finish calls when calling async methods from
+	coroutines
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Do not generate invalid type check statements in coroutines
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagasyncmodule.vala:
+
+	Use closure struct to declare and initialize local variables in
+	coroutines
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Do not use g_error_new for non-format strings, fixes bug 564961
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Use closure struct to access local variables and parameters in
+	coroutines
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusservermodule.vala:
+
+	Do not generate property code if not necessary
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Update wording for error message when trying to duplicate
+	non-reference counted object
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaformalparameter.vala:
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+
+	Remove support for deprecated syntax for construct parameters
+
+	* tests/arrays.test:
+	* tests/objects/test-029.test:
+
+	Update syntax used in test cases
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodewriter.vala:
+
+	Update syntax to use owned and unowned where appropriate
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Remove support for deprecated syntax for property default values
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamemberaccess.vala:
+
+	Fix crash when using property prototype as value
+
+2008-12-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+	* vala/valascanner.vala:
+	* vala/valatokentype.vala:
+
+	Add `owned' type modifier and `(owned)' cast to replace `#',
+	add `unowned' type modifier to complement `weak' for non-reference
+	counted objects.
+
+	`#' will be deprecated in Vala 0.5.5
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Fix named constructor chaining, fixes bug 559303
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/sqlite3.vapi:
+
+	Fix sqlite3_callback binding
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Support error propagation from base constructor, fixes bug 564984
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix error propagation in creation methods, fixes part of 564944
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodecontrolflowmodule.vala:
+
+	Fix temporary variable handling in switch expressions,
+	fixes bug 559278
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Remove statements without effect, fixes bug 530601
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix member initializers for array fields, fixes bug 562600
+
+2008-12-18  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaassignment.vala:
+
+	Report error when trying to connect signal to instance method
+	from static context, fixes bug 502669
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix initialization of static array fields, fixes bug 472545
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	GTree binding improvements, patch by Evan Nemerson,
+	fixes bug 564823
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_element_make_from_uri binding,
+	patch by Zeeshan Ali Khattak, fixes bug 539817
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_ui_manager_new_merge_id binding, patch by Evan Nemerson,
+	fixes bug 527381
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/pango/:
+
+	Add PangoScale binding, patch by Evan Nemerson, fixes bug 519922
+
+	* vapi/pango.vapi: regenerated
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_notebook_page_num binding, patch by Evan Nemerson,
+	fixes bug 512437
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+	* vala/valavoidtype.vala:
+
+	Store source_reference for void types
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Report error when using class fields or constructors in compact
+	classes, fixes bug 564090
+
+2008-12-17  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+
+	Fix private array fields in structs, fixes bug 557174
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.3 release
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* Makefile.am:
+	* configure.ac:
+	* gen-project/:
+
+	Drop vala-gen-project, moved to vtg, Vala Toys for gedit
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix temporary variable handling when using methods defined in
+	VAPI files
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Fix handling of int16, uint16, int32, and uint32
+
+	* vapi/packages/gstreamer-netbuffer-0.10/:
+
+	Fix gst_netaddress_get_ip4_address binding, patch by Evan Nemerson,
+	fixes bug 564676
+
+	* vapi/gstreamer-netbuffer-0.10.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-netbuffer-0.10/:
+
+	Fix GstNetBuffer binding, patch by Evan Nemerson, fixes bug 564670
+
+	* vapi/gstreamer-netbuffer-0.10.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_version binding, patch by Evan Nemerson, fixes bug 564669
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valaparser.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Add support for class destructors, patch by Sebastian Dröge,
+	fixes bug 564011
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valainterfaceregisterfunction.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Add support for private class fields, patch by Sebastian Dröge,
+	fixes bug 561469
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Fix GByteArray binding, patch by Evan Nemerson, fixes bug 561867
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gdk-pixbuf-2.0/:
+
+	Fix gdk_pixbuf_new_from_stream* bindings, patch by Evan Nemerson,
+	fixes bug 560721
+
+	* vapi/gdk-pixbuf-2.0.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Fix crash and temporary variable declarations when using struct
+	initialization methods in field initializer, fixes bug 559459
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Extend metadata support for delegates
+
+	* vapi/packages/libnotify/:
+
+	Fix NotifyActionCallback and notify_notification_add_action
+	bindings, fixes bug 562726
+
+	* vapi/libnotify.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Fix crash when parsing metadata, fixes bug 563390
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Fix crash when using out parameters in delegates,
+	fixes bug 563705
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_bus_sync_signal_handler binding, fixes bug 559721
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadelegate.vala:
+	* vala/valamethodcall.vala:
+	* vala/valaparser.vala:
+	* gobject/valaccodedelegatemodule.vala:
+
+	Support delegates throwing errors, fixes bug 557332
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/json-glib-1.0/:
+
+	Various ownership fixes, patch by Evan Nemerson, fixes bug 547450
+
+	* vapi/json-glib-1.0.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_string_truncate binding, patch by Yu Feng, fixes bug 564428
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/sqlite3.vapi:
+
+	Add transaction hook, tracing, profiling, and mutex bindings,
+	patch by Evan Nemerson, fixes bug 564571
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Move substring method to VAPI file, handle negative and out of
+	bounds values, fixes bug 443524
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gnome-keyring-1/:
+
+	Various delegate parameter fixes, patch by Michael Terry,
+	fixes bug 564068
+
+	* vapi/gnome-keyring-1.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gio-2.0/:
+
+	Add g_io_extension_get_type binding, patch by Jared Moore,
+	fixes bug 537522
+
+	* vapi/gio-2.0.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasizeofexpression.vala:
+
+	Include C header files for types used in sizeof expressions,
+	fixes bug 542705
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Report error when using construct properties in non-GObject
+	classes, fixes bug 541728
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_status_icon_position_menu and GtkMenuPositionFunc bindings,
+	fixes bug 563457
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-16  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagobjectmodule.vala:
+
+	Report error when using construct blocks in non-GObject classes
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_container_get_children binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Add GTK_WIDGET_* bindings, patch by Víctor Manuel Jáquez Leal,
+	fixes bug 561341
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* tests/testrunner.sh:
+
+	Fix make check of uninstalled vala, based on patch by Götz Waschk,
+	fixes bug 562951
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* tests/testrunner.sh:
+
+	Fix order of commandline arguments passed to C compiler,
+	patch by Alexander Bokovoy
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/unique-1.0/:
+
+	Fix unique_app_new* bindings, patch by Michael Terry,
+	fixes bug 564064
+
+	* vapi/unique-1.0.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gio-2.0/:
+
+	Fix g_themed_icon_new_from_names binding, patch by Michael Terry,
+	fixes bug 564062
+
+	* vapi/gio-2.0.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix g_main_current_source binding, patch by Zeeshan Ali Khattak,
+	fixes bug 563349
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Various ownership fixes, patch by Evan Nemerson, fixes bug 553032
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add fileno, ferror, and clearerr bindings and fix a few other
+	bindings, patch by Evan Nemerson, fixes bug 547921 and bug 558206
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Various delegate binding fixes, patch by Evan Nemerson,
+	fixes bug 547657
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaswitchstatement.vala:
+
+	Check switch expression
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add abs, labs, and llabs bindings, patch by Rob Taylor
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix comparison of nullable and non-nullable values
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodestructmodule.vala:
+
+	Fix bug introduced in last commit
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodestructmodule.vala:
+
+	Fix handling of array fields in structs, fixes bug 562665
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix comparing nullable struct values with null, fixes bug 548672
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix constructors in inner structs
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valastruct.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valagtypemodule.vala:
+	* gobject/valastructregisterfunction.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Register structs as boxed types, generate dup, copy, and free
+	functions, fixes bug 548864
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* vapi/glib-2.0.vapi:
+
+	Support empty ref_function and unref_function attributes,
+	fix GSequenceIter binding
+
+2008-12-15  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Support GLib.Type as generic type argument
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Detect unsupported generic type arguments in local variable
+	declarations
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* vapi/dbus-glib-1.vapi:
+
+	Rewrite D-Bus server support to directly use libdbus without
+	dbus-glib marshalling, fixes bug 560034 and bug 549980
+
+	Support BusName sender parameter in exported D-Bus methods
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add type_id for GHashTable
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusmodule.vala:
+
+	Support reading and writing nullable struct values
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix struct dup function for GValue
+
+2008-12-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Detect unsupported generic type arguments, fixes bug 561674
+
+2008-12-13  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusmodule.vala:
+
+	Support reading and writing nullable GLib.Value values
+
+2008-12-13  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gsl.vapi:
+
+	Improve gsl_histogram_calloc_range binding,
+	patch by Matías De la Puente, fixes bug 564387
+
+2008-12-13  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Remove g_thread_init binding, should never be called manually
+
+2008-12-13  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+
+	Remove workarounds for old Vala versions
+
+2008-12-13  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valablock.vala:
+
+	Detect conflicting local variables in parent scopes
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valacodewriter.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* vapigen/valagidlparser.vala:
+
+	Fix conflicting local variables
+
+2008-12-12  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Support reading multi-dimensional arrays in static D-Bus clients
+
+2008-12-12  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Fix array length and size handling in static D-Bus clients
+
+2008-12-12  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/curses.vapi:
+
+	Add missing [Compact]
+
+2008-12-11  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/libsoup-2.4/:
+
+	Updated to libsoup 2.25.2
+
+	* vapi/libsoup-2.4.vapi: regenerated
+
+2008-12-10  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/rasqal.vapi:
+
+	Add bindings to support LAQRS extensions
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagsignalmodule.vala:
+
+	Do not use g_signal_connect_object if the target object is not a
+	GObject, fixes bug 539614
+
+2008-12-09  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gdk-pixbuf-2.0/gdk-pixbuf-2.0.metadata:
+
+	Fix gdk_pixbuf_new_from_inline binding
+
+	* vapi/gdk-pixbuf-2.0.vapi: regenerated
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/Makefile.am:
+	* vapi/raptor.vapi:
+	* vapi/rasqal.vapi:
+
+	Add partial raptor and rasqal bindings
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gobject-2.0.vapi:
+
+	Fix g_value_set_boxed binding, remove broken g_value_take_boxed
+	binding
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix dbus-glib type for structs
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Use specialized dbus-glib types for signals in D-Bus servers
+
+2008-12-09  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vala/valacodewriter.vala:
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10-custom.vala:
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix *_make_writable functions in gstreamer by marking them
+	with ReturnsModifiedPointer
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Improve Time.to_string method and add Time.format method
+
+2008-12-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Fix inline struct methods in VAPI files
+
+2008-12-07  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix gst_buffer functions
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-06  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Fix gst_segment_clip binding
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-12-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethodcall.vala:
+
+	Report error when trying to call constructor without `new' operator
+
+2008-12-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasourcefile.vala:
+
+	Add SourceFile.clear_using_directives method, required by
+	anjuta-vala-plugin
+
+2008-12-05  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix struct constants
+
+2008-12-05  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_target_list_new binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/libsoup-2.4/:
+
+	Fix soup_server_add_handler binding,
+	patch by Zeeshan Ali Khattak, fixes bug 562978
+
+	* vapi/libsoup-2.4.vapi: regenerated
+
+2008-12-04  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Use generics in GAsyncQueue binding,
+	patch by Zeeshan Ali Khattak, fixes bug 563225
+
+2008-12-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaassignment.vala:
+	* vala/valasignal.vala:
+
+	Resolve generic types when connecting signals
+
+2008-12-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadatatype.vala:
+
+	Fix type resolving with nested generic types, fixes bug 562956
+
+2008-12-01  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2008-12-01  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.2 release
+
+2008-12-01  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_text_view_get_line_at_y binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-12-01  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* vala/valaconditionalexpression.vala:
+
+	Fix critical when using conditional expressions in method contracts
+
+2008-12-01  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Support signals in non-GObject classes, patch by Yu Feng,
+	fixes bug 561989
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_tree_model_get_value binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasymbolresolver.vala:
+
+	Resolve types in switch labels
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Accept any integer type as array index
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gstreamer-rtsp-0.10.vapi:
+
+	Regenerated
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix array length variable name for internal variables
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valalocalvariable.vala:
+	* vala/valamethodcall.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Avoid object duplication due to error handling
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethodcall.vala:
+
+	Move compiler internal variable to right block
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaelementaccess.vala:
+
+	Fix error handling in element access expressions
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valacodewriter.vala:
+	* compiler/valacompiler.vala:
+	* vapigen/valavapigen.vala:
+
+	Add --dump-tree command-line option to write code tree to file
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valanullchecker.vala:
+	* vala/valaswitchlabel.vala:
+	* vala/valaswitchstatement.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Separate visiting switch sections from visiting switch statements
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamemberaccess.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Separate visiting inner expressions from visiting member access
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaaddressofexpression.vala:
+	* vala/valaarraycreationexpression.vala:
+	* vala/valaassignment.vala:
+	* vala/valabaseaccess.vala:
+	* vala/valabinaryexpression.vala:
+	* vala/valablock.vala:
+	* vala/valacastexpression.vala:
+	* vala/valaconditionalexpression.vala:
+	* vala/valadostatement.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valaexpression.vala:
+	* vala/valaforstatement.vala:
+	* vala/valainitializerlist.vala:
+	* vala/valalambdaexpression.vala:
+	* vala/valaliteral.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethodcall.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valapointerindirection.vala:
+	* vala/valapostfixexpression.vala:
+	* vala/valareferencetransferexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasizeofexpression.vala:
+	* vala/valaswitchsection.vala:
+	* vala/valatuple.vala:
+	* vala/valatypecheck.vala:
+	* vala/valatypeofexpression.vala:
+	* vala/valaunaryexpression.vala:
+	* vala/valawhilestatement.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Fix error handling in condition of while, do, and for statements
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaexpressionstatement.vala:
+	* vala/valanullchecker.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Separate visiting expressions from visiting expression statements
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Separate visiting operands from visiting binary expression
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadeclarationstatement.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Separate visiting declaration from visiting declaration statement
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* ccode/valaccodeassignment.vala:
+	* ccode/valaccodeconditionalexpression.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+
+	More parenthesis improvements
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaforeachstatement.vala:
+	* ccode/valaccodebinaryexpression.vala:
+	* ccode/valaccodecastexpression.vala:
+	* ccode/valaccodeelementaccess.vala:
+	* ccode/valaccodeexpression.vala:
+	* ccode/valaccodememberaccess.vala:
+	* ccode/valaccodeunaryexpression.vala:
+
+	Fix generated parentheses
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valathrowstatement.vala:
+
+	Check type of error expression in throw statements
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+
+	Fix array length variable name for internal variables,
+	fixes bug 562723
+
+2008-11-30  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasourcefile.vala:
+
+	Fix critical when using error codes
+
+2008-11-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valavoidtype.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Use G_TYPE_POINTER for pointers and G_TYPE_INVALID for
+	unsupported types in typeof expressions
+
+2008-11-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethodcall.vala:
+
+	Fix error handling in inner expressions, fixes bug 475922
+
+2008-11-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaaddressofexpression.vala:
+	* vala/valaarraycreationexpression.vala:
+	* vala/valaassignment.vala:
+	* vala/valabaseaccess.vala:
+	* vala/valabinaryexpression.vala:
+	* vala/valacastexpression.vala:
+	* vala/valaconditionalexpression.vala:
+	* vala/valadostatement.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valaexpression.vala:
+	* vala/valaforstatement.vala:
+	* vala/valainitializerlist.vala:
+	* vala/valalambdaexpression.vala:
+	* vala/valaliteral.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethodcall.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valapointerindirection.vala:
+	* vala/valapostfixexpression.vala:
+	* vala/valareferencetransferexpression.vala:
+	* vala/valasizeofexpression.vala:
+	* vala/valatuple.vala:
+	* vala/valatypecheck.vala:
+	* vala/valatypeofexpression.vala:
+	* vala/valaunaryexpression.vala:
+	* vala/valawhilestatement.vala:
+
+	Convert binary conditional expressions into if statements
+
+2008-11-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaflowanalyzer.vala:
+
+	Detect unreachable code in if and while statements
+
+2008-11-29  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valablock.vala:
+	* vala/valacodenode.vala:
+	* vala/valaconditionalexpression.vala:
+	* vala/valadeclarationstatement.vala:
+	* vala/valaexpression.vala:
+	* vala/valanullchecker.vala:
+	* vala/valastatementlist.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Convert ternary conditionals into if statements,
+	fixes bug 543870 and bug 554594
+
+2008-11-28  Étienne Bersac  <bersace03@laposte.net>
+
+	* vapi/gobject-2.0.vapi:
+
+	Fix g_flags_get_first_value binding
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix generated code in struct destroy function for array fields
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagidlparser.vala:
+
+	Support ssize_t and size_t
+
+	* vapi/gdk-pixbuf-2.0.vapi:
+	* vapi/gio-2.0.vapi:
+	* vapi/gtk+-2.0.vapi:
+	* vapi/pango.vapi:
+
+	Regenerated
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support construct properties
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support nullable parameters
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support interface prerequisites
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support functions in classes
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix copying and destroying GValue values
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_unsetenv binding, patch by Jorn Baayen, fixes bug 562590
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Remove unused fields
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Don't require libgee for `in' operations
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add string.contains method
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaflowanalyzer.vala:
+
+	Analyze errors in return expressions
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valablock.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+
+	Don't require libgee for foreach statements
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valadatatype.vala:
+	* vala/valagenerictype.vala:
+	* vala/valainterface.vala:
+	* vala/valamethod.vala:
+	* vala/valaobjecttypesymbol.vala:
+	* vala/valasymbolresolver.vala:
+
+	Fix method checking with generic base types, fixes bug 511286
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadatatype.vala:
+	* vala/valaexpression.vala:
+	* vala/valaintegertype.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethodcall.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valavaluetype.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+
+	Improve handling of generic values, fixes bug 562460
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethodcall.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+
+	Improve get_actual_type signature
+
+2008-11-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valagenerictype.vala:
+	* vala/valasymbolresolver.vala:
+
+	Rename TypeParameterType to GenericType
+
+2008-11-27  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	gst_element_found_tags takes ownership on TagList
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-11-26  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Include dbus.h, required for static D-Bus client support
+
+2008-11-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add string.replace method, patch by Ali Sabil
+
+2008-11-24  Jürg Billeter  <j@bitron.ch>
+
+	* ccode/valaccodefunctioncall.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vapi/glib-2.0.vapi:
+
+	Add g_array_index binding and fix g_array_free calls,
+	fixes bug 519978
+
+2008-11-22  Jürg Billeter  <j@bitron.ch>
+
+	* tests/:
+
+	Prepare support for more complex test cases
+
+2008-11-22  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Whitespace fixes
+
+2008-11-22  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagasyncmodule.vala:
+
+	Support async method calls in static D-Bus clients
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valagasyncmodule.vala:
+
+	Fix return type of finish vfunc
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethod.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagasyncmodule.vala:
+
+	Various coroutine code generation improvements
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Small refactoring
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusmodule.vala:
+
+	Support serialization and deserialization of GHashTable objects
+	in static D-Bus clients
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusmodule.vala:
+
+	Support serialization and deserialization of GValue values in
+	static D-Bus clients
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Support serialization and deserialization of structs in static
+	D-Bus clients
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Support serialization and deserialization of arrays in static
+	D-Bus clients
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusmodule.vala:
+	* vapi/dbus-glib-1.vapi:
+
+	Add partial static D-Bus client support without dbus-glib
+	marshalling
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_quark_try_string binding, patch by Rob Taylor
+
+2008-11-21  Étienne Bersac  <bersace03@laposte.net>
+
+	* vapi/gmodule-2.0.vapi:
+
+	Add binding for G_MODULE_SUFFIX, fixes bug 561120
+
+2008-11-21  Étienne Bersac  <bersace03@laposte.net>
+
+	* vapi/glib-2.0.vapi:
+
+	Add G_SEARCHPATH_SEPARATOR binding, fixes bug 561117
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gdk-2.0/:
+
+	Fix gdk_region_polygon and gdk_region_rectangle bindings,
+	patch by Víctor Manuel Jáquez Leal, fixes bug 561655
+
+	* vapi/gdk-2.0.vapi: regenerated
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/dbus-glib-1.vapi:
+
+	Fix DBusError binding, patch by Sebastian Pölsterl,
+	fixes bug 556340
+
+2008-11-21  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix g_hscale_new and g_vscale_new bindings,
+	based on patch by Geert Jan Alsem, fixes bug 560053
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-11-21  Étienne Bersac  <bersace03@laposte.net>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_strjoin binding, fixes bug 561124
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaassignment.vala:
+
+	Check types in property assignments, fixes bug 550088
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacatchclause.vala:
+
+	Fix generic catch clauses
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodcallmodule.vala:
+
+	Fix base access to virtual signal handlers with return values,
+	fixes bug 538901
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valacodevisitor.vala:
+	* vala/valadynamicmethod.vala:
+	* vala/valaflowanalyzer.vala:
+	* vala/valagenieparser.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethodcall.vala:
+	* vala/valanullchecker.vala:
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemethodcallmodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Rename InvocationExpression to MethodCall
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valainvocationexpression.vala:
+
+	Fix struct initialization
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-interfaces-0.10/:
+
+	Fix GstColorBalance binding, patch by Víctor Manuel Jáquez Leal,
+	fixes bug 560840
+
+	* vapi/gstreamer-interfaces-0.10.vapi: regenerated
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/libxml-2.0.vapi:
+
+	Mark encoding parameters as nullable,
+	patch by Víctor Manuel Jáquez Leal, fixes bug 560062
+
+2008-11-20  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacatchclause.vala:
+	* vala/valaerrortype.vala:
+
+	Correct source file dependencies for catch clauses,
+	fixes bug 561437
+
+2008-11-19  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valatypeofexpression.vala:
+
+	Include C header files for types used in typeof expressions,
+	fixes bug 559494
+
+2008-11-19  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Remove extra g_type_create_instance in constructors
+
+2008-11-19  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+
+	* gobject/valagobjectmodule.vala:
+
+	Add support for class field initializers for classes that are not
+	derived from GObject.
+
+2008-11-18  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gtk+-2.0/gtk+-2.0.metadata:
+
+	Transfer ownership on gtk_container_get_children
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-11-18  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gstreamer-0.10/gstreamer-0.10.metadata:
+
+	Transfer ownership on gst_tag_list_merge
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valasourcefile.vala:
+
+	Allow any integer compatible value to be used as array index,
+	fixes bug 561057
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaflowanalyzer.vala:
+
+	Fix control flow graph for try statements with finally clause,
+	fixes bug 561115
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadynamicmethod.vala:
+	* vala/valadynamicsignal.vala:
+
+	Fix checking of dynamic methods and signals
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valafield.vala:
+
+	Correct source file dependencies for private fields of compact
+	classes, based on patch by Thijs Vermeir, fixes bug 555249
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacatchclause.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valafield.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethod.vala:
+
+	Ensure that members are checked when accessing them,
+	fixes bug 561018
+
+2008-11-17  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix g_queue_*_nth bindings, patch by John Carr
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+
+	Set target_type for member initializers
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gstreamer-0.10/:
+
+	Fix gst_bin_add_many binding
+
+	* vapi/gstreamer-0.10.vapi: regenerated
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaformalparameter.vala:
+	* vala/valainterfacewriter.vala:
+	* vala/valainvocationexpression.vala:
+	* vala/valaparser.vala:
+	* vala/valascanner.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valatokentype.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+
+	Support parameter arrays, fixes bug 538897
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valagenieparser.vala:
+	* vala/valaparser.vala:
+
+	Avoid C compiler warnings with switch statements
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix non-struct output arguments in dynamic D-Bus method calls
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valaassignment.vala:
+	* vala/valabasicblock.vala:
+	* vala/valabinaryexpression.vala:
+	* vala/valacastexpression.vala:
+	* vala/valacatchclause.vala:
+	* vala/valacodenode.vala:
+	* vala/valadeclarationstatement.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valaexpressionstatement.vala:
+	* vala/valaflowanalyzer.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valainvocationexpression.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valaphifunction.vala:
+	* vala/valapointerindirection.vala:
+	* vala/valareferencetransferexpression.vala:
+	* vala/valareturnstatement.vala:
+	* vala/valathrowstatement.vala:
+	* vala/valaunaryexpression.vala:
+	* compiler/valacompiler.vala:
+
+	Report use of possibly uninitialized variables, fixes bug 508477
+	and bug 556861
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valagenieparser.vala:
+	* vala/valainterface.vala:
+	* vala/valainterfacewriter.vala:
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* vapi/glib-2.0.vapi:
+	* vapigen/valagidlparser.vala:
+	* vapigen/valagirparser.vala:
+	* vapigen/valamarkupreader.vala:
+	* vapigen/valavapicheck.vala:
+	* gen-project/valaprojectgenerator.vala:
+
+	Do not use possibly uninitialized variables
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacfgbuilder.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamethod.vala:
+	* vala/valasymbol.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Report unused fields, methods, and local variables
+
+	* vala/valacodecontext.vala:
+	* vala/valadynamicproperty.vala:
+	* vala/valaenum.vala:
+	* vala/valagenieparser.vala:
+	* vala/valainterfacewriter.vala:
+	* vala/valaparser.vala:
+	* vala/valastruct.vala:
+	* vala/valaunresolvedtype.vala:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* vapigen/valagirparser.vala:
+	* vapigen/valamarkupreader.vala:
+
+	Remove unused symbols
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* tests/Makefile.am:
+	* tests/basic-types/:
+
+	Rearrange test cases
+
+2008-11-14  Jürg Billeter  <j@bitron.ch>
+
+	* tests/:
+
+	Rearrange test cases
+
+2008-11-13  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* gobject/valadbusclientmodule.vala:
+	* compiler/valacompiler.vala:
+
+	Add --disable-dbus-transformation command-line option to disable
+	case transformation of D-Bus member names in dynamic D-Bus client
+	support, this option will be removed again when Vala gains static
+	D-Bus client support
+
+2008-11-13  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix retrieving D-Bus structs with owned strings
+
+2008-11-13  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+
+	Fix copy of constant arrays
+
+2008-11-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaaddressofexpression.vala:
+	* vala/valaarraycreationexpression.vala:
+	* vala/valaassignment.vala:
+	* vala/valabinaryexpression.vala:
+	* vala/valablock.vala:
+	* vala/valacastexpression.vala:
+	* vala/valacatchclause.vala:
+	* vala/valaclass.vala:
+	* vala/valaconditionalexpression.vala:
+	* vala/valaconstant.vala:
+	* vala/valaconstructor.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valadeclarationstatement.vala:
+	* vala/valadelegate.vala:
+	* vala/valadeletestatement.vala:
+	* vala/valadestructor.vala:
+	* vala/valadostatement.vala:
+	* vala/valaelementaccess.vala:
+	* vala/valaenum.vala:
+	* vala/valaenumvalue.vala:
+	* vala/valaerrorcode.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valaexpressionstatement.vala:
+	* vala/valafield.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valaforstatement.vala:
+	* vala/valaifstatement.vala:
+	* vala/valainitializerlist.vala:
+	* vala/valainterface.vala:
+	* vala/valainvocationexpression.vala:
+	* vala/valalambdaexpression.vala:
+	* vala/valalocalvariable.vala:
+	* vala/valalockstatement.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valamemberinitializer.vala:
+	* vala/valamethod.vala:
+	* vala/valanamespace.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valapointerindirection.vala:
+	* vala/valapostfixexpression.vala:
+	* vala/valaproperty.vala:
+	* vala/valapropertyaccessor.vala:
+	* vala/valareferencetransferexpression.vala:
+	* vala/valareturnstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasignal.vala:
+	* vala/valasizeofexpression.vala:
+	* vala/valasourcefile.vala:
+	* vala/valastruct.vala:
+	* vala/valaswitchlabel.vala:
+	* vala/valaswitchsection.vala:
+	* vala/valaswitchstatement.vala:
+	* vala/valathrowstatement.vala:
+	* vala/valatrystatement.vala:
+	* vala/valatypecheck.vala:
+	* vala/valatypeofexpression.vala:
+	* vala/valaunaryexpression.vala:
+	* vala/valawhilestatement.vala:
+	* vala/valayieldstatement.vala:
+
+	Remove unnecessary accept calls in semantic analyzer
+
+2008-11-10  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaaddressofexpression.vala:
+	* vala/valabaseaccess.vala:
+	* vala/valabooleanliteral.vala:
+	* vala/valacastexpression.vala:
+	* vala/valacharacterliteral.vala:
+	* vala/valaconditionalexpression.vala:
+	* vala/valaintegerliteral.vala:
+	* vala/valalambdaexpression.vala:
+	* vala/valanullliteral.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valaparenthesizedexpression.vala:
+	* vala/valapointerindirection.vala:
+	* vala/valapostfixexpression.vala:
+	* vala/valarealliteral.vala:
+	* vala/valareferencetransferexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasizeofexpression.vala:
+	* vala/valastringliteral.vala:
+	* vala/valatypecheck.vala:
+	* vala/valatypeofexpression.vala:
+	* vala/valaunaryexpression.vala:
+
+	Move expression checking to code nodes
+
+2008-11-10  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusservermodule.vala:
+
+	Work around missing enum support in dbus-glib
+
+2008-11-10  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusservermodule.vala:
+
+	Really insert GValueArray into hash table
+
+2008-11-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacreationmethod.vala:
+	* vala/valadelegate.vala:
+	* vala/valadelegatetype.vala:
+	* vala/valaenum.vala:
+	* vala/valafield.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valamethod.vala:
+	* vala/valaproperty.vala:
+	* vala/valastruct.vala:
+	* vala/valavaluetype.vala:
+
+	Ensure attributes of field, property, parameter, and return types
+	are processed before querying C header filenames
+
+2008-11-09  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusservermodule.vala:
+
+	Support hash tables with struct values
+
+2008-11-09  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valainterface.vala:
+	* vala/valamemberaccess.vala:
+	* vala/valaobjecttype.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Ensure attributes of base types are processed before querying
+	C header filenames
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valablock.vala:
+	* vala/valacatchclause.vala:
+	* vala/valadeclarationstatement.vala:
+	* vala/valadeletestatement.vala:
+	* vala/valadostatement.vala:
+	* vala/valaexpressionstatement.vala:
+	* vala/valaforstatement.vala:
+	* vala/valaifstatement.vala:
+	* vala/valainitializerlist.vala:
+	* vala/valalocalvariable.vala:
+	* vala/valalockstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valaswitchsection.vala:
+	* vala/valatrystatement.vala:
+	* vala/valawhilestatement.vala:
+
+	Move statement checking to code nodes
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add g_rmdir binding
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Fix D-Bus methods with out parameters but no return value
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaconstant.vala:
+	* vala/valaconstructor.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valadestructor.vala:
+	* vala/valafield.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valaproperty.vala:
+	* vala/valapropertyaccessor.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasignal.vala:
+
+	Move member checking to code nodes
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadelegate.vala:
+	* vala/valaenum.vala:
+	* vala/valaenumvalue.vala:
+	* vala/valaerrorcode.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valainterface.vala:
+	* vala/valanamespace.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valastruct.vala:
+
+	Move type symbol checking to code nodes
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move array creation expression checking to
+	ArrayCreationExpression.check
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+	* vala/valathrowstatement.vala:
+
+	Move throw statement checking to ThrowStatement.check
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valareturnstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move return statement checking to ReturnStatement.check
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaforeachstatement.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move foreach statement checking to ForeachStatement.check
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaelementaccess.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move element access checking to ElementAccess.check
+
+2008-11-07  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Set source_reference in parsed nodes
+
+2008-11-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethod.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move method checking to Method.check
+
+2008-11-06  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move class checking to Class.check
+
+2008-11-06  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Move dynamic signal generation to GObjectModule and
+	DBusClientModule
+
+2008-11-06  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodedynamicpropertymodule.vala:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Move dynamic property generation to GObjectModule and
+	DBusClientModule
+
+2008-11-06  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Move constructor code generation to GObjectModule
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valainvocationexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move invocation expression checking to InvocationExpression.check
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamemberaccess.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move member access checking to MemberAccess.check
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* vala/valaobjectcreationexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move object creation expression checking to
+	ObjectCreationExpression.check
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valabinaryexpression.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move binary expression checking to BinaryExpression.check
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaassignment.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move assignment checking to Assignment.check
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaenum.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Support enums in D-Bus clients and servers, fixes bug 534105
+
+2008-11-05  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodecontrolflowmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Add CCodeControlFlowModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadynamicproperty.vala:
+	* vala/valaproperty.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Fix crash when using dynamic properties, fixes bug 559304
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Move signal emission to GSignalModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+
+	Move delegate wrapper generation to CCodeDelegateModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Move array dup wrapper generation to CCodeArrayModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Move construct property assignment to GObjectModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Move signal connection and disconnection to GSignalModule
+
+2008-11-04  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valagsignalmodule.vala:
+
+	Move detailed signal emission to GSignalModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* configure.ac: Post-release version bump
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* NEWS: update for 0.5.1 release
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valadbusclientmodule.vala:
+
+	Move dbus_use_ptr_array to DBusClientModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodedelegatemodule.vala:
+	* gobject/valaccodedynamicpropertymodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valagerrormodule.vala:
+
+	Add CCodeDelegateModule, move more code to GErrorModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagerrormodule.vala:
+
+	Move code generation for try and yield statements to GErrorModule
+	and GAsyncModule, resp.
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodedynamicpropertymodule.vala:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagirwriter.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+	* gobject/valainterfaceregisterfunction.vala:
+	* gobject/valatyperegisterfunction.vala:
+
+	Move code generation to module
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebasemodule.vala:
+
+	Move array helper functions to CCodeArrayModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix fgets binding
+
+2008-11-03  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/packages/loudmouth-1.0/loudmouth-1.0.metadata:
+
+	Mark lm_message_new.to as nullable, and unhide lm_connection_new
+
+	* vapi/packages/loudmouth-1.0/loudmouth-1.0-custom.vala:
+
+	Add the missing Message.get_type () method, and remove the now unecessary
+	creation method from Connection
+
+	* vapi/loudmouth-1.0.vapi:
+	* vapi/packages/loudmouth-1.0/loudmouth-1.0.gi:
+
+	Regenerated
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valagerrormodule.vala:
+	* gobject/valagtypemodule.vala:
+
+	Add GErrorModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodedynamicpropertymodule.vala:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodestructmodule.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusservermodule.vala:
+	* gobject/valagasyncmodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+
+	Combine internal modules by inheritance to improve performance
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valagasyncmodule.vala:
+
+	Add GAsyncModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagsignalmodule.vala:
+	* gobject/valagtypemodule.vala:
+
+	Add GTypeModule, GObjectModule, and GSignalModule to replace
+	GObjectInterfaceModule, GObjectClassModule, and
+	GObjectSignalModule, resp.
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valagobjectclassmodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagobjectsignalmodule.vala:
+
+	Move parameter handling to GObjectClassModule and signal handling
+	to GObjectSignalModule
+
+2008-11-03  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeelementaccessmodule.vala:
+	* gobject/valaccodegenerator.vala:
+
+	Move element access handling to CCodeArrayModule
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Fix comment generation of private enums, patch by Carlos Cadete,
+	fixes bug 558533
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valagenieparser.vala:
+	* vala/valainterface.vala:
+	* vala/valainterfacewriter.vala:
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaclassregisterfunction.vala:
+	* gobject/valagobjectclassmodule.vala:
+	* gobject/valagobjectinterfacemodule.vala:
+
+	Drop deprecated support for static classes and interfaces
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Add errno and g_strerror bindings
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valadbusclientmodule.vala:
+
+	Support GHashTable in D-Bus clients, patch by Marc-André Lureau
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadatatype.vala:
+	* vapi/glib-2.0.vapi:
+
+	Return the right D-Bus type signature for GHashTable,
+	patch by Marc-André Lureau
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+
+	Add partial support for calling coroutines from other coroutines
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethodtype.vala:
+	* gobject/valaccodegenerator.vala:
+
+	Add member `begin' to coroutines
+
+2008-11-02  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valaattributeprocessor.vala:
+	* vala/valaclass.vala:
+	* vala/valaenum.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valastruct.vala:
+	* compiler/valacompiler.vala:
+	* vapigen/valagidlparser.vala:
+	* vapigen/valavapigen.vala:
+
+	Move attribute processing to semantic analyzer
+
+2008-11-01  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valamethod.vala:
+	* ccode/valaccodeblock.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add experimental support for yield statements and coroutines
+
+2008-11-01  Jürg Billeter  <j@bitron.ch>
+
+	* ccode/valaccodecasestatement.vala:
+	* ccode/valaccodeswitchstatement.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valagobjectclassmodule.vala:
+
+	Support more flexible C switch statements
+
+2008-11-01  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valacfgbuilder.vala:
+	* vala/valacodevisitor.vala:
+	* vala/valamethod.vala:
+	* vala/valanullchecker.vala:
+	* vala/valaparser.vala:
+	* vala/valascanner.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasymbolresolver.vala:
+	* vala/valatokentype.vala:
+	* vala/valayieldstatement.vala:
+	* gobject/valaccodegenerator.vala:
+
+	Parse yield statements
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaproperty.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Check properties when accessing them
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaproperty.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Set PropertyAccessor.prop property earlier, don't require the
+	semantic analyzer to set it
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodenode.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasourcefile.vala:
+
+	Check parameters when checking arguments
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaformalparameter.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Move parameter checking to FormalParameter.check
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+
+	Move default argument processing from code generator to	semantic
+	analyzer
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodenode.vala:
+
+	Add check method to CodeNode class to prepare support for more
+	modular semantic analyzer
+
+2008-10-31  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Generate C switch statements for Vala switch statements where
+	possible
+
+2008-10-29  Thijs Vermeir  <thijsvermeir@gmail.com>
+
+	* vapi/packages/gdk-2.0/gdk-2.0.metadata:
+
+	Hide gdk_window_add_filter.data
+
+	* vapi/packages/gtk+-2.0/gtk+-2.0.metadata:
+
+	use ctype GCallback for gtk_action_group_add_radio_actions
+
+	* vapi/gdk-2.0.vapi:
+	* vapi/gtk+-2.0.vapi:
+
+	Regenerate bindings
+
+2008-10-28  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/libgnome-menu/:
+
+	Fix GMenuTreeItem binding
+	
+	* vapi/*.vapi:
+
+	Regenerate bindings
+
+2008-10-28  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valainterfacewriter.vala:
+
+	Don't sort struct fields in vapi files to fix struct
+	initialization, patch by Hans Vercammen
+
+2008-10-27  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* gobject/valaccodegenerator.vala:
+	* compiler/valacompiler.vala:
+
+	Disable additional run-time checks by default to improve
+	performance
+
+2008-10-27  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodemethodmodule.vala:
+
+	Remove unused method
+
+2008-10-27  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraylengthfield.vala:
+	* vala/valaarraymovemethod.vala:
+	* vala/valaarrayresizemethod.vala:
+	* vala/valablock.vala:
+	* vala/valaclass.vala:
+	* vala/valaconstant.vala:
+	* vala/valaconstructor.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valadelegate.vala:
+	* vala/valadestructor.vala:
+	* vala/valadynamicmethod.vala:
+	* vala/valadynamicproperty.vala:
+	* vala/valadynamicsignal.vala:
+	* vala/valaenum.vala:
+	* vala/valaenumvalue.vala:
+	* vala/valaerrorcode.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valafield.vala:
+	* vala/valaforeachstatement.vala:
+	* vala/valaformalparameter.vala:
+	* vala/valainterface.vala:
+	* vala/valalocalvariable.vala:
+	* vala/valamember.vala:
+	* vala/valamethod.vala:
+	* vala/valanamespace.vala:
+	* vala/valaobjecttypesymbol.vala:
+	* vala/valaproperty.vala:
+	* vala/valasignal.vala:
+	* vala/valastruct.vala:
+	* vala/valaswitchsection.vala:
+	* vala/valasymbol.vala:
+	* vala/valatypeparameter.vala:
+	* vala/valatypesymbol.vala:
+
+	Use constructor chaining instead of helper method
+
+2008-10-26  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valaattribute.vala:
+	* vala/valacodevisitor.vala:
+	* vala/valafield.vala:
+	* vala/valagenieparser.vala:
+	* vala/valanamedargument.vala:
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Remove NamedArgument, improve attribute lookup performance
+
+2008-10-26  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+
+	Support calling base method of virtual signal handler,
+	fixes bug 538901
+
+2008-10-26  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix binding for GtkWidget::size_request
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-10-26  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Fix binding for g_sequence_get
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Support custom sentinels for constructors
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valadelegate.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+
+	Next attempt to correct parameter positions for instance and
+	error parameters in delegate wrappers
+
+2008-10-25  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/glib-2.0.vapi:
+
+	Removed the "v_" prefix from the TokenValue fields name
+
+2008-10-25  Ali Sabil  <ali.sabil@gmail.com>
+
+	* vapi/glib-2.0.vapi:
+
+	Changed the ScannerConfig string fields to string* to avoid valac
+	looking for a g_scanner_config_destroy function
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+
+	Remove redundant g_scanner_cur_* bindings
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Fix parameter position for errors in delegate wrappers
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Fix crash when using delegates in combination with pointer types,
+	fixes bug 557728
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* gobject-introspection/scanner.c:
+
+	Fix compile error on FreeBSD, patch by Jille Timmermans,
+	fixes bug 555720
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Fix support for arrays of nullable types, fixes bug 555050
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+
+	Fix crash with invalid return values, fixes bug 549996
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaerrorcode.vala:
+	* vala/valaerrordomain.vala:
+	* vala/valaerrortype.vala:
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasymbolresolver.vala:
+	* gobject/valaccodegenerator.vala:
+	* vapigen/valagirparser.vala:
+
+	Support type checks for error domains and error codes
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasemanticanalyzer.vala:
+	* vala/valasourcefile.vala:
+
+	Fix crash on certain header dependencies, fixes bug 546183
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gobject-2.0.vapi:
+
+	Add GValueArray binding, patch by Mark Lee, fixes bug 557843
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/packages/gconf-2.0/:
+
+	Fix gconf_client_notify_add binding
+
+	* vapi/gconf-2.0.vapi: regenerated
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/libgnome-menu.vapi:
+
+	Fix GMenuTreeItem binding
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/libbonoboui-2.0.vapi:
+	* vapi/libpanelapplet-2.0.vapi:
+
+	Fix PanelApplet and BonoboUIVerb bindings
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Report error when using virtual method modifiers for static
+	methods, fixes bug 556881
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+
+	Report error when using conflicting method modifiers,
+	fixes bug 535853
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodecontext.vala:
+	* compiler/valacompiler.vala:
+
+	Remove non-working support for conditional compilation
+
+2008-10-25  Jürg Billeter  <j@bitron.ch>
+
+	* tests/exceptions.exp:
+	* tests/exceptions.vala:
+	* tests/testrunner.sh:
+	* vapi/Makefile.am:
+
+	Remove libgee test to avoid conflict in vapidir
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valadbusclientmodule.vala:
+	* gobject/valadbusservermodule.vala:
+
+	Split DBusModule into DBusClientModule and DBusServerModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodeelementaccessmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Move get_array_length_cname and get_array_length_cexpression to
+	CCodeArrayModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support virtual methods
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support methods throwing errors
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Support shared namespaces
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/*.vapi:
+
+	Regenerate bindings
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valainterfacewriter.vala:
+
+	Sort output to allow comparison of generated vapi files
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vapigen/valagirparser.vala:
+
+	Recognize goffset
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valanamespace.vala:
+	* vapigen/valagirparser.vala:
+
+	Remove Class and Iface structs
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodegeneratorsourcefile.vala:
+	* gobject/valaccodemodule.vala:
+
+	Move visit_source_file to CCodeBaseModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valaccodestructmodule.vala:
+
+	Add CCodeStructModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valadbusmodule.vala:
+	* gobject/valagobjectmodule.vala:
+	* gobject/valagobjectsignalmodule.vala:
+
+	Add GObjectSignalModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Enable CCodeDynamicSignalModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/Makefile.am:
+	* vala/valacodebinding.vala:
+	* vala/valacodegenerator.vala:
+	* vala/valacodenode.vala:
+	* vala/valadynamicsignal.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebinding.vala:
+	* gobject/valaccodedynamicsignalmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeDynamicSignalModule, remove CodeBinding and CCodeBinding
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* vala/valadynamicproperty.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodedynamicpropertymodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeDynamicPropertyModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodeassignmentmodule.vala:
+	* gobject/valaccodebinding.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+	* vala/valaassignment.vala:
+	* vala/valacodegenerator.vala:
+
+	Add CCodeAssignmentModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* vala/valaelementaccess.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodebinding.vala:
+	* gobject/valaccodeelementaccessmodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeElementAccessModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* vala/valainvocationexpression.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionmodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeInvocationExpressionModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* vala/valamemberaccess.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodememberaccessmodule.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeMemberAccessModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaarraycreationexpression.vala:
+	* vala/valacodegenerator.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodearraymodule.vala:
+	* gobject/valaccodebinding.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeArrayModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodearraycreationexpressionbinding.vala:
+	* gobject/valaccodeassignmentbinding.vala:
+	* gobject/valaccodeelementaccessbinding.vala:
+	* gobject/valaccodeexpressionbinding.vala:
+	* gobject/valaccodeinvocationexpressionbinding.vala:
+	* gobject/valaccodememberaccessbinding.vala:
+
+	Remove CCodeExpressionBinding
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaclass.vala:
+	* vala/valacodegenerator.vala:
+	* vala/valainterface.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valagobjectclassmodule.vala:
+	* gobject/valagobjectinterfacemodule.vala:
+
+	Add GObjectClassModule and GObjectInterfaceModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodeclassbinding.vala:
+	* gobject/valaccodeinterfacebinding.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Move register_dbus_info from CCodeObjectTypeSymbolBinding
+	to DBusModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodeclassbinding.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinterfacebinding.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valaccodeobjecttypesymbolbinding.vala:
+	* gobject/valagobjectmodule.vala:
+
+	Add GObjectModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* vala/valacreationmethod.vala:
+	* vala/valadynamicmethod.vala:
+	* vala/valamethod.vala:
+	* gobject/Makefile.am:
+	* gobject/valaccodeassignmentbinding.vala:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodebinding.vala:
+	* gobject/valaccodeclassbinding.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodeinvocationexpressionbinding.vala:
+	* gobject/valaccodememberaccessbinding.vala:
+	* gobject/valaccodemethodmodule.vala:
+	* gobject/valaccodemodule.vala:
+	* gobject/valadbusmodule.vala:
+
+	Add CCodeMethodModule and DBusModule
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Allow access to head and codegen from CCode modules
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valacodegenerator.vala:
+	* gobject/valaccodegenerator.vala:
+
+	Remove unused stubs for code bindings
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/Makefile.am:
+	* gobject/valaccodebasemodule.vala:
+	* gobject/valaccodegenerator.vala:
+	* gobject/valaccodemodule.vala:
+
+	Add CCodeModule and CCodeBaseModule classes as preparation to
+	make the backend more modular
+
+2008-10-24  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodeinvocationexpressionbinding.vala:
+
+	Fix constructor chain-up
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/dbus-glib-1.vapi:
+
+	Add dbus_g_connection_get_connection and
+	dbus_connection_get_g_connection bindings, patch by Jan Luebbe
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaparser.vala:
+	* vala/valasemanticanalyzer.vala:
+	* gobject/valaccodemethodbinding.vala:
+
+	Mark creation methods as instance methods to fix lambda
+	expressions in creation methods
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Fix virtual struct properties
+
+2008-10-23  Levi Bard  <taktaktaktaktaktaktaktaktaktak@gmail.com>
+
+	* vapi/sdl.vapi: Fix SysWMEvent link issue.
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gobject-2.0.vapi:
+
+	Fix runtime error when using GValue with D-Bus
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/gobject-2.0.vapi:
+
+	Support passing GValues as variants over D-Bus
+
+2008-10-23  Jürg Billeter  <j@bitron.ch>
+
+	* gobject/valaccodegenerator.vala:
+
+	Fix foreach over stacked arrays
+
+2008-10-22  Andrea Del Signore  <sejerpz@tin.it>
+
+	* vapi/packages/gtk+-2.0/:
+
+	Fix gtk_text_buffer_new binding
+
+	* vapi/gtk+-2.0.vapi: regenerated
+
+2008-10-22  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valaintegertype.vala:
+	* vala/valasemanticanalyzer.vala:
+
+	Fix leaked reference cycle
+
+2008-10-22  Jürg Billeter  <j@bitron.ch>
+
+	* vala/valasignal.vala:
+
+	Always mangle signal name from camel case to lower case
+
+2008-10-22  Jürg Billeter  <j@bitron.ch>
+
+	* vapi/glib-2.0.vapi:
+	* vapi/gobject-2.0.vapi:
+	* vapi/Makefile.am:
+
+	Move gobject-2.0 bindings to separate VAPI file
+
+	* compiler/valacompiler.vala:
+	* vapigen/valavapigen.vala:
+
+	Include gobject-2.0 by default
+
+	* gee/Makefile.am:
+	* ccode/Makefile.am:
+	* vala/Makefile.am:
+	* gobject/Makefile.am:
+	* compiler/Makefile.am:
+
+	Support building libvala and valac with older Vala versions
+
+2008-10-22  Jürg Billeter  <j@bitron.ch>
+
+	* ChangeLog.pre-0-4:
+	* Makefile.am:
+
+	Rotate ChangeLog

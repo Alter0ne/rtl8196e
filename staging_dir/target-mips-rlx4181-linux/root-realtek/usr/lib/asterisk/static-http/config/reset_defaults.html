@@ -1,0 +1,103 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Reset PBX to factory defaults
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Reset to Factory Defaults</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Reset to Factory Defaults 
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+	<center><div id="tabbedMenu"></div></center>
+
+	<div class='lite_Heading'> Reset to Factory Defaults </div>
+
+	<center>
+	<div style='text-align:center; 	background-color : #FFFFFF; width: 700px; padding:20px; margin-top:10px; border:1px solid #CDCDCD; ' class='lite'>
+		<B>Warning:</B> By resetting your Asterisk Appliance/System to factory defaults, you will lose all your configuration ! <BR>
+		You can take a backup of your current configuration from the 
+		<span onclick="parent.miscFunctions.click_panel('backup.html');" style='text-decoration: underline; cursor: pointer; cursor: hand; color: #0000EE'>Backup page.</span>
+	</div>
+	</center>
+	<div style='text-align:center; width: 95%; margin-top:20px'>
+		<span class='guiButton' id='reset_button' onclick='reset_factory();'>Reset to Defaults</span>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script>
+
+	var reset_factory = function(){
+		if(!confirm("Are you sure you want to reset ?")) { return true; }
+
+		parent.ASTGUI.dialog.waitWhile(' Resetting to factory defaults ...');
+		if(parent.sessionData.PLATFORM.isAA50 ){
+			var after = function(){
+				parent.ASTGUI.dialog.hide();
+				top.cookies.set( 'configFilesChanged' , 'no' ); // ignore any previous changes -- skip calling save_config
+				parent.miscFunctions.reboot_pbx({
+					msg: 'You appliance has been reset to <i>\'factory defaults\' </i> ',
+					btnNo_text : 'Later'
+				});
+			};
+			parent.ASTGUI.systemCmd( ASTGUI.globals.app_factoryReset, after);
+			return;
+		}
+
+		// if not AA50 - manually reset all config files 
+		var files = ['extensions.conf', 'users.conf', 'agents.conf', 'meetme.conf', 'misdn.conf', 'queues.conf'];
+		files.each(function(file){
+			var c = config2json({filename:file, catlist:'yes'});
+			parent.ASTGUI.dialog.waitWhile(' Resetting file ' + file );
+			c.each( function(cat){
+				var u = new listOfSynActions(file);
+				u.new_action('delcat', cat , '', '');
+				u.callActions();
+			});
+		});
+
+		parent.ASTGUI.dialog.waitWhile(' Reloading Asterisk !');
+		parent.miscFunctions.applyChanges();
+		parent.miscFunctions.logoutFunction.doLogout();
+	};
+
+	var localajaxinit = function(){
+		top.document.title = "Reset PBX to Default Configuration" ;
+		var fd_text = (parent.sessionData.PLATFORM.isAA50 || parent.sessionData.PLATFORM.isABE ) ? 'Factory Reset' : 'Reset Configuration' ;
+		var t = [
+			{url:'preferences.html', desc:'General Preferences' } ,
+			{url:'language.html', desc:'Language' } ,
+			{url:'password.html', desc:'Change Password'},
+			{url:'#', desc: fd_text , selected:true }
+		];
+		t.push( {url:'reboot.html', desc:'Reboot' } );
+		t.push( {url:'flipadvanced.html', desc:'Advanced Options' } );
+		ASTGUI.tabbedOptions( _$('tabbedMenu') , t );
+	};
+
+	</script>
+</body>
+</html>

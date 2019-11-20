@@ -1,0 +1,612 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Add/delete/Edit "Users"
+ *
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com> 
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Manage Users</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+		.no_obcid { 
+			color: #FF0000; 
+		}
+
+		#table_userslist_container{
+			clear:both;
+			height: 600px;
+			margin-left: 5px;
+			margin-right: 20px;
+			margin-top: 5px;
+			margin-bottom:10px;
+			overflow:auto;
+		}
+
+		#table_userslist {
+			border: 1px solid #666666;
+			width: 99%;
+			text-align: center;
+			padding : 1px;
+		}
+
+		#table_userslist tr.frow { 
+			background: #6b79a5; 
+			color: #CED7EF; 
+		}
+
+		#table_userslist tr.frow td { 
+			font-weight:bold; 
+		}
+
+		#table_userslist tr td { 
+			padding : 3px; 
+		}
+
+		#table_userslist tr.even { 
+			background: #DFDFDF; 
+		}
+
+		#table_userslist tr.odd { 
+			background: #FFFFFF; 
+		}
+
+		#table_userslist tr.even:hover, #table_userslist tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+		.top_buttons > span.guiButton, .top_buttons > span.guiButtonNew, .top_buttons > span.guiButtonDelete {
+			float: left;
+		}
+
+		.top_buttons > span.lite_Heading {
+			margin-left: 80px;
+		}
+
+		#whereToBuy_button {
+			float: right;
+			margin-right: 30px;
+		}
+
+		#edit_userExtension_div {
+			display: none;
+			width: 750px;
+		}
+
+	</style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar"> User Extensions on PBX 
+		<span class='refresh_icon'>&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+		<div class='top_buttons'>
+			<span id='new' class='guiButtonNew'>Create New User</span>
+			<span class='guiButton' id="modify_users">Modify Selected Users</span>
+			<span class='guiButtonDelete'>Delete Selected Users</span>
+
+			<span class='guiButton' id='whereToBuy_button' tip="en,users,98">Where to Buy</span>
+			<span class='lite_Heading'> List of User Extensions </span>
+		</div>
+
+	<div id='table_userslist_container'>
+	<table id='table_userslist' cellpadding=0 cellspacing=0 border=0 align=center></table>
+	</div>
+
+	<div id="edit_userExtension_div" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span id="edit_userExtension_div_title"></span></TD>
+			<TD width="120"><span id='User_AdvancedEditButton' class='guiButton'>Advanced Edit</span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=4 border=0 width='100%'>
+		<TR>	<TD>	<fieldset>
+					<legend>&nbsp;General :&nbsp;</legend>
+					<table>	<TR>
+							<TD align="right">Extension:</TD>
+							<TD>	<input id="new_ext" size=5  field_name='Extension' validation='numeric' required='yes'>
+								<img src="images/tooltip_info.gif" tip="en,users,0" class='tooltipinfo'>
+							</TD>
+							<TD align="left">CallerID Name: <input id="edit_fullname" size=14>
+								<img src="images/tooltip_info.gif" tip="en,users,1" class='tooltipinfo'>
+							</TD>
+							<TD align="right">DialPlan: <select id='edit_user_dialplan'></select>
+								<img src="images/tooltip_info.gif" tip="en,users,6" class='tooltipinfo'>
+							</TD>
+						</TR>
+						<TR>	
+							<TD align='right'>Internal CallerID:</TD>
+							<TD>	<span id='edit_callerid_span'></span>
+								<img src="images/tooltip_info.gif" tip="en,users,4" class='tooltipinfo'>
+							</TD>
+							<TD align='left'>
+								
+								CallerID Number: <input id='edit_OutBoundCallerid' size=12>
+								<img src="images/tooltip_info.gif" tip="en,users,27" class='tooltipinfo'>
+							</TD>
+							<TD align='left'></TD>
+						</TR>
+					</table>
+				</fieldset>
+			</TD>
+		</TR>
+		<TR id='tmp_hideIfRmwi'>
+			<TD>
+				<fieldset>
+					<legend>&nbsp;<input type='checkbox' id='edit_hasvoicemail'>&nbsp;<label for='edit_hasvoicemail'>Enable Voicemail for this User <img src="images/tooltip_info.gif" tip="en,users,8" class='tooltipinfo'></label> </legend>
+					<table>	<TR>	<TD>VoiceMail Access PIN code:</TD>
+							<TD><input id="edit_vmsecret" size=4>
+								<img src="images/tooltip_info.gif" tip="en,users,16" class='tooltipinfo'>
+							</TD>
+							<TD align="right"><span style="margin-left:30px;">Email Address:</span></TD>
+							<TD><input id="edit_email" size=15>
+								<img src="images/tooltip_info.gif" tip="en,users,3" class='tooltipinfo'>
+							</TD>
+						</TR>
+					</table>
+				</fieldset>
+			</TD>
+		</TR>
+
+		<TR>	<TD>	<fieldset>
+					<legend>&nbsp;Technology</legend>
+					<TABLE> <TR>	<TD>
+
+								<input type='checkbox' id='edit_hasSip'><label for='edit_hasSip'>SIP</label>
+								<img src="images/tooltip_info.gif" tip="en,users,10" class='tooltipinfo'>
+						
+								<input type='checkbox' id='edit_hasIax'><label for='edit_hasIax'>IAX</label>
+								<img src="images/tooltip_info.gif" tip="en,users,11" class='tooltipinfo'>
+
+								Analog Station: <select id='edit_fxs'></select>
+								<img src="images/tooltip_info.gif" tip="en,users,5" class='tooltipinfo'>
+
+
+								<label for="edit_flash">flash</label> <img src="images/tooltip_info.gif" tip="en,users,30" class='tooltipinfo'>:
+									<input id='edit_flash' size=4>
+								<label for="edit_rxflash">rxflash</label> <img src="images/tooltip_info.gif" tip="en,users,31" class='tooltipinfo'>:
+									<input id='edit_rxflash' size=4>
+							</TD>
+						</TR>
+						<TR>	<TD>	Codec Preference : First :<select id='codec_one'></select>
+										Second :<select id='codec_two'></select>
+										Third :<select id='codec_three'></select>
+										Fourth :<select id='codec_fourth'></select>
+										Fifth :<select id='codec_fifth'></select>
+							</TD>
+						</TR>
+					</TABLE>
+				</fieldset>
+			</TD>
+		</TR>
+
+		<TR>	<TD>	<fieldset>
+					<legend>&nbsp;VoIP Settings</legend>
+					<TABLE> <TR>	<TD>
+								MAC Address : <input id='macaddress' size=12  field_name='MAC Address' validation='macaddress'>
+								<img src="images/tooltip_info.gif" tip="en,users,99" class='tooltipinfo'>
+								Line Number : <select id='linenumber'>
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+									<option value='3'>3</option>
+									<option value='4'>4</option>
+									<option value='5'>5</option>
+									<option value='6'>6</option>
+								</select>
+								<img src="images/tooltip_info.gif" tip="en,users,96" class='tooltipinfo'>
+
+								LineKeys: <select id="edit_linekeys" dfalt='1'>
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+									<option value='3'>3</option>
+									<option value='4'>4</option>
+									<option value='5'>5</option>
+									<option value='6'>6</option>
+								</select>
+								<img src="images/tooltip_info.gif" tip="en,users,94" class='tooltipinfo'>
+							</TD>
+						</TR>
+						<TR>
+							<TD>
+								
+								SIP/IAX Password: <input id="edit_secret" size=6>
+								<img src="images/tooltip_info.gif" tip="en,users,2" class='tooltipinfo'>
+ 							
+ 							IAX: Require Call Token: <img src="images/tooltip_info.gif" tip="en,users,32" class='tooltipinfo'>
+ 							<select id="edit_requirecalltoken" dfalt=""> 
+ 								<option value=''></option>
+ 								<option value='yes'>yes</option>
+ 								<option value='no'>no</option>
+ 								<option value='auto'>auto</option>
+ 							</select>
+							</TD>
+						</TR>
+						<TR>
+							<TD>
+ 					<TR>
+ 						<TD>
+ 
+ 							IAX: Max Call Numbers: <img src="images/tooltip_info.gif" tip="en,iax_general,42" class='tooltipinfo'>
+ 							<input type='text' size=4 id='edit_maxcallnumbers' dfalt='' validation='numeric' class="input8">
+ 						</TD>
+ 					</TR>
+ 					<TR>
+ 						<TD>
+								NAT: <input type='checkbox' id='edit_nat' dfalt='yes'> <img src="images/tooltip_info.gif" tip="en,users,22" class='tooltipinfo'>
+								Can Reinvite: <input type='checkbox' id='edit_canreinvite'> <img src="images/tooltip_info.gif" tip="en,users,21" class='tooltipinfo'>
+
+								DTMF Mode: <select id="edit_dtmfmode" dfalt='rfc2833'><option value="rfc2833">RFC2833</option><option value="info" >Info</option><option value="inband" >Inband</option>
+										<option value="auto" >Auto</option></select> <img src="images/tooltip_info.gif" tip="en,users,23" class='tooltipinfo'>
+								
+								insecure:  <select id="edit_insecure" dfalt='no' class="input8"><option value='port'>port</option><option value='port,invite'>very</option><option value='no'>no</option></select> <img src="images/tooltip_info.gif" tip="en,users,26" class='tooltipinfo'>
+							</TD>
+						</TR>
+						<TR>	<TD id="mwi_from">
+								MWI from: <input type="text" id="edit_mwifrom" /> <img src="images/tooltip_info.gif" tip="en,users,33" size="12" class="tooltipinfo" />
+							</TD>
+						</TR>
+					</TABLE>
+				</fieldset>
+			</TD>
+		</TR>
+
+
+		<TR>	<TD>	<fieldset>
+					<legend>&nbsp;Other Options</legend>
+					<TABLE> <TR>	<TD>
+							<input type='checkbox' id='edit_3wayCalling'>
+							<label for='edit_3wayCalling'>3-Way Calling (analog)</label>
+							<img src="images/tooltip_info.gif" tip="en,users,14" class='tooltipinfo'>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type='checkbox' id='edit_inDirectory'>
+							<label for='edit_inDirectory'>In Directory</label>
+							<img src="images/tooltip_info.gif" tip="en,users,9" class='tooltipinfo'>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type='checkbox' id='edit_callWaiting'>
+							<label for='edit_callWaiting'>Call Waiting (analog)</label>
+							<img src="images/tooltip_info.gif" tip="en,users,13" class='tooltipinfo'>
+							<br>
+							<input type='checkbox' id='edit_cti'>
+							<label for='edit_cti'>ADA User</label>
+							<img src="images/tooltip_info.gif" tip="en,users,12" class='tooltipinfo'>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type='checkbox' id='edit_isagent'>
+							<label for='edit_isagent'>Is Agent</label>
+							<img src="images/tooltip_info.gif" tip="en,users,15" class='tooltipinfo'>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;
+							Pickup Group: <select id='edit_pickupgroup'></select>
+
+							</TD>
+						</TR>
+					</TABLE>
+				</fieldset>
+			</TD>
+		</TR>
+
+		<TR>	<TD align=center height=50 valign=middle>
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' onclick='SAVE_USER_FORM();'>Update</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+
+	<div id="edit_selectedExtensions_div" STYLE="width:600; display:none; " class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"> Modify Parameters on all selected users </TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=4 border=0 width='100%'>
+			<TR>
+				<TD></TD>
+				<TD><strong>General</strong></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_obcid'></TD>
+				<TD> OutBound CallerID: <input id='edit_multiple_obcid' type=text size=12> <img src="images/tooltip_info.gif" tip="en,users,27" class='tooltipinfo'></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_dialplan'></TD>
+				<TD> DialPlan: <select id='edit_multiple_dialplan'></select>
+					<img src="images/tooltip_info.gif" tip="en,users,6" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_hasvoicemail'></TD>
+				<TD>
+					<input type=checkbox id='edit_multiple_hasvoicemail'> Enable Voicemail for these Users <img src="images/tooltip_info.gif" tip="en,users,8" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_vmsecret'></TD>
+				<TD>
+					VoiceMail Access PIN code: <img src="images/tooltip_info.gif" tip="en,users,16" class='tooltipinfo'><BR>
+							<input type=radio id='edit_multiple_vmCHoice1' name='edit_multiple_vmCHoice'> Use <input id='edit_multiple_vmsecret' size=4> for all users<BR>
+							<input type=radio id='edit_multiple_vmCHoice2' name='edit_multiple_vmCHoice'> Use Extension as PIN	
+				</TD>
+			</TR>
+			<TR>
+				<TD></TD>
+				<TD><strong>Technology</strong></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_hassip'></TD>
+				<TD>
+					<input type=checkbox id='edit_multiple_hassip'> SIP <img src="images/tooltip_info.gif" tip="en,users,10" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_hasiax'></TD>
+				<TD>
+					<input type=checkbox id='edit_multiple_hasiax'> IAX <img src="images/tooltip_info.gif" tip="en,users,11" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD></TD>
+				<TD><strong>Codec Preference:</strong></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_allow'></TD>
+				<TD>
+					First :<select id='edit_multiple_codec_one'></select>
+					Second :<select id='edit_multiple_codec_two'></select>
+					Third :<select id='edit_multiple_codec_three'></select>
+					Fourth :<select id='edit_multiple_codec_fourth'></select>
+					Fifth :<select id='edit_multiple_codec_fifth'></select>
+				</TD>
+			</TR>		
+			<TR>
+				<TD></TD>
+				<TD><strong>Analog Settings:</strong></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_flashrxflash'></TD>
+				<TD>flash: <input id='edit_multiple_flash' size=4> <img src="images/tooltip_info.gif" tip="en,users,30" class='tooltipinfo'>
+					rxflash: <input id='edit_multiple_rxflash' size=4> <img src="images/tooltip_info.gif" tip="en,users,31" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD></TD>
+				<TD><strong>VoIP Settings:</strong></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_secret'></TD>
+				<TD>
+					SIP/IAX Password: <img src="images/tooltip_info.gif" tip="en,users,2" class='tooltipinfo'>
+ 				<BR>	<input type=radio id='edit_multiple_seCHoice1' name='edit_multiple_seCHoice'> Use <input id="edit_multiple_secret" size=4> for all users 
+ 						<input type=radio id='edit_multiple_seCHoice2' name='edit_multiple_seCHoice'> Use Extension as Password
+ 						</TD>
+ 					</TR>
+				<TR>
+					<TD></TD>
+					<TD><strong>IAX Security Settings:</strong></TD>
+				</TR>
+ 					<TR>
+					<TD><input type=checkbox id='edit_check_multiple_iax'></TD>
+ 						<TD>
+ 							IAX: Require Call Token: <img src="images/tooltip_info.gif" tip="en,users,32" class='tooltipinfo'>
+ 							<select id="edit_multiple_requirecalltoken" dfalt=''> 
+ 								<option value=''></option>
+ 								<option value='yes'>yes</option>
+ 								<option value='no'>no</option>
+ 								<option value='auto'>auto</option>
+ 							</select>
+							<br> 
+ 							IAX: Max Call Numbers: <img src="images/tooltip_info.gif" tip="en,iax_general,42" class='tooltipinfo'>
+ 							<input type='text' size=4 id='edit_multiple_maxcallnumbers' dfalt='' validation='numeric' class="input8">
+				</TD>
+			</TR>
+
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_nat'></TD>
+				<TD><input type='checkbox' id='edit_multiple_nat'> NAT <img src="images/tooltip_info.gif" tip="en,users,22" class='tooltipinfo'></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_canreinvite'></TD>
+				<TD><input type='checkbox' id='edit_multiple_canreinvite'> Can Reinvite <img src="images/tooltip_info.gif" tip="en,users,21" class='tooltipinfo'></TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_dtmfmode'></TD>
+				<TD>
+					DTMF Mode: <select id="edit_multiple_dtmfmode">
+					<option value="rfc2833" >RFC2833</option>
+					<option value="info" >Info</option>
+					<option value="inband" >Inband</option>
+					<option value="auto" >Auto</option>
+					</select>
+					<img src="images/tooltip_info.gif" tip="en,users,23" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_insecure'></TD>
+				<TD>
+					insecure : <select id='edit_multiple_insecure' class="input8"><option value='port'>port</option><option value='port,invite'>very</option><option value='no'>no</option></select> <img src="images/tooltip_info.gif" tip="en,users,26" class='tooltipinfo'>
+				</TD>
+			</TR>
+			
+			<TR>
+				<TD></TD>
+				<TD><strong>Other Options:</strong></TD>
+			</TR>
+
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_3waycalling'></TD>
+				<TD>
+					<input type='checkbox' id='edit_multiple_3waycalling'>
+					<label for='edit_multiple_3waycalling'>3-Way Calling</label>
+					<img src="images/tooltip_info.gif" tip="en,users,14" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_indirectory'></TD>
+				<TD>
+					<input type='checkbox' id='edit_multiple_indirectory'>
+					<label for='edit_multiple_indirectory'>In Directory</label>
+					<img src="images/tooltip_info.gif" tip="en,users,9" class='tooltipinfo'>
+				</TD>
+			</TR>
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_callwaiting'></TD>
+				<TD>
+					<input type='checkbox' id='edit_multiple_callwaiting'>
+					<label for='edit_multiple_callwaiting'>Call Waiting</label>
+					<img src="images/tooltip_info.gif" tip="en,users,13" class='tooltipinfo'>
+				</TD>
+			</TR>
+
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_cti'></TD>
+				<TD>
+					<input type='checkbox' id='edit_multiple_cti'>
+					<label for='edit_multiple_cti'>CTI</label>
+					<img src="images/tooltip_info.gif" tip="en,users,12" class='tooltipinfo'>
+				</TD>
+			</TR>
+			
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_isagent'> </TD>
+				<TD>
+					<input type='checkbox' id='edit_multiple_isagent'>
+					<label for='edit_multiple_isagent'>Is Agent</label>
+					<img src="images/tooltip_info.gif" tip="en,users,15" class='tooltipinfo'>
+				</TD>
+			</TR>
+
+			<TR>
+				<TD><input type=checkbox id='edit_check_multiple_pickupgroup'></TD>
+				<TD>
+					Pickup Group: <select id='edit_multiple_pickupgroup'></select>
+				</TD>
+			</TR>
+			<TR>	<TD align=center valign=middle colspan=2>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' onclick='save_multiple_users();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+
+	<div id="edit_User_Advanced_DIV" STYLE="width:650; max-height:450;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);"><span></span></TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+			<TR>	<TD align="center">
+					<textarea id='edit_USER_Advanced_details' rows=15 cols=80></textarea>
+				</TD>
+			</TR>
+			<TR>	<TD align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='show_UserEdit_normal();'>Cancel</span>
+					<span class='guiButtonEdit' onclick='save_User_Advanced();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+
+	<div style="display:none">
+		<form name="buynow_form" id="buynow_form" action="http://www.digium.com/en/ecosystem/partners/partners.php" method="post"></form>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/users.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.delegate-1.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			top.document.title = "Manage User Extensions";
+			if (!ASTGUI.miscFunctions.alertIfRangeisNotdefined('ue_start', 'ue_end', 'Users')) {
+				$('.top_buttons').hide();
+				return;
+			}
+
+			/* lets init everything */
+			$('#whereToBuy_button').tooltip({ delay: 0.9, showURL: false, top: 15, left: -300});
+			load_users_table();
+			initialize_formFields();
+			
+			/* lets add some event handlers/delegators */
+			$('#new_ext')
+				.keyup(function() {
+					$('#edit_callerid_span').html(this.value);
+				})
+				.change(function() {
+					$('#edit_callerid_span').html(this.value);
+			});
+			$('span.refresh_icon').click(function() {
+				window.location.reload();
+			});
+			$('div.top_buttons')
+				.delegate('click', '.guiButtonNew', function() {
+					NEW_USER_FORM();
+					return false;
+				})
+				.delegate('click', '#modify_users', function() {
+					EDIT_SELECTEDUSERs_FORM();
+					return false;
+				})
+				.delegate('click', '.guiButtonDelete', function() {
+					DELETE_SELECTED_USERS();
+					return false;
+				})
+				.delegate('click', '#whereToBuy_button', function() {
+					buynow_action();
+					return false;
+			});
+			$('#User_AdvancedEditButton').click(function() {
+				show_UserEdit_Advanced();
+			});
+			$('#edit_fxs').change(function() {
+				/* lets disable all the inputs that are analog only if
+				 * there is no analog stations */
+				var changes = ['3wayCalling', 'callWaiting', 'flash', 'rxflash'];
+				if ($('#edit_fxs option:selected').text() === 'None') {
+					for (var i=0; i<changes.length; i++) {
+						$('#edit_'+changes[i]).attr('disabled', 'disabled');
+						$('label[for=edit_'+changes[i]+']').css('color', '#555555');
+					}
+				} else {
+					for (var i=0; i<changes.length; i++) {
+						$('#edit_'+changes[i]).removeAttr('disabled');
+						$('label[for=edit_'+changes[i]+']').css('color', 'inherit');
+					}
+				}
+			}).change();
+		});
+	</script>
+</body>
+</html>

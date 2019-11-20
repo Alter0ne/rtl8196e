@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+#
+# Fwknop is developed primarily by the people listed in the file 'AUTHORS'.
+# Copyright (C) 2009-2014 fwknop developers and contributors. For a full
+# list of contributors, see the file 'CREDITS'.
+#
+
+START=60
+
+FWKNOPD_BIN=/usr/sbin/fwknopd
+
+start()
+{
+	$FWKNOPD_BIN
+}
+
+stop()
+{
+	$FWKNOPD_BIN -K
+}
+
+restart()
+{
+    stop;
+    sleep 1;
+    start;
+}
+
+reload()
+{
+	$FWKNOPD_BIN -R
+}

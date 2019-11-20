@@ -1,0 +1,3 @@
+i2c-algo-pcf.ko
+i2c-core.ko
+i2c-dev.ko

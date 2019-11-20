@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libtorrent
+Description: A BitTorrent library
+Version: 0.13.4
+Libs: -L${libdir} -ltorrent
+Cflags: -I${includedir}

@@ -1,0 +1,82 @@
+Test the patch merging functionality of `quilt diff'.
+
+	$ mkdir patches
+
+	$ cat > abc.txt
+	< a
+	< b
+	< c
+
+	$ cat > patches/series
+	< a.diff
+	< b.diff
+	< c.diff
+
+	$ cat > patches/a.diff
+	< --- merge.orig/abc.txt
+	< +++ merge/abc.txt
+	< @@ -1 +1 @@
+	< -a
+	< +a+
+
+	$ cat > patches/b.diff
+	< --- merge.orig/abc.txt
+	< +++ merge/abc.txt
+	< @@ -2 +2 @@
+	< -b
+	< +b+
+
+	$ cat > patches/c.diff
+	< --- merge.orig/abc.txt
+	< +++ merge/abc.txt
+	< @@ -3 +3 @@
+	< -c
+	< +c+
+
+	$ quilt push -qa
+	> Applying patch %{P}a.diff
+	> Applying patch %{P}b.diff
+	> Applying patch %{P}c.diff
+	> Now at patch %{P}c.diff
+
+	$ quilt diff -P b.diff | grep -v "^\\(---\\|+++\\)"
+	> Warning: more recent patches modify files in patch %{P}b.diff
+	>~ Index: [^/]+/abc\.txt
+	> ===================================================================
+	> @@ -1,3 +1,3 @@
+	>  a+
+	> -b
+	> +b+
+	>  c
+
+	$ quilt diff --combine a.diff -P b.diff | grep -v "^\\(---\\|+++\\)"
+	> Warning: more recent patches modify files in patch %{P}b.diff
+	>~ Index: [^/]+/abc\.txt
+	> ===================================================================
+	> @@ -1,3 +1,3 @@
+	> -a
+	> -b
+	> +a+
+	> +b+
+	>  c
+
+	$ quilt diff --combine b.diff | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/abc\.txt
+	> ===================================================================
+	> @@ -1,3 +1,3 @@
+	>  a+
+	> -b
+	> -c
+	> +b+
+	> +c+
+
+	$ quilt diff --combine - | grep -v "^\\(---\\|+++\\)"
+	>~ Index: [^/]+/abc\.txt
+	> ===================================================================
+	> @@ -1,3 +1,3 @@
+	> -a
+	> -b
+	> -c
+	> +a+
+	> +b+
+	> +c+

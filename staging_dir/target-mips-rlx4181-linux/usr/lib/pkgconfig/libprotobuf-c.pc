@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+bindir=/usr/bin
+
+Name: libprotobuf-c
+Description: Protocol Buffers C library
+Version: 1.0.0-rc2
+Libs: -L${libdir} -lprotobuf-c
+Libs.private:
+Cflags: -I${includedir}

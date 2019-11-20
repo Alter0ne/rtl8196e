@@ -1,0 +1,897 @@
+#!/usr/bin/perl
+#
+# Realtek Semiconductor Corp.
+#
+# rsdk-linux-lstrip: target file system strip
+#
+# Tony Wu (tonywu@realtek.com)
+# Jan. 10, 2009
+
+
+$| = 1;
+use Cwd 'abs_path';
+use File::Basename;
+use Getopt::Long;
+
+my @ROMFS_EXES = ();
+my %ROMFS_LIBS = ();
+my %RSDK_LIBS = ();
+
+my $var_eglibc = 0;
+my $var_muslc = 0;
+my $var_sdk = 'rsdk';
+my $ver_rsdk;
+my $dir_rsdk;
+my $dir_romfs = '';
+my $dir_extfs = '';
+my $var_romfs_size1;
+my $var_romfs_size2;
+my $var_strip = 2;
+
+my $ldscript;
+my $libgcc_file;
+my $libgcc_shared;
+my $libgcc_static;
+my $libpthread_used = 0;
+my $endian;
+
+##
+## parse argument
+##
+&get_rsdkver();
+&print_header();
+&check_option();
+
+print "INFO: shrinking ", $dir_romfs, "\n";
+print "INFO: shrinking ", $dir_extfs, "\n" if ($dir_extfs ne '');
+
+##
+## 0.0
+##
+&list_romfs;
+&list_extfs if ($dir_extfs ne '');
+&list_romfs_libs;
+&list_rsdk_libs;
+
+$var_romfs_size1 = &check_size("$dir_romfs/");
+$var_romfs_size1+= &check_size("$dir_extfs/") if ($dir_extfs ne '');
+
+##
+## 0.1
+##
+&check_duplicate;
+
+##
+## 0. locate RSDK directory/check libgcc/check endian
+##
+&check_rsdk('rsdk-linux-gcc');
+&check_endian;
+&check_libgcc;
+
+##
+## 1. regenerate libraries
+##
+&list_used_libs;
+&lib_cleanup;
+&lib_makeover unless ($opt_noshrink == 1);
+
+##
+## 2. strip/sstrip libraries and executables
+##
+&romfs_strip;
+
+##
+## 3. print stats
+##
+$var_romfs_size2 = &check_size("$dir_romfs/");
+$var_romfs_size2+= &check_size("$dir_extfs/") if ($dir_extfs ne '');
+
+print "INFO: romfs stripping completed", "\n";
+print "INFO: romfs size reduced from $var_romfs_size1 to $var_romfs_size2", "\n";
+
+exit 0;
+
+##
+## EXE
+##
+sub check_duplicate
+{
+  local($file);
+  local(@item) = ();
+  local(%inode) = ();
+  local(@romfs_exes) = ();
+
+  @romfs_exes = @ROMFS_EXES;
+  @ROMFS_EXES = ();
+
+  foreach $file (@romfs_exes) {
+    @item = stat($file);
+    if ($inode{$item[1]} == 1) {
+      print $file, " is duplicate\n";
+    } else {
+      unshift @ROMFS_EXES, $file;
+    }
+    $inode{$item[1]} = 1;
+  }
+}
+
+sub list_used_libs
+{
+  local($lib);
+  local($exe);
+  local($line);
+  local(@libs);
+
+  foreach $exe (@ROMFS_EXES) {
+
+    $line = &list_needed_libs($exe);
+    @libs = split(/:/, $line);
+
+    foreach $lib (@libs) {
+      $ROMFS_LIBS{$lib} .= $exe . ':';
+    }
+  }
+
+  while (1) {
+    $count = 0;
+    foreach $lib (keys(%ROMFS_LIBS)) {
+      next if ($ROMFS_LIBS{$lib} eq '');
+
+      $line = &list_needed_libs($lib);
+      @libs = split(/:/, $line);
+
+      foreach $exe (@libs) {
+        next if (index($ROMFS_LIBS{$exe}, $lib) != -1);
+        $ROMFS_LIBS{$exe} .= $lib . ':';
+        $count++;
+      }
+    }
+    last if ($count == 0);
+  }
+
+  return;
+}
+
+sub list_extfs
+{
+    local(@FILE);
+    local($file);
+    local($type);
+
+    @FILE = &glob($dir_extfs);
+    foreach $file (@FILE) {
+      next if (-l $file || !-B $file);
+
+      $type = &check_elf_type($file);
+      if ($type == 1 or $type == 2) {
+        unshift @ROMFS_EXES, $file;
+        print $file, "\n";
+        next;
+      }
+    }
+}
+
+sub list_romfs
+{
+    local(@FILE);
+    local($file);
+    local($type);
+
+    @FILE = &glob($dir_romfs);
+    foreach $file (@FILE) {
+      next if (-l $file || !-B $file);
+
+      $type = &check_elf_type($file);
+      if ($type == 1) {
+        unshift @ROMFS_EXES, $file;
+        print $file, "\n";
+        next;
+      }
+
+      if ($type == 2) {
+        next if ($file =~ m|$dir_romfs/lib/|);
+        unshift @ROMFS_EXES, $file;
+        print $file, "\n";
+        next;
+      }
+    }
+}
+
+sub list_rsdk_libs
+{
+  local(@FILE);
+  local($lib);
+
+  @FILE = ();
+  unshift @FILE, glob("$dir_rsdk/lib/*.so*");
+  foreach $file (@FILE) {
+    next if (-l $file || !-B $file);
+    $RSDK_LIBS{$file} = '1' if (&test_if_elf($file));
+  }
+}
+
+sub list_romfs_libs
+{
+  local(@FILE);
+  local($lib);
+
+  print "INFO: listing romfs shared libraries", "\n";
+
+  @FILE = ();
+  unshift @FILE, glob("$dir_romfs/lib/*.so*");
+
+  foreach $file (@FILE) {
+    next if (-l $file || !-B $file);
+    $ROMFS_LIBS{$file} = '' if (&test_if_elf($file));
+  }
+}
+
+sub list_needed_libs
+{
+  local($lexe) = shift;
+  local($line) = '';
+
+  open(PIPE, "rsdk-linux-readelf -d $lexe 2>&1 | grep NEEDED |");
+  while (<PIPE>) {
+    chomp;
+    #0x00000001 (NEEDED)                     Shared library: [libc.so.0]
+    next if (!m|0x\d{8} \(NEEDED\).+Shared library: \[(.*)\]|);
+
+    $name = $1;
+    $file = $dir_romfs . '/lib/' . $name;
+    if (-l $file) {
+      $file = readlink($file);
+      $file = $dir_romfs . '/lib/' . $file;
+    }
+
+    next if (index($line, $file) != -1);
+    $line .= $file . ':';
+  }
+  close (PIPE);
+
+  return $line;
+}
+
+sub list_symbols
+{
+  local(@exes) = @_;
+  local(%syms) = ();
+  local($exe);
+
+  %syms = ();
+  foreach $exe (@exes) {
+    open(PIPE, "rsdk-linux-nm --dynamic $exe 2>&1 |");
+    while (<PIPE>) {
+      if (m|rsdk-linux-nm:.*: No symbols|) {
+        print "WARNING: $exe contains no dynamic symbols", "\n";
+        %syms = ();
+        close(PIPE);
+        return %syms;
+      }
+
+      chomp;
+      if (m|^.{8} [BU] (.+)|) {
+        $syms{$1} = 1;
+      }
+    }
+    close(PIPE);
+  }
+
+  return %syms;
+}
+
+sub list_lib_symbols
+{
+  local($lib_file) = shift;
+  local(%lib_syms) = ();
+  local(@sym);
+
+  %lib_syms = ();
+  open(PIPE, "rsdk-linux-nm --dynamic $lib_file 2>&1 |");
+  while (<PIPE>) {
+    if (m|rsdk-linux-nm:.*: No symbols|) {
+      print "WARNING: $lib_file contains no dynamic symbols", "\n";
+      last;
+    }
+
+    chomp;
+    if (m|^.{8} . (.+)|) {
+      $lib_syms{$1} = 1;
+    }
+  }
+  close(PIPE);
+  return %lib_syms;
+}
+
+sub read_soname
+{
+  local($lib_file) = shift;
+  local($lib_name) = '';
+
+  open(PIPE, "rsdk-linux-readelf -d $lib_file 2>&1 | grep SONAME |");
+  while (<PIPE>) {
+    chomp;
+    #0x0000000e (SONAME)                     Library soname: [libm.so.6]
+    if (m|.+\(SONAME\).+Library soname: \[(.*)\]|) {
+      $lib_name = $1;
+      last;
+    }
+  }
+  close (PIPE);
+
+  return $lib_name;
+}
+
+sub read_soflag
+{
+  local($lib_file) = shift;
+  local($lib_name) = '';
+  local($lib_flag) = '';
+  local(@lib_temp) = ();
+  local(@lib_flag) = ();
+
+  open(PIPE, "rsdk-linux-readelf -d $lib_file 2>&1 | grep FLAGS |");
+  while (<PIPE>) {
+    chomp;
+    #0x0000001e (FLAGS)                      STATIC_TLS
+    #0x6ffffffb (FLAGS_1)                    Flags: NODELETE INITFIRST
+
+    if (m|.+\(FLAGS_1\).+Flags: (.*)$|) {
+      $lib_flag = $1;
+      last;
+    }
+  }
+  close (PIPE);
+
+  @lib_temp = split(/\s/, $lib_flag);
+  foreach $lib_flag (@lib_temp) {
+    $lib_flag =~ s/ \t//g;
+    next if ($lib_flag eq '');
+
+    $lib_flag =~ tr/A-Z/a-z/;
+    $lib_flag = '-Wl,-z,' . $lib_flag;
+    unshift @lib_flag, $lib_flag;
+  }
+
+  return @lib_flag;
+}
+
+##
+## library subroutines
+##
+sub generate_lds
+{
+  local($lib_file) = shift;
+  local($lib_name) = shift;
+  local(%lib_syms) = ();
+  local(%syms) = ();
+  local(@exes) = ();
+  local($line) = '';
+
+  ##
+  ## list my symbols
+  ##
+  %lib_syms = &list_lib_symbols($lib_file);
+  if (%lib_syms == ()) {
+    return -1;
+  }
+
+  ##
+  ## list used symbols
+  ##
+  $line = $ROMFS_LIBS{$lib_file};
+  @exes = split(/:/, $line);
+  %syms = &list_symbols(@exes);
+  if (%syms == ()) {
+    return -1;
+  }
+
+  ##
+  ## generate linker script
+  ##
+  open(PIPE, ">$lib_name.lds");
+  print PIPE "INCLUDE $dir_rsdk/$ldscript", "\n";
+
+  if ($lib_name eq 'libc' || $lib_name eq 'libuClibc') {
+    if ($var_eglibc) {
+      print PIPE "EXTERN(__dso_handle)", "\n";
+      print PIPE "EXTERN(__cxa_atexit)", "\n";
+      print PIPE "EXTERN(__cxa_atexit_internal)", "\n";
+      print PIPE "EXTERN(__cxa_at_quick_exit)", "\n";
+      print PIPE "EXTERN(__cxa_finalize)", "\n";
+    }
+    if ($libpthread_used == 0) {
+      print PIPE "EXTERN(__pthread_cleanup_pop_restore)", "\n";
+      print PIPE "EXTERN(__pthread_cleanup_push_defer)", "\n";
+      print PIPE "EXTERN(_pthread_cleanup_pop_restore)", "\n";
+      print PIPE "EXTERN(_pthread_cleanup_push_defer)", "\n";
+    }
+  }
+
+  if ($lib_name eq 'libpthread' and !$var_eglibc) {
+      print PIPE "EXTERN(__pthread_cleanup_pop_restore)", "\n";
+      print PIPE "EXTERN(__pthread_cleanup_push_defer)", "\n";
+      print PIPE "EXTERN(_pthread_cleanup_pop_restore)", "\n";
+      print PIPE "EXTERN(_pthread_cleanup_push_defer)", "\n";
+  }
+
+  for $sym (keys(%syms)) {
+    print PIPE "EXTERN($sym)", "\n" if ($lib_syms{$sym} and $syms{$sym});
+  }
+
+  close(PIPE);
+  return 0;
+}
+
+sub generate_lib
+{
+  local($lib_file) = shift;
+  local($lib_name) = shift;
+
+  local($sofile, $solink, $soname, @solibs, @soflag, @soitem);
+  local($line);
+  local($ldcmd);
+  local($ldlib);
+
+  $sofile = $lib_file;
+  $solink = $lib_name . '.lds';
+  @soitem = ();
+  @soflag = ();
+
+  ##
+  ## list linked libraries
+  ##
+  $line = &list_needed_libs($lib_file);
+  @solibs = split(/:/, $line);
+
+  $soname = &read_soname($lib_file);
+  @soflag = &read_soflag($lib_file);
+
+  ##
+  ## rebuild library
+  ##
+  if ($lib_name eq 'libuClibc') {
+    $soname = 'libc.so.0' if ($soname eq '');
+    if (-e $dir_rsdk . '/lib/uclibc_nonshared.a') {
+      push @soitem, $dir_rsdk . '/lib/uclibc_nonshared.a';
+    }
+    unshift @soitem, $dir_rsdk . '/lib/libc_pic.a';
+    push @soitem, $libgcc_file;
+  }
+  else {
+    $soname = $lib_name . '.so.0' if ($soname eq '');
+    if (-e $dir_rsdk . '/lib/' . $lib_name . '_pic.a') {
+      unshift @soitem, $dir_rsdk . '/lib/' . $lib_name . '_pic.a';
+    } else {
+      unshift @soitem, $dir_rsdk . '/lib/' . $lib_name . '.a';
+    }
+    if (-e $dir_rsdk . '/lib/' . $lib_name . '_nonshared.a') {
+      push @soitem, $dir_rsdk . '/lib/' . $lib_name . '_nonshared.a';
+    }
+    if (-e $dir_rsdk . '/lib/' . $lib_name . '_pic.map') {
+      unshift @soflag, '-Wl,--version-script=' . $lib_name . '_pic.map';
+    }
+    push @solibs, $libgcc_file if ($libgcc_static);
+
+    if ($lib_name =~ m|^libstdc\+\+|) {
+      if (-f $dir_rsdk . '/lib/libstdc++-symbols.ver') {
+        unshift @soflag, '-Wl,--version-script=libstdc++-symbols.ver';
+      }
+    }
+  }
+
+  ##
+  ## make sure each solib exists before we do regen.
+  ##
+  foreach $ldlib (@solibs,@soitem) {
+    if ($ldlib ne '' and !-e $ldlib) {
+      return;
+    }
+  }
+
+  $ldcmd  = "rsdk-linux-gcc -nodefaultlibs -Wl,-warn-common -shared -o $sofile ";
+  $ldcmd .= "-Wl,-soname,$soname -Wl,--script=$solink @soflag @soitem @solibs";
+  print $ldcmd, "\n" if ($opt_debug);
+  system($ldcmd);
+}
+
+sub lib_makeover
+{
+  local($bookie_libc) = ();
+  local($bookie_libcpp) = ();
+  local($bookie_libld) = ();
+  local($bookie_libdl) = ();
+  local($bookie_libgcc) = ();
+  local($bookie_libssp) = ();
+  local($bookie_libmudflap) = ();
+  local(@bookie_libs) = ();
+  local($lib_file);
+
+  print "INFO: shrinking shared libraries ...", "\n";
+
+  foreach $lib_file (keys(%ROMFS_LIBS)) {
+
+    next if ($ROMFS_LIBS{$lib_file} eq '');
+    if ($lib_file =~ m|/libuClibc| or $lib_file =~ m|/libc-|) {
+      $bookie_libc = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|libstdc\+\+|) {
+      $bookie_libcpp = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|ld-|) {
+      $bookie_libld = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|libdl|) {
+      $bookie_libdl = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|libgcc|) {
+      $bookie_libgcc = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|libssp|) {
+      $bookie_libssp = $lib_file;
+      next;
+    }
+    if ($lib_file =~ m|libmudflap|) {
+      $bookie_libmudflap = $lib_file;
+      next;
+    }
+
+    if ($lib_file =~ m|libpthread|) {
+      $libpthread_used = 1;
+    }
+    unshift @bookie_libs, $lib_file;
+  }
+
+  if ($bookie_libcpp ne '' and $bookie_libc ne '') {
+    $ROMFS_LIBS{$bookie_libc} .= $bookie_libcpp . ':';
+  }
+
+  ##
+  ## libdl is too much fun
+  ##
+  &lib_shrinking($bookie_libgcc);
+  &lib_shrinking($bookie_libdl);
+  &lib_shrinking($bookie_libld);
+
+  ##
+  ## libc must be treated very differently
+  ##
+  &lib_shrinking($bookie_libc) unless ($var_eglibc);
+
+  foreach $lib_file (@bookie_libs) {
+    &lib_shrinking($lib_file);
+  }
+
+  ##
+  ## libstdc++ must be treated differently
+  ##
+  &lib_shrinking($bookie_libcpp) if ($bookie_libcpp ne '');
+}
+
+sub lib_shrinking
+{
+    local($lib_file) = shift;
+    local($lib_name);
+    local($ret);
+
+    return if (!-e $lib_file);
+
+    $lib_name = basename $lib_file;
+    $lib_name =~ m/^([^-\.]*)[-\.]/;
+    $lib_name = $1;
+
+    ##
+    ## generate LDS
+    ##
+    $ret = &generate_lds($lib_file, $lib_name);
+    if ($ret < 0) {
+      print "----> skipping ", $lib_file, "\n";
+      return;
+    } else {
+      print "----> shrinking ", $lib_file, "\n";
+    }
+
+    ##
+    ## generate LIB
+    ##
+    &generate_lib($lib_file, $lib_name);
+    system("rm -f $lib_name.lds") if ($opt_debug == 0);
+}
+
+sub lib_cleanup
+{
+  local(@FILE);
+  local($file);
+
+  print "INFO: remove unused shared libraries", "\n";
+
+  foreach $file (keys(%ROMFS_LIBS)) {
+
+    if ($ROMFS_LIBS{$file} eq '' and $RSDK_LIBS{$file} eq '1') {
+      next if ($file =~ m/ld-/);
+      print "----> removing ", $file, "\n";
+      system("rm -f $file");
+      next;
+    }
+  }
+
+  print "INFO: cleanup shared library links", "\n";
+
+  @FILE = ();
+  unshift @FILE, glob("$dir_romfs/lib/*.so*");
+
+  foreach $file (@FILE) {
+    if (-l $file) {
+      if (!-B $file) {
+        print "----> removing dangling link ", $file, "\n";
+        system("rm -f $file");
+      }
+      next;
+    }
+
+    if (-T $file) {
+      print "----> removing linker file ", $file, "\n";
+      system("rm -f $file");
+      next;
+    }
+
+    unshift @ROMFS_EXES, $file if (&test_if_elf($file));
+  }
+}
+
+sub romfs_strip
+{
+  local($file);
+
+  print "INFO: stripping executables and libraries", "\n";
+
+  foreach $file (@ROMFS_EXES) {
+    next if ($file eq '' or !-e $file);
+    if ($var_strip == 2) {
+      print "----> sstripping ", $file, "\n";
+      system("rsdk-linux-sstrip $file");
+    }
+    elsif ($var_strip == 1) {
+      print "----> stripping ", $file, "\n";
+      system("rsdk-linux-strip $file");
+    }
+  }
+}
+
+##
+## supporter functions
+##
+sub get_rsdkver
+{
+    local($line);
+
+    open(PIPE, 'rsdk-linux-gcc -v 2>&1 |') 
+       or die "ERROR: unable to execute rsdk-linux-gcc";
+    while ($line = <PIPE>) {
+      chomp $line;
+      if ($line =~ m|gcc version [^-]+-([^-]+)$|) {
+        $ver_rsdk = $1;
+      }
+    }
+    close(PIPE);
+}
+
+sub print_header
+{
+    print "\n";
+    print "Realtek Semiconductor Corp.", "\n";
+    print "Shared Library Shrinker, v1.1", "\n";
+    print "Tony Wu (tonywu\@realtek.com)", "\n";
+    print "\n";
+    print "RSDK version: ", $ver_rsdk, "\n";
+}
+
+sub print_usage
+{
+    print "\n";
+    print "usage: $0 [-nostrip|-nosstrip|-noshrink] dir_romfs", "\n";
+    print "\n";
+}
+
+sub check_option
+{
+    local(@all_options) = (
+        "help",
+        "nostrip",
+        "nosstrip",
+        "noshrink",
+        "debug",
+    );
+
+    $Getopt::Long::autoabbrev = 0;
+    Getopt::Long::GetOptions(@all_options);
+
+    if (defined($opt_nostrip)) {
+        $var_strip = 0;
+    }
+
+    if (defined($opt_nosstrip) || $var_eglibc) {
+        $var_strip = 1;
+    }
+
+    if (defined($opt_noshrink) || $var_muslc) {
+        $opt_noshrink = 1;
+    } else {
+        $opt_noshrink = 0;
+    }
+
+    if (defined($opt_debug)) {
+        $opt_debug = 1;
+    } else {
+        $opt_debug = 0;
+    }
+
+    if ($#ARGV > 1) {
+        &print_usage;
+        exit -1;
+    }
+
+    if ($#ARGV == 0) {
+        $dir_romfs = $ARGV[0];
+    }
+
+    if ($#ARGV == 1) {
+        $dir_romfs = $ARGV[0];
+        $dir_extfs = $ARGV[1];
+    }
+}
+
+sub check_rsdk
+{
+    local($prog) = shift;
+    local($line);
+
+    $line = `which $prog 2>/dev/null`;
+    chomp $line;
+
+    if (!-f $line) {
+        print "ERROR: unable to allocate RSDK", "\n";
+        exit 1;
+    }
+
+    $line = `dirname $line`;
+    chomp $line;
+
+    if ($line eq '') {
+        print "ERROR: unable to allocate RSDK", "\n";
+        exit 1;
+    }
+
+    $dir_rsdk = abs_path($line . '/..');
+    print "INFO: RSDK -> ", $dir_rsdk, "\n";
+}
+
+sub check_endian
+{
+  local($exe);
+  local($line);
+  local($mmac);
+
+  print "INFO: checking romfs endian ... ";
+  $exe = $ROMFS_EXES[0];
+  if ($exe eq '') {
+    print "ERROR: romfs is empty", "\n";
+    exit -1;
+  }
+
+  $mmac = `rsdk-linux-gcc -dumpmachine`; chomp $mmac;
+  $line = `rsdk-linux-readelf -h $exe`;
+  if ($line =~ m/little endian/) {
+    if ($var_sdk eq 'asdk') {
+      $ldscript = "$mmac/lib/ldscripts/armelf_linux_eabi.xs";
+    } else {
+      $ldscript = "$mmac/lib/ldscripts/elf32ltsmip.xs";
+    }
+    print "little endian";
+  }
+
+  if ($line =~ m/big endian/) {
+    if ($var_sdk eq 'asdk') {
+      $ldscript = "$mmac/lib/ldscripts/armelfb_linux_eabi.xs";
+    } else {
+      $ldscript = "$mmac/lib/ldscripts/elf32btsmip.xs";
+    }
+    print "big endian";
+  }
+  print "\n";
+}
+
+sub check_libgcc
+{
+  local($lib);
+
+  $libgcc_file = $dir_rsdk . '/lib/libgcc.a';
+  $libgcc_shared = 0;
+  $libgcc_static = 0;
+
+  print "INFO: checking libgcc ... ";
+  foreach $lib (keys(%ROMFS_LIBS)) {
+    if ($lib =~ m|libgcc|) {
+      print "shared", "\n";
+      $libgcc_shared = 1;
+      return;
+    }
+  }
+
+  print "static", "\n";
+  $libgcc_static = 1;
+}
+
+sub check_size
+{
+  local($line) = shift;
+  local($size, $rest);
+
+  return 0 if (!-d $line);
+
+  open(PIPE, "du -s $line |");
+  $line = <PIPE>;
+  close(PIPE);
+
+  ($size, $rest) = split(/[\s\t]+/, $line);
+  return $size;
+}
+
+sub test_if_elf
+{
+	local($file) = shift;
+
+	open(PIPE, $file);
+	read(PIPE, $line, 4);
+	close(PIPE);
+
+	if ($line eq "\x7FELF") {
+		return 1;
+	}
+
+	return 0;
+}
+
+sub check_elf_type
+{
+  local($file) = shift;
+  local($line) = '';
+  local(@LINE) = ();
+
+  open(PIPE, "rsdk-linux-readelf -h $file 2>&1 |") or die "ERROR: unable to readelf";
+  @LINE = <PIPE>;
+  close(PIPE);
+
+  foreach $line (@LINE) {
+    if ($line =~ m|EXEC \(Executable file\)|) {
+      return 1;
+    }
+
+    if ($line =~ m|DYN \(Shared object file\)|) {
+      return 2;
+    }
+  }
+
+  return 0;
+}
+
+sub glob
+{
+  local($l_path) = shift;
+  local($l_file) = '';
+  local(@l_FILE) = ();
+
+  open(PIPE, "find $l_path/ -type f |") or die "ERROR: unable to find";
+  while ($l_file = <PIPE>) {
+   chomp $l_file; 
+   unshift (@l_FILE, $l_file);
+  }
+  close(PIPE);
+
+  return @l_FILE;
+}

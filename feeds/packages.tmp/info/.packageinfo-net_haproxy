@@ -1,0 +1,58 @@
+Source-Makefile: feeds/packages/net/haproxy/Makefile
+Package: haproxy-nossl
+Submenu: Web Servers/Proxies
+Version: 1.5.14-00
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpcre +libltdl +zlib +libpthread
+Menu-Depends: 
+Provides: 
+Build-Variant: nossl
+Section: net
+Category: Network
+Title: The Reliable, High Performance TCP/HTTP Load Balancer
+Maintainer: Thomas Heil <heil@terminal-consulting.de>
+Source: haproxy-1.5.14.tar.gz
+Type: ipkg
+Description:  Open source Reliable, High Performance TCP/HTTP Load Balancer.
+ This package is built without SSL support.
+http://haproxy.1wt.eu/
+Thomas Heil <heil@terminal-consulting.de>
+@@
+
+Package: haproxy
+Submenu: Web Servers/Proxies
+Version: 1.5.14-00
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpcre +libltdl +zlib +libpthread +libopenssl
+Menu-Depends: 
+Provides: 
+Build-Variant: ssl
+Section: net
+Category: Network
+Title: The Reliable, High Performance TCP/HTTP Load Balancer
+Maintainer: Thomas Heil <heil@terminal-consulting.de>
+Source: haproxy-1.5.14.tar.gz
+Type: ipkg
+Description:  Open source Reliable, High Performance TCP/HTTP Load Balancer.
+ This package is built with SSL support.
+http://haproxy.1wt.eu/
+Thomas Heil <heil@terminal-consulting.de>
+@@
+
+Package: halog
+Menu: 1
+Submenu: Web Servers/Proxies
+Version: 1.5.14-00
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread haproxy
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: The Reliable, High Performance TCP/HTTP Load Balancer halog
+Maintainer: Thomas Heil <heil@terminal-consulting.de>
+Source: haproxy-1.5.14.tar.gz
+Type: ipkg
+Description: 	HAProxy Log Analyzer
+http://haproxy.1wt.eu/
+Thomas Heil <heil@terminal-consulting.de>
+@@
+
+

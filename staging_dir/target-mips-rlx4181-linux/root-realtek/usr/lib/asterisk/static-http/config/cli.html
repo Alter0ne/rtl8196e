@@ -1,0 +1,104 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Asterisk CLI emulator 
+ *
+ * Copyright (C) 2006-2007, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Asterisk CLI</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+</head>
+<body onload="localajaxinit()"  bgcolor="#FFFFFF">
+<div style="font-size : 12px; padding : 4px 6px 4px 6px; border-style : solid none solid none; border-top-color : #BDC7E7; border-bottom-color : #182052; border-width : 1px 0px 1px 0px; background-color : #ef8700; color : #ffffff;">
+	<span style="cursor: pointer; cursor: hand;" onclick="window.location.href=window.location.href;" >&nbsp;<img src="images/refresh.png" title=" Refresh" border=0 >&nbsp;</span>
+	<span style="margin-left: 4px;font-weight:bold;">
+	Asterisk CLI>&nbsp;<input id="cli_cmd" onKeyDown="sendCommand(event)" size=65>
+	</span>
+</div>
+<div style="padding : 0px 1px 0px 2px; overflow :auto; font-size : 12px;" id="cli_output"></div>
+<script>
+var DOM_CLI_CMD ;
+var CLIINDEX = 0;
+
+var setIndexToLastCommand = function(){
+	CLIINDEX = parent.sessionData.cliHistory.length - 1 ;
+}
+
+var showCommandWithIndex = function(){
+	DOM_CLI_CMD.value = (parent.sessionData.cliHistory[CLIINDEX]) ? parent.sessionData.cliHistory[CLIINDEX] : '';
+}
+
+function executeCommand(cmd){
+	cmd = cmd.replace(/^\s+|\s+$/g, "");
+	if(!cmd ){ DOM_CLI_CMD.value = ''; DOM_CLI_CMD.focus(); return ;}
+	if(cmd == 'stop now' ){
+		parent.ASTGUI.feedback( { msg:'restricted command', showfor:2 });
+		DOM_CLI_CMD.select();
+		DOM_CLI_CMD.focus();
+		return ;
+	}
+	var t = parent.ASTGUI.cliCommand(cmd) ;
+	var response = parent.ASTGUI.parseCLIResponse(t) ;
+	parent.sessionData.cliHistory.push(cmd) ;
+	setIndexToLastCommand(); CLIINDEX++ ;
+	document.getElementById('cli_output').innerHTML = 'Command><B><Font color=#13138a>' + cmd + '</FONT></B><PRE>' + response + '</PRE>' ;
+	DOM_CLI_CMD.value = '' ;
+	DOM_CLI_CMD.focus() ;
+}
+
+function sendCommand(e){
+	if(e.keyCode == 38){ // UP Key
+		if( CLIINDEX <= 0  ) {
+			setIndexToLastCommand();
+			showCommandWithIndex();
+			return;
+		}
+		CLIINDEX -- ;
+		showCommandWithIndex();
+		return false;
+	}
+
+	if(e.keyCode == 40){ // Down Key
+		if( CLIINDEX == (parent.sessionData.cliHistory.length - 1)  ) {
+			DOM_CLI_CMD.value = ''; CLIINDEX++ ;
+			return;
+		}
+		CLIINDEX += 1;
+		showCommandWithIndex();
+		return false;
+	}
+
+	if(e.keyCode == 13){
+		executeCommand( DOM_CLI_CMD.value );
+		return false;
+	}
+}
+
+var localajaxinit = function(){
+	top.document.title = "Asterisk CLI Emulator";
+	DOM_CLI_CMD = document.getElementById('cli_cmd');
+	DOM_CLI_CMD.focus();
+	DOM_CLI_CMD.value = "core show version";
+	executeCommand(DOM_CLI_CMD.value);
+}
+
+</script>
+</body>
+</html>

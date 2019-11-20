@@ -1,0 +1,13 @@
+gl_list.o: gl_list.c /usr/include/stdc-predef.h config.h gl_list.h \
+ /usr/lib/gcc/x86_64-linux-gnu/7/include/stdbool.h \
+ /usr/lib/gcc/x86_64-linux-gnu/7/include/stddef.h
+
+/usr/include/stdc-predef.h:
+
+config.h:
+
+gl_list.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/7/include/stdbool.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/7/include/stddef.h:

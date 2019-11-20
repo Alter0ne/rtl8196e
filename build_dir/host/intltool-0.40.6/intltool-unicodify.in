@@ -1,0 +1,172 @@
+#!@INTLTOOL_PERL@ -w
+        
+#
+#  The i18n Unicode Encoding Utility
+#
+#  Copyright (C) 2001 Free Software Foundation.
+#
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License as
+#  published by the Free Software Foundation; either version 2 of the
+#  License, or (at your option) any later version.
+#
+#  This script is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this library; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#  Authors:  Kenneth Christiansen <kenneth@gnu.org>
+#
+
+## Release information
+my $PROGRAM = "intltool-unicodify";
+my $VERSION = "@VERSION@";
+my $PACKAGE = "@PACKAGE@";
+
+## Loaded modules
+use strict;
+use Getopt::Long;
+use Cwd;
+use File::Copy;
+
+## Scalars used by the option stuff
+my $LANG     	   = $ARGV[0];
+my $HELP_ARG 	   = 0;
+my $VERSION_ARG    = 0;
+my $OVERWRITE_ARG  = 0;
+my $VERBOSE        = 0;
+
+## Always print as the first thing
+$| = 1;
+
+## Handle options
+GetOptions 
+(
+ "help" 	       => \$HELP_ARG,
+ "version" 	       => \$VERSION_ARG,
+ "verbose|v"           => \$VERBOSE,
+ "overwrite|o"         => \$OVERWRITE_ARG,
+ ) or &print_error_invalid_option;
+
+sub split_on_argument
+{
+    if ($VERSION_ARG) {
+	&print_version;
+    }
+    elsif ($HELP_ARG) {
+	&print_help;
+    }
+
+    ## Give error if script is run without an argument
+    if (! $LANG){
+	print "${PROGRAM}:  missing file arguments\n";
+	print "Try `${PROGRAM} --help' for more information.\n";
+	exit;
+    }
+}
+
+&split_on_argument;
+&main;
+
+sub print_version
+{
+    ## Print version information
+    print "${PROGRAM} (${PACKAGE}) $VERSION\n";
+    print "Written by Kenneth Christiansen\n\n";
+    print "Copyright (C) 2001-2002 Free Software Foundation, Inc.\n";
+    print "This is free software; see the source for copying conditions.  There is NO\n";
+    print "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
+    exit;
+}
+
+sub print_help
+{
+    ## Print usage information
+    print "Usage: ${PROGRAM} [OPTIONS] ...LANGCODE\n";
+    print "Convert PO files containing translations to UTF8.\n\n";
+    print "  -o, --owerwrite        overwrite original file\n";
+    print "  -x, --verbose          display lots of feedback\n";
+    print "      --help             display this help and exit\n";
+    print "      --version          output version information and exit\n";
+    print "\nExamples of use:\n";
+    print "${PROGRAM} da    ports da.po to UTF8 and saves as da.po-1\n\n";
+    print "Report bugs to bugzilla.gnome.org, module 'intltool'.\n";
+    exit;
+}
+
+sub get_local_charset
+{
+    my ($encoding) = @_;
+    my $alias_file = $ENV{"G_CHARSET_ALIAS"} || "@INTLTOOL_LIBDIR@/charset.alias";
+
+    # seek character encoding aliases in charset.alias (glib)
+
+    if (open CHARSET_ALIAS, $alias_file)
+    {
+	while (<CHARSET_ALIAS>) 
+        {
+            next if /^\#/;
+            return $1 if (/^\s*([-._a-zA-Z0-9]+)\s+$encoding\b/i)
+        }
+
+        close CHARSET_ALIAS;
+    }
+
+    # if not found, return input string
+
+    return $encoding;
+}
+
+sub main
+{
+    my $encoding_code_orig;
+
+    open IN, "$LANG.po";
+    
+    while (<IN>) 
+    {
+	## example: "Content-Type: text/plain; charset=ISO-8859-1\n"
+	if (/Content-Type\:.*charset=(.*)\\n/) 
+        {
+	    $encoding_code_orig = $1; 
+	    last;
+	}
+    }
+    
+    close IN;
+    
+    $encoding_code_orig = get_local_charset($encoding_code_orig);
+
+    print "Converting from $encoding_code_orig\n" if $VERBOSE;
+    
+    my $extern_conv="iconv -f $encoding_code_orig "
+	."-t UTF-8 $LANG.po > $LANG.po-1";
+    
+    system ($extern_conv);
+    
+    my $source_orig;
+    {
+	local (*IN);
+	local $/; #slurp mode
+	open (IN, "<$LANG.po-1") || die "can't open $LANG.po-1: $!";
+	$source_orig = <IN>;
+    }
+    
+    $source_orig =~ s/Content-Type\:(.*)$encoding_code_orig/Content-Type\:$1UTF-8/;
+    
+    close IN;
+    open OUT, ">$LANG.po-1";
+
+    print OUT $source_orig;
+    close OUT;
+
+    if ($OVERWRITE_ARG) 
+    {
+	copy ("$LANG.po-1", "$LANG.po");
+	system ("rm -rf $LANG.po-1");
+    }
+}

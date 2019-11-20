@@ -1,0 +1,14 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libgssapi.so
+./usr/lib/libgssapi.a
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libgssapi.pc
+./usr/lib/libgssapi.so.2
+./usr/lib/libgssapi.so.2.0.0
+./usr/include
+./usr/include/gssglue
+./usr/include/gssglue/gssapi
+./usr/include/gssglue/gssapi/gssapi.h

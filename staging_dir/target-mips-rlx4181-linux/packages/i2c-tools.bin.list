@@ -1,0 +1,11 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libi2c.a
+./usr/lib/libi2c.so.0
+./usr/lib/libi2c.so
+./usr/lib/libi2c.so.0.1.1
+./usr/include
+./usr/include/i2c
+./usr/include/i2c/smbus.h

@@ -1,0 +1,30 @@
+# Makefile for uClibc
+#
+# Copyright (C) 2000-2005 Erik Andersen <andersen@uclibc.org>
+#
+# Licensed under the LGPL v2.1, see the file COPYING.LIB in this tarball.
+#
+
+CSRC-y := \
+	__longjmp.c  brk.c setjmp_aux.c \
+	pread_write.c _test_and_set.c sigaction.c
+
+SSRC-y := bsd-_setjmp.S bsd-setjmp.S setjmp.S syscall.S pipe.S syscall_error.S
+
+CSRC-$(UCLIBC_LINUX_SPECIFIC) += cacheflush.c sysmips.c
+CSRC-$(UCLIBC_HAS_ADVANCED_REALTIME) += posix_fadvise.c posix_fadvise64.c
+SSRC-$(if $(UCLIBC_HAS_THREADS_NATIVE),,y) += vfork.S clone.S
+SSRC-$(UCLIBC_HAS_CONTEXT_FUNCS) += makecontext.S setcontext.S getcontext.S \
+	swapcontext.S
+
+ASFLAGS-syscall_error.S += -D_LIBC_REENTRANT
+
+ARCH_HEADERS := sgidefs.h
+ARCH_ASFLAGS := -mno-mips16
+# regdef.h
+
+CFLAGS-OMITx-__longjmp.c = -mips16
+CFLAGS-OMITx-brk.c = -mips16
+CFLAGS-OMITx-setjmp_aux.c = -mips16
+CFLAGS-OMITx-_test_and_set.c = -mips16
+CFLAGS-OMITx-sigaction.c = -mips16

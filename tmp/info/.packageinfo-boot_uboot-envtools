@@ -1,0 +1,22 @@
+Source-Makefile: package/boot/uboot-envtools/Makefile
+Package: uboot-envtools
+Version: 2014.04-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: +fstools
+Section: utils
+Category: Utilities
+Title: read/modify U-Boot bootloader environment
+Maintainer: 
+Source: u-boot-2014.04.tar.bz2
+Type: ipkg
+Description:  This package includes tools to read and modify U-Boot bootloader environment.
+http://www.denx.de/wiki/U-Boot
+
+@@
+Config:
+	source "package/boot/uboot-envtools/Config.in"
+@@
+
+

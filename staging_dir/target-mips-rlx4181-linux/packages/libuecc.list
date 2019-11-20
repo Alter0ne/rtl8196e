@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libuecc.so
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libuecc.pc
+./usr/lib/libuecc.so.0
+./usr/lib/libuecc.so.0.7
+./usr/include
+./usr/include/libuecc-7
+./usr/include/libuecc-7/libuecc
+./usr/include/libuecc-7/libuecc/ecc.h

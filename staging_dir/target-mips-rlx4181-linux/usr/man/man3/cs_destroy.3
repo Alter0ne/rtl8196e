@@ -1,0 +1,41 @@
+.TH cs_destroy 3 "12 July 2007" "ClearSilver" "cs/cs.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cs_destroy  - clean up and dealloc a parse tree
+.SH SYNOPSIS
+.Ss
+#include <cs/cs.h>
+.Se
+.Ss
+void cs_destroy (CSPARSE **parse);
+
+.Se
+
+.SH ARGUMENTS
+parse - a pointer to a parse structure.
+
+.SH DESCRIPTION
+cs_destroy will clean up all the memory associated with
+a CSPARSE structure, including strings passed to
+cs_parse_string.  This does not clean up any memory
+allocated by your own CSOUTFUNC or the HDF data
+structure passed to cs_init.  It is safe to call this
+with a NULL pointer, and it will leave parse NULL as
+well (ie, it can be called more than once on the same
+var)
+
+.SH "RETURN VALUE"
+parse - will be NULL
+
+.SH "SEE ALSO"
+.BR cs_dump "(3), "cs_destroy "(3), "cs_render "(3), "cs_register_esc_strfunc "(3), "cs_arg_parsev "(3), "cs_register_fileload "(3), "cs_init "(3), "cs_register_strfunc "(3), "cs_arg_parse "(3), "cs_parse_string "(3), "cs_parse_file "(3), "= "(3), "cs_register_function

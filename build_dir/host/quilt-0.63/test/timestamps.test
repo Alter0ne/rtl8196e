@@ -1,0 +1,46 @@
+# Test how quilt behaves when patches include timestamps
+
+$ mkdir patches
+
+$ cat > patches/series
+< unified-create.patch
+< unified-update.patch
+< unified-delete.patch
+
+$ cat > patches/unified-create.patch
+< diff -ruN a/file b/file
+< --- a/file	1970-01-01 01:00:00.000000000 +0100
+< +++ b/file	2014-01-15 11:19:43.000000000 +0100
+< @@ -0,0 +1 @@
+< +new line
+
+$ cat > patches/unified-update.patch
+< diff -ruN a/file b/file
+< --- a/file	2014-01-15 11:19:43.000000000 +0100
+< +++ b/file	2014-01-15 11:20:17.000000000 +0100
+< @@ -1 +1 @@
+< -new line
+< +updated line
+
+$ cat > patches/unified-delete.patch
+< diff -ruN a/file b/file
+< --- a/file	2014-01-15 11:20:17.000000000 +0100
+< +++ b/file	1970-01-01 01:00:00.000000000 +0100
+< @@ -1 +0,0 @@
+< -updated line
+
+$ quilt patches file
+> patches/unified-create.patch
+> patches/unified-update.patch
+> patches/unified-delete.patch
+
+$ quilt push -qa
+> Applying patch patches/unified-create.patch
+> Applying patch patches/unified-update.patch
+> Applying patch patches/unified-delete.patch
+> Now at patch patches/unified-delete.patch
+
+$ quilt patches file
+> patches/unified-create.patch
+> patches/unified-update.patch
+> patches/unified-delete.patch

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0040)http://localhost:8144/admin?page=mychans -->
+<html><!-- InstanceBegin template="/Templates/peercast.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="title" --> 
+<title>PeerCast on {$servMgr.serverIP}:{$servMgr.serverPort}</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="peercast.css" rel="stylesheet" type="text/css">
+<!-- InstanceBeginEditable name="head" -->
+<meta http-equiv="refresh" content="{$servMgr.refreshHTML}">
+<!-- InstanceEndEditable -->
+</head>
+
+<body bgcolor="#DDDDDD">
+<div align="center">
+  <table width="100%" height="100%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#999999" bgcolor="#FFFFFF">
+    <tr> 
+      <td align="center" valign="top">
+<div align="center">
+<div align="center">
+            <table width="100%" border="0">
+              <tr> 
+                <td nowrap>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td valign="middle" nowrap> <table border="0" align="center" cellpadding="1" cellspacing="0">
+                          <tr> 
+                            <td rowspan="2" valign="middle"><a href="http://www.peercast.org"><img src="images/small-logo.png" alt="www.peercast.org" border="0"></a></td>
+                            <td valign="bottom"><div align="left"><span class="titlelinksBig">peercast</span></div></td>
+                          </tr>
+                          <tr> 
+                            <td valign="top"><div align="center"><span class="normal-small">{$servMgr.version}</span> 
+                              </div></td>
+                          </tr>
+                        </table>
+                        <div align="center"><span class="titlelinksBig"> </span> 
+                        </div></td>
+                      <td>
+					  {@if servMgr.upgradeURL} 
+	  				    <div align="center" class="normal">
+                        <a href="{$servMgr.upgradeURL}" target="_blank"><strong><font color="#FF0000">Please 
+                          upgrade your client, click here to download the latest 
+                          version. </font></strong></a>
+						</div>
+					  {@else}
+	  				    <div align="center" class="normal-small">
+					  	{$servMgr.rootMsg}
+						</div>						
+                      {@end} 
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div align="center"></div>
+          <table width="100%" border="1" cellpadding="1" cellspacing="0">
+            <tr class="normal"> 
+              <td><div align="center"><a href="index.html">Information</a></div></td>
+              <td><div align="center"><a href="http://yp.peercast.org/?host={$servMgr.serverLocalIP}:{$servMgr.serverPort1}" target="_blank">Yellow 
+                  Pages</a></div></td>
+              <td><div align="center"><a href="relays.html">Relays</a></div></td>
+              <td><div align="center"><a href="broadcast.html">Broadcast</a></div></td>
+              <td><div align="center"><a href="connections.html">Connections</a></div></td>
+              <td><div align="center"><a href="settings.html">Settings</a></div></td>
+              <td><div align="center"><a href="viewlog.html">View Log</a></div></td>
+              <td><div align="center"><a href="logout.html">Logout</a></div></td>
+            </tr>
+          </table>
+          <br>
+          <!-- InstanceBeginEditable name="content" -->
+<DIV align=center></DIV>
+          <TABLE width="95%" align=center border=0>
+            <TBODY>
+              <TR align=middle bgColor=#cccccc class="normal"> 
+                <TD width="1">&nbsp;</TD>
+                <TD width="59%"><B>Channel</B></TD>
+                <TD width="9%"><B>Bitrate (kb/s)</B></TD>
+                <TD width="6%"><B>Stream</B></TD>
+                <TD width="6%"><B>Total Relays<br>
+                  </B></TD>
+                <TD width="8%"><B>Local Relays</B></TD>
+                <TD width="6%"><B>Status</B></TD>
+                <TD width="6%"><B>Keep</B></TD>
+              </TR>
+            {@loop chanMgr.numChannels} 
+            <tr class="normal" bgcolor={@if loop.indexEven}#eeeeee{@else}#dddddd{@end}> 
+              <TD width="1" align="left"><a href="/pls/{$loop.channel.id}.pls"><img src="images/play.png" border="0"></a></TD>
+              <TD align="left"> <span class="normal"><b>{$loop.channel.name}</b> 
+                <font size="-1"> </font></span><font size="-1"><br>
+                <span class="normal-small">{$loop.channel.track.artist} - {$loop.channel.track.title} 
+                </span> <br>
+                <span class="normal"> <b><a href="relayinfo.html?id={$loop.channel.id}">Info</a></b> 
+                {@if loop.channel.contactURL} - <b><a href="{$loop.channel.contactURL}">WWW</a></b> 
+                {@end} - <b><a href="/admin?cmd=keep&id={$loop.channel.id}">Keep</a></b> 
+                - <b><a href="/admin?cmd=bump&id={$loop.channel.id}">Bump</a></b> 
+                - <b><a href="/admin?cmd=stop&id={$loop.channel.id}">Stop</a></b> 
+                </span></font> </TD>
+              <TD class="normal"><div align="center">{$loop.channel.bitrate}</div></TD>
+              <TD class="normal"><div align="center"><a href="/stream/{$loop.channel.id}{$loop.channel.ext}">{$loop.channel.type}</a></div></TD>
+              <TD class="normal"><div align="center">{$loop.channel.totalListeners} 
+                  / {$loop.channel.totalRelays}</div></TD>
+              <TD class="normal"><div align="center">{$loop.channel.localListeners} 
+                  / {$loop.channel.localRelays}</div></TD>
+              <TD class="normal"><div align="center">{$loop.channel.status}</div></TD>
+              <TD class="normal"><div align="center">{$loop.channel.keep}</div></TD>
+            </TR>
+            {@end} </TBODY> 
+          </TABLE>
+<!-- InstanceEndEditable --> 
+          <hr size="1">
+          <div align="center" class="normal-small"> &copy; 2005<a href="http://www.peercast.org" target="_blank"> 
+            peercast.org</a> </div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+</body>
+<!-- InstanceEnd --></html>

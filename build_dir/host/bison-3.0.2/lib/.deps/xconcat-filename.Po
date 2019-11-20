@@ -1,0 +1,15 @@
+lib/xconcat-filename.o: lib/xconcat-filename.c /usr/include/stdc-predef.h \
+ lib/config.h lib/concat-filename.h lib/xalloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/7/include/stddef.h lib/xalloc-oversized.h
+
+/usr/include/stdc-predef.h:
+
+lib/config.h:
+
+lib/concat-filename.h:
+
+lib/xalloc.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/7/include/stddef.h:
+
+lib/xalloc-oversized.h:

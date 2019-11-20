@@ -1,0 +1,37 @@
+.TH cBroadcast 3 "12 July 2007" "ClearSilver" "util/ulocks.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+cBroadcast  - broadcast signal to all waiting threads.
+.SH SYNOPSIS
+.Ss
+#include <util/ulocks.h>
+.Se
+.Ss
+NEOERR *cBroadcast(pthread_cond_t *cond);
+
+.Se
+
+.SH ARGUMENTS
+cond - condition variable to broadcast on.
+
+.SH DESCRIPTION
+Broadcasts a signal to all threads waiting on condition
+variable <cond>.
+
+MT-Level: Safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR mCreate "(3), "fCreate "(3), "mUnlock "(3), "fUnlock "(3), "cBroadcast "(3), "cSignal "(3), "fFind "(3), "cDestroy "(3), "cCreate "(3), "mDestroy "(3), "cWait "(3), "fLock "(3), "fDestroy "(3), "mLock

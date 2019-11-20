@@ -1,0 +1,37 @@
+.TH fDestroy 3 "12 July 2007" "ClearSilver" "util/ulocks.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+fDestroy  - destroy a lock.
+.SH SYNOPSIS
+.Ss
+#include <util/ulocks.h>
+.Se
+.Ss
+void fDestroy(int lock);
+
+.Se
+
+.SH ARGUMENTS
+lock - Lock to destroy.
+
+.SH DESCRIPTION
+Destroys the lock <lock> that was created by fCreate()
+or fFind().
+
+MT-Level: Safe for unique <lock>.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR mCreate "(3), "fCreate "(3), "mUnlock "(3), "fUnlock "(3), "cBroadcast "(3), "cSignal "(3), "fFind "(3), "cDestroy "(3), "cCreate "(3), "mDestroy "(3), "cWait "(3), "fLock "(3), "fDestroy "(3), "mLock

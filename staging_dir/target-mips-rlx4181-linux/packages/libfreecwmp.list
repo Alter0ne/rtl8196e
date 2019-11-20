@@ -1,0 +1,8 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libfreecwmp.so
+./usr/lib/libfreecwmp.a
+./usr/include
+./usr/include/libfreecwmp.h

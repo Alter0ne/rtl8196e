@@ -1,0 +1,92 @@
+Source-Makefile: package/feeds/oldpackages/python/python-automat/Makefile
+Package: python-automat
+Submenu: Python
+Version: 0.7.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-automat:python-light +PACKAGE_python-automat:python-attrs +PACKAGE_python-automat:python-six
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Concise, idiomatic finite-state automata
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Automat-0.7.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Automat is a library for concise, idiomatic Python expression of
+finite-state automata (particularly deterministic finite-state
+transducers).
+https://github.com/glyph/Automat
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python-automat-src
+Submenu: Python
+Version: 0.7.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Concise, idiomatic finite-state automata (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Automat-0.7.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Automat is a library for concise, idiomatic Python expression of
+finite-state automata (particularly deterministic finite-state
+transducers)..
+    (Contains the Python sources for this package).
+https://github.com/glyph/Automat
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-automat
+Submenu: Python
+Version: 0.7.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-automat:python3-light +PACKAGE_python3-automat:python3-attrs +PACKAGE_python3-automat:python3-six
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Concise, idiomatic finite-state automata
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Automat-0.7.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Automat is a library for concise, idiomatic Python expression of
+finite-state automata (particularly deterministic finite-state
+transducers).
+.
+(Variant for Python3)
+https://github.com/glyph/Automat
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-automat-src
+Submenu: Python
+Version: 0.7.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Concise, idiomatic finite-state automata (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Automat-0.7.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Automat is a library for concise, idiomatic Python expression of
+finite-state automata (particularly deterministic finite-state
+transducers).
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/glyph/Automat
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+

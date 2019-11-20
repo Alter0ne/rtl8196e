@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/click-log/Makefile
+Package: python3-click-log
+Submenu: Python
+Version: 0.3.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-click
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-click-log
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: click-log-0.3.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Simple and beautiful logging for click applications
+http://github.com/mitsuhiko/click
+Karel Kočí <cynerd@email.cz>
+@@
+
+Package: python3-click-log-src
+Submenu: Python
+Version: 0.3.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-click-log (sources)
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: click-log-0.3.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Simple and beautiful logging for click applications.
+    (Contains the Python3 sources for this package).
+http://github.com/mitsuhiko/click
+Karel Kočí <cynerd@email.cz>
+@@
+
+

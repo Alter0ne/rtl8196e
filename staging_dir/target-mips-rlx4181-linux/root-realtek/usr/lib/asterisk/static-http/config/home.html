@@ -1,0 +1,179 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Login Page
+ *
+ * Copyright (C) 2006-2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Login</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+</head>
+<body topmargin=0  bgcolor="EFEFEF">
+
+	<div class="iframeTitleBar">Welcome to the Asterisk&trade; Configuration Panel</div>
+
+	<h2>Asterisk&trade; Configuration Engine</h2>
+
+	<table align="center" id='loginForm'>
+		<tr>	<td colspan="2"><BR></td>
+		<tr>	<td align=right>Username:</td>
+			<td><input id="username" size=12 autocomplete="off" disabled></td>
+		</tr>
+		<tr>	<td align=right>Password:</td>
+			<td><input type="password" id="secret" size=12 onKeyUp="home_miscFunctions.submitOnEnter(event)" disabled></td>
+		</tr>
+		<tr>	<td align='center' colspan='2'>
+				<span class='guiButton' onclick="doLogin();" id='login_button'>Login</span> 
+			</td>
+		</tr>
+	</table>
+
+	<table align="center" id='changePasswordForm' style='display:none;'>
+		<tr>	<td colspan="2" align='center' class='lite'><b>Change Password</b></td>
+		<tr>	<td align=right>New Password:</td>
+			<td><input id="new_password" size=12 type='password' field_name='Password' validation='alphanumeric'></td>
+		</tr>
+		<tr>	<td align=right>Retype New Password:</td>
+			<td><input id="new_password_retype" size=12  type='password' onKeyUp="home_miscFunctions.updateOnEnter(event)"></td>
+		</tr>
+		<tr>	<td align='center' colspan='2'>
+				<span class='guiButton' onclick="updatePassword();">Update Password</span> 
+			</td>
+		</tr>
+	</table>
+
+	<div width='95%' style='text-align:center; margin-top:20px;'>
+		<span id="statusbar">&nbsp;</span>
+	</div>
+
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.js"></script>
+	<script>
+
+	var setLoggedIn = function(a){
+		DOM_statusbar.innerHTML = '<img src=images/tick.gif border=0> Connected';
+		DOM_login_button.innerHTML = 'Logout';
+		parent.ASTGUI.dialog.hide();
+		DOM_username.disabled = true;
+		DOM_secret.disabled = true ;
+		try{ if (a.welcome_redirect == true){ window.location.href = 'welcome.html'; } }catch(err){ }
+	};
+
+	var localajaxinit = function(){
+		DOM_username = _$('username');
+		DOM_secret = _$('secret');
+		DOM_statusbar = _$('statusbar');
+		DOM_login_button = _$('login_button');
+
+		if( parent.sessionData.isLoggedIn){
+			if( ASTGUI.parseGETparam(window.location.href, 'status') == '1' ){
+				setLoggedIn({ welcome_redirect : true });
+			}else{
+				setLoggedIn({ welcome_redirect : false });
+			}
+		}else{
+			DOM_username.disabled = false;
+			DOM_secret.disabled = false;
+			DOM_username.focus();
+		}
+	}
+
+	function doLogin(){
+		if( parent.sessionData.isLoggedIn == true ){
+			parent.miscFunctions.logoutFunction.confirmlogout();
+			return ;
+		}
+		var f = makeSyncRequest({ action :'login', username: DOM_username.value, secret: DOM_secret.value });
+		f = f.toLowerCase();
+		if(f.match('authentication accepted')){
+			top.log.debug("Login Success result: " + f);
+			setLoggedIn( { welcome_redirect: false } );
+			DOM_secret.blur();
+			parent.ASTGUI.dialog.waitWhile(' <font color=#005119><b>Login Success</b></font>');
+			ASTGUI.feedback({msg:'Login Success', showfor: 4 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+			top.cookies.set('username', DOM_username.value );
+
+			if( DOM_secret.value == 'password'){
+				ASTGUI.feedback({msg:'Your are using the default password.<BR> Please choose a new password', showfor: 7 , color: '#672b13'}) ;
+				parent.onLogInFunctions.makePings.start();
+				parent.ASTGUI.dialog.hide();
+				_$('loginForm').style.display = 'none';
+				_$('changePasswordForm').style.display = '';
+				_$('new_password').focus();
+
+			}else{
+				parent.onLogInFunctions.checkifLoggedIn();
+			}
+			return;
+		}else if(f.match('authentication failed') ) {
+			top.log.debug("Login failure result: " + f);
+			ASTGUI.feedback({msg:'Invalid Username or Password', showfor: 4, color:'#c42421'}) ;
+			DOM_secret.focus();
+			DOM_secret.select();
+		}
+	}
+
+
+	var home_miscFunctions = {
+		submitOnEnter: function (e){
+			if(e.keyCode == 13){
+				doLogin();
+				return false;
+			}
+		},
+		updateOnEnter: function (e){
+			if(e.keyCode == 13){
+				updatePassword();
+				return false;
+			}
+		}
+	};
+
+
+	var updatePassword = function(){
+		var CURRENT_Username = top.cookies.get('username');
+		var u = new listOfSynActions('manager.conf') ;
+
+		var newp = ASTGUI.getFieldValue('new_password');
+		var newp_rt = ASTGUI.getFieldValue('new_password_retype');
+		if ( !ASTGUI.validateFields( [ 'new_password' ] ) ){
+			return ;
+		}
+		if( newp.length < 4 ){
+			ASTGUI.highlightField( 'new_password' , 'Password must be atleast 4 digits');
+			return;
+		}
+		if( newp != newp_rt ){
+			ASTGUI.highlightField( 'new_password' , 'Passwords do not match');
+			return;
+		}
+		u.new_action('update', CURRENT_Username, 'secret', newp );
+		u.callActions();
+
+		ASTGUI.feedback( { msg:"Password Updated Successfully", showfor:3 });
+		var t = ASTGUI.cliCommand('manager reload');
+		alert("Password Updated Successfully!!  \n\n You will now be redirected to the login page \n You must relogin using your new password") ;
+		var f = makeSyncRequest({ action :'logoff'});
+		parent.window.location.reload();
+	}
+	</script>
+</body>
+</html>

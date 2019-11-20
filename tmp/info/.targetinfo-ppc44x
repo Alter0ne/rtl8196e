@@ -1,0 +1,19 @@
+Source-Makefile: target/linux/ppc44x/Makefile
+Target: ppc44x
+Target-Board: ppc44x
+Target-Name: AMCC/IBM PPC44x
+Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Arch: powerpc
+Target-Arch-Packages: ppc44x
+Target-Features: broken dt gpio pci pcie squashfs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mcpu=440
+CPU-Type: 440
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: powerpc
+Target-Description:
+	Build firmware images for AMCC/IBM PPC44x based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables kmod-ipt-nathelper firewall odhcpd odhcp6c 
+

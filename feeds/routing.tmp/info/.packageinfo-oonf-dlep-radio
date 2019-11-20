@@ -1,0 +1,19 @@
+Source-Makefile: feeds/routing/oonf-dlep-radio/Makefile
+Package: oonf-dlep-radio
+Submenu: OLSR.org network framework
+Version: 0.13.0
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +librt +libnl-tiny +libuci +oonf-init-scripts
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Build DLEP Radio Agent
+Maintainer: Henning Rogge <hrogge@gmail.com>
+Source: oonf-dlep-radio-0.13.0.tar.bz2
+Type: ipkg
+Description: Build DLEP Radio Agent
+http://www.olsr.org/
+Henning Rogge <hrogge@gmail.com>
+@@
+
+

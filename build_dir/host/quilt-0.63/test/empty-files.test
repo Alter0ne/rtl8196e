@@ -1,0 +1,131 @@
+# Check that quilt properly deals with patches which delete vs. empty files
+
+# Prepare the working tree
+	$ mkdir patches
+	$ echo "will be deleted" > deleted1
+	$ echo "will be emptied" > emptied1
+	$ echo "will be deleted" > deleted2
+	$ echo "will be emptied" > emptied2
+
+# Prepate the patches and series
+	$ cat > patches/series
+	< using-filenames.patch
+	< using-timestamps.patch
+
+	$ cat > patches/using-filenames.patch
+	< diff -ruN a/deleted1 b/deleted1
+	< --- a/deleted1
+	< +++ /dev/null
+	< @@ -1 +0,0 @@
+	< -will be deleted
+	< diff -ruN a/emptied1 b/emptied1
+	< --- a/emptied1
+	< +++ b/emptied1
+	< @@ -1 +0,0 @@
+	< -will be emptied
+
+	$ cat > patches/using-timestamps.patch
+	< diff -ruN a/deleted2 b/deleted2
+	< --- a/deleted2	2014-01-15 11:19:43.000000000 +0100
+	< +++ b/deleted2	1970-01-01 01:00:00.000000000 +0100
+	< @@ -1 +0,0 @@
+	< -will be deleted
+	< diff -ruN a/emptied2 b/emptied2
+	< --- a/emptied2	2014-01-15 11:19:59.000000000 +0100
+	< +++ b/emptied2	2014-01-15 11:20:11.000000000 +0100
+	< @@ -1 +0,0 @@
+	< -will be emptied
+
+# Test quilt push
+	$ quilt push
+	> Applying patch patches/using-filenames.patch
+	> patching file deleted1
+	> patching file emptied1
+	>
+	> Now at patch patches/using-filenames.patch
+	$ [ ! -e deleted1 ] && echo "File deleted1 does not exist"
+	> File deleted1 does not exist
+	$ [ -e deleted1 -a ! -s deleted1 ] && echo "File deleted1 is empty"
+	$ [ ! -e emptied1 ] && echo "File emptied1 does not exist"
+	$ [ -e emptied1 -a ! -s emptied1 ] && echo "File emptied1 is empty"
+	> File emptied1 is empty
+
+	$ quilt push
+	> Applying patch patches/using-timestamps.patch
+	> patching file deleted2
+	> patching file emptied2
+	>
+	> Now at patch patches/using-timestamps.patch
+	$ [ ! -e deleted2 ] && echo "File deleted2 does not exist"
+	> File deleted2 does not exist
+	$ [ -e deleted2 -a ! -s deleted2 ] && echo "File deleted2 is empty"
+	$ [ ! -e emptied2 ] && echo "File emptied2 does not exist"
+	$ [ -e emptied2 -a ! -s emptied2 ] && echo "File emptied2 is empty"
+	> File emptied2 is empty
+
+# Test quilt fold
+	$ quilt pop -aq
+	> Removing patch patches/using-timestamps.patch
+	> Removing patch patches/using-filenames.patch
+	> No patches applied
+
+	$ quilt new fold.patch
+	> Patch patches/fold.patch is now on top
+
+	$ quilt fold < patches/using-filenames.patch
+	> patching file deleted1
+	> patching file emptied1
+	$ [ ! -e deleted1 ] && echo "File deleted1 does not exist"
+	> File deleted1 does not exist
+	$ [ -e deleted1 -a ! -s deleted1 ] && echo "File deleted1 is empty"
+	$ [ ! -e emptied1 ] && echo "File emptied1 does not exist"
+	$ [ -e emptied1 -a ! -s emptied1 ] && echo "File emptied1 is empty"
+	> File emptied1 is empty
+
+	$ quilt fold < patches/using-timestamps.patch
+	> patching file deleted2
+	> patching file emptied2
+	$ [ ! -e deleted2 ] && echo "File deleted2 does not exist"
+	> File deleted2 does not exist
+	$ [ -e deleted2 -a ! -s deleted2 ] && echo "File deleted2 is empty"
+	$ [ ! -e emptied2 ] && echo "File emptied2 does not exist"
+	$ [ -e emptied2 -a ! -s emptied2 ] && echo "File emptied2 is empty"
+	> File emptied2 is empty
+
+# Test quilt refresh
+	$ quilt delete
+	> Removing patch patches/fold.patch
+	> No patches applied
+	> Removed patch patches/fold.patch
+	$ quilt push -q
+	> Applying patch patches/using-filenames.patch
+	> Now at patch patches/using-filenames.patch
+
+	$ quilt refresh -pab --sort --no-index
+	> Refreshed patch patches/using-filenames.patch
+	$ quilt pop -q
+	> Removing patch patches/using-filenames.patch
+	> No patches applied
+
+	$ quilt push
+	> Applying patch patches/using-filenames.patch
+	> patching file deleted1
+	> patching file emptied1
+	>
+	> Now at patch patches/using-filenames.patch
+	$ [ ! -e deleted1 ] && echo "File deleted1 does not exist"
+	> File deleted1 does not exist
+	$ [ -e deleted1 -a ! -s deleted1 ] && echo "File deleted1 is empty"
+	$ [ ! -e emptied1 ] && echo "File emptied1 does not exist"
+	$ [ -e emptied1 -a ! -s emptied1 ] && echo "File emptied1 is empty"
+	> File emptied1 is empty
+
+	$ cat patches/using-filenames.patch
+	> --- a/deleted1
+	> +++ /dev/null
+	> @@ -1 +0,0 @@
+	> -will be deleted
+	> --- a/emptied1
+	> +++ b/emptied1
+	> @@ -1 +0,0 @@
+	> -will be emptied

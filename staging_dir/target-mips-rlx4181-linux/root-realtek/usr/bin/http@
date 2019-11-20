@@ -1,0 +1,8 @@
+#!/bin/sh
+# WARNING: This file was auto-generated. Do not edit!
+echo "GET /${2-} HTTP/1.0
+Host: ${1-0}:${3-80}
+" | /usr/bin/tcpclient -RHl0 -- "${1-0}" "${3-80}" sh -c '
+  /usr/bin/addcr >&7
+  exec /usr/bin/delcr <&6
+' | awk '/^$/ { body=1; next } { if (body) print }'

@@ -1,0 +1,62 @@
+`quilt refresh` must respect the specified file order within patch:
+
+All files that were already in the patch must be first in the file (in
+the current order), and any new file must be in alphabetic order,
+after the last file that were already in the file.
+
+	$ mkdir patches
+
+	$ echo foo >foo
+	$ echo fnord >fnord
+	$ echo zulu >zulu
+
+	$ quilt new bar
+	> Patch %{P}bar is now on top
+
+Adding two files: they are in alphabetic order
+	$ quilt add fnord zulu
+	> File fnord added to patch %{P}bar
+	> File zulu added to patch %{P}bar
+
+	$ echo x >>fnord
+	$ echo x >>zulu
+	$ quilt refresh --no-timestamps -p ab
+	> Refreshed patch %{P}bar
+
+	$ grep '^--- ' patches/bar
+	> --- a/fnord
+	> --- a/zulu
+
+Add a new file: must be placed after the last one
+	$ quilt add foo
+	> File foo added to patch %{P}bar
+
+	$ echo x >>foo
+	$ quilt refresh --no-timestamps -p ab
+	> Refreshed patch %{P}bar
+
+	$ grep '^--- ' patches/bar
+	> --- a/fnord
+	> --- a/zulu
+	> --- a/foo
+
+Remove the first file: should not change the relative order of others
+	$ echo fnord >fnord
+
+	$ quilt refresh --no-timestamps -p ab
+	> Refreshed patch %{P}bar
+
+	$ grep '^--- ' patches/bar
+	> --- a/zulu
+	> --- a/foo
+
+Readd the file: must now be last
+	$ echo x >>fnord
+
+	$ quilt refresh --no-timestamps -p ab
+	> Refreshed patch %{P}bar
+
+	$ grep '^--- ' patches/bar
+	> --- a/zulu
+	> --- a/foo
+	> --- a/fnord

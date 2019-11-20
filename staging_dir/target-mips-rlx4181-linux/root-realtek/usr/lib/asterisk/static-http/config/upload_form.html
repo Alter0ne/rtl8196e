@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>Upload Form</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+</head>
+<body onload='localinit();' onunload="hidetheupload();">
+	<div align=center style="font-family:'trebuchet ms',helvetica,sans-serif;">
+		<FORM method="POST" enctype="multipart/form-data" id="form22">
+			<BR>	<nobr>Choose file to Upload: <input name="uImage" type="file" id="uf1"></nobr>		<BR><BR>
+			<div align=center><input type="button" value="Upload" onclick="beforeupload();" id='UploadFORM_UPLOAD_BUTTON'></div>
+		</FORM>
+	</div>
+
+	<script>
+	//parent.onUploadForm_beforeUploading(); // if you want to do some thing right before uploading
+	//parent.onUploadForm_load();  // if you want to do some thing when this page(Upload FORM) is loaded - this is where you set the action path
+	//parent.onUploadForm_unload(); // if you want to do some thing after the file is uploaded
+	// parent.upload_Filename // upload file name
+
+	var frm ;
+
+	function localinit(){ 
+		frm = document.getElementById('form22') ;
+		var t = parent.onUploadForm_load();
+
+	}
+
+	function beforeupload(){
+		if(!frm.action){
+			top.log.error('AG101');
+			alert('Aborting Upload : Error Code  AG101');
+			return;
+		}
+
+		var fullpath = document.getElementById("uf1").value ;
+		if(!fullpath){ top.ASTGUI.dialog.alertmsg("Please select file to upload"); return; }
+		var a = fullpath.lastIndexOf("\\");
+		if (a == -1){ a = fullpath.lastIndexOf("/"); }
+
+		parent.upload_Filename = fullpath.substr(a+1);
+
+		if( parent.onUploadForm_beforeUploading() ){
+			frm.submit();
+		}
+	}
+
+
+	function hidetheupload(){
+		parent.onUploadForm_unload();
+	}
+
+	</script>
+</body>
+</html>

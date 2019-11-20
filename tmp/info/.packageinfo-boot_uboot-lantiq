@@ -1,0 +1,580 @@
+Source-Makefile: package/boot/uboot-lantiq/Makefile
+Package: uboot-lantiq-arv4519pw_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4519PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv4519pw_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv4519pw (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv4519pw (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv4519pw_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4519PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv4519pw_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv4519pw (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv4519pw (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv4519pw_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4519PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv4519pw_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv4519pw (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv4519pw (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4510PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4510PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV4510PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw22_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7510PW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw22_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw22 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw22 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw22_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7510PW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw22_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw22 (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw22 (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7510pw22_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7510PW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7510pw22_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7510pw22 (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7510pw22 (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7518pw_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7518PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7518pw_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7518pw (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7518pw (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7518pw_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7518PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7518pw_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7518pw (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7518pw (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv7518pw_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV7518PW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv7518pw_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv7518pw (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv7518pw (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw22_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw22_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw22 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw22 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw22_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw22_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw22 (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw22 (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-arv752dpw22_brn
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ARV752DPW22
+Menu-Depends: 
+Provides: 
+Build-Variant: arv752dpw22_brn
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Arcadyan arv752dpw22 (BRN)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Arcadyan arv752dpw22 (BRN)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-gigasx76x_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_GIGASX76X
+Menu-Depends: 
+Provides: 
+Build-Variant: gigasx76x_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Siemens Gigaset sx76x (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Siemens Gigaset sx76x (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-gigasx76x_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_GIGASX76X
+Menu-Depends: 
+Provides: 
+Build-Variant: gigasx76x_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Siemens Gigaset sx76x (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Siemens Gigaset sx76x (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-acmp252_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ACMP252
+Menu-Depends: 
+Provides: 
+Build-Variant: acmp252_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for AudioCodes MP-252 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for AudioCodes MP-252 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-acmp252_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_ACMP252
+Menu-Depends: 
+Provides: 
+Build-Variant: acmp252_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for AudioCodes MP-252 (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for AudioCodes MP-252 (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy50712_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_EASY50712
+Menu-Depends: 
+Provides: 
+Build-Variant: easy50712_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY50712 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY50712 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy50712_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_EASY50712
+Menu-Depends: 
+Provides: 
+Build-Variant: easy50712_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY50712 (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY50712 (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy50712_norspl
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xway_EASY50712
+Menu-Depends: 
+Provides: 
+Build-Variant: easy50712_norspl
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY50712 (NOR SPL)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY50712 (NOR SPL)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy80920_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(TARGET_lantiq_xrx200_EASY80920NOR||TARGET_lantiq_xrx200_EASY80920NAND)
+Menu-Depends: 
+Provides: 
+Build-Variant: easy80920_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY80920 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY80920 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy80920_nor
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(TARGET_lantiq_xrx200_EASY80920NOR||TARGET_lantiq_xrx200_EASY80920NAND)
+Menu-Depends: 
+Provides: 
+Build-Variant: easy80920_nor
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY80920 (NOR)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY80920 (NOR)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy80920_norspl
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(TARGET_lantiq_xrx200_EASY80920NOR||TARGET_lantiq_xrx200_EASY80920NAND)
+Menu-Depends: 
+Provides: 
+Build-Variant: easy80920_norspl
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY80920 (NOR SPL)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY80920 (NOR SPL)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-easy80920_sfspl
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(TARGET_lantiq_xrx200_EASY80920NOR||TARGET_lantiq_xrx200_EASY80920NAND)
+Menu-Depends: 
+Provides: 
+Build-Variant: easy80920_sfspl
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for Lantiq EASY80920 (SPI SPL)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for Lantiq EASY80920 (SPI SPL)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-fb3370_eva
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xrx200_FRITZ3370
+Menu-Depends: 
+Provides: 
+Build-Variant: fb3370_eva
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for AVM FRITZ3370 (EVA)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for AVM FRITZ3370 (EVA)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-fb3370_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xrx200_FRITZ3370
+Menu-Depends: 
+Provides: 
+Build-Variant: fb3370_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for AVM FRITZ3370 (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for AVM FRITZ3370 (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-fb3370_sfspl
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xrx200_FRITZ3370
+Menu-Depends: 
+Provides: 
+Build-Variant: fb3370_sfspl
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for AVM FRITZ3370 (SPI SPL)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for AVM FRITZ3370 (SPI SPL)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-p2812hnufx_ram
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xrx200_P2812HNUFX
+Menu-Depends: 
+Provides: 
+Build-Variant: p2812hnufx_ram
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for ZyXEL P-2812HNU-Fx (RAM)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for ZyXEL P-2812HNU-Fx (RAM)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+Package: uboot-lantiq-p2812hnufx_nandspl
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_lantiq_xrx200_P2812HNUFX
+Menu-Depends: 
+Provides: 
+Build-Variant: p2812hnufx_nandspl
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for ZyXEL P-2812HNU-Fx (NAND SPL)
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Description: U-Boot for ZyXEL P-2812HNU-Fx (NAND SPL)
+http://www.denx.de/wiki/U-Boot
+Luka Perkov <luka@openwrt.org>
+@@
+
+

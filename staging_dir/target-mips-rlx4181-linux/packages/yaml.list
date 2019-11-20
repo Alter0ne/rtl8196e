@@ -1,0 +1,7 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libyaml.a
+./usr/include
+./usr/include/yaml.h

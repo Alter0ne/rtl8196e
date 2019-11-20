@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+includedir=/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/usr/include
+libdir=${exec_prefix}/lib
+
+Name: unixODBC
+Description: unixODBC is an Open Source ODBC sub-system.
+URL: http://unixodbc.org
+Version: 2.3.7
+Cflags: -I${includedir}
+Libs: -L${libdir} -lodbcinst

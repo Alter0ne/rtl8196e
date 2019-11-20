@@ -1,0 +1,41 @@
+.TH dictCleanup 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictCleanup  - cleanup dictionary
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+void dictCleanup(dictCtx dict, dictCleanupFunc cleanup, void *rock);
+
+.Se
+
+.SH ARGUMENTS
+dict - dictionary to cleanup
+.br
+cleanup - cleanup callback
+.br
+rock - to pass to <cleanup>
+
+.SH DESCRIPTION
+Calls <cleanup> for every item in <dict>.  If <cleanup>
+returns true, then item is removed from <dict>.
+
+MT-Level: Safe if <dict> thread-safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

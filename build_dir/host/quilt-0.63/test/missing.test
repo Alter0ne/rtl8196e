@@ -1,0 +1,20 @@
+	$ mkdir patches
+
+	$ cat > patches/series
+	< missing1.diff
+	< missing2.diff
+
+	$ quilt push -qa
+	> Applying patch patches/missing1.diff
+	> Patch patches/missing1.diff does not exist; applied empty patch
+	> Applying patch patches/missing2.diff
+	> Patch patches/missing2.diff does not exist; applied empty patch
+	> Now at patch patches/missing2.diff
+
+	$ quilt rename missing3.diff
+	> Patch %{P}missing2.diff renamed to %{P}missing3.diff
+
+	$ quilt pop -qa
+	> Patch %{P}missing3.diff appears to be empty, removing
+	> Patch patches/missing1.diff appears to be empty, removing
+	> No patches applied

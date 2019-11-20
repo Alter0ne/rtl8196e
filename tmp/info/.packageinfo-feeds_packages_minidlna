@@ -1,0 +1,21 @@
+Source-Makefile: package/feeds/packages/minidlna/Makefile
+Package: minidlna
+Version: 1.2.1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpthread +libexif +libjpeg +libsqlite3 +libffmpeg +libid3tag +libflac +libvorbis +libuuid +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: UPnP A/V & DLNA Media Server
+Maintainer: Knyazkov Dmitry <medavedik@gmail.com>
+Source: minidlna-1.2.1.tar.gz
+Type: ipkg
+Feed: packages
+Description:   MiniDLNA (aka ReadyDLNA) is server software with the aim of
+  being fully compliant with DLNA/UPnP-AV clients.
+http://minidlna.sourceforge.net/
+Knyazkov Dmitry <medavedik@gmail.com>
+@@
+
+

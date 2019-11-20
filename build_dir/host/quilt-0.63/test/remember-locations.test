@@ -1,0 +1,27 @@
+	$ mkdir -p my/changes
+
+	$ export QUILT_PATCHES=my/changes
+	$ export QUILT_SERIES=patchlist
+	$ quilt new mychange1
+	> Patch my/changes/mychange1 is now on top
+	$ unset QUILT_PATCHES
+	$ unset QUILT_SERIES
+	$ cat .pc/.quilt_patches
+	> my/changes
+	$ cat .pc/.quilt_series
+	> patchlist
+	$ cat my/changes/patchlist
+	> mychange1
+
+	# Verify that the custom location is still used even
+	# if QUILT_PATCHES is not set
+	$ quilt new mychange2
+	> Patch my/changes/mychange2 is now on top
+	# Verify that the root directory can be identified even
+	# without QUILT_PATCHES with the .pc directory
+	$ cd my
+	$ quilt applied
+	> ../my/changes/mychange1
+	> ../my/changes/mychange2
+
+	$ cd ..

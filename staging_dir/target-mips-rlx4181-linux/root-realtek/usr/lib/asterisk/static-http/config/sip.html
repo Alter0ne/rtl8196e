@@ -1,0 +1,580 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Global SIP settings
+ *
+ * Copyright (C) 2007-2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ * Brandon Kruse <bkruse@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>SIP Configuration</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		SIP (Session Intitation Protocol) Configuration
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center>
+
+	<div id="tabbedMenu"></div>
+
+	<div style='max-width: 800px;'>
+
+	<div id='sipoptions_general' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>	<td align=right width=370>Context:</td>
+			<td>	&nbsp;<input type='text' dfalt='default' size=10 id='context' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,0" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Realm for digest authentication:</td>
+			<td>&nbsp;<input type='text' dfalt='asterisk' id='realm' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,1" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>UDP Port to bind to:</td>
+			<td>&nbsp;<input type='text' size=4 id='bindport' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,2" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>IP address to bind to:</td>
+			<td>&nbsp;<input type='text' size=16 id='bindaddr' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,3" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Domain:</td>
+			<td>&nbsp;<input type='text' size=18 id='domain' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,4" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Allow guest calls:</td>
+			<td><input type='checkbox' dfalt='y' id='allowguest' >
+				<img src="images/tooltip_info.gif" tip="en,sip_general,5" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Overlap dialing support:</td>
+			<td><input type='checkbox' dfalt='y' id='allowoverlap'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,6" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Allow Transfers:</td>
+			<td><input type='checkbox' dfalt='y' id='allowtransfer'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,7" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right tip="en,sip_general,8">Enable DNS SRV lookups (on outbound calls):</td>
+			<td><input type='checkbox' dfalt='y' id='srvlookup'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,8" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right tip="en,sip_general,9">Pedantic:</td><td>
+			<input type='checkbox' dfalt='no' id='pedantic'>
+			<img src="images/tooltip_info.gif" tip="en,sip_general,9" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr id="mwi_from_container">
+			<td align=right tip="en,users,33">MWI From:</td>
+			<td>
+				<input type='text' id='mwi_from' />
+				<img src="images/tooltip_info.gif" tip="en,users,33" class='tooltipinfo' />
+			</td>
+		</tr>
+
+		<tr>	<td colspan=2 align=center><B>SIP Domain Support</B></td></tr>
+
+		<tr>
+			<td align=right>From Domain:</td>
+			<td>&nbsp;<input type='text' size=18 id='fromdomain' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,69" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Auto Domain:</td>
+			<td><input type='checkbox' id='autodomain'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,70" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Allow External Domains:</td>
+			<td><input type='checkbox' dfalt='y' id='allowexternaldomains'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,71" class='tooltipinfo'>
+			</td>
+		</tr>
+	<!--	<tr>
+			<td align=right>Allow External Invites:</td>
+			<td><input type='checkbox' id='allowexternalinvites'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,72" class='tooltipinfo'>
+			</td>
+		</tr>
+	-->
+		</table>
+	</div>
+
+
+	<div id='sipoptions_tos' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr><td align=right>TOS for Signalling packets:</td>
+			<td>&nbsp;<select size=1 dfalt='none' id="tos_sip" class="input8">
+				<option value='none'>none</option>
+				<option value='ef'>ef</option>
+				<option value='CS0'>CS0</option>
+				<option value='CS1'>CS1</option>
+				<option value='CS2'>CS2</option>
+				<option value='CS3'>CS3</option>
+				<option value='CS4'>CS4</option>
+				<option value='CS5'>CS5</option>
+				<option value='CS6'>CS6</option>
+				<option value='CS7'>CS7</option>
+				<option value='AF11'>AF11</option>
+				<option value='AF12'>AF12</option>
+				<option value='AF13'>AF13</option>
+				<option value='AF21'>AF21</option>
+				<option value='AF22'>AF22</option>
+				<option value='AF23'>AF23</option>
+				<option value='AF31'>AF31</option>
+				<option value='AF32'>AF32</option>
+				<option value='AF33'>AF33</option>
+				<option value='AF41'>AF41</option>
+				<option value='AF42'>AF42</option>
+				<option value='AF43'>AF43</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,11" class='tooltipinfo'>
+			</td>
+			<td align=right>TOS for RTP audio packets:</td>
+			<td>&nbsp;<select size=1 dfalt='none' id="tos_audio" class="input8">
+				<option value='none'>none</option>
+				<option value='ef'>ef</option>
+				<option value='CS0'>CS0</option>
+				<option value='CS1'>CS1</option>
+				<option value='CS2'>CS2</option>
+				<option value='CS3'>CS3</option>
+				<option value='CS4'>CS4</option>
+				<option value='CS5'>CS5</option>
+				<option value='CS6'>CS6</option>
+				<option value='CS7'>CS7</option>
+				<option value='AF11'>AF11</option>
+				<option value='AF12'>AF12</option>
+				<option value='AF13'>AF13</option>
+				<option value='AF21'>AF21</option>
+				<option value='AF22'>AF22</option>
+				<option value='AF23'>AF23</option>
+				<option value='AF31'>AF31</option>
+				<option value='AF32'>AF32</option>
+				<option value='AF33'>AF33</option>
+				<option value='AF41'>AF41</option>
+				<option value='AF42'>AF42</option>
+				<option value='AF43'>AF43</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,12" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>TOS for RTP video packets:</td>
+			<td colspan=3>&nbsp;<select size=1 dfalt='none' id="tos_video" class="input8">
+				<option value='none'>none</option>
+				<option value='ef'>ef</option>
+				<option value='CS0'>CS0</option>
+				<option value='CS1'>CS1</option>
+				<option value='CS2'>CS2</option>
+				<option value='CS3'>CS3</option>
+				<option value='CS4'>CS4</option>
+				<option value='CS5'>CS5</option>
+				<option value='CS6'>CS6</option>
+				<option value='CS7'>CS7</option>
+				<option value='AF11'>AF11</option>
+				<option value='AF12'>AF12</option>
+				<option value='AF13'>AF13</option>
+				<option value='AF21'>AF21</option>
+				<option value='AF22'>AF22</option>
+				<option value='AF23'>AF23</option>
+				<option value='AF31'>AF31</option>
+				<option value='AF32'>AF32</option>
+				<option value='AF33'>AF33</option>
+				<option value='AF41'>AF41</option>
+				<option value='AF42'>AF42</option>
+				<option value='AF43'>AF43</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,13" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right tip="en,sip_general,20">Music On Hold Interpret:</td>
+			<td>&nbsp;<input type='text'  size=12 dfalt='default' id='mohinterpret' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,20" class='tooltipinfo'>
+			</td>
+			<td align=right tip="en,sip_general,21">Music On Hold Suggest:</td>
+			<td>&nbsp;<input type='text'  size=12 id='mohsuggest' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,21" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right tip="en,sip_general,22">Language:</td>
+			<td>&nbsp;<input type='text' size=3 id='language' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,22" class='tooltipinfo'>
+			</td>
+			<td align=right>Enable Relaxed DTMF:</td>
+			<td><input type='checkbox' id='relaxdtmf'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,23" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>RTP TimeOut:</td>
+			<td>&nbsp;<input type='text' size=4 id='rtptimeout' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,24" class='tooltipinfo'>
+			</td>
+			<td align=right>RTP HoldTimeOut:</td>
+			<td>&nbsp;<input type='text' size=4 id='rtpholdtimeout' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,25" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Trust Remote Party ID:</td>
+			<td><input type='checkbox' id='trustrpid'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,26" class='tooltipinfo'>
+			</td>
+			<td align=right>Send Remote Party ID:</td>
+			<td><input type='checkbox' id='sendrpid'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,27" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Generate In-Band Ringing:</td>
+			<td>&nbsp;<select id='progressinband' dfalt='never' class="input8">
+				<option value='never'>never</option>
+				<option value='no'>no</option>
+				<option value='yes'>yes</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,28" class='tooltipinfo'>
+			</td>
+			<td align=right>Server UserAgent:</td>
+			<td>&nbsp;<input type='text' size=12 dfalt='Asterisk PBX' id='useragent' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,29" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Allow Nonlocal Redirect:</td>
+			<td><input type='checkbox' id='promiscredir'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,30" class='tooltipinfo'>
+			</td>
+			<td align=right>Add 'user=phone' to URI:</td>
+			<td><input type='checkbox' id='usereqphone'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,31" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>DTMF Mode:</td>
+			<td>&nbsp;<select id='dtmfmode' class="input8">
+				<option value='rfc2833'>rfc2833</option>
+				<option value='info'>info</option>
+				<option value='inband'>inband</option>
+				<option value='auto'>auto</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,32" class='tooltipinfo'>
+			</td>
+			<td align=right>Send Compact SIP Headers:</td>
+			<td><input type='checkbox' id='compactheaders'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,33" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Max Registration/Subscription Time:</td>
+			<td colspan=3>&nbsp;<input type='text' size=4 id='maxexpiry' dfalt="3600" pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,14" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Min Registration/Subscription Time:</td>
+			<td colspan=3>&nbsp;<input type='text' dfalt='60'  size=4 id='minexpiry' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,15" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right> Default Incoming/Outgoing Registration Time:</td>
+			<td colspan=3>&nbsp;<input type='text' size=4 dfalt='120' id='defaultexpiry' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,16" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Min RoundtripTime (T1 Time):</td>
+			<td>&nbsp;<input type='text' dfalt='100'  size=4 id='t1min' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,17" class='tooltipinfo'>
+			</td>
+			<td align=right>Time between MWI Checks:</td>
+			<td>&nbsp;<input type='text' dfalt='10' size=4 id='checkmwi' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,19" class='tooltipinfo'>
+			</td>
+		</tr>
+	<!--	<tr>	<td align=right>Override Notify MIME Type:</td>
+			<td colspan=3>&nbsp;<input type='text'  size=16 id='notifymimetype' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,18" class='tooltipinfo'>
+			</td>
+		</tr>-->
+		</table>
+	</div>
+
+
+	<div id='sipoptions_debugNotify' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>	<td colspan=2 align=center>
+				<B>&nbsp;Sip Debugging</B>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,42" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right width='50%'>Enable SIP debugging:</td>
+			<td><input type='checkbox' id='sipdebug'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,43" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right> Record SIP History:</td>
+			<td><input type='checkbox' id='recordhistory'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,44" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Dump SIP History:</td>
+			<td><input type='checkbox' id='dumphistory'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,45" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr height=15><td colspan=2></td></tr>
+		<tr>
+			<td colspan=2 align=center><B>&nbsp;Status Notifications (Subscriptions) </B>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,46" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Subscribe Context:</td>
+			<td>&nbsp;<input size=8 type='text' id='subscribecontext' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,47" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Allow Subscribe:</td>
+			<td><input type='checkbox' dfalt='y' id='allowsubscribe'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,48" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Notify on Ringing:</td>
+			<td><input type='checkbox' dfalt='y' id='notifyringing'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,49" class='tooltipinfo'>
+			</td>
+		</tr>
+		</table>
+	</div>
+
+	<div id='sipoptions_nat' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>
+			<td align=right>Extern ip:</td>
+			<td>&nbsp;<input size=16 type='text' id='externip' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,55" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right width='50%'>Extern Host:</td>
+			<td>&nbsp;<input size=16 type='text' id='externhost' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,56" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Extern Refresh:</td>
+			<td>&nbsp;<input size=4 type='text' dfalt='10' id='externrefresh' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,57" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>
+			<td align=right>Local Network Address:</td>
+			<td>&nbsp;<input size=16 type='text' id='localnet' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,58" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	
+			<td align=right>NAT mode:</td>
+			<td>&nbsp;<select id='nat' class="input8">
+				<option value='yes'>yes</option>
+				<option value='no'>no</option>
+				<option value='never'>never</option>
+				<option value='route'>route</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,59" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	
+			<td align=right>Allow RTP Reinvite:</td>
+			<td>&nbsp;<select id='canreinvite' dflt='no' class="input8">
+					<option value='yes'>yes</option>
+					<option value='nonat'>nonat</option>
+					<option value='update'>update</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,60" class='tooltipinfo'>
+			</td>
+		</tr>
+		</table>
+	</div>
+
+
+	<!--<div id='sipoptions_realtime' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>	<td align=right>Auto-Expire Friends:</td>
+			<td><input type='text' size=4 id='rtautoclear' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,62" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right  width='50%'>Cache Friends:</td>
+			<td><input type='checkbox' id='rtcachefriends'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,63" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Save SysName:</td>
+			<td><input type='checkbox' id='rtsavesysname'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,64" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Send Registry Updates:</td>
+			<td><input type='checkbox' id='rtupdate'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,65" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Ignore Expired Peers:</td>
+			<td><input type='checkbox' id='ignoreregexpire'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,66" class='tooltipinfo'>
+			</td>
+		</tr>
+		</table>
+	</div>-->
+
+
+	<div id='sipoptions_misc' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+
+		<tr>	<td colspan=2 align=center><B>FAX Passthrough</B></td></tr>
+
+		<tr>
+			<td align=right  width='50%'>T.38 fax (UDPTL) Passthrough:</td>
+			<td><input type='checkbox' id='t38pt_udptl'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,41" class='tooltipinfo'>
+			</td>
+		</tr>
+
+
+		<tr>	<td colspan=2 align=center><B>&nbsp;Outbound SIP Registrations</B></td></tr>
+
+		<tr>	<td align=right>Register:</td>
+			<td>&nbsp;<input size=18 type='text' id='register' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,51" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Register TimeOut:</td>
+			<td>&nbsp;<input size=4 type='text' dfalt='20' id='registertimeout' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,52" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Register Attempts:</td>
+			<td>&nbsp;<input size=4 type='text' dfalt='0' id='registerattempts' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,53" class='tooltipinfo'>
+			</td>
+		</tr>
+
+
+		<tr>	<td colspan=2 align=center><B>Video</B></td></tr>
+
+		<tr>	<td align=right>Max Bitrate (kb/s):</td>
+			<td>&nbsp;<input type='text' size=4  dfalt=384 id='maxcallbitrate' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,35" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Support for SIP Video:</td>
+			<td><input type='checkbox' id='videosupport'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,36" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Generate Manager Events:</td>
+			<td><input type='checkbox' id='callevents'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,37" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Reject NonMatching Invites:</td>
+			<td><input type='checkbox' checked id='alwaysauthreject'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,38" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right tip="en,sip_general,39">NonStandard G.726 Support:</td>
+			<td><input type='checkbox' id='g726nonstandard'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,39" class='tooltipinfo'>
+			</td>
+		</tr>
+		</table>
+	</div>
+
+
+
+	<div id='sipoptions_JitterBuffer' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>	<td align=right width='50%'>Enable Jitter Buffer:</td>
+			<td><input type='checkbox' id='jbenable'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,74" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Force Jitter Buffer:</td>
+			<td><input type='checkbox' id='jbforce'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,75" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Log Frames:</td>
+			<td><input type='checkbox' id='jblog'>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,76" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Max Jitter Buffer:</td>
+			<td>&nbsp;<input type='text' size=4 id='jbmaxsize' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,77" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Resync Threshold:</td>
+			<td>&nbsp;<input type='text' size=4 id='jbresyncthreshold' pattern='^\d*$' class="input8">
+				<img src="images/tooltip_info.gif" tip="en,sip_general,78" class='tooltipinfo'>
+			</td>
+		</tr>
+		<tr>	<td align=right>Implementation:</td>
+			<td>&nbsp;<select id='jbimpl' class="input8">
+				<option value='fixed'>fixed</option>
+				<option value='adaptive'>adaptive</option>
+				</select>
+				<img src="images/tooltip_info.gif" tip="en,sip_general,79" class='tooltipinfo'>
+			</td>
+		</tr>
+		</table>
+	</div>
+
+
+	<div id='sipoptions_codecs' style='display: none;'>
+		<table class="field_text" align="center" width="100%" cellpadding=3 cellspacing=0 border=0>
+		<tr>
+			<td align=right>Allowed Codecs:</td>
+			<td>&nbsp;<span id='allow'></span></td>
+		</tr>
+		</table>
+	</div>
+
+
+	<div style='margin-top:15px; width:100%; text-align:center;'>
+		<span class='guiButtonCancel' onclick='window.location.reload();' style='margin-left:10px'>Cancel</span>
+		<span class='guiButtonEdit' onclick='saveChanges();'>Save</span>
+	</div>
+	</div>
+	</center>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/sip.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+</body>
+</html>

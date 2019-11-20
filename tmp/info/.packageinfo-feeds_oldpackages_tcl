@@ -1,0 +1,26 @@
+Source-Makefile: package/feeds/oldpackages/tcl/Makefile
+Package: tcl
+Submenu: Tcl
+Version: 8.6.9-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpthread +zlib
+Menu-Depends: 
+Provides: 
+Build-Types: host
+Section: lang
+Category: Languages
+Title: The Tcl language
+Maintainer: Joe Mistachkin <joe@mistachkin.com>
+Source: tcl8.6.9-src.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Tcl, or Tool Command Language, is a an elegant, versatile, feature-rich,
+  simple-to-learn yet very powerful industrial-strength open-source
+  programming language and development platform. It is renowned for its
+  stability and utility, and its emphasis on providing a cross-platform
+  programming API makes it an ideal choice for an enormous variety of
+  programming jobs.
+https://www.tcl.tk/
+Joe Mistachkin <joe@mistachkin.com>
+@@
+
+

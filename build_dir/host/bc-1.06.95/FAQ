@@ -1,0 +1,27 @@
+Because of frequent questions ....... here is the BC FAQ
+
+
+1) Why does BC have its own arbitrary precision number routines 
+   (found in lib/number.c) rather than using GMP?
+
+GMP has "integers" (no digits after a decimal), "rational numbers"
+(stored as 2 integers) and "floats".  None of these will correctly
+represent a POSIX BC number.  Floats are the closest, but will not
+behave correctly for many computations.  For example, BC numbers have
+a "scale" that represent the number of digits to represent after the
+decimal point.  The multiplying two of these numbers requires one to
+calculate an exact number of digits after the decimal point regardless
+of the number of digits in the integer part.  GMP floats have a
+"fixed, but arbitrary" mantissa and so multiplying two floats will end
+up dropping digits BC must calculate.
+
+2) The code "ibase=16; obase=10; FF" outputs FF, not 255.  Isn't this
+   a bug?
+
+No.  ibase changed the input base at that point.  The 10 is then in
+base 16 and thus is the value 16.  Therefore, both ibase and obase
+are 16 (decimal).  And FF (base 16) on input is printed as FF (base 16)
+on output.  So how can one get 255?  First, single digit numbers are
+not converted using ibase.  So A is always 10 (decimal).  The following
+code will always work.  "ibase=F+1; obase=A; FF" and that always prints
+255.

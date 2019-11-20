@@ -1,0 +1,27 @@
+#! @BASH@
+
+if [ x"$1" = x"-d" ]
+then
+	for ((n=0 ; $n<100 ; n++))
+	do
+		try=${2%XXXXXX}$RANDOM
+		mkdir -m 700 "$try" 2>/dev/null && break
+	done
+else
+	user_mask=$(umask)
+	umask 077
+	set -o noclobber
+	for ((n=0 ; $n<100 ; n++))
+	do
+		try=${1%XXXXXX}$RANDOM
+		echo -n "" 2> /dev/null > "$try" && break
+	done
+	set +o noclobber
+	umask $user_mask
+fi
+if [ $n -lt 100 ]
+then
+	echo "$try"
+else
+	exit 1
+fi

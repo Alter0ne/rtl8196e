@@ -1,0 +1,334 @@
+#!/bin/sh
+# Copyright (C) 2011-2012 Luka Perkov <freecwmp@lukaperkov.net>
+
+get_management_server_url() {
+local tmp=${FLAGS_value}
+FLAGS_value=${FLAGS_TRUE}
+local scheme=`get_management_server_x_freecwmp_org__acs_scheme`
+local hostname=`get_management_server_x_freecwmp_org__acs_hostname`
+local port=`get_management_server_x_freecwmp_org__acs_port`
+local path=`get_management_server_x_freecwmp_org__acs_path`
+FLAGS_value=$tmp
+local val=`echo $scheme://$hostname:$port$path`
+freecwmp_output "InternetGatewayDevice.ManagementServer.URL" "$val"
+}
+
+set_management_server_url() {
+local url=$1
+local scheme
+local hostname
+local path
+local port
+
+scheme=`echo $url | awk -F "://" '{ print $1 }'`
+hostname=`echo $url | awk -F "$scheme://" '{ print $2 }' | awk -F ":" '{ print $1 }' | awk -F "/" '{ print $1 }'`
+port=`echo $url | awk -F "$scheme://$hostname:" '{ print $2 }' | awk -F '/' '{ print $1 }'`
+
+if [ -z "$port" ]; then
+	port=80
+	path=`echo $url | awk -F "$scheme://$hostname" '{ print $2 }'`
+else
+	path=`echo $url | awk -F "$scheme://$hostname:$port" '{ print $2 }'`
+fi
+
+if [ -z "$path" ]; then
+	path="/"
+fi
+
+set_management_server_x_freecwmp_org__acs_scheme $scheme
+set_management_server_x_freecwmp_org__acs_hostname $hostname
+set_management_server_x_freecwmp_org__acs_port $port
+set_management_server_x_freecwmp_org__acs_path $path
+
+ubus ${UBUS_SOCKET:+-s $UBUS_SOCKET} call tr069 inform '{ "event": "value_change" }' &
+}
+
+get_management_server_username() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].username 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.Username" "$val"
+}
+
+set_management_server_username() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].username="$1"
+}
+
+get_management_server_password() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].password 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.Password" "$val"
+}
+
+set_management_server_password() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].password="$1"
+}
+
+get_management_server_periodic_inform_enable() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformEnable"
+freecwmp_get_parameter_value "val" "$parm"
+freecwmp_output "$parm" "$val"
+}
+
+set_management_server_periodic_inform_enable() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformEnable"
+freecwmp_set_parameter_value "$parm" "$1"
+}
+
+get_management_server_periodic_inform_interval() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformInterval"
+freecwmp_get_parameter_value "val" "$parm"
+freecwmp_output "$parm" "$val"
+}
+
+set_management_server_periodic_inform_interval() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformInterval"
+freecwmp_set_parameter_value "$parm" "$1"
+}
+
+get_management_server_periodic_inform_time() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformTime"
+freecwmp_get_parameter_value "val" "$parm"
+freecwmp_output "$parm" "$val"
+}
+
+set_management_server_periodic_inform_time() {
+local parm="InternetGatewayDevice.ManagementServer.PeriodicInformTime"
+freecwmp_set_parameter_value "$parm" "$1"
+}
+
+get_management_server_connection_request_url() {
+local val
+if [ -z "$default_management_server_connection_request_url" ]; then
+	local tmp=${FLAGS_value}
+	FLAGS_value=${FLAGS_TRUE}
+	local ip=`get_wan_device_mng_interface_ip`
+	local port=`get_management_server_x_freecwmp_org__connection_request_port`
+	FLAGS_value=$tmp
+
+	if [ -n "$ip" -a -n "$port" ]; then
+		val="http://$ip:$port/"
+	fi
+else
+	val=$default_management_server_connection_request_url
+fi
+
+freecwmp_output "InternetGatewayDevice.ManagementServer.ConnectionRequestURL" "$val"
+}
+
+get_management_server_connection_request_username() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@local[0].username 2> /dev/null`
+freecwmp_value_output "InternetGatewayDevice.ManagementServer.ConnectionRequestUsername" "$val"
+}
+
+set_management_server_connection_request_username() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@local[0].username="$1"
+}
+
+get_management_server_connection_request_password() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@local[0].password 2> /dev/null`
+freecwmp_value_output "InternetGatewayDevice.ManagementServer.ConnectionRequestPassword" "$val"
+}
+
+set_management_server_connection_request_password() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@local[0].password="$1"
+}
+
+# TODO: InternetGatewayDevice.ManagementServer.PeriodicInformTime
+
+get_management_server_x_freecwmp_org__acs_scheme() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].scheme 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Scheme" "$val"
+}
+
+set_management_server_x_freecwmp_org__acs_scheme() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].scheme="$1"
+}
+
+get_management_server_x_freecwmp_org__acs_hostname() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].hostname 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Hostname" "$val"
+}
+
+set_management_server_x_freecwmp_org__acs_hostname() {
+if [ -z "$default_management_server_acs_hostname" ]; then
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].hostname="$1"
+else
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].hostname="$default_management_server_acs_hostname"
+fi
+}
+
+get_management_server_x_freecwmp_org__acs_port() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].port 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Port" "$val"
+}
+
+set_management_server_x_freecwmp_org__acs_port() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].port="$1"
+}
+
+get_management_server_x_freecwmp_org__acs_path() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@acs[0].path 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Path" "$val"
+}
+
+set_management_server_x_freecwmp_org__acs_path() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@acs[0].path="$1"
+}
+
+get_management_server_x_freecwmp_org__connection_request_port() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@local[0].port 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.ManagementServer.X_freecwmp_org__Connection_Request_Port" "$val"
+}
+
+set_management_server_x_freecwmp_org__connection_request_port() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.@local[0].port="$1"
+}
+
+get_management_server() {
+case "$1" in
+	InternetGatewayDevice.)
+	get_management_server_url
+	get_management_server_username
+	get_management_server_password
+	get_management_server_periodic_inform_enable
+	get_management_server_periodic_inform_interval
+	get_management_server_connection_request_url
+	get_management_server_connection_request_username
+	get_management_server_connection_request_password
+	get_management_server_x_freecwmp_org__acs_scheme
+	get_management_server_x_freecwmp_org__acs_hostname
+	get_management_server_x_freecwmp_org__acs_port
+	get_management_server_x_freecwmp_org__acs_path
+	get_management_server_x_freecwmp_org__connection_request_port
+	;;
+	InternetGatewayDevice.ManagementServer.)
+	get_management_server_url
+	get_management_server_username
+	get_management_server_password
+	get_management_server_periodic_inform_enable
+	get_management_server_periodic_inform_interval
+	get_management_server_connection_request_url
+	get_management_server_connection_request_username
+	get_management_server_connection_request_password
+	get_management_server_x_freecwmp_org__acs_scheme
+	get_management_server_x_freecwmp_org__acs_hostname
+	get_management_server_x_freecwmp_org__acs_port
+	get_management_server_x_freecwmp_org__acs_path
+	get_management_server_x_freecwmp_org__connection_request_port
+	;;
+	InternetGatewayDevice.ManagementServer.URL)
+	get_management_server_url
+	;;
+	InternetGatewayDevice.ManagementServer.Username)
+	get_management_server_username
+	;;
+	InternetGatewayDevice.ManagementServer.Password)
+	get_management_server_password
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformEnable)
+	get_management_server_periodic_inform_enable
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformInterval)
+	get_management_server_periodic_inform_interval
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformTime)
+	get_management_server_periodic_inform_time
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestURL)
+	get_management_server_connection_request_url
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestUsername)
+	get_management_server_connection_request_username
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestPassword)
+	get_management_server_connection_request_password
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Scheme)
+	get_management_server_x_freecwmp_org__acs_scheme
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Hostname)
+	get_management_server_x_freecwmp_org__acs_hostname
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Port)
+	get_management_server_x_freecwmp_org__acs_port
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Path)
+	get_management_server_x_freecwmp_org__acs_path
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__Connection_Request_Port)
+	get_management_server_x_freecwmp_org__connection_request_port
+	;;
+esac
+}
+
+set_management_server() {
+case "$1" in
+	InternetGatewayDevice.ManagementServer.URL)
+	set_management_server_url "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.Username)
+	set_management_server_username "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.Password)
+	set_management_server_password "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformEnable)
+	set_management_server_periodic_inform_enable "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformInterval)
+	set_management_server_periodic_inform_interval "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.PeriodicInformTime)
+	set_management_server_periodic_inform_time "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestURL)
+	set_management_server_connection_request_url "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestUsername)
+	set_management_server_connection_request_username "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.ConnectionRequestPassword)
+	set_management_server_connection_request_password "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Scheme)
+	set_management_server_x_freecwmp_org__acs_scheme "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Hostname)
+	get_management_server_x_freecwmp_org__acs_hostname "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Port)
+	set_management_server_x_freecwmp_org__acs_port "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__ACS_Path)
+	set_management_server_x_freecwmp_org__acs_path "$2"
+	;;
+	InternetGatewayDevice.ManagementServer.X_freecwmp_org__Connection_Request_Port)
+	set_management_server_x_freecwmp_org__connection_request_port "$2"
+	;;
+esac
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+}
+
+check_parameter_management_server_generic() {
+case "$1" in
+	InternetGatewayDevice.ManagementServer.UpgradesManaged)
+	return 0
+	;;
+esac
+return 1
+}
+
+get_management_server_generic() {
+	check_parameter_management_server_generic "$1" ; _tmp=$? ; if [ "$_tmp" -eq 1 ]; then return 0; fi
+
+	freecwmp_get_parameter_value "val" "$1"
+	freecwmp_value_output "$1" "$val"
+}
+
+set_management_server_generic() {
+	check_parameter_management_server_generic "$1" ; _tmp=$? ; if [ "$_tmp" -eq 1 ]; then return 0; fi
+
+	freecwmp_set_parameter_value "$1" "$2"
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+}
+
+add_management_server() { return; }
+add_management_server_generic() { return; }

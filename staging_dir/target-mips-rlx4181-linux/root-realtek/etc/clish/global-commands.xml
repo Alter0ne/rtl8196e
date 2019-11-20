@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CLISH_MODULE xmlns="http://clish.sourceforge.net/XMLSchema" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://clish.sourceforge.net/XMLSchema
+                     http://clish.sourceforge.net/XMLSchema/clish.xsd">
+    <!--=======================================================-->
+    <COMMAND name="help"
+             help="Display an overview of the CLI syntax">
+        <ACTION builtin="clish_overview"/>
+    </COMMAND>
+    <!--=======================================================-->
+    <COMMAND name="logout"
+             help="Logout of the current CLI session">
+        <ACTION builtin="clish_close"/>
+    </COMMAND>
+    <!--=======================================================-->
+    <COMMAND name="top"
+             help="Return to the default mode"
+             view="root-view"
+             viewid=""/>
+    <!--=======================================================-->
+    <COMMAND name="debug"
+             help="Change to the debug mode"
+             view="debug-view">
+       <ACTION>echo "Entering debug mode..."</ACTION>
+    </COMMAND>
+    <!--=======================================================-->
+    <COMMAND name="script"
+             help="Change to the script demo mode"
+             view="script-view"/>
+    <!--=======================================================-->
+    <COMMAND name="history"
+             help="Display the current session's command line history">
+        <PARAM name="limit"
+               help="Set the size of history list (zero means unbounded)"
+              ptype="UINT"
+            default=""/>
+        <ACTION builtin="clish_history">${limit}</ACTION>
+    </COMMAND>
+	<!--=======================================================-->
+</CLISH_MODULE>

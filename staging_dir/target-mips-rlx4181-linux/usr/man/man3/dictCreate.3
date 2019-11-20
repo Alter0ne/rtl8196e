@@ -1,0 +1,54 @@
+.TH dictCreate 3 "12 July 2007" "ClearSilver" "util/dict.h"
+
+.de Ss
+.sp
+.ft CW
+.nf
+..
+.de Se
+.fi
+.ft P
+.sp
+..
+.SH NAME
+dictCreate  - create new dictionary.
+.SH SYNOPSIS
+.Ss
+#include <util/dict.h>
+.Se
+.Ss
+NEOERR *dictCreate(dictCtx *dict, BOOL threaded, UINT32 root, UINT32 maxLevel, 
+    UINT32 flushLimit, BOOL useCase, 
+    dictFreeValueFunc freeValue, void *freeRock);
+
+.Se
+
+.SH ARGUMENTS
+threaded - true if list should be thread-safe.
+.br
+root - performance parameter (see above).
+.br
+maxLevel - performance parameter (see above).
+.br
+flushLimit - max deleted items to keep cached before
+.br
+forcing a flush.
+.br
+useCase - true to be case sensitive in identifiers
+.br
+freeValue - callback when freeing a value
+.br
+freeRock - context for freeValue callback
+
+.SH DESCRIPTION
+Returns a dictionary.  If <threaded> is true, list is
+multi-thread safe.  <root>, <maxLevel>, and <flushLimit>
+act as for skipNewList() (see skiplist.h)
+
+MT-Level: Safe.
+
+.SH "RETURN VALUE"
+None.
+
+.SH "SEE ALSO"
+.BR dictDestroy "(3), "dictCleanup "(3), "dictReleaseLock "(3), "dictRemove "(3), "dictNext "(3), "dictCreate "(3), "dictSetValue "(3), "dictModifyValue "(3), "dictSearch

@@ -1,0 +1,9 @@
+
+Copyright (c) 2003-2012 Embedthis Software, LLC. All Rights Reserved.
+Copyright (c) 1994-2012 Michael O'Brien. All Rights Reserved.
+
+Embedthis, Appweb and Ejscript are trademarks of Embedthis Software, LLC. 
+Other brands and their products are trademarks of their respective holders.
+
+See LICENSE.TXT for software license details.
+

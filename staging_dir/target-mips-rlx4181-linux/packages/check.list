@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libcheck.so.0
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/check.pc
+./usr/lib/libcheck.so.0.0.0
+./usr/lib/libcheck.a
+./usr/lib/libcheck.so
+./usr/include
+./usr/include/check.h
+./usr/include/check_stdint.h

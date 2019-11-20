@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/macchanger/Makefile
+Package: macchanger
+Version: 1.7.0-3
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: utility for viewing/manipulating the MAC address
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Source: macchanger-1.7.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: 	This is a GNU/Linux utility for viewing/manipulating the MAC address
+	of network interfaces.
+https://github.com/alobbs/macchanger/
+Nicolas Thill <nico@openwrt.org>
+@@
+
+

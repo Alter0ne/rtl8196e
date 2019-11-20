@@ -1,0 +1,138 @@
+# same as import.test, but with compressed patches
+
+	$ mkdir patches
+
+	$ quilt new patch1.diff
+	> Patch %{P}patch1.diff is now on top
+
+	$ quilt add f
+	> File f added to patch %{P}patch1.diff
+
+	$ echo f > f
+
+	$ quilt refresh
+	> Refreshed patch %{P}patch1.diff
+
+	$ quilt pop
+	> Removing patch %{P}patch1.diff
+	> Removing f
+	>
+	> No patches applied
+
+	$ mkdir t
+	$ gzip < patches/patch1.diff > t/patch1.diff.gz
+	$ rm -f patches/patch1.diff
+
+	# test importing into an empty series
+	$ rm -rf patches/ .pc/
+	$ mkdir patches
+	$ quilt import t/patch1.diff.gz
+	> Importing patch t/patch1.diff.gz (stored as %{P}patch1.diff.gz)
+
+	$ quilt push
+	> Applying patch %{P}patch1.diff.gz
+	>~ patching file `?f'?
+	>
+	> Now at patch %{P}patch1.diff.gz
+
+	$ quilt new patch2.diff.gz
+	> Patch %{P}patch2.diff.gz is now on top
+
+	$ quilt add g
+	> File g added to patch %{P}patch2.diff.gz
+
+	$ echo g > g
+
+	$ quilt refresh
+	> Refreshed patch %{P}patch2.diff.gz
+
+	$ quilt pop
+	> Removing patch %{P}patch2.diff.gz
+	> Removing g
+	>
+	> Now at patch %{P}patch1.diff.gz
+
+	$ quilt header -a
+	< original description
+	> Appended text to header of patch %{P}patch1.diff.gz
+
+	$ quilt pop
+	> Removing patch %{P}patch1.diff.gz
+	> Removing f
+	>
+	> No patches applied
+
+	$ quilt delete patch1
+	> Removed patch %{P}patch1.diff.gz
+
+	$ cat %{P}series
+	> patch2.diff.gz
+
+	# test a few error cases
+
+	$ quilt import missing.diff.gz
+	> Patch missing.diff.gz does not exist
+
+	$ quilt import patches/patch1.diff.gz
+	> Importing patch %{P}patch1.diff.gz
+
+	$ quilt import patches/patch2.diff.gz
+	> Patch %{P}patch2.diff.gz already exists in series.
+
+	# a simple use of import
+
+	$ quilt import t/patch1.diff.gz
+	> Patch %{P}patch1.diff.gz exists. Replace with -f.
+
+	$ quilt import -f t/patch1.diff.gz
+	> Replacing patch %{P}patch1.diff.gz with new version
+
+	# an import requiring a description merge
+	$ zcat patches/patch1.diff.gz | sed -e 's/original/new/' | gzip > t/patch1.diff.gz
+	$ quilt import t/patch1.diff.gz
+	> Patch %{P}patch1.diff.gz exists. Replace with -f.
+
+	$ quilt import -f t/patch1.diff.gz
+	> Patch headers differ:
+	> @@ -1 +1 @@
+	> -original description
+	> +new description
+	> Please use -d {o|a|n} to specify which patch header(s) to keep.
+
+	$ quilt import -d a -f t/patch1.diff.gz
+	> Replacing patch %{P}patch1.diff.gz with new version
+
+	# quilt header does not work in this case because it stops at '---'
+	$ zcat patches/patch1.diff.gz | head -n 3
+	> original description
+	> ---
+	> new description
+
+	$ quilt import -d n -f t/patch1.diff.gz
+	> Replacing patch %{P}patch1.diff.gz with new version
+
+	$ quilt header patch1
+	> new description
+
+	$ quilt delete patch1
+	> Removed patch %{P}patch1.diff.gz
+
+	# make sure it accepts non-conflicting names
+	# a small presentation problem here
+
+	$ cp patches/patch1.diff.gz t/patch1.patch.gz
+	$ quilt import t/patch1.patch.gz
+	> Importing patch t/patch1.patch.gz (stored as %{P}patch1.patch.gz)
+
+	$ ls patches/
+	> patch1.diff.gz
+	> patch1.patch.gz
+	> patch2.diff.gz
+	> series
+
+	$ cat %{P}series
+	> patch1.patch.gz
+	> patch2.diff.gz
+
+	$ quilt delete patch1.diff.gz
+	> Patch patch1.diff.gz is not in series

@@ -1,0 +1,19 @@
+Source-Makefile: feeds/routing/bcp38/Makefile
+Package: bcp38
+Submenu: Routing and Redirection
+Version: 4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +ipset
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: BCP38 compliance 
+Maintainer: Dave Taht <d+bcp38@taht.net>
+Source: 
+Type: ipkg
+Description:  bcp38 implements rfc bcp 38 for home routers.
+http://www.github.com/dtaht/bcp38
+Dave Taht <d+bcp38@taht.net>
+@@
+
+

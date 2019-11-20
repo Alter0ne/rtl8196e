@@ -1,0 +1,13 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libshout.a
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/shout.pc
+./usr/lib/libshout.so.3.2.0
+./usr/lib/libshout.so
+./usr/lib/libshout.so.3
+./usr/include
+./usr/include/shout
+./usr/include/shout/shout.h

@@ -1,0 +1,35 @@
+	$ mkdir patches
+
+	$ echo a > a
+	$ echo b > b
+	$ diff -u a b > patches/patch
+	$ echo patch -p0 > patches/series
+	$ rm -f b
+	$ quilt push -q
+	> Applying patch patches/patch
+	> Now at patch patches/patch
+
+	$ quilt pop -q
+	> Removing patch patches/patch
+	> No patches applied
+
+	$ patch -s -p0 < patches/patch
+	$ quilt push -q
+	> Applying patch patches/patch
+	> 1 out of 1 hunk FAILED
+	> Patch patches/patch can be reverse-applied
+
+	$ echo patch -p0 -R > patches/series
+	$ quilt push -q
+	> Applying patch patches/patch
+	> Now at patch patches/patch
+
+	$ quilt pop -q
+	> Removing patch patches/patch
+	> No patches applied
+
+	$ patch -s -p0 -R < patches/patch
+	$ quilt push -q
+	> Applying patch patches/patch
+	> 1 out of 1 hunk FAILED
+	> Patch patches/patch can be reverse-applied

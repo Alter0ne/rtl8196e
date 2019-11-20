@@ -1,0 +1,10 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libargtable2.so
+./usr/lib/libargtable2.a
+./usr/lib/libargtable2.so.0
+./usr/lib/libargtable2.so.0.1.8
+./usr/include
+./usr/include/argtable2.h

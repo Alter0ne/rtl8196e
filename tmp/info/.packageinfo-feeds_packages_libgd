@@ -1,0 +1,37 @@
+Source-Makefile: package/feeds/packages/libgd/Makefile
+Package: libgd
+Menu: 1
+Version: 2.2.5-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libjpeg +libpng +LIBGD_TIFF:libtiff +LIBGD_FREETYPE:libfreetype
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: The GD graphics library
+Maintainer: Jo-Philipp Wich <jo@mein.io>
+Source: libgd-2.2.5.tar.xz
+Type: ipkg
+Feed: packages
+Description:   GD is an open source code library for the dynamic creation of images by
+  programmers. GD creates PNG, JPEG and GIF images, among other formats.
+https://libgd.github.io/
+Jo-Philipp Wich <jo@mein.io>
+@@
+Config:
+	if PACKAGE_libgd
+		config LIBGD_TIFF
+			bool "TIFF image support"
+			default n
+			help
+				Enable TIFF image support through libtiff
+	endif
+	if PACKAGE_libgd
+		config LIBGD_FREETYPE
+			bool "Freetype 2.x library support"
+			default n
+			help
+				Enable Freetype 2.x font engine support through libfreetype
+	endif
+@@
+
+

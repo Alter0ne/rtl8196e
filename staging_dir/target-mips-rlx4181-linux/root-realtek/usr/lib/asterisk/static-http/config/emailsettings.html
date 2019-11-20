@@ -1,0 +1,144 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * VoiceMail->Email Template Settings
+ *
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ *
+ * Mark Spencer <markster@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>VoiceMail Email Settings</title>
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		Voicemail-Email alert preferences
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<table width=95% cellpadding=0 cellspacing=0 border=0><tr><td align=center><div id="tabbedMenu"></div></td></tr></table>
+
+	<div>	<table align="center" cellpadding=2 cellspacing=1 border=0>
+			<tr>	
+				<td align=right><input type='checkbox' id='emailonly'></td>
+				<td>
+					<label for='emailonly'>Send messages by e-mail only</label>
+					<img src="images/tooltip_info.gif" tip="en,voicemail,4" class='tooltipinfo'>
+				</td>
+			</tr>
+			<tr>
+				<td align=right><input type='checkbox' id='attach'></td>
+				<td>
+					<label for='attach'>Attach recordings to e-mail</label>
+					<img src="images/tooltip_info.gif" tip="en,voicemail,1" class='tooltipinfo'>
+				</td>
+			</tr>
+			<TR>	<TD colspan=2 align=center valign=middle><span class='lite_Heading'>Template for Voicemail Emails </span></TD></TR>
+			<TR>	<TD align=right>From</TD>
+				<TD><input type="text" id="serveremail" size=45></TD>
+			</TR>
+			<TR>	<TD align=right>Subject</TD>
+				<TD><input type="text" id="emailsubject" size=45></TD>
+			</TR>
+			<TR>	<TD valign=top>Message</TD>
+				<TD><textarea id="emailbody" rows=5 cols=65></textarea></TD>
+			</TR>
+			<TR>	<TD colspan=2 align=center>
+					<span class='guiButtonCancel' id='cancel' onclick='window.location.reload();'>Cancel</span>
+					<span class='guiButton' id='span_load_defaults' onclick='load_defaults();'>Load Defaults</span>
+					<span class='guiButtonEdit' id='save' onclick='save_changes();'>Save</span>
+				</TD>
+			</TR>
+		</table><BR>
+		<table align="center" cellpadding=2 cellspacing=1 border=0>
+			<TR>	<TD valign=top align=center><B>Template Variables:</B></TD>
+				<TD>\t : TAB</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_NAME} : Recipient's firstname and lastname</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_DUR} : The duration of the voicemail message</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_MAILBOX} : The recipient's extension</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_CALLERID} : The caller id of the person who left the message</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_MSGNUM} : The message number in your mailbox</TD>
+			</TR>
+			<TR>	<TD></TD>
+				<TD>${VM_DATE} : The date and time the message was left</TD>
+			</TR>
+		</table>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script>
+	var localajaxinit = function(){
+		(function (){
+			var t = [
+				{url:'voicemail.html', desc:'General Settings'} ,
+				{url:'#', desc:'Email Settings for VoiceMails', selected:true }
+			];
+			if( parent.sessionData.PLATFORM.isAA50 ){
+				t.push( {url:'smtp_settings.html', desc:'SMTP Settings'} );
+			}
+			ASTGUI.tabbedOptions( _$('tabbedMenu') , t);
+		})();
+
+		top.document.title = 'VoiceMail Email Settings' ;
+		var c = config2json({filename:'voicemail.conf', usf:1});
+		if(! c.hasOwnProperty('general') ){return;}
+		var cg = c['general'];
+
+		ASTGUI.updateFieldToValue( 'emailonly' , cg.getProperty('emailonly') );
+		ASTGUI.updateFieldToValue( 'attach' , cg.getProperty('attach') );
+		ASTGUI.updateFieldToValue( 'emailbody' ,  cg.getProperty('emailbody') );
+		ASTGUI.updateFieldToValue( 'serveremail' , cg.getProperty('serveremail') );
+		ASTGUI.updateFieldToValue( 'emailsubject' ,  cg.getProperty('emailsubject') );
+	};
+
+	var load_defaults = function(){
+		ASTGUI.updateFieldToValue( 'emailbody' ,  'Hello ${VM_NAME}, you received a message lasting ${VM_DUR} at ${VM_DATE} from, (${VM_CALLERID}). This is message ${VM_MSGNUM} in your voicemail Inbox.' );
+		ASTGUI.updateFieldToValue( 'serveremail' , 'asterisk@yourcompany.null' );
+		ASTGUI.updateFieldToValue( 'emailsubject' ,  'New voicemail from ${VM_CALLERID} for ${VM_MAILBOX}' );
+		_$('span_load_defaults').style.display = 'none';
+	};
+
+	var save_changes = function(){
+		var u = new listOfSynActions('voicemail.conf') ;
+		u.new_action('update', 'general' , 'emailonly', ASTGUI.getFieldValue('emailonly') );
+		u.new_action('update', 'general' , 'attach', ASTGUI.getFieldValue('attach') );
+		u.new_action('update', 'general' , 'serveremail', ASTGUI.getFieldValue('serveremail') );
+		u.new_action('update', 'general' , 'emailsubject', ASTGUI.getFieldValue('emailsubject') );
+		u.callActions();
+			var eb = ASTGUI.getFieldValue('emailbody');
+			eb = eb.split('\n').join('\\n');
+		ASTGUI.updateaValue({ file:'voicemail.conf', context :'general', variable :'emailbody', value : eb }) ;
+		ASTGUI.feedback({msg:' Saved !!', showfor: 3 , color: '#5D7CBA', bgcolor: '#FFFFFF'}) ;
+		window.location.reload();
+
+	};
+
+	</script>
+</body>
+</html>

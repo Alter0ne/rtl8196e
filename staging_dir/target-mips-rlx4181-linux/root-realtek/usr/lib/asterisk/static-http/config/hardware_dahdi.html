@@ -1,0 +1,525 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Digital Card Setup / Detection 
+ *
+ * Copyright (C) 2007-2011, Digium, Inc.
+ *
+ * Brandon Kruse <bkruse@digium.com>
+ * Pari Nannapaneni <pari@digium.com>
+ * Erin Spiceland <espiceland@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+ *
+ *
+ ** this page is designed to work with the following sample ztscan output 
+ ** - - - - - - begin ztscan output - - - - - - - - 
+ **   [3]
+ **   active=yes
+ **   alarms=UNCONFIGURED
+ **   description=T4XXP (PCI) Card 2 Span 1
+ **   name=TE4/2/1
+ **   manufacturer=Digium
+ **   devicetype=Wildcard TE410P/TE405P (1st Gen)
+ **   location=PCI Bus 02 Slot 04
+ **   basechan=1
+ **   totchans=24
+ **   irq=21
+ **   type=digital-T1
+ **   syncsrc=0
+ **   lbo=0 db (CSU)/0-133 feet (DSX-1)
+ **   coding_opts=B8ZS,AMI
+ **   framing_opts=ESF,D4
+ **   coding=
+ **   framing=
+ ** - - - - - - End of ztscan output - - - - - - - - 
+ ** in the above output, [3] is the span number and the description says 'Card 2 Span 1' which is 
+ ** still valid because 'span 3' is the 'span 1' on 'card 2'
+ ** if your ztscan outputs in some other weird format, this page will go crazy and might not work as expected.
+ ** 
+ *** in this page, SPANS[l]['syncsrc'] is NOT the syncsrc from ztscan - but it is read from zaptel.conf
+ -->
+<html>
+<head>
+	<title>DAHDI Hardware Configuration</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style>
+
+		.taglist {
+			border: 1px solid #666666;
+			margin-top:10px;
+			margin-bottom:10px;
+			max-width: 80%;
+		}
+
+		.taglist tr.frow {
+			background-color: #6b79a5;
+			color: #CED7EF;
+		}
+
+		.taglist tr.even {
+			background-color: #DFDFDF;
+		}
+
+		.taglist tr.odd{
+			background-color: #FFFFFF;
+		}
+
+		.taglist tr.even:hover, .taglist tr.odd:hover {
+			background-color: #a8b6e5;
+		}
+
+		#errmsg{
+			border: 1px solid #666666;
+			margin-left:50px;
+			margin-right:50px;
+			padding : 20px 10px 20px 10px;
+			font-size: 125%;
+			text-align: center;
+			background-color:#FFFFFF;
+		}
+
+		.advanced {
+			text-align: left;
+		}
+
+		.advanced > div > span {
+			float: left;
+			margin-right: 5px;
+			text-align: right;
+			width: 50%;
+		}
+
+		.advanced > div > input, .advanced > div > select {
+			margin: 2px 0 3px 0;
+			text-align: left;
+		}
+
+		#vpmsettings {
+			display: none;
+		}
+
+		.pageheading{
+			padding : 10px 10px 4px 10px;
+			font-size: 135%;
+			text-align: center;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body bgcolor="#EFEFEF">
+	<div class="iframeTitleBar">
+		<span id='iframeTitleBar_title'> Hardware Configuration</span>
+		<span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<TABLE id='tabbedMenu_container' style='display:none;' width='100%' align=center><TR><TD align=center>
+		<div id="tabbedMenu"></div>
+	</TD></TR></table>
+
+	<div id="div_maintable">
+
+		<div id='digital_settings' style='display:none;'>
+			<div class="pageheading">Digital Hardware</div>
+			<div style="overflow:auto;left:40; max-height: 300px;">
+				<table class="taglist" id="digitalcardstable" cellpadding=5 cellspacing=1 border=0 align=center></table>
+			</div><BR>
+		</div>
+
+		<div class="pageheading">Analog Hardware</div>
+		<div style="overflow:auto;left:40">
+			<table id="FXSFXO_ports_td" cellpadding=5 cellspacing=1 align=center border=0 class='taglist' width=480></table>
+		</div>
+
+		<div>
+			<table  cellpadding=5 cellspacing=1 align=center border=0>
+				<tr>	<td align="right"><B>Tone Region <img src="images/tooltip_info.gif" tip="en,confighw,0" class='tooltipinfo'> : </B>
+						<select id="loadZone">
+							<option value="us">United States/North America</option>
+							<option value="au">Australia</option>
+							<option value="fr">France</option>
+							<option value="nl">Netherlands</option>
+							<option value="uk">United Kingdom</option>
+							<option value="fi">Finland</option>
+							<option value="es">Spain</option>
+							<option value="jp">Japan</option>
+							<option value="no">Norway</option>
+							<option value="at">Austria</option>
+							<option value="nz">New Zealand</option>
+							<option value="it">Italy</option>
+							<option value="us-old">United States Circa 1950 / North America</option>
+							<option value="gr">Greece</option>
+							<option value="tw">Taiwan</option>
+							<option value="cl">Chile</option>
+							<option value="se">Sweden</option>
+							<option value="be">Belgium</option>
+							<option value="sg">Singapore</option>
+							<option value="il">Israel</option>
+							<option value="br">Brazil</option>
+							<option value="hu">Hungary</option>
+							<option value="lt">Lithuania</option>
+							<option value="pl">Poland</option>
+							<option value="za">South Africa</option>
+							<option value="pt">Portugal</option>
+							<option value="ee">Estonia</option>
+							<option value="mx">Mexico</option>
+							<option value="in">India</option>
+							<option value="de">Germany</option>
+							<option value="ch">Switzerland</option>
+							<option value="dk">Denmark</option>
+							<option value="cz">Czech Republic</option>
+							<option value="cn">China</option>
+							<option value="ar">Argentina</option>
+							<option value="my">Malaysia</option>
+							<option value="th">Thailand</option>
+							<option value="bg">Bulgaria</option>
+							<option value="ve">Venezuela</option>
+							<option value="ph">Philippines</option>
+							<option value="ru">Russian Federation</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<span>software echo canceller <img src="images/tooltip_info.gif" tip="en,opermode_settings,11" class='tooltipinfo'>:</span>
+						<input type='checkbox' id='enable_disable_checkbox_echocan'>
+						<select id="echocan" dfalt='0'>
+							<option value="0">mg2</option>
+							<option value="1">kb1</option>
+							<option value="2">sec</option>
+							<option value="3">sec2</option>
+							<option value="4">hpec</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align='center'>
+						<input type='checkbox' id='RESET_ANY_DIGITAL_TRUNKS'> Reset all Previous Digital Trunks Information
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="advanced">
+			<div class="pageheading">Advanced Settings</div>
+			<div>
+				<span>Module Name:</span>
+				<input id="zap_moduleName" dfalt='wctdm24xxp' size=10>
+			</div>
+			<div>
+				<span>Opermode <img src="images/tooltip_info.gif" tip="en,opermode_settings,0" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_opermode'>
+				<select id="opermode" dfalt='USA'>
+					<option value="USA">USA</option>
+					<option value="ARGENTINA">ARGENTINA</option>
+					<option value="AUSTRALIA">AUSTRALIA</option>
+					<option value="AUSTRIA">AUSTRIA</option>
+					<option value="BAHRAIN">BAHRAIN</option>
+					<option value="BELGIUM">BELGIUM</option>
+					<option value="BRAZIL">BRAZIL</option>
+					<option value="BULGARIA">BULGARIA</option>
+					<option value="CANADA">CANADA</option>
+					<option value="CHILE">CHILE</option>
+					<option value="CHINA">CHINA</option>
+					<option value="COLUMBIA">COLUMBIA</option>
+					<option value="CROATIA">CROATIA</option>
+					<option value="CYRPUS">CYRPUS</option>
+					<option value="CZECH">CZECH</option>
+					<option value="DENMARK">DENMARK</option>
+					<option value="ECUADOR">ECUADOR</option>
+					<option value="EGYPT">EGYPT</option>
+					<option value="ELSALVADOR">ELSALVADOR</option>
+					<option value="FCC">FCC</option>
+					<option value="FINLAND">FINLAND</option>
+					<option value="FRANCE">FRANCE</option>
+					<option value="GERMANY">GERMANY</option>
+					<option value="GREECE">GREECE</option>
+					<option value="GUAM">GUAM</option>
+					<option value="HONGKONG">HONGKONG</option>
+					<option value="HUNGARY">HUNGARY</option>
+					<option value="ICELAND">ICELAND</option>
+					<option value="INDIA">INDIA</option>
+					<option value="INDONESIA">INDONESIA</option>
+					<option value="IRELAND">IRELAND</option>
+					<option value="ISRAEL">ISRAEL</option>
+					<option value="ITALY">ITALY</option>
+					<option value="JAPAN">JAPAN</option>
+					<option value="JORDAN">JORDAN</option>
+					<option value="KAZAKHSTAN">KAZAKHSTAN</option>
+					<option value="KUWAIT">KUWAIT</option>
+					<option value="LATVIA">LATVIA</option>
+					<option value="LEBANON">LEBANON</option>
+					<option value="LUXEMBOURG">LUXEMBOURG</option>
+					<option value="MACAO">MACAO</option>
+					<option value="MALAYSIA">MALAYSIA</option>
+					<option value="MALTA">MALTA</option>
+					<option value="MEXICO">MEXICO</option>
+					<option value="MOROCCO">MOROCCO</option>
+					<option value="NETHERLANDS">NETHERLANDS</option>
+					<option value="NEWZEALAND">NEWZEALAND</option>
+					<option value="NIGERIA">NIGERIA</option>
+					<option value="NORWAY">NORWAY</option>
+					<option value="OMAN">OMAN</option>
+					<option value="PAKISTAN">PAKISTAN</option>
+					<option value="PERU">PERU</option>
+					<option value="PHILIPPINES">PHILIPPINES</option>
+					<option value="POLAND">POLAND</option>
+					<option value="PORTUGAL">PORTUGAL</option>
+					<option value="ROMANIA">ROMANIA</option>
+					<option value="RUSSIA">RUSSIA</option>
+					<option value="SAUDIARABIA">SAUDIARABIA</option>
+					<option value="SINGAPORE">SINGAPORE</option>
+					<option value="SLOVAKIA">SLOVAKIA</option>
+					<option value="SLOVENIA">SLOVENIA</option>
+					<option value="SOUTHAFRICA">SOUTHAFRICA</option>
+					<option value="SOUTHKOREA">SOUTHKOREA</option>
+					<option value="SPAIN">SPAIN</option>
+					<option value="SWEDEN">SWEDEN</option>
+					<option value="SWITZERLAND">SWITZERLAND</option>
+					<option value="SYRIA">SYRIA</option>
+					<option value="TAIWAN">TAIWAN</option>
+					<option value="TBR21">TBR21</option>
+					<option value="THAILAND">THAILAND</option>
+					<option value="UAE">UAE</option>
+					<option value="UK">UK</option>
+					<option value="YEMEN">YEMEN</option>
+				</select>
+			</div>
+			<div>
+				<span>a-law override <img src="images/tooltip_info.gif" tip="en,opermode_settings,1" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_alawoverride'>
+				<select id="alawoverride" dfalt='0'>
+					<option value="0">ulaw</option>
+					<option value="1">alaw</option>
+				</select>
+			</div>
+			<div>
+				<span>fxs honor mode <img src="images/tooltip_info.gif" tip="en,opermode_settings,2" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_fxshonormode'>
+				<select id="fxshonormode" dfalt='0'>
+					<option value="0">apply opermode to fxo modules only </option>
+					<option value="1">apply opermode to fxs and fxo modules</option>
+				</select>
+			</div>
+			<div>
+				<span>boostringer <img src="images/tooltip_info.gif" tip="en,opermode_settings,3" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_boostringer'>
+				<select id="boostringer" dfalt='0'>
+					<option value="0">normal</option>
+					<option value="1">peak(89V)</option>
+				</select>
+			</div>
+			<div>
+				<span>fastringer <img src="images/tooltip_info.gif" tip="en,opermode_settings,5" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_fastringer'>
+				<select id="fastringer" dfalt='0'>
+					<option value="0">normal</option>
+					<option value="1">fast ringer (25hz) </option>
+				</select>
+			</div>
+			<div>
+				<span>lowpower <img src="images/tooltip_info.gif" tip="en,opermode_settings,4" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_lowpower'>
+				<select id="lowpower" dfalt='0'>
+					<option value="0">normal</option>
+					<option value="1">fast ringer to 50V peak</option>
+				</select>
+			</div>
+			<div>
+				<span>ring detect <img src="images/tooltip_info.gif" tip="en,opermode_settings,6" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_fwringdetect'>
+				<select id="fwringdetect" dfalt='0'>
+					<option value='0'>standard</option>
+					<option value='1'>full wave</option>
+				</select>
+			</div>
+			<div>
+				<span>MWI mode <img src="images/tooltip_info.gif" tip="en,opermode_settings,7" class='tooltipinfo'>:</span>
+				<input type='checkbox' id='enable_disable_checkbox_mwimode'>
+				<select id="mwimode" dfalt='none'>
+					<option value='none'>None</option>
+					<option value='FSK'>FSK</option>
+					<option value='NEON'>NEON</option>
+				</select>
+			</div>
+			<div class='neon_settings' style='display:none'>
+				<span>Neon MWI voltage Level:</span><input id="neonmwi_level" size=2>
+				<span>Neon MWI off Limit (ms):</span><input id="neonmwi_offlimit" size=4>
+			</div>
+		</div>
+		<div id="vpmsettings" class="advanced">
+			<div class="pageheading">VPM Settings</div>
+			<div>
+				<span>Echo Cancellation NLP Type <img src="images/tooltip_info.gif" tip="en,opermode_settings,8" class='tooltipinfo'> :</span>
+				<select id="vpmnlptype">
+					<option value="0">None</option>
+					<option value="1">Mute</option>
+					<option value="2">Random Noise</option>
+					<option value="3">Hoth Noise</option>
+					<option value="4">Suppression NLP (default)</option>
+				</select>
+			</div>
+			<div>
+				<span>Echo Cancellation NLP Threshold <img src="images/tooltip_info.gif" tip="en,opermode_settings,9" class='tooltipinfo'> :</span>
+				<select id="vpmnlpthresh"></select>
+			</div>
+			<div>
+				<span>Echo Cancellation NLP Max Suppression <img src="images/tooltip_info.gif" tip="en,opermode_settings,10" class='tooltipinfo'> :</span>
+				<select id="vpmnlpmaxsupp"></select>
+			</div>
+		</div>
+		<div style="text-align:center; overflow:auto;left:40">
+			<span class='guiButtonCancel' id="cancel_b" onclick='window.location.reload();'>Cancel Changes</span>
+			<span class='guiButtonEdit' id="save_b"  onclick='applyDigitalSettings();'>Update Settings</span>&nbsp;&nbsp;
+		</div>
+	</div>
+
+	<div id="errmsg" style="display:none"></div>
+
+	<div id="edit_span" STYLE="width:500; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				SPAN : <span id="editspan_SPAN"></span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+		<TR>	<TD align="right">ALARMS:</TD>
+			<TD><span id="editspan_ALARMS"></span></TD>
+		</TR>
+		<TR>	<TD align="right">Framing/Coding:</TD>
+			<TD>	<select id="editspan_fac"></select> </TD>
+		</TR>
+		<TR>	<TD align="right">Channels:</TD>
+			<TD><span id="editspan_channels"></span></TD>
+		</TR>
+		<TR>	<TD align="right">Signalling</TD>
+			<TD>	<select id="editspan_signalling" onChange="disablEnable_sc();">
+				<option value="pri_net">PRI - Net</option>
+				<option value="pri_cpe">PRI - CPE</option>
+				<option value="em">E & M</option>
+				<option value="em_w">E & M -- Wink</option>
+				<option value="featd">E & M -- featd(DTMF)</option>
+				<option value="fxo_ks">FXOKS</option>
+				<option value="fxo_ls">FXOLS</option>
+				<!--<option value="fxs_ks">FXSKS</option>
+				<option value="fxs_ls">FXSLS</option>-->
+				</select>
+			</TD>
+		</TR>
+		<TR id="switchtype_container">
+			<TD align="right"> Switch Type </TD>
+			<TD>	<select id="editspan_switchtype">
+					<option value="national">National ISDN 2 (default)</option>
+					<option value="dms100">Nortel DMS100</option>
+					<option value="4ess">AT&T 4ESS</option>
+					<option value="5ess">Lucent 5ESS</option>
+					<option value="euroisdn">EuroISDN</option>
+					<option value="ni1">Old National ISDN 1</option>
+					<option value="qsig">Q.SIG</option>
+				</select>
+			</TD>
+		</TR>
+		<TR>	<TD align="right">Sync/Clock Source</TD>
+			<TD>	<select id="editspan_syncsrc">
+				</select>
+			</TD>
+		</TR>
+		<TR>	<TD align="right">Line Build Out</TD>
+			<TD>	<select id="editspan_lbo">
+					<option value="0">0 db (CSU)/0-133 feet (DSX-1)</option>
+					<option value="1">133-266 feet (DSX-1)</option>
+					<option value="2">266-399 feet (DSX-1)</option>
+					<option value="3">399-533 feet (DSX-1)</option>
+					<option value="4">533-655 feet (DSX-1)</option>
+					<option value="5">-7.5db (CSU)</option>
+					<option value="6">-15db (CSU)</option>
+					<option value="7">-22.5db (CSU)</option>
+				</select>
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right" valign="top">Pridialplan:</TD>
+			<TD>
+				<select id="editspan_pridialplan">
+					<option value="national">National</option>
+					<option value="dynamic">Dynamic</option>
+					<option value="unknown">Unknown</option>
+					<option value="local">Local</option>
+					<option value="private">Private</option>
+					<option value="international">International</option>
+				</select>
+			</TD>
+		</TR>
+		<TR>
+			<TD align="right" valign="top">Prilocaldialplan:</TD>
+			<TD>
+				<select id="editspan_prilocaldialplan">
+					<option value="national">National</option>
+					<option value="dynamic">Dynamic</option>
+					<option value="unknown">Unknown</option>
+					<option value="local">Local</option>
+					<option value="private">Private</option>
+					<option value="international">International</option>
+				</select>
+			</TD>
+		</TR>
+		<TR>    <TD align="right" valign=top>Channels:</TD>
+			<TD>    <table border=0 cellpadding=2 cellspacing=1>
+					<tr>	<td> Use : <select id="edit_DefinedChans"></select>	</td>	</tr>
+					<tr>	<td> From : <span id="edit_labelZapchan"></span>	</td>	</tr>
+					<tr>	<td> Reserved : <span id="edit_labelReserved"></span>	</td>	</tr>
+				</table>
+			</TD>
+		</TR>
+
+		<TR>	<TD colspan=2 align=center height=50 valign=middle>  
+				<span class='guiButtonCancel' id="cancel_a" onclick='canelSpanInfo();'>Cancel</span>
+				<span class='guiButtonEdit' id="save_a" onclick='updateSpanInfo();'>Update</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+
+	<div id="edit_analog_signalling" STYLE="width:500; height:340;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">Analog Ports - Signalling Preferences</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0>
+		<TR>	<TD align="center">
+				<div style='text-align:center;overflow :auto; height:250px; width: 400px;' id='edit_analog_signalling_options_container'>
+				</div>
+			</TD>
+		</TR>
+		<TR>	<TD align=center height=50 valign=middle>  
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' onclick='digital_miscFunctions.save_analog_signalling_prefs();'>Update</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/hardware_dahdi.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
+	<script src="js/jquery.autocomplete.js"></script>
+</body>
+</html>

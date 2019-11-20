@@ -1,0 +1,153 @@
+#!/bin/sh
+# Copyright (C) 2011-2012 Luka Perkov <freecwmp@lukaperkov.net>
+
+get_wan_device_mng_status() {
+# TODO: Unconfigured ; Connecting ; Connected ; PendingDisconnect ; Disconneting ; Disconnected
+local val="Connected"
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.ConnectionStatus" "$val"
+}
+
+get_wan_device_mng_interface_ip() {
+local val
+if [ -z "$default_wan_device_mng_interface_ip" ]; then
+	network_get_ipaddr val mng
+else
+	val=$default_wan_device_mng_interface_ip
+fi
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.ExternalIPAddress" "$val"
+}
+
+get_wan_device_mng_interface_mac() {
+if [ -z "$default_wan_device_mng_interface_mac" ]; then
+	val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get network.mng.macaddr`
+else
+	val=$default_wan_device_mng_interface_mac
+fi
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.MACAddress" "$val"
+}
+
+get_wan_device_wan_ppp_enable() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get network.wan.auto 2> /dev/null`
+if [ -z $val ]; then
+	val="1"
+fi
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Enable" "$val"
+}
+
+set_wan_device_wan_ppp_enable() {
+local val=$1
+if [ "$val" -eq 0 ]; then
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set network.wan.auto=0
+	ifdown wan &
+elif [ "$val" -eq 1 ]; then
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set network.wan.auto=1
+	ifup wan &
+fi
+}
+
+get_wan_device_wan_ppp_username() {
+local val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get network.wan.username 2> /dev/null`
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Username" "$val"
+}
+
+set_wan_device_wan_ppp_username() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set network.wan.username="$1"
+}
+
+get_wan_device_wan_ppp_password() {
+freecwmp_output "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Password" ""
+}
+
+set_wan_device_wan_ppp_password() {
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set network.wan.password="$1"
+}
+
+get_wan_device() {
+case "$1" in
+	InternetGatewayDevice.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	get_wan_device_wan_ppp_enable
+	get_wan_device_wan_ppp_username
+	get_wan_device_wan_ppp_password
+	;;
+	InternetGatewayDevice.WANDevice.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	get_wan_device_wan_ppp_enable
+	get_wan_device_wan_ppp_username
+	get_wan_device_wan_ppp_password
+	;;
+	InternetGatewayDevice.WANDevice.1.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	get_wan_device_wan_ppp_enable
+	get_wan_device_wan_ppp_username
+	get_wan_device_wan_ppp_password
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	get_wan_device_wan_ppp_enable
+	get_wan_device_wan_ppp_username
+	get_wan_device_wan_ppp_password
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	get_wan_device_wan_ppp_enable
+	get_wan_device_wan_ppp_username
+	get_wan_device_wan_ppp_password
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.)
+	get_wan_device_mng_status
+	get_wan_device_mng_interface_ip
+	get_wan_device_mng_interface_mac
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.ConnectionStatus)
+	get_wan_device_mng_status
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.ExternalIPAddress)
+	get_wan_device_mng_interface_ip
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.MACAddress)
+	get_wan_device_mng_interface_mac
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Enable)
+	get_wan_device_wan_ppp_enable
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Username)
+	get_wan_device_wan_ppp_username
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Password)
+	get_wan_device_wan_ppp_password
+	;;
+esac
+}
+
+set_wan_device() {
+case "$1" in
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Enable)
+	set_wan_device_wan_ppp_enable "$2"
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Username)
+	set_wan_device_wan_ppp_username "$2"
+	;;
+	InternetGatewayDevice.WANDevice.1.WANConnectionDevice.2.WANPPPConnection.1.Password)
+	set_wan_device_wan_ppp_password "$2"
+	;;
+esac
+/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit
+}
+
+add_wan_device() { return; }

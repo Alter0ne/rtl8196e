@@ -1,0 +1,31 @@
+.titlelinks {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+a {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #0000FF;
+	text-decoration: none;
+
+}
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: underline;
+
+}
+.normal {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+
+}
+.normal-small {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.titlelinksBig {
+
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+}

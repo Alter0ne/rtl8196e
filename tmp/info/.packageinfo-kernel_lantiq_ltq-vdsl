@@ -1,0 +1,18 @@
+Source-Makefile: package/kernel/lantiq/ltq-vdsl/Makefile
+Package: kmod-ltq-vdsl-vr9
+Submenu: Network Devices
+Version: <LINUX_VERSION>+4.11.4-1
+Depends: @TARGET_lantiq_xrx200 +kmod-ltq-vdsl-vr9-mei
+Menu-Depends: 
+Provides: 
+Section: sys
+Category: Kernel modules
+Title: vdsl driver
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: drv_dsl_cpe_api_vrx-4.11.4.tar.gz
+Type: ipkg
+Description: vdsl driver
+John Crispin <blogic@openwrt.org>
+@@
+
+

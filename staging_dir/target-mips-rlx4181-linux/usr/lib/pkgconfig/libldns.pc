@@ -1,0 +1,13 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: ldns
+Description: Library for DNS programming
+URL: http://www.nlnetlabs.nl/projects/ldns
+Version: 1.7.0
+Requires: 
+Libs: -L${libdir} -lldns
+Libs.private: -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/usr/lib -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/lib -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//lib 
+Cflags: -I${includedir} 

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MASTERCSV="/var/log/asterisk/cdr-csv/Master.csv"
+STATICHTTP="/var/lib/asterisk/static-http/"
+
+if [ `whoami` != "root" ]; then
+	echo "Error: You must be root to run this script."
+	exit 1
+fi
+
+if [ -f /var/log/asterisk/cdr-csv/Master.csv ]; then
+	if [ ! -f $STATICHTTP`basename $MASTERCSV` ]; then
+		ln -s $MASTERCSV /var/lib/asterisk/static-http/config/`basename $MASTERCSV`
+	fi
+fi
+
+exit

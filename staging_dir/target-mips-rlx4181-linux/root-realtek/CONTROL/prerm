@@ -1,0 +1,77 @@
+#!/bin/sh
+# 	prerm -- Pre removal script for appweb
+#
+#	Copyright (c) Embedthis Software LLC, 2003-2012. All Rights Reserved.
+#
+
+BLD_PRODUCT=appweb
+BLD_NAME="Embedthis Appweb"
+BLD_BIN_PREFIX=/usr/lib/appweb/bin
+BLD_CFG_PREFIX=/etc/appweb
+
+#
+#	Modify service. Usage:configureService stop|remove
+#
+configureService() {
+	local action=$1
+
+	case $action in
+	stop)
+		if [ -f /etc/rc.d/init.d/$BLD_PRODUCT ] ; then
+			if which service >/dev/null 2>&1 ; then
+				service $BLD_PRODUCT $action
+			elif which invoke-rc.d >/dev/null 2>&1 ; then
+				invoke-rc.d $BLD_PRODUCT $action || true
+            fi
+        elif [ -f /etc/init.d/$BLD_PRODUCT ] ; then
+            /etc/init.d/$BLD_PRODUCT stop
+		fi
+		pid=`/bin/pidof /usr/lib/appweb/bin/$BLD_PRODUCT; true`
+		[ "$pid" != "" ] && kill -9 $pid
+		rm -f /var/lock/subsys/$BLD_PRODUCT /var/lock/$BLD_PRODUCT
+		rm -fr /var/log/$BLD_PRODUCT
+		rm -rf /var/run/$BLD_PRODUCT
+		;;
+
+	remove)
+		if which chkconfig >/dev/null 2>&1 ; then
+			chkconfig --del $BLD_PRODUCT
+			rm /etc/rc.d/init.d/$BLD_PRODUCT
+
+		elif which update-rc.d >/dev/null 2>&1 ; then
+			rm -f /etc/init.d/$BLD_PRODUCT
+			update-rc.d $BLD_PRODUCT remove >/dev/null || true
+
+        elif [ -f /etc/init.d/$BLD_PRODUCT ] ; then
+            ( cd /etc/init.d ; /etc/init.d/$BLD_PRODUCT disable )
+		fi
+        "$BLD_BIN_PREFIX/linkup" Remove
+		;;
+	esac
+}
+
+###############################################################################
+#
+#	Main
+#
+cd /
+action=$1
+case $action in
+	remove)					# when new
+		# or conflictor's prerm remove in-favor package new-version
+		oldVersion=$2
+		configureService stop
+		configureService remove
+		;;
+	upgrade)				# when old
+		newVersion=$2
+		configureService stop
+		;;
+	failed-upgrade)			# when new
+		oldVersion=$2
+		;;
+	deconfigure)			# when old
+		# 	deconfigure in-favor package-being-installed version removing 
+		#	conflicting-package version
+esac
+exit 0

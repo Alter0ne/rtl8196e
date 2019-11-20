@@ -1,0 +1,17 @@
+###########################################################################
+# libssh2 installation details
+###########################################################################
+
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libssh2
+URL: http://www.libssh2.org/
+Description: Library for SSH-based communication
+Version: 1.4.3
+Requires.private: libssl,libcrypto
+Libs: -L${libdir} -lssh2 -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/usr/lib -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/target-mips-rlx4181-linux/lib -L/home/alter0ne/rtk_openwrt_sdk/staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001//lib  
+Libs.private: 
+Cflags: -I${includedir}

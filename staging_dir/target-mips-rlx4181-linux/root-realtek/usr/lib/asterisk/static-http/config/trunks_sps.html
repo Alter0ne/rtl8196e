@@ -1,0 +1,212 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Manage Digium Partnered VOIP Service Provider  trunks
+ *
+ * Copyright (C) 2006 - 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Service Provider Trunks</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css">
+
+		#table_SPS_list {
+			border: 0px solid #666666;
+			margin-top: 8px;
+			padding : 1px;
+			width: 96%;
+		}
+
+		#table_SPS_list {
+			border: 1px solid #666666;
+			margin-top: 5px;
+			margin-bottom:10px;
+			width: 96%;
+			text-align: center;
+			padding : 1px;
+		}
+		#table_SPS_list tr.frow { background: #6b79a5; color: #CED7EF; }
+		#table_SPS_list tr.frow td{ font-weight:bold; }
+		#table_SPS_list tr td{ padding : 3px; }
+		#table_SPS_list tr.even { background: #DFDFDF; }
+		#table_SPS_list tr.odd{ background: #FFFFFF; }
+		#table_SPS_list tr.even:hover, #table_SPS_list tr.odd:hover {
+			background: #a8b6e5;
+			cursor: default;
+		}
+
+
+	#TD_SP_desc {
+		padding: 10px;
+		padding-bottom: 20px;
+	}
+
+
+	#div_INR_LIST {
+		text-align:left;
+		height:200px;
+		width:96%;
+		border-width: 1px;
+		border-color: #7E5538;
+		border-style: solid;
+		overflow: auto;
+	}
+
+	#div_INR_LIST div {
+		clear: both;
+		padding : 3px 5px 0px 5px;
+		min-height: 20px;
+	}
+
+	#div_INR_LIST div:hover{
+		background-color:#DEDEDE;
+	}
+
+	#div_INR_LIST div span.rule_desc {
+		padding: 2px 3px 2px 5px;
+		float: left;
+		background: transparent;
+	}
+
+	#div_INR_LIST div span.rule_delete {
+		float: right;
+		width: 20px;
+		background: transparent url("./images/delete_circle.png") no-repeat;
+	}
+
+	</style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar"> 
+		Manage Service Providers
+		<span style="cursor: pointer; cursor: hand;" onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<div id="tabbedMenu"></div>
+
+	<div class='top_buttons' style="margin-top: -10px; display:none;">
+		<span id='new_SP_button' class='guiButtonNew' onclick='misc_SP_Functions.show_newSP_form();'>New ServiceProvider</span>
+	</div>
+
+	<div style='display:none; width:95%; text-align:center;' id='unableToLoadProviders_container'>
+			<div>
+				<BR><BR>
+				Could not load providers configuration. <BR>
+				Please make sure that your computer is connected to the internet and try again.<BR><BR>
+			</div>
+			<span id='new_SP_button' class='guiButton' onclick='window.location.reload();'>&nbsp;&nbsp; Try Again &nbsp;&nbsp;</span>
+	</div>
+
+	<table id='table_SPS_list' cellpadding=0 cellspacing=0 border=0 align=center></table>
+
+	<div id="new_SPTrunk_DIV" STYLE="width:650; max-height:450;display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+		<TR class="dialog_title_tr">
+			<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+				<span id='new_SP_DIV_Title'>Add New Service Provider</span>
+			</TD>
+			<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+		</TR>
+		</TABLE>
+
+		<TABLE	align=center cellpadding=2 cellspacing=2 border=0 width='100%'>
+
+		<TR>	<TD align="center" width='50%'>Choose a Service Provider &darr;</TD>
+			<TD></TD>
+		</TR>
+
+		<TR>	<TD align="center">
+				<select id='new_SP_Provider' style='width:250px' size=5></select>
+			</TD>
+			<TD id="TD_SP_Logo_container" align="center"></TD>
+		</TR>
+
+		<TR>	<TD align="center" id="TD_SP_desc" colspan=2></TD>
+		</TR>
+		<TR class='TR_SP_UP'>
+			<TD align="right">Username:</TD>
+			<TD align="left"><input size=12 id='input_sp_uname'></TD>
+		</TR>
+		<TR class='TR_SP_UP'>
+			<TD align="right">Password:</TD>
+			<TD align="left"><input size=12 id='input_sp_password'></TD>
+		</TR>
+
+	<!--	<TR class='TR_SP_FB'>	<TD align="right">
+				All unmatched incoming calls go to:
+			</TD>
+			<TD>
+				<select id="new_SP_fb"></select>
+			</TD>
+		</TR>-->
+		<TR>	<TD colspan=2 align=center height=50 valign=middle>
+				<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+				<span class='guiButtonEdit' id="new_SP_save" onclick='create_new_serviceProvider();'>Add</span>
+			</TD>
+		</TR>
+		</TABLE>
+	</div>
+
+
+
+
+	<div id="Edit_SPTrunk_DIV" STYLE="width:550; display:none;" class='dialog'>
+		<TABLE width="100%" cellpadding=0 cellspacing=0>
+			<TR class="dialog_title_tr">
+				<TD class="dialog_title" onmousedown="ASTGUI.startDrag(event);">
+					<span id='edit_SP_DIV_Title'>Edit Service Provider</span>
+				</TD>
+				<TD class="dialog_title_X" onclick="ASTGUI.hideDrag(event);"> X </TD>
+			</TR>
+		</TABLE>
+		<TABLE	align=center cellpadding=3 cellspacing=2 border=0 width='100%'>
+			<TR>	<TD align="right">Username :</TD>
+				<TD align="left"><input size=26 id='edit_sp_uname'></TD>
+			</TR>
+			<TR>	<TD align="right">Password :</TD>
+				<TD align="left"><input size=26 id='edit_sp_password'></TD>
+			</TR>
+			<TR>	<TD align="right" valign=top>CallerID :</TD>
+				<TD align="left"><input id='edit_trunk_obcid' size=12></TD>
+			</TR>
+			<TR>	<TD align="right" valign=top>Outbound Proxy :</TD>
+				<TD align="left"><input id='edit_trunk_outboundproxy' size=12></TD>
+			</TR>
+			<TR>	<TD align="right" valign=top>Codecs :</TD>
+				<TD align="left">
+					First : <select id='codec_one'></select>
+					Second : <select id='codec_two'></select>
+					Third : <select id='codec_three'></select><BR>
+					Fourth : <select id='codec_fourth'></select>
+					Fifth : <select id='codec_fifth'></select>
+				</TD>
+			</TR>
+			<TR>	<TD colspan=2 align=center height=50 valign=middle>
+					<span class='guiButtonCancel' onclick='ASTGUI.hideDrag(event);'>Cancel</span>
+					<span class='guiButtonEdit' id="new_SP_save" onclick='misc_SP_Functions.edit_trunk_save();'>Update</span>
+				</TD>
+			</TR>
+		</TABLE>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script src="js/trunks_sps.js"></script>
+</body>
+</html>

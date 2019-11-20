@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE appref SYSTEM "appref.dtd">
+
+<appref>
+  <header>
+    <copyright>
+      <year>1999</year><year>2013</year>
+      <holder>Ericsson AB. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice>
+      The contents of this file are subject to the Erlang Public License,
+      Version 1.1, (the "License"); you may not use this file except in
+      compliance with the License. You should have received a copy of the
+      Erlang Public License along with this software. If not, it can be
+      retrieved online at http://www.erlang.org/.
+
+      Software distributed under the License is distributed on an "AS IS"
+      basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+      the License for the specific language governing rights and limitations
+      under the License.
+
+    </legalnotice>
+
+    <title>ssl</title>
+    <file>ssl_app.sgml</file>
+  </header>
+  <app>ssl</app>
+  <appsummary>The SSL application provides secure communication over
+  sockets.</appsummary>
+
+  <section>
+    <title>DEPENDENCIES</title>
+    <p>The ssl application uses the Erlang applications public_key and
+    crypto to handle public keys and encryption, hence these
+    applications needs to be loaded for the ssl application to work. In
+    an embedded environment that means they need to be started with
+    application:start/[1,2] before the ssl application is started.
+    </p>
+  </section>
+
+  <section>
+    <title>ENVIRONMENT</title>
+    <p>The following application environment configuration parameters
+    are defined for the SSL application. See <seealso
+    marker="kernel:application">application(3)</seealso>for more
+    information about configuration parameters.
+      </p>
+    <p>Note that the environment parameters can be set on the command line,
+      for instance,</p>
+    <p><c>erl ... -ssl protocol_version '[sslv3, tlsv1]' ...</c>.
+      </p>
+    <taglist>
+      <tag><c><![CDATA[protocol_version = [sslv3|tlsv1] <optional>]]></c>.</tag>
+      <item>
+	<p>Protocol that will be supported by started clients and
+	servers. If this option is not set it will default to all
+	protocols currently supported by the erlang ssl application.
+	Note that this option may be overridden by the version option
+	to ssl:connect/[2,3] and ssl:listen/2.
+	</p>
+      </item>
+
+      <tag><c><![CDATA[session_lifetime = integer() <optional>]]></c></tag>
+      <item>
+	<p>The lifetime of session data in seconds. 
+	</p>
+      </item>
+
+        <tag><c><![CDATA[session_cb = atom() <optional>]]></c></tag>
+      <item>
+        <p>
+	  Name of session cache callback module that implements
+	  the ssl_session_cache_api behavior, defaults to
+	  ssl_session_cache.erl.
+          </p>
+      </item>
+
+      <tag><c><![CDATA[session_cb_init_args = list() <optional>]]></c></tag>
+      <item>
+	<p>
+	  List of arguments to the init function in session cache
+	  callback module, defaults to [].
+	</p>
+      </item>
+
+    </taglist>
+  </section>
+
+  <section>
+    <title>SEE ALSO</title>
+	<p><seealso marker="kernel:application">application(3)</seealso></p>
+  </section>
+  
+</appref>

@@ -1,0 +1,193 @@
+	$ mkdir patches
+
+	$ touch e
+	$ quilt annotate e
+	> No series file found
+
+	$ quilt top
+	> No series file found
+
+	$ quilt next
+	> No series file found
+
+	$ quilt previous
+	> No series file found
+
+	$ quilt unapplied
+	> No series file found
+
+	$ quilt applied
+	> No series file found
+
+	$ quilt next patch1
+	> No series file found
+
+	$ quilt push patch1
+	> No series file found
+
+	$ quilt push
+	> No series file found
+
+	$ quilt pop
+	> No patch removed
+	$ echo %{?}
+	> 2
+
+	$ quilt new patch1.diff
+	> Patch %{P}patch1.diff is now on top
+
+	$ quilt top
+	> patches/patch1.diff
+
+	$ quilt add f
+	> File f added to patch %{P}patch1.diff
+
+	$ echo f > f
+
+	$ ls %{P}
+	> series
+
+	$ quilt new patch2.diff
+	> Patch %{P}patch2.diff is now on top
+
+	$ quilt previous
+	> patches/patch1.diff
+
+	$ quilt add g
+	> File g added to patch %{P}patch2.diff
+
+	$ echo g > g
+
+	$ quilt refresh
+	> Refreshed patch %{P}patch2.diff
+
+	# Test diff called with multiple file names
+	$ quilt diff -p0 f g
+	> Index: g
+	> ===================================================================
+	> --- /dev/null
+	> +++ g
+	> @@ -0,0 +1 @@
+	> +g
+
+	# Test that diff strips the "./" prefix
+	$ quilt diff -p0 ./f ./g
+	> Index: g
+	> ===================================================================
+	> --- /dev/null
+	> +++ g
+	> @@ -0,0 +1 @@
+	> +g
+
+	$ quilt pop
+	> Removing patch patches/patch2.diff
+	> Removing g
+	>
+	> Now at patch patches/patch1.diff
+
+	$ ls %{P}
+	> patch2.diff
+	> series
+
+	$ quilt next
+	> patches/patch2.diff
+
+	$ quilt previous
+	$ quilt previous patch2
+	> patches/patch1.diff
+
+	$ quilt pop
+	> Patch %{P}patch1.diff does not remove cleanly (refresh it or enforce with -f)
+
+	$ quilt refresh
+	> Refreshed patch %{P}patch1.diff
+
+	$ quilt refresh patch2
+	> Patch patches/patch2.diff is not applied
+
+	$ quilt pop
+	> Removing patch patches/patch1.diff
+	> Removing f
+	>
+	> No patches applied
+
+	$ quilt top
+	> No patches applied
+
+	$ quilt pop
+	> No patch removed
+	$ echo %{?}
+	> 2
+
+	$ quilt applied
+	> No patches applied
+
+	$ quilt unapplied
+	> patches/patch1.diff
+	> patches/patch2.diff
+
+	$ quilt previous
+	> No patches applied
+
+	$ quilt next
+	> patches/patch1.diff
+
+	$ quilt applied patch1
+	> Patch patches/patch1.diff is not applied
+
+	$ quilt unapplied patch2
+	$ quilt unapplied patch1
+	> patches/patch2.diff
+
+	$ quilt revert f
+	> No patches applied
+
+	$ quilt delete patch3.diff
+	> Patch patch3.diff is not in series
+
+	$ quilt push -qa
+	> Applying patch patches/patch1.diff
+	> Applying patch patches/patch2.diff
+	> Now at patch patches/patch2.diff
+
+	$ quilt push patch2
+	> Patch patches/patch2.diff is currently applied
+
+	$ quilt push
+	> File series fully applied, ends at patch patches/patch2.diff
+	$ echo %{?}
+	> 2
+
+	$ quilt diff --combine patch1 -P patch2 -p ab
+	> Index: b/f
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/f
+	> @@ -0,0 +1 @@
+	> +f
+	> Index: b/g
+	> ===================================================================
+	> --- /dev/null
+	> +++ b/g
+	> @@ -0,0 +1 @@
+	> +g
+
+	$ quilt diff -P patch1 --combine patch2
+	> Patch patches/patch2.diff not applied before patch patches/patch1.diff
+
+	$ echo patch3.diff >> %{P}series
+	$ quilt diff -P patch1 --combine patch3
+	> Patch patches/patch3.diff is not applied
+
+	$ quilt pop -qaR
+	> Removing patch %{P}patch2.diff
+	> Removing patch %{P}patch1.diff
+	> No patches applied
+
+	$ quilt annotate f
+	> No patches applied
+
+	$ quilt pop patch4.diff
+	> Patch patch4.diff is not in series
+
+	$ quilt grep "not there"

@@ -1,0 +1,45 @@
+Source-Makefile: package/feeds/oldpackages/python/python-schedule/Makefile
+Package: python3-schedule
+Submenu: Python
+Version: 0.6.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-logging
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Job scheduling for humans
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: schedule-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   An in-process scheduler for periodic jobs that uses the builder pattern for configuration.
+  The Schedule lets you run Python functions (or any other callable)
+  periodically at predetermined intervals using a simple, human-friendly syntax.
+https://github.com/dbader/schedule
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-schedule-src
+Submenu: Python
+Version: 0.6.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Job scheduling for humans (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: schedule-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       An in-process scheduler for periodic jobs that uses the builder pattern for configuration.
+  The Schedule lets you run Python functions (or any other callable)
+  periodically at predetermined intervals using a simple, human-friendly syntax..
+    (Contains the Python3 sources for this package).
+https://github.com/dbader/schedule
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+

@@ -1,0 +1,9 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libamsel.so
+./usr/include
+./usr/include/compat.h
+./usr/include/compat
+./usr/include/compat/queue.h

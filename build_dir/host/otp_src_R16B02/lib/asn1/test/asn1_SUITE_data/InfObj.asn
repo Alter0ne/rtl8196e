@@ -1,0 +1,260 @@
+InfObj DEFINITIONS ::=
+BEGIN
+
+
+RANAP-ELEMENTARY-PROCEDURE ::= CLASS {
+    &InitiatingMessage				,
+    &SuccessfulOutcome				OPTIONAL,
+    &Outcome				DEFAULT NULL,
+    &vartypvalue                        &Outcome OPTIONAL,
+    &FixTypeValSet                      PrintableString OPTIONAL,
+    &VarTypeValSet                      &InitiatingMessage OPTIONAL,
+    &infoObject                         RANAP-ELEMENTARY-PROCEDURE OPTIONAL,
+    &InfObjectSet                       CLASS2 OPTIONAL,
+    &UnsuccessfulOutcome				OPTIONAL,
+    &procedureCode			ProcedureCode 	UNIQUE,
+    &criticality			Criticality 	DEFAULT ignore
+}
+WITH SYNTAX {
+  INITIATING MESSAGE		&InitiatingMessage
+  [SUCCESSFUL OUTCOME		&SuccessfulOutcome]
+  [UNSUCCESSFUL OUTCOME		&UnsuccessfulOutcome]
+  [OUTCOME			&Outcome]
+  PROCEDURE CODE				&procedureCode
+  [CRITICALITY			&criticality]
+  [VARTYPEVALUE                 &vartypvalue]
+  [FIXT                         &FixTypeValSet]
+  [VART                         &VarTypeValSet]
+  [INFOOBJECT                   &infoObject]
+  [INFOOBJECTSET                &InfObjectSet]
+}
+
+RANAP-PDU ::= CHOICE {
+	initiatingMessage	InitiatingMessage,
+--	successfulOutcome	SuccessfulOutcome,
+--	unsuccessfulOutcome	UnsuccessfulOutcome,
+--	outcome			Outcome,
+	...
+}
+
+CLASS2 ::= RANAP-ELEMENTARY-PROCEDURE
+
+InitiatingMessage  ::= SEQUENCE {
+    procedureCode  RANAP-ELEMENTARY-PROCEDURE.&procedureCode	({RANAP-ELEMENTARY-PROCEDURES}),
+    criticality	RANAP-ELEMENTARY-PROCEDURE.&criticality		({RANAP-ELEMENTARY-PROCEDURES}{@procedureCode}),
+    value	RANAP-ELEMENTARY-PROCEDURE.&InitiatingMessage	({RANAP-ELEMENTARY-PROCEDURES}{@procedureCode})
+    }
+
+iu-Release RANAP-ELEMENTARY-PROCEDURE ::= {
+    INITIATING MESSAGE	Iu-ReleaseCommand
+    SUCCESSFUL OUTCOME	Iu-ReleaseComplete
+    PROCEDURE CODE	id-Iu-Release1
+    CRITICALITY		ignore
+    }
+
+relocationPreparation RANAP-ELEMENTARY-PROCEDURE ::= {
+    INITIATING MESSAGE	INTEGER --Iu-ReleaseCommand
+    SUCCESSFUL OUTCOME	Iu-ReleaseComplete
+    PROCEDURE CODE	id-Iu-Release2
+    CRITICALITY		notify
+    }
+
+object3 RANAP-ELEMENTARY-PROCEDURE ::= {
+    &InitiatingMessage Iu-ReleaseCommand,
+    &SuccessfulOutcome Iu-ReleaseComplete,
+    &procedureCode     id-Iu-Release3,
+    &criticality       reject
+    }
+
+object4 RANAP-ELEMENTARY-PROCEDURE ::= {
+    &InitiatingMessage INTEGER,
+    &SuccessfulOutcome PrintableString,
+    &procedureCode     id-Iu-Release4,
+    &criticality       reject
+    }
+
+object5 RANAP-ELEMENTARY-PROCEDURE ::= {
+    &InitiatingMessage INTEGER,
+    &SuccessfulOutcome PrintableString,
+    &Outcome           ProcedureCode,
+    &vartypvalue       12,
+    &infoObject        object4,
+    &InfObjectSet      MyObjectSet,
+    &procedureCode     id-Iu-Release5,
+    &criticality       reject
+    }
+
+
+RANAP-ELEMENTARY-PROCEDURES RANAP-ELEMENTARY-PROCEDURE ::= {
+    iu-Release         |
+    relocationPreparation ,
+    ...
+    }
+
+RANAP-ELEMENTARY-PROCEDURES2 RANAP-ELEMENTARY-PROCEDURE ::= {
+    iu-Release         |
+    relocationPreparation
+    }
+
+
+OBJECTSET1 RANAP-ELEMENTARY-PROCEDURE ::= {
+    {INITIATING MESSAGE Iu-ReleaseCommand SUCCESSFUL OUTCOME Iu-ReleaseComplete PROCEDURE CODE id-Iu-Release1 CRITICALITY ignore} | {INITIATING MESSAGE Iu-ReleaseCommand PROCEDURE CODE id-Iu-Release2}
+    }
+
+OBJECTSET2 RANAP-ELEMENTARY-PROCEDURE ::= {
+    iu-Release |
+    {INITIATING MESSAGE Iu-ReleaseCommand SUCCESSFUL OUTCOME Iu-ReleaseComplete PROCEDURE CODE id-Iu-Release4 CRITICALITY ignore} |
+    relocationPreparation |
+    {INITIATING MESSAGE Iu-ReleaseCommand PROCEDURE CODE id-Iu-Release5} ,
+    ...
+    }
+
+OBJECTSET3 RANAP-ELEMENTARY-PROCEDURE ::= {
+    iu-Release,
+    ...
+    }
+
+OBJECTSET4 RANAP-ELEMENTARY-PROCEDURE ::= {
+    iu-Release
+    }
+
+Iu-ReleaseCommand  ::= SEQUENCE {
+    first     INTEGER,
+    second    BOOLEAN
+    }
+
+Iu-ReleaseComplete ::= INTEGER (1..510)
+
+ProcedureCode      ::= INTEGER (0..255)
+Criticality        ::= ENUMERATED { reject, ignore, notify }
+id-Iu-Release1				INTEGER ::= 1
+id-Iu-Release2				INTEGER ::= 2
+id-Iu-Release3				INTEGER ::= 3
+id-Iu-Release4				INTEGER ::= 4
+id-Iu-Release5				INTEGER ::= 5
+
+--
+-- MY-CLASS
+--
+
+Seq ::= SEQUENCE {
+    int INTEGER,
+    str OCTET STRING
+}
+
+MY-CLASS ::= CLASS {
+    &Count             DEFAULT INTEGER,
+    &integerValue      INTEGER UNIQUE,
+    &booleanValue      BOOLEAN,
+    &stringValue       PrintableString
+}
+
+myobject MY-CLASS ::= {
+    &integerValue      12,
+    &booleanValue      TRUE,
+    &stringValue       "hejsan"
+}
+
+myotherobject MY-CLASS ::= {
+    &Count             Seq,
+    &integerValue      42,
+    &booleanValue      FALSE,
+    &stringValue       "hoppsan"
+}
+
+MyObjectSet MY-CLASS ::= {
+    myobject | myotherobject |
+    {
+        -- Each character will be encoded in 3 bits in UPER, 4 bits in PER.
+	&Count             NumericString (FROM("01234567") ^ SIZE(8)),
+	&integerValue      43,
+	&booleanValue      TRUE,
+	&stringValue       "tjosan"
+    }
+}
+
+MyPdu ::= SEQUENCE {
+    count MY-CLASS.&Count ({MyObjectSet}{@int}),
+    int   MY-CLASS.&integerValue ({MyObjectSet}),
+    bool  MY-CLASS.&booleanValue ({MyObjectSet}{@int}),
+    str   MY-CLASS.&stringValue ({MyObjectSet}{@int})
+}
+
+Seq2 ::= SEQUENCE {
+   int MY-CLASS.&integerValue ({MyObjectSet}),
+   seqof SEQUENCE (1..10) OF MY-CLASS.&booleanValue ({MyObjectSet}{@int}),
+   setof SET (1..10) OF MY-CLASS.&booleanValue ({MyObjectSet}{@int})
+}
+
+--
+-- Class with constructed default
+--
+
+CONSTRUCTED-DEFAULT ::= CLASS {
+  &id INTEGER UNIQUE,
+  &Type DEFAULT SEQUENCE { a INTEGER, b BOOLEAN },
+  &ok BOOLEAN DEFAULT TRUE
+}
+
+constructed1 CONSTRUCTED-DEFAULT ::= { &id 1 }
+constructed2 CONSTRUCTED-DEFAULT ::= { &id 2, &ok false }
+
+ConstructedDefaultSet CONSTRUCTED-DEFAULT ::= {
+  constructed1 |
+  constructed2 |
+  { &id 3, &Type BOOLEAN } |
+  { &id 4, &Type SET { a INTEGER, b BIT STRING } } |
+  { &id 5, &Type CHOICE { i INTEGER, b BIT STRING } } |
+  { &id 6, &Type SEQUENCE OF INTEGER (1..16) } |
+  { &id 7, &Type SET OF INTEGER (1..64) }
+}
+
+ConstructedPdu ::= SEQUENCE {
+  id CONSTRUCTED-DEFAULT.&id ({ConstructedDefaultSet}),
+  content CONSTRUCTED-DEFAULT.&Type ({ConstructedDefaultSet}{@id})
+}
+
+ConstructedSet ::= SET {
+  id [0] CONSTRUCTED-DEFAULT.&id ({ConstructedDefaultSet}),
+  content [1] CONSTRUCTED-DEFAULT.&Type ({ConstructedDefaultSet}{@id})
+}
+
+-- Test OPTIONAL and DEFAULT
+
+OptionalInSeq ::= SEQUENCE {
+  id CONSTRUCTED-DEFAULT.&id ({ConstructedDefaultSet}),
+  content CONSTRUCTED-DEFAULT.&Type ({ConstructedDefaultSet}{@id}) OPTIONAL
+}
+
+DefaultInSeq ::= SEQUENCE {
+  id CONSTRUCTED-DEFAULT.&id ({ConstructedDefaultSet}),
+  content CONSTRUCTED-DEFAULT.&Type ({ConstructedDefaultSet}{@id})
+          DEFAULT BOOLEAN:TRUE
+}
+
+-- Test more than one optional typefield table constraint in a SEQUENCE.
+
+MULTIPLE-OPTIONALS ::= CLASS {
+   &id INTEGER UNIQUE,
+   &T1,
+   &T2,
+   &T3
+}
+
+multiple-optionals-1 MULTIPLE-OPTIONALS ::=
+   {&id 1, &T1 INTEGER, &T2 BOOLEAN, &T3 OCTET STRING}
+
+Multiple-Optionals-Set MULTIPLE-OPTIONALS ::= {
+   multiple-optionals-1
+}
+
+Multiple-Optionals ::= SEQUENCE {
+   id MULTIPLE-OPTIONALS.&id ({Multiple-Optionals-Set}),
+   t1 [0] MULTIPLE-OPTIONALS.&T1 ({Multiple-Optionals-Set}{@id}) OPTIONAL,
+   t2 [1] MULTIPLE-OPTIONALS.&T2 ({Multiple-Optionals-Set}{@id}) OPTIONAL,
+   t3 [2] MULTIPLE-OPTIONALS.&T3 ({Multiple-Optionals-Set}{@id}) OPTIONAL
+}
+
+END
+
+

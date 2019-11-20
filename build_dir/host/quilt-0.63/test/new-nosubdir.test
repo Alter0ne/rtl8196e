@@ -1,0 +1,6 @@
+	$ mkdir patches
+
+	$ mkdir sub
+	$ cd sub
+	$ quilt new here.diff
+	> Patch %{_P}here.diff is now on top

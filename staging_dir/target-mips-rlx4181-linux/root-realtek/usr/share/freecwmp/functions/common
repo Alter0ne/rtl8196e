@@ -1,0 +1,303 @@
+#!/bin/sh
+# Copyright (C) 2011-2013 Luka Perkov <freecwmp@lukaperkov.net>
+
+freecwmp_output() {
+local parameter="$1"
+local value="$2"
+local delimiter="$3"
+
+if [ "$delimiter" = "" ]; then
+	delimiter=":"
+fi
+
+if [ -n "$value" -o ${FLAGS_empty} -eq ${FLAGS_TRUE} ]; then
+	if [ ${FLAGS_value} -eq ${FLAGS_TRUE} ]; then
+		echo $ECHO_newline $value
+	else
+		echo $ECHO_newline $parameter "$delimiter" $value
+	fi
+fi
+}
+
+freecwmp_value_output() {
+	freecwmp_output "$1" "$2" "V"
+}
+
+freecwmp_notification_output() {
+	freecwmp_output "$1" "$2" "N"
+}
+
+freecwmp_object_output() {
+	freecwmp_output "$1" "$2" "O"
+}
+
+freecwmp_tags_output() {
+	freecwmp_output "$1" "$2" "T"
+}
+
+freecwmp_not_implemented() {
+	freecwmp_output "$1" "NOT_IMPLEMENTED"
+}
+
+freecwmp_check_prefix() {
+	local prefix="$1"
+	local parameter="$2"
+	case "$parameter" in
+		"$prefix"*)
+			eval "export -- \"$3=0\""
+		;;
+		*)
+			eval "export -- \"$3=-1\""
+		;;
+	esac
+}
+
+freecwmp_parse_formated_parameter() {
+	local _clean_parameter="$1"
+	local _formated_parameter="$2"
+	local _values
+
+	if [ "x$_clean_parameter" = "x" ]; then
+		eval "export -- \"$3=-1\""
+		return
+	fi
+
+	local _clean_parameter_array=`echo $_clean_parameter | sed 's/\./ /g'`
+	local _formated_parameter_array=`echo $_formated_parameter | sed 's/\./ /g'`
+
+	local i
+	local _clean_parameter_array_num=0
+	for i in $_clean_parameter_array
+	do
+		let _clean_parameter_array_num=$_clean_parameter_array_num+1
+	done
+
+	local _formated_parameter_array_num=0
+	for i in $_formated_parameter_array
+	do
+		let _formated_parameter_array_num=$_formated_parameter_array_num+1
+	done
+
+	if [ $_clean_parameter_array_num -ne $_formated_parameter_array_num ]; then
+		eval "export -- \"$3=-1\""
+		return
+	fi
+
+	local j=0
+	for i in $_formated_parameter_array
+	do
+		let j=$j+1
+		if [ "x$i" == "x{i}" ]; then
+			# get value for sections maked as {i}
+			local m
+			local n=0
+			for m in $_clean_parameter_array
+			do
+				let n=$n+1
+				if [ $n -eq $j ]; then
+					if [ "x$_values" == "x" ]; then
+						_values="$m"
+					else
+						_values="$_values $m"
+					fi
+				fi
+			done
+		else
+			# check if sections not marked as {i} match
+			local m
+			local n=0
+			for m in $_clean_parameter_array
+			do
+				let n=$n+1
+				if [ $n -eq $j -a "x$m" != "x$i" ]; then
+					eval "export -- \"$3=-1\""
+					return
+				fi
+			done
+		fi
+	done
+
+	eval "export -- \"$3=0\""
+	eval "export -- \"$4=\"\"$_values\"\"\""
+}
+
+freecwmp_config_cwmp() {
+	config_get __parameter "$1" "parameter"
+	config_get __value "$1" "value"
+	config_get __tags "$1" "tag"
+
+	if [ "$__parameter" = "$4" ]; then
+		if [ "get" = "$2" ]; then
+			if [ "value" = "$3" ]; then
+				eval "export -- \"$5=\"\"$__value\"\"\""
+			fi
+			if [ "tags" = "$3" ]; then
+				eval "export -- \"$5=\"\"$__tags\"\"\""
+			fi
+		elif [ "set" = "$2" ]; then
+			if [ "value" = "$3" ]; then
+				/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.$1.value=$5 2> /dev/null
+			fi
+		elif [ "check" = "$2" ]; then
+			if [ "parameter" = "$3" ]; then
+				eval "export -- \"$5=\"$1\"\""
+			fi
+		fi
+	fi
+}
+
+freecwmp_config_notifications() {
+	config_get __active "$1" "active"
+	config_get __passive "$1" "passive"
+
+	for item in $__active
+	do
+		if [ "$item" = "$3" ]; then
+			eval "export -- \"$4=2\""
+			return 0
+		fi
+	done
+	for item in $__passive
+	do
+		if [ "$item" = "$3" ]; then
+			eval "export -- \"$4=1\""
+			return 0
+		fi
+	done
+}
+
+freecwmp_get_parameter_value() {
+	local _dest="$1"
+	local _parm="$2"
+	local _val
+	config_foreach freecwmp_config_cwmp "cwmp" "get" "value" "$_parm" "_val"
+	eval "export -- \"$_dest=\"\"$_val\"\"\""
+}
+
+freecwmp_set_parameter_value() {
+	local _parm="$1"
+	local _val="$2"
+	config_foreach freecwmp_config_cwmp "cwmp" "check" "parameter" "$_parm" "_section"
+	if [ ! "$_section" = "" ]; then
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set freecwmp.$_section.value=$_val 2> /dev/null
+	else
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} batch << EOF 2>&1 >/dev/null
+			add freecwmp cwmp
+			set freecwmp.@cwmp[-1].parameter="$_parm"
+			set freecwmp.@cwmp[-1].value="$_val"
+EOF
+	fi
+	config_foreach freecwmp_config_notifications "notifications" "get" "$_parm" "tmp"
+	# TODO: notify freecwmpd about the change
+	# if [ "$tmp" -eq "2" ]; then
+	# fi
+}
+
+freecwmp_get_parameter_notification() {
+	local _dest="$1"
+	local _parm="$2"
+	local _val
+	config_foreach freecwmp_config_notifications "notifications" "get" "$_parm" "_val"
+	eval "export -- \"$_dest=$_val\""
+}
+
+freecwmp_set_parameter_notification() {
+	local _parm="$1"
+	local _val="$2"
+	local tmp=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get freecwmp.@notifications[0] 2>/dev/null`
+	if [ "$tmp" = "" ]; then
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} add freecwmp notifications 2>&1 >/dev/null
+	else
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} del_list "freecwmp.@notifications[0].passive=$_parm" 2>/dev/null
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} del_list "freecwmp.@notifications[0].active=$_parm" 2>/dev/null
+	fi
+	if [ "$_val" -eq "1" ]; then
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} add_list freecwmp.@notifications[0].passive="$_parm" 2>&1 >/dev/null
+	elif [ "$_val" -eq "2" ]; then
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} add_list freecwmp.@notifications[0].active="$_parm" 2>&1 >/dev/null
+	fi
+}
+
+freecwmp_get_parameter_tags() {
+	local _dest="$1"
+	local _parm="$2"
+	config_foreach freecwmp_config_cwmp "cwmp" "get" "tags" "$_parm" "_tags"
+	eval "export -- \"$_dest=\"\"$_tags\"\"\""
+}
+
+freecwmp_set_parameter_tag() {
+	local _parm="$1"
+	local _tag="$2"
+	config_foreach freecwmp_config_cwmp "cwmp" "check" "parameter" "$_parm" "_section"
+	if [ ! "$_section" = "" ]; then
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} add_list freecwmp.$_section.tag=$_tag 2> /dev/null
+	else
+		/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} batch << EOF 2>&1 >/dev/null
+			add freecwmp cwmp
+			set freecwmp.@cwmp[-1].parameter="$_parm"
+			add_list freecwmp.@cwmp[-1].tag="$_tag"
+EOF
+	fi
+}
+
+freecwmp_get_uci() {
+	local _parm="$1"
+	local _return_val="$2"
+	local _config="$3"
+	local _section="$4"
+	local _num="$5"
+	local _option="$6"
+
+	local _val=`/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} get $_config.@$_section[$_num].$_option`
+	if [ "x$_parm" != "x" ]; then
+		freecwmp_value_output "$_parm" "$_val"
+	fi
+	if [ "x$_return_val" != "x" ]; then
+		eval "export -- \"$_return_val=\"\"$_val\"\"\""
+	fi
+}
+
+freecwmp_set_uci() {
+	local _config="$1"
+	local _section="$2"
+	local _num="$3"
+	local _option="$4"
+	local _val="$5"
+
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} set $_config.@$_section[$_num].$_option=$_val
+	/sbin/uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} commit $_config
+}
+
+delay_service_restart() {
+local service="$1"
+local delay="$2"
+local lock="/tmp/freecwmp_$service"
+
+if [ ! -x "$lock" ]; then
+	cat > "$lock" <<EOF
+/etc/init.d/$service stop >/dev/null 2>/dev/null
+sleep $delay
+/etc/init.d/$service start >/dev/null 2>/dev/null
+rm "$lock"
+EOF
+	chmod +x "$lock"
+	sh "$lock" &
+fi
+}
+
+delay_command() {
+local name="$1"
+local command="$2"
+local delay="$3"
+local lock="/tmp/freecwmp_command_$name"
+
+if [ ! -x "$lock" ]; then
+	cat > "$lock" <<EOF
+sleep $delay
+$command >/dev/null 2>/dev/null
+rm "$lock"
+EOF
+	chmod +x "$lock"
+	sh "$lock" &
+fi
+}

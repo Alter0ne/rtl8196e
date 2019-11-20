@@ -1,0 +1,124 @@
+
+Version 0.63 (Wed May 07 2014)
+  - New NEWS file, containing a human-readable changelog
+  - Option -E is no longer passed to patch by default
+  - Huge performance improvement (e.g., for commands series, applied and unapplied)
+  - configure: Add compat symlinks for cp and md5sum
+  - Return 2 when there is nothing to do, contrasting with errors (ret=1)
+  - Exit with an error when diff's retcode=2 (error) on patch refresh
+  - bash_completion: cleanups and performance improvement (Savannah's #27111)
+  - test/run: Use perl module Text::ParseWords (+ performance improvement)
+  - Add some tests to our testsuite, for a better coverage
+  - Fix heuristic for unapplied patches with timestamps
+  - Bug fix: Patches emptying files should work now
+  - Bug fix: Check for duplicate patch in series (Savannah's #20628)
+  - Portability fixes for older Bash and GNU patch
+
+Version 0.62 (was a buggy release, with an incomplete tarfile)
+
+Version 0.61 (Sun Dec 08 2013)
+  - Almost two years of fixes and minor improvements
+  - Fix support for ./configure --with-xargs
+  - Parameter quoting fixes to many commands
+  - Various fixes to the pop, push, refresh and patches commands
+  - Translation fixes
+  - setup: Many fixes and improvements
+  - remove-trailing-ws: Several fixes and improvements
+  - remove-trailing-ws: Add a dedicated test case
+  - quilt.el: Many fixes and improvements (emacs integration)
+
+Version 0.60 (Wed Feb 29 2012)
+  - BSD compatibility improvements
+  - grep: Support file names which include spaces
+  - import: Fix import of relative patches
+  - mail: Several fixes
+  - setup: Support directory and archive names which include spaces
+  - backup-files: rewritten from C to bash
+  - backup-files: Add a dedicated test case
+
+Version 0.51 (Sat Jan 28 2012)
+  - Fix support for ./configure --docdir
+  - Various $TMPDIR fixes
+  - mail: Fix delivery address checking
+  - mail: CC people in more common patch headers
+  - push: Fix bash completion
+  - inspect: Complain if wrapper script can't be executed
+
+Version 0.50 (Mon Dec 5 2011)
+  - 34 months of fixes and improvements, too many to list them all
+  - Fix detection of the patch version
+  - Avoid error messages when building due to missing git-desc file
+  - Add support for lzma and xz compression formats
+  - import: Fix confusing French translation
+  - mail: Stop using =~ for older versions of bash
+  - mail: Fix a temporary directory leak
+  - revert: Stop using cp -l
+  - revert: Add bash completion support
+  - setup: Add --fuzz parameter
+  - setup: Add support for reverse patches
+  - inspect: Fix shell syntax errors
+  - Fix error in test case create-delete
+
+Version 0.48 (Thu Jan 29 2009)
+  - fold: Fix bash completion
+  - mail: Don't use GNU awk extensions
+  - mail: Check for formail
+  - setup: Fix for rpm 4.6
+  - Fix error in test case import
+
+Version 0.47 (Thu Aug 21 2008)
+  - Change summary not available
+
+Version 0.46 (Thu Oct 19 2006)
+  - Change summary not available
+
+Version 0.45 (Mon Apr 24 2006)
+  - Change summary not available
+
+Version 0.44 (Tue Feb 14 2006)
+  - Change summary not available
+
+Version 0.43 (Wed Feb 01 2006)
+  - Change summary not available
+
+Version 0.42 (Tue Jul 26 2005)
+  - Change summary not available
+
+Version 0.40 (Fri Apr 29 2005)
+  - Change summary not available
+
+Version 0.39 (Thu Feb 10 2005)
+  - Change summary not available
+
+Version 0.37 (Sun Oct 17 2004)
+  - Change summary not available
+
+Version 0.36 (Wed Sep 22 2004)
+  - Change summary not available
+
+Version 0.35 (Thu Jul 15 2004)
+  - Change summary not available
+
+Version 0.34 (Thu Jun 10 2004)
+  - Change summary not available
+
+Version 0.33 (Sun Jun 06 2004)
+  - Change summary not available
+
+Version 0.32 (Sat Mar 13 2004)
+  - Change summary not available
+
+Version 0.30 (Wed Jan 28 2004)
+  - Change summary not available
+
+Version 0.29 (Wed Nov 12 2003)
+  - Change summary not available
+
+Version 0.28 (Fri Oct 31 2003)
+  - Change summary not available
+
+Version 0.27 (Tue Oct 28 2003)
+  - Change summary not available
+
+Version 0.26 (Tue Oct 21 2003)
+  - Change summary not available

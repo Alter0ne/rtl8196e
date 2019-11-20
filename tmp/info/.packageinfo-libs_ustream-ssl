@@ -1,0 +1,50 @@
+Source-Makefile: package/libs/ustream-ssl/Makefile
+Package: libustream-polarssl
+Version: 2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox +libpolarssl
+Menu-Depends: 
+Provides: 
+Build-Variant: polarssl
+Section: libs
+Category: Libraries
+Title: ustream SSL Library (polarssl)
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Source: ustream-ssl-2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0.tar.gz
+Type: ipkg
+Description: ustream SSL Library (polarssl)
+Felix Fietkau <nbd@openwrt.org>
+@@
+
+Package: libustream-cyassl
+Version: 2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox +libcyassl
+Menu-Depends: 
+Provides: 
+Build-Variant: cyassl
+Section: libs
+Category: Libraries
+Title: ustream SSL Library (cyassl)
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Source: ustream-ssl-2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0.tar.gz
+Type: ipkg
+Description: ustream SSL Library (cyassl)
+Felix Fietkau <nbd@openwrt.org>
+@@
+
+Package: libustream-openssl
+Version: 2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox +libopenssl
+Menu-Depends: 
+Provides: 
+Build-Variant: openssl
+Section: libs
+Category: Libraries
+Title: ustream SSL Library (openssl)
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Source: ustream-ssl-2014-03-25-fc0b5ec804ee43c532978dd04ab0509c34baefb0.tar.gz
+Type: ipkg
+Description: ustream SSL Library (openssl)
+Felix Fietkau <nbd@openwrt.org>
+@@
+
+

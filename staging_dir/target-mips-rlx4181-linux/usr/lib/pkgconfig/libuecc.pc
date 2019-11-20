@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libuecc
+Description: Very small Elliptic Curve Cryptography library
+Version: 7
+Libs: -L${libdir} -luecc
+Cflags: -I${includedir}/libuecc-7

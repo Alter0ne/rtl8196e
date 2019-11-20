@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libp11
+Description: libp11
+Version: 0.2.9_git
+Libs: -L${libdir} -lp11
+Libs.private: -lcrypto
+Cflags: -I${includedir}
+

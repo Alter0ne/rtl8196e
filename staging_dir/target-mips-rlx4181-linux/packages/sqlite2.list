@@ -1,0 +1,12 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libsqlite.so.0
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/sqlite.pc
+./usr/lib/libsqlite.so
+./usr/lib/libsqlite.a
+./usr/lib/libsqlite.so.0.8.6
+./usr/include
+./usr/include/sqlite.h

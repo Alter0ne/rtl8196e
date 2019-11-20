@@ -1,0 +1,8 @@
+The shared build infrastructure for the GNOME C++ bindings has been created
+by Daniel Elstner <daniel.kitta@gmail.com> while working as a developer for
+Openismus GmbH <http://www.openismus.com/>.  This work is based on the ideas
+and prior work of many people involved with the GNOME C++ bindings project.
+
+The libstdc++.tag Doxygen tag file shipped with mm-common has been created
+by the authors of the GNU C++ library reference documentation available from
+<http://gcc.gnu.org/onlinedocs/libstdc++/>.

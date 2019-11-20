@@ -1,0 +1,111 @@
+<!--
+ * Asterisk-GUI	- an Asterisk configuration interface
+ *
+ * Show/Hide advanced options
+ *
+ * Copyright (C) 2008, Digium, Inc.
+ *
+ * Pari Nannapaneni <pari@digium.com>
+ *
+ * See http://www.asterisk.org for more information about
+ * the Asterisk project. Please do not directly contact
+ * any of the maintainers of this project for assistance;
+ * the project provides a web site, mailing lists and IRC
+ * channels for your use.
+ *
+ * This program is free software, distributed under the terms of
+ * the GNU General Public License Version 2. See the LICENSE file
+ * at the top of the source tree.
+ *
+-->
+<html>
+<head>
+	<title>Show/Hide Advanced Options</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+
+	<link href="stylesheets/schwing.css" media="all" rel="Stylesheet" type="text/css" />
+	<style type="text/css"></style>
+</head>
+<body bgcolor="EFEFEF">
+	<div class="iframeTitleBar">
+		Advanced Options <span class='refresh_icon' onclick="window.location.reload();" >&nbsp;<img src="images/refresh.png" title=" Refresh " border=0 >&nbsp;</span>
+	</div>
+
+	<center> <div id="tabbedMenu"></div> </center>
+
+	<div class='lite_Heading' id='ADVOPTIONS_HEADING'> Advanced Options </div>
+
+	<center>
+		<div id='flip_decsription' style='text-align:center; 	background-color : #FFFFFF; max-width: 700px; padding:20px; margin-top:10px; border:1px solid #CDCDCD; ' class='lite'></div>
+	</center>
+
+	<div style='text-align:center; width: 95%; margin-top:20px'>
+		<span class='guiButton' id='flip_button' onclick='flip_advOptions();'></span>
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/astman.js"></script>
+	<script>
+	// parent.miscFunctions.flip_advancedmode
+
+	var localajaxinit = function(){
+		top.document.title = "Show/Hide Advanced options" ;
+		var t = [
+			{ url:'preferences.html', desc:'General Preferences' },
+			{ url:'language.html', desc:'Language' },
+			{ url:'password.html', desc:'Change Password' }
+		];
+		if( parent.sessionData.PLATFORM.isAA50 ){
+			t.push({ url:'reset_defaults.html', desc: 'Factory Reset' });
+		}
+		t.push({ url:'reboot.html', desc:'Reboot' });
+		t.push({ url:'#', desc:'Advanced Options', selected: true });
+
+		ASTGUI.tabbedOptions( _$('tabbedMenu') , t );
+		update_status();
+
+		ASTGUI.events.add( _$('ADVOPTIONS_HEADING') , 'dblclick' , function(){
+			if( parent.sessionData.DEBUG_MODE ){
+				parent.sessionData.DEBUG_MODE = false;
+				parent.miscFunctions.DEBUG_CLEAR();
+				parent.$(".debugWindow").hide();
+			}else{
+				parent.sessionData.DEBUG_MODE = true;
+				parent.miscFunctions.DEBUG_START();
+				parent.$(".debugWindow").show();
+			}
+		});
+	};
+
+
+	var update_status = function(){
+
+		var am = top.cookies.get('advancedmode');
+		if( am && am == 'yes' ){
+			_$('flip_button').innerHTML = 'Hide Advanced Options';
+			_$('flip_decsription').innerHTML = "Clicking the 'Hide Advanced Options' button below removes the advanced menu items on the left hand sidebar"
+			+ "<BR><BR><B>Notice!</B>  Digium does not provide support for the options configurable in the Advanced menu items. "
+			+ "Digium does not provide support for bugs uncovered in the Advanced menu items.  If your unit becomes inoperable "
+			+ "due to editing of the Advanced menu items, Digium Technical Support will request that you reset your unit to"
+			+ "Factory Default configuration.  Continue at your own risk." ;
+		}else{
+			_$('flip_button').innerHTML = 'Show Advanced Options';
+			_$('flip_decsription').innerHTML = "Clicking the 'Show Advanced Options' button below provides the additional menu items on the left hand sidebar"
+			+ "<BR><BR><B>Notice!</B>  Digium does not provide support for the options configurable in the Advanced menu items. "
+			+ "Digium does not provide support for bugs uncovered in the Advanced menu items.  If your unit becomes inoperable "
+			+ "due to editing of the Advanced menu items, Digium Technical Support will request that you reset your unit to"
+			+ "Factory Default configuration.  Continue at your own risk." ;
+		}
+
+	};
+
+
+	var flip_advOptions = function(){
+		parent.miscFunctions.flip_advancedmode();
+		update_status();
+	};
+
+
+	</script>
+</body>
+</html>

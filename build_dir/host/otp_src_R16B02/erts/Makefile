@@ -1,0 +1,140 @@
+# 
+# %CopyrightBegin%
+#
+# Copyright Ericsson AB 2006-2013. All Rights Reserved.
+#
+# The contents of this file are subject to the Erlang Public License,
+# Version 1.1, (the "License"); you may not use this file except in
+# compliance with the License. You should have received a copy of the
+# Erlang Public License along with this software. If not, it can be
+# retrieved online at http://www.erlang.org/.
+#
+# Software distributed under the License is distributed on an "AS IS"
+# basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+# the License for the specific language governing rights and limitations
+# under the License.
+#
+# %CopyrightEnd%
+# 
+
+.NOTPARALLEL:
+
+include $(ERL_TOP)/make/output.mk
+include $(ERL_TOP)/make/target.mk
+include vsn.mk
+
+# ----------------------------------------------------------------------
+
+# Other erts dirs than the emulator dir...
+ERTSDIRS = etc epmd lib_src
+XINSTDIRS = preloaded
+ifeq ($(NO_START_SCRIPTS),)
+ERTSDIRS += start_scripts
+endif
+
+EXTRA_FLAVORS=smp
+
+.PHONY: all
+all: smp opt
+
+.PHONY: docs
+docs:
+	$(V_at)( cd doc/src && $(MAKE) $@ )
+
+.PHONY: debug opt clean
+debug opt clean:
+	$(V_at)for d in emulator $(ERTSDIRS); do \
+		if test -d $$d; then \
+			( cd $$d && $(MAKE) $@ FLAVOR=$(FLAVOR) ) || exit $$? ; \
+		fi ; \
+	done
+
+# ----------------------------------------------------------------------
+# These are "convenience targets", provided as shortcuts for developers
+# - don't use them in scripts or assume they will always stay like this!
+#
+
+.PHONY: $(EXTRA_FLAVORS)
+$(EXTRA_FLAVORS):
+	$(V_at)( cd emulator && $(MAKE) opt FLAVOR=$@ )
+
+# Make erl script and erlc in $(ERL_TOP)/bin which runs the compiled version
+# Note that erlc is not a script and requires extra handling on cygwin.
+# also note that this file is not created by autoconf, that's why 
+# is not used.
+
+# The copying of beam.dll should be removed when the beam dll need no longer be
+# in the same directory...
+.PHONY: local_setup
+local_setup:
+	@cd start_scripts && $(MAKE)
+	$(V_colon)@echo `ls $(ERL_TOP)/bin/`
+	@rm -f $(ERL_TOP)/bin/erl $(ERL_TOP)/bin/erlc $(ERL_TOP)/bin/cerl \
+		$(ERL_TOP)/bin/erl.exe $(ERL_TOP)/bin/erlc.exe \
+		$(ERL_TOP)/bin/escript $(ERL_TOP)/bin/escript.exe \
+		$(ERL_TOP)/bin/dialyzer $(ERL_TOP)/bin/dialyzer.exe \
+		$(ERL_TOP)/bin/typer $(ERL_TOP)/bin/typer.exe \
+		$(ERL_TOP)/bin/ct_run $(ERL_TOP)/bin/ct_run.exe \
+		$(ERL_TOP)/bin/start*.boot $(ERL_TOP)/bin/start*.script
+	@if [ "X$(TARGET)" = "Xwin32" ]; then \
+		cp $(ERL_TOP)/bin/$(TARGET)/dialyzer.exe $(ERL_TOP)/bin/dialyzer.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/typer.exe $(ERL_TOP)/bin/typer.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/ct_run.exe $(ERL_TOP)/bin/ct_run.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/erlc.exe $(ERL_TOP)/bin/erlc.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/erl.exe $(ERL_TOP)/bin/erl.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/werl.exe $(ERL_TOP)/bin/werl.exe; \
+		cp $(ERL_TOP)/bin/$(TARGET)/escript.exe $(ERL_TOP)/bin/escript.exe; \
+	 	chmod 755 $(ERL_TOP)/bin/erl.exe $(ERL_TOP)/bin/erlc.exe \
+			 $(ERL_TOP)/bin/werl.exe; \
+		make_local_ini.sh $(ERL_TOP); \
+		cp $(ERL_TOP)/bin/erl.ini $(ERL_TOP)/bin/$(TARGET)/erl.ini; \
+	else \
+	sed	-e "s;%FINAL_ROOTDIR%;$(ERL_TOP);"   \
+		-e "s;erts-.*/bin;bin/$(TARGET);"    \
+		-e "s;EMU=.*;EMU=beam$(TYPEMARKER);" \
+	        $(ERL_TOP)/erts/etc/unix/erl.src.src > $(ERL_TOP)/bin/erl; \
+	sed	-e "s;%SRC_ROOTDIR%;$(ERL_TOP);"   \
+		-e "s;%TARGET%;$(TARGET);"    \
+		-e "s;%VSN%;$(VSN);"    \
+	        $(ERL_TOP)/erts/etc/unix/cerl.src > $(ERL_TOP)/bin/cerl; \
+		cp $(ERL_TOP)/bin/$(TARGET)/dialyzer $(ERL_TOP)/bin/dialyzer; \
+		cp $(ERL_TOP)/bin/$(TARGET)/typer $(ERL_TOP)/bin/typer; \
+		cp $(ERL_TOP)/bin/$(TARGET)/ct_run $(ERL_TOP)/bin/ct_run; \
+		cp $(ERL_TOP)/bin/$(TARGET)/erlc $(ERL_TOP)/bin/erlc; \
+		cp $(ERL_TOP)/bin/$(TARGET)/escript $(ERL_TOP)/bin/escript; \
+	 	chmod 755 $(ERL_TOP)/bin/erl $(ERL_TOP)/bin/erlc \
+			$(ERL_TOP)/bin/cerl; \
+	fi
+	@cd start_scripts && $(MAKE) $(ERL_TOP)/bin/start.script \
+		$(ERL_TOP)/bin/start_sasl.script \
+		$(ERL_TOP)/bin/start_clean.script
+
+# Run the configure script
+.PHONY: configure
+configure:
+	@set -e ; cd autoconf && $(MAKE)
+
+# Remake the makefiles, if you already have configured but you have edited
+# a "Makefile.in".
+.PHONY: makefiles
+makefiles:
+	@set -e ; cd autoconf && $(MAKE) $@
+
+# ----------------------------------------------------------------------
+# Release targets
+#
+
+.PHONY: release
+release:
+	$(V_at)for f in plain $(EXTRA_FLAVORS) ; do \
+		( cd emulator && $(MAKE) release FLAVOR=$$f ) \
+	done
+	$(V_at)for d in $(ERTSDIRS) $(XINSTDIRS); do \
+		if test -d $$d; then \
+			( cd $$d && $(MAKE) $@ ) || exit $$? ; \
+		fi ; \
+	 done
+
+.PHONY: release_docs
+release_docs:
+	$(V_at)( cd doc/src && $(MAKE) $@ )

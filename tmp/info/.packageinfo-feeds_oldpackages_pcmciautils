@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/oldpackages/pcmciautils/Makefile
+Package: pcmciautils
+Version: 018-3
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsysfs @PCMCIA_SUPPORT
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: PCMCIA Utilities
+Maintainer: 
+Source: pcmciautils-018.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description: PCMCIA Utilities
+http://www.kernel.org/pub/linux/utils/kernel/pcmcia/pcmcia.html
+
+@@
+
+

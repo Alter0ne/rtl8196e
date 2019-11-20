@@ -1,0 +1,16 @@
+./
+./host
+./usr
+./usr/lib
+./usr/lib/libprotobuf-c.so.1.0.0
+./usr/lib/pkgconfig
+./usr/lib/pkgconfig/libprotobuf-c.pc
+./usr/lib/libprotobuf-c.so
+./usr/lib/libprotobuf-c.so.1
+./usr/lib/libprotobuf-c.a
+./usr/include
+./usr/include/protobuf-c
+./usr/include/protobuf-c/protobuf-c.h
+./usr/include/google
+./usr/include/google/protobuf-c
+./usr/include/google/protobuf-c/protobuf-c.h
