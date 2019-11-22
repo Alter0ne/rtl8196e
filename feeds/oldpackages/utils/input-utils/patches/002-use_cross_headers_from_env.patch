@@ -1,0 +1,10 @@
+--- a/name.sh
++++ b/name.sh
+@@ -1,7 +1,6 @@
+ #!/bin/sh
+ 
+ TYPE="$1"
+-INPUT="/usr/include/linux/input.h"
+ 
+ awk "
+ 	/KEY_MIN_INTERESTING/	{next};

@@ -1,0 +1,29 @@
+--- a/lib/mlog.c
++++ b/lib/mlog.c
+@@ -60,7 +60,7 @@ void debugf ( char fmt[], ... )
+     va_end(args);
+ 
+     fprintf ( stderr, "DEBUG <" );
+-    fprintf ( stderr, tmpbuf );
++    fprintf ( stderr, "%s", tmpbuf );
+     fprintf ( stderr, ">\n" );
+     fflush  ( stderr );
+ #endif
+@@ -80,7 +80,7 @@ void errorf ( char fmt[], ... )
+     (void) vsnprintf( tmpbuf, sizeof(tmpbuf), fmt, args );
+     va_end(args);
+ 
+-    fprintf ( stderr, tmpbuf );
++    fprintf ( stderr, "%s", tmpbuf );
+ }
+ 
+ /*--------------------------------------------------
+@@ -104,7 +104,7 @@ void mlogf ( int vlevel, char fmt[], ...
+     (void) vsnprintf( tmpbuf, sizeof(tmpbuf), fmt, args );
+     va_end(args);
+ 
+-    fprintf( mlog_fp, tmpbuf );
++    fprintf( mlog_fp, "%s", tmpbuf );
+     if ( mlog_vlevel > 1 )
+         fflush( mlog_fp );
+ }

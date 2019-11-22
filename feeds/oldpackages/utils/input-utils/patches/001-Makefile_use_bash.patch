@@ -1,0 +1,12 @@
+--- a/mk/Autoconf.mk
++++ b/mk/Autoconf.mk
+@@ -12,6 +12,9 @@
+ #
+ ########################################################################
+ 
++# fix echo -e with dash on Debian/Ubuntu 
++SHELL=/bin/bash
++
+ # verbose yes/no
+ verbose		?= no
+ 

@@ -1,0 +1,11 @@
+--- a/Makefile
++++ b/Makefile
+@@ -17,7 +17,7 @@ DEPS	= Makefile
+ OBJS	= empcd.o keyeventtable.o support/mpc-0.12.2/src/libmpdclient.o
+ WARNS	= -W -Wall -pedantic -Wno-format -Wno-unused -Wno-long-long
+ EXTRA   = -g3
+-CFLAGS	= $(WARNS) $(EXTRA) -D_GNU_SOURCE
++CFLAGS	+= $(WARNS) $(EXTRA) -D_GNU_SOURCE
+ LDFLAGS	=
+ CC      = gcc
+ RM      = rm

@@ -1,0 +1,7 @@
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -1,4 +1,3 @@
+-CFLAGS=`/bin/sh Makefile-helper.sh`
+ 
+ all: rtl8316b rtl8324 rtl8326 rtl83xx_dlink_des1016d rtl83xx_dlink_des1024d_b1 \
+ rtl83xx_dlink_des1024d_c1 rtl83xx_compex_ps2216 rtl83xx_ovislink_fsh2402gt \

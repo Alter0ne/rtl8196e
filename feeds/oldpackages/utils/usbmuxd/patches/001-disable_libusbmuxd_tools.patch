@@ -1,0 +1,32 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -64,19 +64,12 @@ endif()
+ 
+ add_definitions(-Wall)
+ 
+-add_subdirectory (libusbmuxd)
+ if (WITH_USBMUXD)
+   add_subdirectory (daemon)
+   if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+     add_subdirectory (udev)
+   endif()
+ endif()
+-add_subdirectory (tools)
+-
+-# pkg-config
+-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libusbmuxd.pc.in" "${CMAKE_CURRENT_BINARY_DIR}/libusbmuxd.pc")
+-# install pkg-config file
+-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libusbmuxd.pc" DESTINATION lib${LIB_SUFFIX}/pkgconfig/)
+ 
+ # add uninstall target
+ configure_file("${CMAKE_SOURCE_DIR}/Modules/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
+--- a/daemon/CMakeLists.txt
++++ b/daemon/CMakeLists.txt
+@@ -8,7 +8,6 @@ if(HAVE_PLIST)
+ endif()
+ include_directories (${CMAKE_SOURCE_DIR}/common)
+ include_directories (${CMAKE_SOURCE_DIR}/daemon)
+-include_directories (${CMAKE_SOURCE_DIR}/libusbmuxd)
+ 
+ add_definitions(-DUSBMUXD_DAEMON -DUSBMUXD_VERSION="${USBMUXD_VERSION}")
+ add_executable(usbmuxd main.c usb-linux.c log.c ${CMAKE_SOURCE_DIR}/common/utils.c device.c client.c)

@@ -1,0 +1,39 @@
+--- a/cutter.c.orig	2005-04-30 09:01:03.000000000 +0200
++++ b/cutter.c	2007-10-26 16:10:04.000000000 +0200
+@@ -476,7 +476,7 @@
+ 
+ int scan_conntrack(in_addr_t ip1, int port1, in_addr_t ip2, int port2)
+ {
+-	FILE *id = fopen( "/proc/net/ip_conntrack", "r" );
++	FILE *id = fopen( "/proc/net/nf_conntrack", "r" );
+ 	char src1[32], dst1[32], src2[32], dst2[32];
+ 	int sport1, dport1, sport2, dport2, i;
+ 	int packets1, packets2, bytes1, bytes2;
+@@ -486,12 +486,12 @@
+ 	int ok = TRUE;
+ 
+ 	if (id == NULL) {
+-		perror( "openning /proc/net/ip_conntrack" );
++		perror( "openning /proc/net/nf_conntrack" );
+ 		return FALSE;
+ 	}
+ 
+ 	while (fgets(buff, sizeof(buff), id) != NULL) {
+-		if (memcmp(buff, "tcp ", 4) != 0 || strstr(buff, " ESTABLISHED ") == NULL)
++		if (memcmp(buff, "ipv4     2 tcp ", 15) != 0 || strstr(buff, " ESTABLISHED ") == NULL)
+ 			continue;
+ 
+ 		p = buff;
+@@ -537,6 +537,12 @@
+ 				ok = send_rst(dst1,dport1,src1,sport1) && ok;
+ 				ok = send_rst(dst2,dport2,src2,sport2) && ok;
+ 			}
++			else {
++				found ++;
++				printf("For connection %s:%d -> %s:%d\n", dst2, dport2, src2, sport2);
++				ok = send_rst(dst1,dport1,src1,sport1) && ok;
++				ok = send_rst(dst2,dport2,src2,sport2) && ok;
++			}
+ 		}
+ 	}
+ 

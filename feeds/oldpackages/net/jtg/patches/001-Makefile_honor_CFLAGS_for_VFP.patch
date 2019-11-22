@@ -1,0 +1,11 @@
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,7 @@ BINDIR= $(HOME)/bin
+ VERSION=1.95
+ 
+ CC = gcc
+-CFLAGS= -O3 -Wall -Winline -pedantic
++CFLAGS+= -O3 -Wall -Winline -pedantic
+ CFLAGS+= -g
+ 
+ # The "-DLinuxTCP" controls which TCP options are in use

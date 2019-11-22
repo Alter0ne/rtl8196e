@@ -1,0 +1,11 @@
+--- a/configure
++++ b/configure
+@@ -369,7 +369,7 @@ int main(void) {
+ 	return getifaddrs(&ifap);
+ }
+ EOF
+-if $XCC _getifaddrs.c -o _getifaddrs 2>/dev/null; then
++if $XCC $CFLAGS _getifaddrs.c -o _getifaddrs 2>/dev/null; then
+ 	echo "yes"
+ else
+ 	echo "no"
