@@ -20,9 +20,9 @@ KERNEL_SOURCE_PATH:=$(KERNEL_BUILD_DIR)/linux-3.10.49
 KERNEL_BUILD_PATH:=$(KERNEL_BUILD_DIR)/linux-3.10.49
 EXT_MODULE_FLAGS:=
 
-ifdef CONFIG_TARGET_rtkmips_rtl8198c
+#ifdef CONFIG_TARGET_rtkmips_rtl8198c
   MODULE_TARGET:=r274734
-endif
+#endif
 
 define KernelPackage/rtl_fs
   SUBMENU:=Filesystems
