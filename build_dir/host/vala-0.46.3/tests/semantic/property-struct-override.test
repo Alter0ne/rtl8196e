@@ -1,9 +1,0 @@
-Invalid Code
-
-struct Foo {
-	public override string foo { get; set; }
-}
-
-void main () {
-}
-

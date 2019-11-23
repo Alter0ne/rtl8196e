@@ -1,1 +1,0 @@
-/home/alter0ne/rtk_openwrt_sdk/build_dir/host/otp_src_21.0/lib/compiler/src/genop.tab beam/ops.tab beam/macros.tab beam/instrs.tab beam/arith_instrs.tab beam/bif_instrs.tab beam/bs_instrs.tab beam/float_instrs.tab beam/map_instrs.tab beam/msg_instrs.tab beam/select_instrs.tab beam/trace_instrs.tab utils/beam_makeops x86_64-pc-linux-gnu/Makefile

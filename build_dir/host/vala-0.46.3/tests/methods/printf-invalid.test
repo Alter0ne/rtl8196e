@@ -1,5 +1,0 @@
-Invalid Code
-
-void main () {
-	var s = "%s".printf (4);
-}

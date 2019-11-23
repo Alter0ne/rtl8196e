@@ -1,8 +1,0 @@
-Invalid Code
-
-abstract class Foo {
-}
-
-void main () {
-	var foo = new Foo ();
-}

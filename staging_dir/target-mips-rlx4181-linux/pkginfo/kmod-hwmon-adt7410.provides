@@ -1,5 +1,0 @@
-adt7410.ko
-adt7x10.ko
-hwmon.ko
-i2c-core.ko
-i2c-dev.ko

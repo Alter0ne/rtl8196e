@@ -1,5 +1,0 @@
-Invalid Code
-
-void main () {
-	var test = new string[4][];
-}

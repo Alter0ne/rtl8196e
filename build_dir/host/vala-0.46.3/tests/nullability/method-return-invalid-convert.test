@@ -1,8 +1,0 @@
-Invalid Code
-
-string foo () {
-	return null;
-}
-
-void main () {
-}

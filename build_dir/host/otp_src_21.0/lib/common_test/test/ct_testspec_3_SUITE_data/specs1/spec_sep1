@@ -1,3 +1,0 @@
-{specs, separate, "../specs2/flat_spec2"}.
-{specs, separate, "flat_spec1"}.
-

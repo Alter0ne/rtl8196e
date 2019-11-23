@@ -1,6 +1,0 @@
-Invalid Code
-
-void main () {
-	string[] sa = { "foo" };
-	sa[0] = 42;
-}

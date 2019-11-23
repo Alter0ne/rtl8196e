@@ -1,8 +1,0 @@
-Invalid Code
-
-void main () {
-	int i;
-	if (i < 42 || (i = 23) > 42) {
-		assert_not_reached ();
-	}
-}

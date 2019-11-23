@@ -1,8 +1,0 @@
-Invalid Code
-
-void foo () {
-	va_list args = va_list ();
-}
-
-void main () {
-}

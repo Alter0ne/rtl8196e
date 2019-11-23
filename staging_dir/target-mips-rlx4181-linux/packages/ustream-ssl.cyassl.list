@@ -1,8 +1,0 @@
-./
-./host
-./usr
-./usr/lib
-./usr/lib/libustream-ssl.so
-./usr/include
-./usr/include/libubox
-./usr/include/libubox/ustream-ssl.h

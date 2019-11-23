@@ -1,8 +1,0 @@
-{application, eldap,
- [{description, "Ldap api"},
-  {vsn, "%VSN%"},
-  {modules, [eldap, 'ELDAPv3']},
-  {registered, []},
-  {applications, [kernel, stdlib]},
-  {env, []}
-]}.

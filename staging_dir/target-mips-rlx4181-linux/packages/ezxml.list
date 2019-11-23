@@ -1,8 +1,0 @@
-./
-./host
-./usr
-./usr/lib
-./usr/lib/libezxml.so
-./usr/lib/libezxml.a
-./usr/include
-./usr/include/ezxml.h

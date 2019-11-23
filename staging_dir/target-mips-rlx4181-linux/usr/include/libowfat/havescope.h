@@ -1,1 +1,0 @@
-#define LIBC_HAS_SCOPE_ID

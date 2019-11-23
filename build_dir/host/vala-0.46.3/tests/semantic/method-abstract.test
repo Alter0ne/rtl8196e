@@ -1,8 +1,0 @@
-Invalid Code
-
-struct Foo {
-	public abstract void foo ();
-}
-
-void main () {
-}

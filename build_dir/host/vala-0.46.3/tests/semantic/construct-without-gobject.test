@@ -1,9 +1,0 @@
-Invalid Code
-
-class Foo {
-	construct {
-	}
-}
-
-void main () {
-}

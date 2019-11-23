@@ -1,7 +1,0 @@
-Invalid Code
-
-async void foo (string first, ...) {
-}
-
-void main () {
-}

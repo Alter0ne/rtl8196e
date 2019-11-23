@@ -1,8 +1,0 @@
-Invalid Code
-
-public class Test {
-	public static signal void test ();
-}
-
-void main () {
-}

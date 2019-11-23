@@ -1,1 +1,0 @@
-MNESIA_VSN = 4.10

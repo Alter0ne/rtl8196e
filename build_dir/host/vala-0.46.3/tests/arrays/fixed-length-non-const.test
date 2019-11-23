@@ -1,6 +1,0 @@
-Invalid Code
-
-void main () {
-	int test_len = 60;
-	string test_array[test_len];
-}

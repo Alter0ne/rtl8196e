@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo<G,T> {
-}
-
-void main () {
-	var foo = new Foo<string> ();
-}

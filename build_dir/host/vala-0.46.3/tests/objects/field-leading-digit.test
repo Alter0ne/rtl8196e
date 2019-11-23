@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo : Object {
-	int 0bar = 0;
-}
-
-void main () {
-}

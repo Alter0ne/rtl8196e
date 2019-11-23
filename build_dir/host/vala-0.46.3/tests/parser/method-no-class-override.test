@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Test {
-	class override void test () {
-	}
-}
-
-void main () {
-}

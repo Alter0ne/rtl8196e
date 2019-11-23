@@ -1,4 +1,0 @@
-hwmon.ko
-i2c-core.ko
-i2c-dev.ko
-tmp421.ko

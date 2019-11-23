@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo {
-	public void foo { get; set; }
-}
-
-void main () {
-}

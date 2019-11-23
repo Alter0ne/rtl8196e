@@ -1,1 +1,0 @@
-{specs, join, ["../specs2/flat_spec2", "flat_spec1"]}.

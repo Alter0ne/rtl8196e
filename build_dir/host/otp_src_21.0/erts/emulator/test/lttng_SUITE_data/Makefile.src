@@ -1,7 +1,0 @@
-
-MISC_DRVS = caller_drv@dll@
-
-
-all: $(MISC_DRVS)
-
-@SHLIB_RULES@

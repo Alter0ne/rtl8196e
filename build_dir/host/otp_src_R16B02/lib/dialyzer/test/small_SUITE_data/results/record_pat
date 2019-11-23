@@ -1,2 +1,0 @@
-
-record_pat.erl:14: The pattern {'foo', 'baz'} violates the declared type for #foo{}

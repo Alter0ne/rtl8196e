@@ -1,9 +1,0 @@
-Invalid Code
-
-[Compact]
-class Foo {
-	public class int i;
-}
-
-void main () {
-}

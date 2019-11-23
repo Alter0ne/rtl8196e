@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Test {
-	class virtual void test () {
-	}
-}
-
-void main () {
-}

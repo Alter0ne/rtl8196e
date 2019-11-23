@@ -1,7 +1,0 @@
-Invalid Code
-
-void main () {
-	int[] test = {};
-	foreach (t in test) {
-	}
-}

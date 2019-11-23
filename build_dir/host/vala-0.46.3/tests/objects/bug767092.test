@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo<T> {
-}
-
-void main(string[] args) {
-	Foo<Foo<string, string>> foo = null;
-}

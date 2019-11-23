@@ -1,5 +1,0 @@
-Invalid Code
-
-[CCode (cname = "test1"), CCode (cname = "test2")]
-void main () {
-}

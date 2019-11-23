@@ -1,6 +1,0 @@
-Invalid Code
-
-void main () {
-	string foo = "foo";
-	var s = !foo;
-}

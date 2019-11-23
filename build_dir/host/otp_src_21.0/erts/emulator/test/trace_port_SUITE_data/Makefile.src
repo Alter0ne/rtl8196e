@@ -1,3 +1,0 @@
-all: echo_drv@dll@
-
-@SHLIB_RULES@

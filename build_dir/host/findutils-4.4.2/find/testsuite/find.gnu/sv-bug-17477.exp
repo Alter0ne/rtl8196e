@@ -1,2 +1,0 @@
-# verify that % with no argument fails gracefully
-find_start f { -maxdepth 0 -printf "test: %" }

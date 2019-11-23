@@ -1,8 +1,0 @@
-Invalid Code
-
-public class Test {
-	static class int i { get; set; }
-}
-
-void main () {
-}

@@ -1,4 +1,0 @@
-[erlang]
-Bindir=%BINDIR%
-Progname=erl
-Rootdir=%ROOTDIR%

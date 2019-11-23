@@ -1,8 +1,0 @@
-Invalid Code
-
-void bar<G,T> (G g, T t) {
-}
-
-void main () {
-	bar<string> ("foo", 42);
-}

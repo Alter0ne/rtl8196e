@@ -1,9 +1,0 @@
-Invalid Code
-
-class Foo {
-}
-
-Foo field = new Foo ();
-
-void main () {
-}

@@ -1,5 +1,0 @@
-interface Foo {
-}
-
-void main () {
-}

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-chmod u+s /usr/bin/newuidmap && \
-chmod u+s /usr/bin/newgidmap

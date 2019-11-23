@@ -1,7 +1,0 @@
-Invalid Code
-
-async void foo (out int i, int j) {
-}
-
-void main () {
-}

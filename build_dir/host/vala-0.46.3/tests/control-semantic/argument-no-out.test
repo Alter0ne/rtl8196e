@@ -1,9 +1,0 @@
-Invalid Code
-
-void foo (string arg) {
-}
-
-void main () {
-	string s;
-	foo (out s);
-}

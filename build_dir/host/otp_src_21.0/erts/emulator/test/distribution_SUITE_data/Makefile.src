@@ -1,4 +1,0 @@
-all: run
-
-run:
-	@erl_name@ -compile run

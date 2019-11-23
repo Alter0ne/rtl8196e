@@ -1,3 +1,0 @@
-{incl_app,eldap,details}.
-
-{excl_mods, eldap, ['ELDAPv3']}.

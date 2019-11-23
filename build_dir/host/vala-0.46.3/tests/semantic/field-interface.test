@@ -1,8 +1,0 @@
-Invalid Code
-
-interface Foo {
-	public int field;
-}
-
-void main () {
-}

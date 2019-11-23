@@ -1,5 +1,0 @@
-
-
-#include "tester.c"   /* poor mans linker */
-
-

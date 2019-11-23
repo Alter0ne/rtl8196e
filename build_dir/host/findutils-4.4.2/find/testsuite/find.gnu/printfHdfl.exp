@@ -1,2 +1,0 @@
-# verify that %H with no argument assumes "."
-find_start p { -maxdepth 0 -printf "%H" }

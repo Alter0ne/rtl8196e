@@ -1,6 +1,0 @@
-#!/bin/sh
-# WARNING: This file was auto-generated. Do not edit!
-echo "${2-}" | /usr/bin/tcpclient -RHl0 -- "${1-0}" 79 sh -c '
-  /usr/bin/addcr >&7
-  exec /usr/bin/delcr <&6
-' | cat -v

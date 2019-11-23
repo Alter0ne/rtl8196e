@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Foo {
-	[NoAccessorMethod]
-	public string baz { get; set; }
-}
-
-void main () {
-}

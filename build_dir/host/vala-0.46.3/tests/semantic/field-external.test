@@ -1,6 +1,0 @@
-Invalid Code
-
-extern unowned string field = "foo";
-
-void main () {
-}

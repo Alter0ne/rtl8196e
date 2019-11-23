@@ -1,8 +1,0 @@
-Invalid Code
-
-[SingleInstance]
-public class Foo {
-}
-
-void main () {
-}

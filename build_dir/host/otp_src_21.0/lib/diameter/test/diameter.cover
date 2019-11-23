@@ -1,8 +1,0 @@
-{incl_app,diameter,details}.
-
-{excl_mods, diameter,
- [diameter_dbg,
-  diameter_info,
-  diameter_etcp,
-  diameter_etcp_sup]
-}.

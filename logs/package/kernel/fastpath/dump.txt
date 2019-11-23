@@ -1,0 +1,20 @@
+Makefile:17: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config: No such file or directory
+Package: kmod-fastpath
+Submenu: Network Support
+Default: y
+Version: <LINUX_VERSION>+0.1-1
+Depends: +kmod-ipt-core +kmod-ipt-conntrack +kmod-ipt-nat +kmod-ppp
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: fastpath driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_RTL_819X CONFIG_RTL_IPTABLES_FAST_PATH=y CONFIG_FAST_PATH_MODULE=y CONFIG_RTL_FAST_PPPOE=y CONFIG_RTL_PPPOE_DIRECT_REPLY=n CONFIG_RTL_L2TP_DIRECT_PPP_REPLY=n 
+Description:  Kernel modules for fastpath support
+
+@@
+
+make[2]: *** No rule to make target '/home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config'.  Stop.

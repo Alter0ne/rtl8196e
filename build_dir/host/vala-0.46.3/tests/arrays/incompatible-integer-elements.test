@@ -1,5 +1,0 @@
-Invalid Code
-
-void main () {
-	uint8?[] foo = new int?[13];
-}

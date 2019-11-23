@@ -1,3 +1,0 @@
-# test for diagnosis of the fact that the argument to -user is empty
-find_start f { . -user "" }
-

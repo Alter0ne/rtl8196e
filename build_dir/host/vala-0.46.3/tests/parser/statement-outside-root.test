@@ -1,8 +1,0 @@
-Invalid Code
-
-namespace Test {
-	var i = {};
-}
-
-void main () {
-}

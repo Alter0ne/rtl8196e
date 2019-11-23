@@ -1,2 +1,0 @@
-set(CMAKE_Fortran_COMPILER "CMAKE_Fortran_COMPILER-NOTFOUND")
-set(CMAKE_Fortran_FLAGS "")

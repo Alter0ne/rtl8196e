@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo {
-	public abstract void bar (int p, ...);
-}
-
-void main () {
-}

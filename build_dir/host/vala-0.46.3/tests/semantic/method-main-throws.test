@@ -1,8 +1,0 @@
-Invalid Code
-
-errordomain FooError {
-	BAR
-}
-
-void main () throws FooError {
-}

@@ -1,3 +1,0 @@
-
-{suites, ".", all}.
-{cover, "./coverspec"}.

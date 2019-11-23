@@ -1,8 +1,0 @@
-Invalid Code
-
-public class Test {
-	abstract int i;
-}
-
-void main () {
-}

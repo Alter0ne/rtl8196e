@@ -1,2 +1,0 @@
-{dialyzer_options, [{warnings, [no_unused, no_return]}]}.
-{time_limit, 40}.

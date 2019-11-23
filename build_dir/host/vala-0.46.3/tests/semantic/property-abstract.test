@@ -1,8 +1,0 @@
-Invalid Code
-
-class Bar {
-	public abstract string foo { get; }
-}
-
-void main () {
-}

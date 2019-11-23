@@ -1,6 +1,0 @@
-Invalid Code
-
-void main () {
-	Variant? v = null;
-	Object? array = v as Object;
-}

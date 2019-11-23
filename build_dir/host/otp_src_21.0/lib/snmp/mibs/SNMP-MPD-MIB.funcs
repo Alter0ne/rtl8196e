@@ -1,6 +1,0 @@
-{snmpUnknownSecurityModels,
-	 {snmp_standard_mib, variable_func, [snmpUnknownSecurityModels]}}.
-{snmpInvalidMsgs,
-	 {snmp_standard_mib, variable_func, [snmpInvalidMsgs]}}.
-{snmpUnknownPDUHandlers,
-	 {snmp_standard_mib, variable_func, [snmpUnknownPDUHandlers]}}.

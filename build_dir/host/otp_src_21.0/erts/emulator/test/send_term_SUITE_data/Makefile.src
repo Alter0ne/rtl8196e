@@ -1,3 +1,0 @@
-all: send_term_drv@dll@
-
-@SHLIB_RULES@

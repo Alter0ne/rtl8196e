@@ -1,2 +1,0 @@
-init
-	assert( true )

@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo : Object {
-	public int[] bar { get; construct; }
-}
-
-void main () {
-}

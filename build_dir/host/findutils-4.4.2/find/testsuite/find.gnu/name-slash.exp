@@ -1,2 +1,0 @@
-# tests for '-name /'
-find_start p {/ /// -maxdepth 0 -name /}

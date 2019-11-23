@@ -1,8 +1,0 @@
-./
-./host
-./usr
-./usr/lib
-./usr/lib/libnmeap.a
-./usr/include
-./usr/include/nmeap_def.h
-./usr/include/nmeap.h

@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Test {
-	static class construct {
-	}
-}
-
-void main () {
-}

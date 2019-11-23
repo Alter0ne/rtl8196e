@@ -1,5 +1,0 @@
-d 0 tmp
-f 0 tmp/LINK
-f 1 tmp/LINK
-l 0 tmp/BROKEN
-l 1 tmp/BROKEN

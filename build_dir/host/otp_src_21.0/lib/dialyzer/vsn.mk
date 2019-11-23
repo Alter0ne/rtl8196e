@@ -1,1 +1,0 @@
-DIALYZER_VSN = 3.3

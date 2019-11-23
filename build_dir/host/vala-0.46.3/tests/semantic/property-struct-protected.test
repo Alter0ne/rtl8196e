@@ -1,9 +1,0 @@
-Invalid Code
-
-struct Foo {
-	protected string foo { get; set; }
-}
-
-void main () {
-}
-

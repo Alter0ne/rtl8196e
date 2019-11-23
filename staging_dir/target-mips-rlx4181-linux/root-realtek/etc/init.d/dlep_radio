@@ -1,6 +1,0 @@
-#!/bin/sh /etc/rc.common
-
-START=82
-DAEMON='dlep_radio'
-
-. /lib/functions/oonf_init.sh

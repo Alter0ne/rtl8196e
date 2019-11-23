@@ -1,2 +1,0 @@
-
-list_match.erl:19: The pattern [_ | T] can never match since previous clauses completely covered the type [1 | 2 | 3 | 4]

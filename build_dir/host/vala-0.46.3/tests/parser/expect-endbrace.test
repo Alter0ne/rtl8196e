@@ -1,7 +1,0 @@
-Invalid Code
-
-void main () {
-	if (true) {
-		
-	return;
-}

@@ -1,3 +1,0 @@
-
-opaque_digraph.erl:353: Cons will produce an improper list since its 2nd argument is number()
-opaque_digraph.erl:365: Cons will produce an improper list since its 2nd argument is number()

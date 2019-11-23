@@ -1,9 +1,0 @@
-set files "\)"
-
-foreach file $files { touch $file }
-
-# shoud not result in a fatal error.  
-find_start p { \) }
-
-foreach file $files { file delete -- $file }
-

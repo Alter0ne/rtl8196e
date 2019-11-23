@@ -1,9 +1,0 @@
-Invalid Code
-
-struct Foo {
-	public abstract string foo { get; set; }
-}
-
-void main () {
-}
-

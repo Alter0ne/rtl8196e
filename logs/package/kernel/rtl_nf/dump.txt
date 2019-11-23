@@ -1,0 +1,19 @@
+Makefile:17: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config: No such file or directory
+Package: kmod-rtl_nf
+Submenu: Network Support
+Version: <LINUX_VERSION>+0.1-1
+Depends: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: rtl_nf driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_RTL_USB_IP_HOST_SPEEDUP=y
+Description: Kernel module to rtl_nf
+
+@@
+
+make[2]: *** No rule to make target '/home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config'.  Stop.

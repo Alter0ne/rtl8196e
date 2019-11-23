@@ -1,8 +1,0 @@
-Invalid Code
-
-public class Foo {
-	public string foo { get; set; default = 23; }
-}
-
-void main () {
-}

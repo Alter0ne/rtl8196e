@@ -1,7 +1,0 @@
-Invalid Code
-
-void foo (params int args) {
-}
-
-void main () {
-}

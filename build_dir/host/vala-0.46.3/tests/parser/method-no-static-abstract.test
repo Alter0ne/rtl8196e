@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Test {
-	static abstract void test () {
-	}
-}
-
-void main () {
-}

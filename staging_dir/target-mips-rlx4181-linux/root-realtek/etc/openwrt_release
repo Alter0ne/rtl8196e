@@ -1,7 +1,0 @@
-DISTRIB_ID="OpenWrt"
-DISTRIB_RELEASE="Barrier Breaker"
-DISTRIB_REVISION="r42887"
-DISTRIB_CODENAME="barrier_breaker"
-DISTRIB_TARGET="realtek/generic"
-DISTRIB_DESCRIPTION="OpenWrt Barrier Breaker 14.07"
-DISTRIB_TAINTS="no-all busybox"

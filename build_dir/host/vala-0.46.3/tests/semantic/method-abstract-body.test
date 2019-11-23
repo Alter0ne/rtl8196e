@@ -1,9 +1,0 @@
-Invalid Code
-
-abstract class Foo {
-	public abstract void foo () {
-	}
-}
-
-void main () {
-}

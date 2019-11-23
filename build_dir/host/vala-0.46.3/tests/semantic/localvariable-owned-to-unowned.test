@@ -1,9 +1,0 @@
-Invalid Code
-
-string get_foo () {
-	return "foo";
-}
-
-void main () {
-	unowned string foo = get_foo ();
-}

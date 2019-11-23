@@ -1,9 +1,0 @@
-* Warn when in --dry-run and the same input file is patched more than once?
-
-* More portability fixes
-* Try to improve the test suite coverage
-* Add test cases for plan B
-* gnulib tests?
-
-* Get rid of the ISSPACE etc. mess
-* Get rid of the signal related tests in configure.ac, etc.?

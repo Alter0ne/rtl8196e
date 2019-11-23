@@ -1,2 +1,0 @@
-# check frcode handles space as first character
-locate_textonly p  0 " fred\n" "-i fred" " fred\n"

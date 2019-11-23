@@ -1,8 +1,0 @@
-Invalid Code
-
-struct Foo {
-	public static int bar { get; set; }
-}
-
-void main () {
-}

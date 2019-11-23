@@ -1,8 +1,0 @@
-Invalid Code
-
-class Foo {
-	public string bar { get; construct; }
-}
-
-void main () {
-}

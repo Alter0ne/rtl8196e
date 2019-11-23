@@ -1,7 +1,0 @@
-
-NIF_LIBS = trace_nif@dll@
-
-all: $(NIF_LIBS)
-
-@SHLIB_RULES@
-

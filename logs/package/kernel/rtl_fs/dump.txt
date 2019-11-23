@@ -1,0 +1,18 @@
+Makefile:17: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config: No such file or directory
+Package: kmod-rtl_fs
+Submenu: Filesystems
+Version: <LINUX_VERSION>+0.1-1
+Depends: 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Realtek High Performance NTFS/exFAT/HFS+ filesystem
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   Realtek kernel module for supporting NTFS/exFAT/HFS+ filesystem formats with high performance.
+
+@@
+
+make[2]: *** No rule to make target '/home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk/.config'.  Stop.

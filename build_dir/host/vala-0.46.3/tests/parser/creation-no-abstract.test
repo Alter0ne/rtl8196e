@@ -1,9 +1,0 @@
-Invalid Code
-
-public class Test {
-	abstract Test () {
-	}
-}
-
-void main () {
-}

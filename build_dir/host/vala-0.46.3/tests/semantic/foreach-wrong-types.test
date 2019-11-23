@@ -1,7 +1,0 @@
-Invalid Code
-
-void main () {
-	string[] test = { "foo", "bar" };
-	foreach (int t in test) {
-	}
-}

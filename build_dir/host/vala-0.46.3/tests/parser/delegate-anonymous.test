@@ -1,7 +1,0 @@
-Invalid Code
-
-[CCode (has_typedef = false)]
-public delegate void MyDelegate ();
-
-void main () {
-}

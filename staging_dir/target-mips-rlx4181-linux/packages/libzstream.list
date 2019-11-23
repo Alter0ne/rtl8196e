@@ -1,9 +1,0 @@
-./
-./host
-./usr
-./usr/lib
-./usr/lib/libzstream.so
-./usr/include
-./usr/include/zstream.h
-./usr/include/zstream
-./usr/include/zstream/http.h
