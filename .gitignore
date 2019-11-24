@@ -1,0 +1,11 @@
+*.o
+.DS_Store
+bin/
+build_dir/
+staging_dir/host/
+staging_dir/target-mips-rlx4181-linux/
+staging_dir/toolchain-mips-rlx4181-linux/
+tmp/info/
+logs/
+*.orig
+*.rej

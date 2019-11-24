@@ -838,8 +838,8 @@ config TARGET_realtek_rtl8196e
 	depends on TARGET_realtek
 	select GPIO_SUPPORT
 	select PCMCIA_SUPPORT
-	select USB_SUPPORT
 	select USES_SQUASHFS
+    select USB_SUPPORT
 	select rlx
 	help
 	  Build firmware images for Realtek based boards

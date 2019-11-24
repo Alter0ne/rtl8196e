@@ -6872,6 +6872,24 @@ from.
 @@
 
 
+Source-Makefile: package/kernel/exfat-nofuse/Makefile
+Package: kmod-fs-exfat
+Submenu: Filesystems
+Version: <LINUX_VERSION>-2
+Depends: +kmod-nls-base
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: ExFAT Kernel driver
+Maintainer: Yousong Zhou <yszhou4tech@gmail.com>
+Source: exfat-nofuse-01c30ad52625a7261e1b0d874553b6ca7af25966.tar.gz
+Type: ipkg
+Description: 	Kernel module for ExFAT Filesytems
+Yousong Zhou <yszhou4tech@gmail.com>
+@@
+
+
 Source-Makefile: package/kernel/mac80211/Makefile
 Package: kmod-adm8211
 Submenu: Wireless Drivers
