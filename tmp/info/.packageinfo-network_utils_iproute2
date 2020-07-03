@@ -1,0 +1,89 @@
+Source-Makefile: package/network/utils/iproute2/Makefile
+Package: ip
+Submenu: Routing and Redirection
+Version: 3.15.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libnl-tiny
+Menu-Depends: 
+Provides: 
+Build-Variant: tiny
+Section: net
+Category: Network
+Title: Routing control utility (Minimal)
+Maintainer: Russell Senior <russell@personaltelco.net>
+Source: iproute2-3.15.0.tar.xz
+Type: ipkg
+Description: Routing control utility (Minimal)
+http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Russell Senior <russell@personaltelco.net>
+@@
+
+Package: ip-full
+Submenu: Routing and Redirection
+Version: 3.15.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libnl-tiny
+Menu-Depends: 
+Provides: 
+Build-Variant: full
+Section: net
+Category: Network
+Title: Routing control utility (Full)
+Maintainer: Russell Senior <russell@personaltelco.net>
+Source: iproute2-3.15.0.tar.xz
+Type: ipkg
+Description: Routing control utility (Full)
+http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Russell Senior <russell@personaltelco.net>
+@@
+
+Package: tc
+Submenu: Routing and Redirection
+Version: 3.15.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +kmod-sched-core
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Traffic control utility
+Maintainer: Russell Senior <russell@personaltelco.net>
+Source: iproute2-3.15.0.tar.xz
+Type: ipkg
+Description: Traffic control utility
+http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Russell Senior <russell@personaltelco.net>
+@@
+
+Package: genl
+Submenu: Routing and Redirection
+Version: 3.15.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libnl-tiny
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: General netlink utility frontend
+Maintainer: Russell Senior <russell@personaltelco.net>
+Source: iproute2-3.15.0.tar.xz
+Type: ipkg
+Description: General netlink utility frontend
+http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Russell Senior <russell@personaltelco.net>
+@@
+
+Package: ss
+Submenu: Routing and Redirection
+Version: 3.15.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libnl-tiny
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Socket statistics utility
+Maintainer: Russell Senior <russell@personaltelco.net>
+Source: iproute2-3.15.0.tar.xz
+Type: ipkg
+Description: Socket statistics utility
+http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Russell Senior <russell@personaltelco.net>
+@@
+
+

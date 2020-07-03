@@ -1,0 +1,45 @@
+Source-Makefile: package/feeds/oldpackages/python/python3-flask-login/Makefile
+Package: python3-flask-login
+Submenu: Python
+Version: 0.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-flask
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: User session management plugin for Flask
+Maintainer: Jan Pavlinec <jan.pavlinec@nic.cz>
+Source: Flask-Login-0.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Flask-Login provides user session management for Flask.
+  It handles the common tasks of logging in, logging out,
+  and remembering your users’ sessions over extended periods of time.
+https://github.com/maxcountryman/flask-login
+Jan Pavlinec <jan.pavlinec@nic.cz>
+@@
+
+Package: python3-flask-login-src
+Submenu: Python
+Version: 0.4.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: User session management plugin for Flask (sources)
+Maintainer: Jan Pavlinec <jan.pavlinec@nic.cz>
+Source: Flask-Login-0.4.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Flask-Login provides user session management for Flask.
+  It handles the common tasks of logging in, logging out,
+  and remembering your users’ sessions over extended periods of time..
+    (Contains the Python3 sources for this package).
+https://github.com/maxcountryman/flask-login
+Jan Pavlinec <jan.pavlinec@nic.cz>
+@@
+
+

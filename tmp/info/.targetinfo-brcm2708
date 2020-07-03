@@ -1,0 +1,30 @@
+Source-Makefile: target/linux/brcm2708/Makefile
+Target: brcm2708
+Target-Board: brcm2708
+Target-Name: Broadcom BCM2708/BCM2835
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: arm
+Target-Arch-Packages: brcm2708
+Target-Features: audio display ext4 gpio usb usbgadget
+Target-Depends: 
+Target-Optimization: -Os -pipe -march=armv6 -mtune=arm1176jzf-s -mfpu=vfp
+CPU-Type: arm1176jzf-s+vfp
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: arm
+Target-Description:
+	Build firmware image for Broadcom BCM2708/BCM2835 SoC devices.
+	Currently produces SD Card image for Raspberry Pi.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c brcm2708-gpu-fw kmod-usb-hid kmod-sound-core kmod-sound-arm-bcm2835 
+Target-Profile: RaspberryPi
+Target-Profile-Name: RaspberryPi
+Target-Profile-Packages:  
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+	RaspberryPi board
+@@
+
+

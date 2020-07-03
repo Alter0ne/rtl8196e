@@ -1,0 +1,76 @@
+Source-Makefile: package/feeds/oldpackages/bandwidthd/Makefile
+Package: bandwidthd
+Version: 2.0.1-35-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgd +libpcap
+Menu-Depends: 
+Provides: 
+Build-Variant: no-db
+Section: utils
+Category: Utilities
+Title: Bandwidthd (without database)
+Maintainer: Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+Source: bandwidthd-2.0.1-35.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   A bandwidthd tracking utility.
+http://bandwidthd.sourceforge.net/
+Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+@@
+
+Package: bandwidthd-pgsql
+Version: 2.0.1-35-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgd +libpcap +libpq
+Menu-Depends: 
+Provides: 
+Build-Variant: pgsql
+Section: utils
+Category: Utilities
+Title: Bandwidthd (with postgresql enabled)
+Maintainer: Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+Source: bandwidthd-2.0.1-35.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   A bandwidthd tracking utility.
+With the ability to store in a postgresql database.
+http://bandwidthd.sourceforge.net/
+Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+@@
+
+Package: bandwidthd-sqlite
+Version: 2.0.1-35-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgd +libpcap +libsqlite3 +php7 +php7-cgi +php7-mod-gd +php7-mod-pdo +php7-mod-pdo-sqlite
+Menu-Depends: 
+Provides: 
+Build-Variant: sqlite
+Section: utils
+Category: Utilities
+Title: Bandwidthd (with sqlite enabled)
+Maintainer: Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+Source: bandwidthd-2.0.1-35.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   A bandwidthd tracking utility.
+With the ability to store in a sqlite database.
+http://bandwidthd.sourceforge.net/
+Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+@@
+
+Package: bandwidthd-php
+Version: 2.0.1-35-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpcre +libxml2 +php7 +php7-cgi +php7-mod-pgsql +php7-mod-gd
+Menu-Depends: 
+Provides: 
+Build-Variant: php
+Section: utils
+Category: Utilities
+Title: PHP files to graph bandwidthd data from postgresql
+Maintainer: Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+Source: bandwidthd-2.0.1-35.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   PHP files to graph bandwidthd data from pgsql.
+http://bandwidthd.sourceforge.net/
+Jean-Michel Lacroix <lacroix@lepine-lacroix.info>
+@@
+
+

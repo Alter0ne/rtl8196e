@@ -1,0 +1,34 @@
+Source-Makefile: package/firmware/linux-firmware/Makefile
+Package: r8169-firmware
+Version: 2014-03-16-f8c22c692bdee57a20b092e647464ff6176df3ed-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: firmware
+Category: Firmware
+Title: RealTek r8169 firmware
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Source: linux-firmware-2014-03-16-f8c22c692bdee57a20b092e647464ff6176df3ed.tar.xz
+Type: ipkg
+Description: RealTek r8169 firmware
+http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git
+Felix Fietkau <nbd@openwrt.org>
+@@
+
+Package: r8188eu-firmware
+Version: 2014-03-16-f8c22c692bdee57a20b092e647464ff6176df3ed-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: firmware
+Category: Firmware
+Title: RealTek r8188eu firmware
+Maintainer: Felix Fietkau <nbd@openwrt.org>
+Source: linux-firmware-2014-03-16-f8c22c692bdee57a20b092e647464ff6176df3ed.tar.xz
+Type: ipkg
+Description: RealTek r8188eu firmware
+http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git
+Felix Fietkau <nbd@openwrt.org>
+@@
+
+

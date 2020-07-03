@@ -1,0 +1,74 @@
+Source-Makefile: package/kernel/lantiq/ltq-hcd/Makefile
+Package: kmod-ltq-hcd-ase
+Submenu: USB Support
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_ase +kmod-usb-core
+Menu-Depends: 
+Provides: 
+Build-Variant: ase
+Section: sys
+Category: Kernel modules
+Title: USB driver for ase
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: USB driver for ase
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-hcd-danube
+Submenu: USB Support
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xway +kmod-usb-core
+Menu-Depends: 
+Provides: 
+Build-Variant: danube
+Section: sys
+Category: Kernel modules
+Title: USB driver for danube
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: USB driver for danube
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-hcd-ar9
+Submenu: USB Support
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xway +kmod-usb-core
+Menu-Depends: 
+Provides: 
+Build-Variant: ar9
+Section: sys
+Category: Kernel modules
+Title: USB driver for ar9
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: USB driver for ar9
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-hcd-vr9
+Submenu: USB Support
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xrx200 +kmod-usb-core
+Menu-Depends: 
+Provides: 
+Build-Variant: vr9
+Section: sys
+Category: Kernel modules
+Title: USB driver for vr9
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: USB driver for vr9
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+

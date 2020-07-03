@@ -1,0 +1,83 @@
+This allows building the package using a newer glibc.
+---
+ lib/blkid/devname.c  | 2 ++
+ lib/blkid/devno.c    | 4 +++-
+ lib/blkid/probe.c    | 4 +++-
+ lib/blkid/save.c     | 4 +++-
+ lib/ext2fs/finddev.c | 4 +++-
+ 5 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/lib/blkid/devname.c b/lib/blkid/devname.c
+index a6673c1..ab1b754 100644
+--- a/lib/blkid/devname.c
++++ b/lib/blkid/devname.c
+@@ -35,6 +35,8 @@
+ #endif
+ #if HAVE_SYS_MKDEV_H
+ #include <sys/mkdev.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #include <time.h>
+ 
+diff --git a/lib/blkid/devno.c b/lib/blkid/devno.c
+index 479d977..c7b56dd 100644
+--- a/lib/blkid/devno.c
++++ b/lib/blkid/devno.c
+@@ -29,7 +29,9 @@
+ #include <errno.h>
+ #endif
+ #if HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ 
+ #include "blkidP.h"
+diff --git a/lib/blkid/probe.c b/lib/blkid/probe.c
+index bd31fe0..56f32a2 100644
+--- a/lib/blkid/probe.c
++++ b/lib/blkid/probe.c
+@@ -25,7 +25,9 @@
+ #include <sys/stat.h>
+ #endif
+ #ifdef HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #ifdef __linux__
+ #include <sys/utsname.h>
+diff --git a/lib/blkid/save.c b/lib/blkid/save.c
+index 6c20168..7589b7b 100644
+--- a/lib/blkid/save.c
++++ b/lib/blkid/save.c
+@@ -20,7 +20,9 @@
+ #include <sys/stat.h>
+ #endif
+ #ifdef HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #ifdef HAVE_ERRNO_H
+ #include <errno.h>
+diff --git a/lib/ext2fs/finddev.c b/lib/ext2fs/finddev.c
+index 311608d..7708160 100644
+--- a/lib/ext2fs/finddev.c
++++ b/lib/ext2fs/finddev.c
+@@ -29,7 +29,9 @@
+ #include <errno.h>
+ #endif
+ #if HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ 
+ #include "ext2_fs.h"
+-- 

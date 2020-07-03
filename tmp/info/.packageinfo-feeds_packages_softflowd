@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/packages/softflowd/Makefile
+Package: softflowd
+Version: 0.9.9-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpcap
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: softflowd
+Maintainer: Ross Vandegrift <ross@kallisti.us>
+Source: softflowd-0.9.9.tar.gz
+Type: ipkg
+Feed: packages
+Description: 	Software netflow exporter
+http://code.google.com/p/softflowd/
+Ross Vandegrift <ross@kallisti.us>
+@@
+
+

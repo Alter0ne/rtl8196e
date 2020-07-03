@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/oldpackages/bwm/Makefile
+Package: bwm
+Version: 1.1.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: A very tiny bandwidth monitor
+Maintainer: 
+Source: bwm_1.1.0.orig.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: A very tiny bandwidth monitor
+http://ftp.debian.org/debian/pool/main/b/bwm
+
+@@
+
+

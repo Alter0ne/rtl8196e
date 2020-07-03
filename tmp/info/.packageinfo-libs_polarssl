@@ -1,0 +1,21 @@
+Source-Makefile: package/libs/polarssl/Makefile
+Package: libpolarssl
+Submenu: SSL
+Version: 1.3.8-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: Embedded SSL (library)
+Maintainer: 
+Source: polarssl-1.3.8-gpl.tgz
+Type: ipkg
+Description: The aim of the PolarSSL project is to provide a quality, open-source
+cryptographic library written in C and targeted at embedded systems.
+This package contains the PolarSSL library.
+http://polarssl.org/
+
+@@
+
+

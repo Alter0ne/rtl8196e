@@ -1,0 +1,44 @@
+Source-Makefile: package/feeds/oldpackages/python/django/Makefile
+Package: python-django
+Menu: 1
+Submenu: Python
+Version: 1.11.24-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-django:python +PACKAGE_python-django:python-pytz
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: The web framework for perfectionists with deadlines.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: Django-1.11.24.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     The web framework for perfectionists with deadlines.
+https://www.djangoproject.com/
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python3-django
+Menu: 1
+Submenu: Python
+Version: 1.11.24-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-django:python3 +PACKAGE_python3-django:python3-pytz
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: The web framework for perfectionists with deadlines.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: Django-1.11.24.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     The web framework for perfectionists with deadlines.
+.
+(Variant for Python3)
+https://www.djangoproject.com/
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+

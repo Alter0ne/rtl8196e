@@ -1,0 +1,19 @@
+Source-Makefile: target/linux/mpc83xx/Makefile
+Target: mpc83xx
+Target-Board: mpc83xx
+Target-Name: Freescale MPC83xx
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: powerpc
+Target-Arch-Packages: mpc83xx
+Target-Features: dt gpio pci squashfs targz
+Target-Depends: 
+Target-Optimization: -Os -pipe -mcpu=603e
+CPU-Type: 603e
+Linux-Version: 3.8.13
+Linux-Release: 1
+Linux-Kernel-Arch: powerpc
+Target-Description:
+	Build firmware images for Freescale MPC83xx based boards (eg. RouterBoard 600).
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c kmod-via-velocity 
+

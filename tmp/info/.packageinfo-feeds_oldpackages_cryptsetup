@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/cryptsetup/Makefile
+Package: cryptsetup
+Submenu: Encryption
+Version: 2.1.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libblkid +libuuid +libpopt +lvm2 +libdevmapper +libjson-c +@KERNEL_DIRECT_IO +kmod-crypto-user
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Cryptsetup
+Maintainer: Daniel Golle <daniel@makrotopia.org>
+Source: cryptsetup-2.1.0.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description:   Cryptsetup is utility used to conveniently setup disk encryption based on DMCrypt kernel module.
+https://gitlab.com/cryptsetup/cryptsetup/
+Daniel Golle <daniel@makrotopia.org>
+@@
+
+

@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/management/freesub/Makefile
+Package: freesub
+Version: 2014-12-03-a1a38e80c6642af723d6aa65f64910dcf27cb3da
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libubox
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: SSH subsystem helper
+Maintainer: Luka Perkov <luka@openwrt.org>
+Source: freesub-2014-12-03-a1a38e80c6642af723d6aa65f64910dcf27cb3da.tar.gz
+Type: ipkg
+Feed: management
+Description: SSH subsystem helper
+http://www.freenetconf.org/
+Luka Perkov <luka@openwrt.org>
+@@
+
+

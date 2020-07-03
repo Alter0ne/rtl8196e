@@ -1,0 +1,53 @@
+Source-Makefile: package/feeds/oldpackages/libdbi-drivers/Makefile
+Package: libdbd-mysql
+Version: 0.9.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread libdbi +libmysqlclient
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: MySQL database server driver for libdbi
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Source: libdbi-drivers-0.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: MySQL database server driver for libdbi
+http://libdbi-drivers.sourceforge.net/
+Nicolas Thill <nico@openwrt.org>
+@@
+
+Package: libdbd-pgsql
+Version: 0.9.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread libdbi +libpq
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: PostgreSQL database server driver for libdbi
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Source: libdbi-drivers-0.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: PostgreSQL database server driver for libdbi
+http://libdbi-drivers.sourceforge.net/
+Nicolas Thill <nico@openwrt.org>
+@@
+
+Package: libdbd-sqlite3
+Version: 0.9.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread libdbi +libsqlite3
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: SQLite3 database driver for libdbi
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Source: libdbi-drivers-0.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: SQLite3 database driver for libdbi
+http://libdbi-drivers.sourceforge.net/
+Nicolas Thill <nico@openwrt.org>
+@@
+
+

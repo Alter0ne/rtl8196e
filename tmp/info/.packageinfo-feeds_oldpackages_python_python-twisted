@@ -1,0 +1,96 @@
+Source-Makefile: package/feeds/oldpackages/python/python-twisted/Makefile
+Package: python-twisted
+Submenu: Python
+Version: 19.7.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-twisted:python-light +PACKAGE_python-twisted:python-attrs +PACKAGE_python-twisted:python-automat +PACKAGE_python-twisted:python-constantly +PACKAGE_python-twisted:python-incremental +PACKAGE_python-twisted:python-hyperlink +PACKAGE_python-twisted:python-setuptools +PACKAGE_python-twisted:python-zope-interface
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Build-Depends: libtirpc
+Section: lang
+Category: Languages
+Title: Asynchronous networking framework
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Twisted-19.7.0.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description: Twisted is a networking engine written in Python, supporting numerous
+protocols. It contains a web server, numerous chat clients, chat servers,
+mail servers, and more.
+https://twistedmatrix.com/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python-twisted-src
+Submenu: Python
+Version: 19.7.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Build-Depends: libtirpc
+Section: lang
+Category: Languages
+Title: Asynchronous networking framework (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Twisted-19.7.0.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description:     Twisted is a networking engine written in Python, supporting numerous
+protocols. It contains a web server, numerous chat clients, chat servers,
+mail servers, and more..
+    (Contains the Python sources for this package).
+https://twistedmatrix.com/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-twisted
+Submenu: Python
+Version: 19.7.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-twisted:python3-light +PACKAGE_python3-twisted:python3-attrs +PACKAGE_python3-twisted:python3-automat +PACKAGE_python3-twisted:python3-constantly +PACKAGE_python3-twisted:python3-incremental +PACKAGE_python3-twisted:python3-hyperlink +PACKAGE_python3-twisted:python3-setuptools +PACKAGE_python3-twisted:python3-zope-interface
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Build-Depends: libtirpc
+Section: lang
+Category: Languages
+Title: Asynchronous networking framework
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Twisted-19.7.0.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description: Twisted is a networking engine written in Python, supporting numerous
+protocols. It contains a web server, numerous chat clients, chat servers,
+mail servers, and more.
+.
+(Variant for Python3)
+https://twistedmatrix.com/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-twisted-src
+Submenu: Python
+Version: 19.7.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Build-Depends: libtirpc
+Section: lang
+Category: Languages
+Title: Asynchronous networking framework (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: Twisted-19.7.0.tar.bz2
+Type: ipkg
+Feed: oldpackages
+Description:     Twisted is a networking engine written in Python, supporting numerous
+protocols. It contains a web server, numerous chat clients, chat servers,
+mail servers, and more.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://twistedmatrix.com/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+

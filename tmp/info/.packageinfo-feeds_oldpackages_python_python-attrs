@@ -1,0 +1,92 @@
+Source-Makefile: package/feeds/oldpackages/python/python-attrs/Makefile
+Package: python-attrs
+Submenu: Python
+Version: 19.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-attrs:python-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Classes Without Boilerplate
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: attrs-19.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: attrs is an MIT-licensed Python package with class decorators that ease
+the chores of implementing the most common attribute-related object
+protocols.
+https://www.attrs.org/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python-attrs-src
+Submenu: Python
+Version: 19.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Classes Without Boilerplate (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: attrs-19.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     attrs is an MIT-licensed Python package with class decorators that ease
+the chores of implementing the most common attribute-related object
+protocols..
+    (Contains the Python sources for this package).
+https://www.attrs.org/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-attrs
+Submenu: Python
+Version: 19.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-attrs:python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Classes Without Boilerplate
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: attrs-19.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: attrs is an MIT-licensed Python package with class decorators that ease
+the chores of implementing the most common attribute-related object
+protocols.
+.
+(Variant for Python3)
+https://www.attrs.org/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+Package: python3-attrs-src
+Submenu: Python
+Version: 19.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Classes Without Boilerplate (sources)
+Maintainer: Jeffery To <jeffery.to@gmail.com>
+Source: attrs-19.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     attrs is an MIT-licensed Python package with class decorators that ease
+the chores of implementing the most common attribute-related object
+protocols.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://www.attrs.org/
+Jeffery To <jeffery.to@gmail.com>
+@@
+
+

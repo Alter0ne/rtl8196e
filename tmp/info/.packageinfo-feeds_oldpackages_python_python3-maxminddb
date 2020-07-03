@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/python3-maxminddb/Makefile
+Package: python3-maxminddb
+Submenu: Python
+Version: 1.5.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +libmaxminddb
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Reader for the MaxMind DB format
+Maintainer: Jan Pavlinec <jan.pavlinec@nic.cz>
+Source: maxminddb-1.5.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Module for reading MaxMind DB files
+https://dev.maxmind.com/
+Jan Pavlinec <jan.pavlinec@nic.cz>
+@@
+
+Package: python3-maxminddb-src
+Submenu: Python
+Version: 1.5.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Reader for the MaxMind DB format (sources)
+Maintainer: Jan Pavlinec <jan.pavlinec@nic.cz>
+Source: maxminddb-1.5.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Module for reading MaxMind DB files.
+    (Contains the Python3 sources for this package).
+https://dev.maxmind.com/
+Jan Pavlinec <jan.pavlinec@nic.cz>
+@@
+
+

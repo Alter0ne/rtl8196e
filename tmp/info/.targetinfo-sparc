@@ -1,0 +1,19 @@
+Source-Makefile: target/linux/sparc/Makefile
+Target: sparc
+Target-Board: sparc
+Target-Name: Sun UltraSPARC
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: sparc
+Target-Arch-Packages: sparc
+Target-Features: broken display dt ext4 fpu pci rtc squashfs tgz usb
+Target-Depends: 
+Target-Optimization: -Os -pipe
+CPU-Type: sparc
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: sparc
+Target-Description:
+
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+

@@ -1,0 +1,17 @@
+Source-Makefile: package/system/ca-certificates/Makefile
+Package: ca-certificates
+Version: 20140325
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: System CA certificates
+Maintainer: 
+Source: ca-certificates_20140325.tar.xz
+Type: ipkg
+Description: System CA certificates
+
+@@
+
+

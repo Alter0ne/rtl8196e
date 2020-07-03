@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/autossh/Makefile
+Package: autossh
+Submenu: SSH
+Version: 1.4g-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Autossh client
+Maintainer: Christian Beier <cb@shoutrlabs.com>
+Source: autossh-1.4g.tgz
+Type: ipkg
+Feed: oldpackages
+Description: Autossh client
+https://www.harding.motd.ca/autossh/
+Christian Beier <cb@shoutrlabs.com>
+@@
+
+

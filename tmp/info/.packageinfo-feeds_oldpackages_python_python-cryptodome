@@ -1,0 +1,88 @@
+Source-Makefile: package/feeds/oldpackages/python/python-cryptodome/Makefile
+Package: python-cryptodome
+Submenu: Python
+Version: 3.9.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgmp +PACKAGE_python-cryptodome:python
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang-python
+Category: Languages
+Title: A self-contained cryptographic library for Python
+Maintainer: Richard Yu <yurichard3839@gmail.com>
+Source: pycryptodome-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: PyCryptodome is a self-contained Python package of low-level
+cryptographic primitives.
+https://www.pycryptodome.org/
+Richard Yu <yurichard3839@gmail.com>
+@@
+
+Package: python-cryptodome-src
+Submenu: Python
+Version: 3.9.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang-python
+Category: Languages
+Title: A self-contained cryptographic library for Python (sources)
+Maintainer: Richard Yu <yurichard3839@gmail.com>
+Source: pycryptodome-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     PyCryptodome is a self-contained Python package of low-level
+cryptographic primitives..
+    (Contains the Python sources for this package).
+https://www.pycryptodome.org/
+Richard Yu <yurichard3839@gmail.com>
+@@
+
+Package: python3-cryptodome
+Submenu: Python
+Version: 3.9.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgmp +PACKAGE_python3-cryptodome:python3
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang-python
+Category: Languages
+Title: A self-contained cryptographic library for Python
+Maintainer: Richard Yu <yurichard3839@gmail.com>
+Source: pycryptodome-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: PyCryptodome is a self-contained Python package of low-level
+cryptographic primitives.
+.
+(Variant for Python3)
+https://www.pycryptodome.org/
+Richard Yu <yurichard3839@gmail.com>
+@@
+
+Package: python3-cryptodome-src
+Submenu: Python
+Version: 3.9.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang-python
+Category: Languages
+Title: A self-contained cryptographic library for Python (sources)
+Maintainer: Richard Yu <yurichard3839@gmail.com>
+Source: pycryptodome-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     PyCryptodome is a self-contained Python package of low-level
+cryptographic primitives.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://www.pycryptodome.org/
+Richard Yu <yurichard3839@gmail.com>
+@@
+
+

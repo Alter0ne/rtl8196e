@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/oldpackages/gawk/Makefile
+Package: gawk
+Version: 5.0.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libncursesw +libreadline
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: GNU awk
+Maintainer: Daniel Golle <daniel@makrotopia.org>
+Source: gawk-5.0.0.tar.xz
+Type: ipkg
+Feed: oldpackages
+Description: GNU awk
+https://www.gnu.org/software/gawk/
+Daniel Golle <daniel@makrotopia.org>
+@@
+
+

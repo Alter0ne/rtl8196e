@@ -1,0 +1,43 @@
+Source-Makefile: package/feeds/oldpackages/python/python-cachelib/Makefile
+Package: python3-cachelib
+Submenu: Python
+Version: 0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: cachelib
+Maintainer: Stepan Henek <stepan.henek@nic.cz>
+Source: cachelib-0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   A collection of cache libraries in the same API interface.
+  Extracted from werkzeug.
+https://github.com/pallets/cachelib
+Stepan Henek <stepan.henek@nic.cz>
+@@
+
+Package: python3-cachelib-src
+Submenu: Python
+Version: 0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: cachelib (sources)
+Maintainer: Stepan Henek <stepan.henek@nic.cz>
+Source: cachelib-0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       A collection of cache libraries in the same API interface.
+  Extracted from werkzeug..
+    (Contains the Python3 sources for this package).
+https://github.com/pallets/cachelib
+Stepan Henek <stepan.henek@nic.cz>
+@@
+
+

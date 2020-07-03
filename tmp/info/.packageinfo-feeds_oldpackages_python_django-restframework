@@ -1,0 +1,84 @@
+Source-Makefile: package/feeds/oldpackages/python/django-restframework/Makefile
+Package: python-django-restframework
+Submenu: Python
+Version: 3.9.0-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-django-restframework:python python-django
+Menu-Depends: python-django
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Web APIs for Django, made easy.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: djangorestframework-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Web APIs for Django, made easy.
+https://www.django-rest-framework.org
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python-django-restframework-src
+Submenu: Python
+Version: 3.9.0-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: python-django
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Web APIs for Django, made easy. (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: djangorestframework-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Web APIs for Django, made easy..
+    (Contains the Python sources for this package).
+https://www.django-rest-framework.org
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python3-django-restframework
+Submenu: Python
+Version: 3.9.0-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-django-restframework:python3 python3-django
+Menu-Depends: python3-django
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Web APIs for Django, made easy.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: djangorestframework-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: 
+.
+(Variant for Python3)
+https://www.django-rest-framework.org
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+Package: python3-django-restframework-src
+Submenu: Python
+Version: 3.9.0-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: python3-django
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Web APIs for Django, made easy. (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>
+Source: djangorestframework-3.9.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://www.django-rest-framework.org
+Alexandru Ardelean <ardeleanalex@gmail.com>
+@@
+
+

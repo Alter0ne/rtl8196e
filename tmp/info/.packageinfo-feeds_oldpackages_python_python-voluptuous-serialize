@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/python-voluptuous-serialize/Makefile
+Package: python3-voluptuous-serialize
+Submenu: Python
+Version: 2.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-voluptuous
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Python Voluptuous Serialize
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: voluptuous-serialize-2.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Convert Voluptuous schemas to dictionaries so they can be serialized.
+https://github.com/balloob/voluptuous-serialize
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-voluptuous-serialize-src
+Submenu: Python
+Version: 2.2.0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Python Voluptuous Serialize (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: voluptuous-serialize-2.2.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Convert Voluptuous schemas to dictionaries so they can be serialized..
+    (Contains the Python3 sources for this package).
+https://github.com/balloob/voluptuous-serialize
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+

@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/packages/libuecc/Makefile
+Package: libuecc
+Version: 7-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: Very small Elliptic Curve Cryptography library
+Maintainer: Matthias Schiffer <mschiffer@universe-factory.net>
+Source: libuecc-7.tar.xz
+Type: ipkg
+Feed: packages
+Description: Very small Elliptic Curve Cryptography library
+https://github.com/NeoRaider/libuecc/
+Matthias Schiffer <mschiffer@universe-factory.net>
+@@
+
+

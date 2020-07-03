@@ -1,0 +1,69 @@
+Source-Makefile: target/linux/kirkwood/Makefile
+Target: kirkwood
+Target-Board: kirkwood
+Target-Name: Marvell Kirkwood
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: arm
+Target-Arch-Packages: kirkwood
+Target-Features: dt gpio jffs2_nand pci rtc targz ubifs usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -march=armv5te -mtune=xscale
+CPU-Type: xscale
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: arm
+Target-Description:
+
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+Target-Profile: Generic
+Target-Profile-Name: Generic (default)
+Target-Profile-Packages: kmod-mmc kmod-mvsdio kmod-usb2 kmod-usb-storage kmod-of-i2c kmod-i2c-core kmod-i2c-mv64xxx kmod-ata-core kmod-ata-marvell-sata kmod-rtc-marvell kmod-thermal-kirkwood 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+ Package set compatible with most Marvell Kirkwood based boards.
+@@
+
+Target-Profile: DOCKSTAR
+Target-Profile-Name: Seagate FreeAgent Dockstar
+Target-Profile-Packages: kmod-ata-core kmod-ata-marvell-sata kmod-rtc-marvell kmod-usb2 kmod-usb-storage uboot-envtools 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+ Package set compatible with Seagate FreeAgent Dockstar board.
+@@
+
+Target-Profile: ICONNECT
+Target-Profile-Name: Iomega Iconnect
+Target-Profile-Packages: kmod-usb2 kmod-usb-storage 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+ Package set compatible with Iomega Iconnect board.
+@@
+
+Target-Profile: IB62X0
+Target-Profile-Name: RaidSonic ICY BOX IB-NAS62x0
+Target-Profile-Packages: kmod-ata-core kmod-ata-marvell-sata kmod-rtc-marvell kmod-usb2 kmod-usb-storage uboot-envtools 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+ Package set compatible with RaidSonic ICY BOX IB-NAS62x0 board.
+@@
+
+Target-Profile: POGOE02
+Target-Profile-Name: Cloud Engines Pogoplug E02
+Target-Profile-Packages: kmod-usb2 kmod-usb-storage uboot-envtools 
+Target-Profile-Config: 
+
+@@
+Target-Profile-Description:
+ Package set compatible with Cloud Engines Pogoplug E02 board.
+@@
+
+

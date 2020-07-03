@@ -18201,91 +18201,6 @@ Description:   Kernel support for the Lantiq/Falcon I2C controller
 
 @@
 
-Package: kmod-sound-soc-jz4740
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: kmod-sound-soc-core @TARGET_xburst
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: JZ4740 SoC sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_JZ4740_SOC CONFIG_SND_JZ4740_SOC_I2S
-Description: JZ4740 SoC sound support
-
-@@
-
-Package: kmod-sound-soc-jz4740-codec
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: kmod-sound-soc-core @TARGET_xburst
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: JZ4740 SoC internal codec support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_SOC_JZ4740_CODEC
-Description: JZ4740 SoC internal codec support
-
-@@
-
-Package: kmod-sound-soc-qilb60
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_qi_lb60
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: QI NanoNote sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_JZ4740_SOC_QI_LB60
-Description: QI NanoNote sound support
-
-@@
-
-Package: kmod-sound-soc-n516
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_n516
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Hanvon N516 sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_JZ4740_SOC_N516
-Description: Hanvon N516 sound support
-
-@@
-
-Package: kmod-sound-soc-n526
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_n526
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Hanvon N526 sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_JZ4740_SOC_N526
-Description: Hanvon N526 sound support
-
-@@
-
 Package: kmod-mcs814x-wdt
 Submenu: Other modules
 Version: <LINUX_VERSION>-
@@ -18300,75 +18215,6 @@ Source:
 Type: ipkg
 Kernel-Config: CONFIG_MCS814X_WATCHDOG
 Description:   Kernel module for the Moschip MCS814x watchdog timer.
-
-@@
-
-Package: kmod-usb-rt305x-dwc_otg
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ramips_rt305x +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: RT305X USB controller driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_DWC_OTG CONFIG_DWC_OTG_HOST_ONLY=y CONFIG_DWC_OTG_DEVICE_ONLY=n CONFIG_DWC_OTG_DEBUG=n
-Description:  This driver provides USB Device Controller support for the
- Synopsys DesignWare USB OTG Core used in the Ralink RT305X SoCs.
-
-@@
-
-Package: kmod-sdhci-mt7620
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ramips_mt7620a +kmod-sdhci
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: MT7620 SDCI
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_MMC_SDHCI_MT7620
-Description: MT7620 SDCI
-
-@@
-
-Package: kmod-i2c-ralink
-Submenu: I2C support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ramips kmod-i2c-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Ralink I2C Controller
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_I2C_RALINK
-Description:  Kernel modules for enable ralink i2c controller.
-
-@@
-
-Package: kmod-sound-mt7620
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ramips_mt7620a +kmod-sound-soc-core +kmod-regmap kmod-sound-core  @!TARGET_uml
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: MT7620 PCM/I2S Alsa Driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_MT7620_SOC_I2S CONFIG_SND_MT7620_SOC_WM8960
-Description:  Alsa modules for ralink i2s controller.
 
 @@
 
@@ -18505,6 +18351,328 @@ Source:
 Type: ipkg
 Kernel-Config: CONFIG_SPI_VSC7385
 Description:   This package contains the SPI driver for the Vitesse VSC7385 ethernet switch.
+
+@@
+
+Package: kmod-usb-brcm47xx
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: @USB_SUPPORT @TARGET_brcm47xx +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support for USB on bcm47xx
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_USB_HCD_BCMA CONFIG_USB_HCD_SSB
+Description: Support for USB on bcm47xx
+
+@@
+
+Package: kmod-ocf-ubsec-ssb
+Submenu: Cryptographic API modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm47xx +kmod-crypto-ocf +kmod-crypto-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: BCM5365P IPSec Core driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_OCF_UBSEC_SSB
+Description:   This package contains the OCF driver for the BCM5365p IPSec Core
+
+@@
+
+Package: kmod-bgmac
+Submenu: Network Devices
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm47xx
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Broadcom bgmac driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_BGMAC
+Description:  Kernel modules for Broadcom bgmac Ethernet adapters.
+
+@@
+
+Package: kmod-rtc-stmp3xxx
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mxs @RTC_SUPPORT 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: STMP3xxx SoC built-in RTC support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_RTC_CLASS=y CONFIG_RTC_DRV_STMP=m
+Description: STMP3xxx SoC built-in RTC support
+
+@@
+
+Package: kmod-wdt-stmp3xxx
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: kmod-rtc-stmp3xxx
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: STMP3xxx Watchdog timer
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_STMP3XXX_RTC_WATCHDOG
+Description:     Kernel module for STMP3xxx watchdog timer.
+
+@@
+
+Package: kmod-usb-chipidea-imx
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: +kmod-usb-chipidea @TARGET_mxs +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support for ChipIdea controllers on Freescale i.MX SoCs
+Maintainer: 
+Source: 
+Type: ipkg
+Description:     Kernel support for USB ChipIdea controllers on Freescale i.MX SoCs
+
+@@
+
+Package: kmod-usb-mxs-phy
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: +kmod-usb-chipidea-imx +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support for Freescale MXS USB PHY controllers
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_USB_MXS_PHY
+Description:     Kernel support for Freescale MXS USB PHY controllers
+
+@@
+
+Package: kmod-usb-net-smsc95xx
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mxs kmod-usb-net 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: SMSC95xx USB/2.0 Ethernet driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_USB_NET_SMSC95XX
+Description:     Kernel support for SMSC95xx USB/2.0 Ethernet driver
+
+@@
+
+Package: kmod-sound-soc-mxs
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mxs +kmod-sound-soc-core kmod-sound-core  @!TARGET_uml
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Freescale i.MX23/i.MX28 built-in SoC sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_SOC_MXS_BUILTIN_CODEC CONFIG_SND_MXS_SOC_BUILTIN
+Description:     Kernel support for Freescale i.MX23/i.MX28 built-in SoC audio
+
+@@
+
+Package: kmod-iio-mxs-lradc
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mxs
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: LRADC driver for i.MX23/28
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_MXS_LRADC
+Description:     Kernel module for i.MX23/28 LRADC driver
+
+@@
+
+Package: kmod-crypto-hw-dcp
+Submenu: Cryptographic API modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mxs +kmod-crypto-core +kmod-crypto-authenc +kmod-crypto-des
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: i.MX23/28 DCP hardware crypto module
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_CRYPTO_DEV_DCP
+Description:     Kernel support for the i.MX23/28 DCP crypto engine
+
+@@
+
+Package: kmod-ata-magicbox-cf
+Submenu: Block Devices
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ppc40x kmod-ata-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Magicbox v2/OpenRB Compact flash support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_PATA_MAGICBOX_CF
+Description:   Support for Magicbox v2/OpenRB on-board CF slot.
+
+@@
+
+Package: kmod-usb-isp116x-hcd
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ppc40x +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support for the ISP116x USB Host Controller
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_USB_ISP116X_HCD CONFIG_USB_ISP116X_HCD_OF=y CONFIG_USB_ISP116X_HCD_PLATFORM=n
+Description:   Kernel support for the ISP116X USB Host Controller
+
+@@
+
+Package: kmod-pcmcia-au1000
+Submenu: PCMCIA support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_au1000 kmod-pcmcia-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: RMI/AMD Au1000 PCMCIA support
+Maintainer: 
+Source: 
+Type: ipkg
+Description: RMI/AMD Au1000 PCMCIA support
+
+@@
+
+Package: kmod-usb-rt305x-dwc_otg
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ramips_rt305x +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: RT305X USB controller driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_DWC_OTG CONFIG_DWC_OTG_HOST_ONLY=y CONFIG_DWC_OTG_DEVICE_ONLY=n CONFIG_DWC_OTG_DEBUG=n
+Description:  This driver provides USB Device Controller support for the
+ Synopsys DesignWare USB OTG Core used in the Ralink RT305X SoCs.
+
+@@
+
+Package: kmod-sdhci-mt7620
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ramips_mt7620a +kmod-sdhci
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: MT7620 SDCI
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_MMC_SDHCI_MT7620
+Description: MT7620 SDCI
+
+@@
+
+Package: kmod-i2c-ralink
+Submenu: I2C support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ramips kmod-i2c-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Ralink I2C Controller
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_I2C_RALINK
+Description:  Kernel modules for enable ralink i2c controller.
+
+@@
+
+Package: kmod-sound-mt7620
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ramips_mt7620a +kmod-sound-soc-core +kmod-regmap kmod-sound-core  @!TARGET_uml
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: MT7620 PCM/I2S Alsa Driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_MT7620_SOC_I2S CONFIG_SND_MT7620_SOC_WM8960
+Description:  Alsa modules for ralink i2s controller.
+
+@@
+
+Package: kmod-ata-rbppc-cf
+Submenu: Block Devices
+Version: <LINUX_VERSION>-
+Depends: @TARGET_mpc83xx kmod-ata-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: RB600 Compact Flash support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_PATA_PLATFORM CONFIG_PATA_RB_PPC
+Description:   RB600 Compact Flash support.
 
 @@
 
@@ -18849,464 +19017,6 @@ Description:   RDC-321x watchdog driver
 
 @@
 
-Package: kmod-usb-brcm47xx
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: @USB_SUPPORT @TARGET_brcm47xx +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Support for USB on bcm47xx
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_USB_HCD_BCMA CONFIG_USB_HCD_SSB
-Description: Support for USB on bcm47xx
-
-@@
-
-Package: kmod-ocf-ubsec-ssb
-Submenu: Cryptographic API modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm47xx +kmod-crypto-ocf +kmod-crypto-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: BCM5365P IPSec Core driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_OCF_UBSEC_SSB
-Description:   This package contains the OCF driver for the BCM5365p IPSec Core
-
-@@
-
-Package: kmod-bgmac
-Submenu: Network Devices
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm47xx
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Broadcom bgmac driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_BGMAC
-Description:  Kernel modules for Broadcom bgmac Ethernet adapters.
-
-@@
-
-Package: kmod-fb-ep93xx
-Submenu: Video Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx +kmod-fb +kmod-fb-cfb-fillrect +kmod-fb-cfb-copyarea +kmod-fb-cfb-imgblt
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: EP93xx framebuffer support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_FB_EP93XX
-Description:   EP93xx framebuffer support
-
-@@
-
-Package: kmod-input-keyboard-ep93xx
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx +!LINUX_3_3:kmod-input-matrixkmap +kmod-input-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: EP93xx Matrix Keypad support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_KEYBOARD_EP93XX CONFIG_INPUT_KEYBOARD=y
-Description:   EP93xx Matrix Keypad support
-
-@@
-
-Package: kmod-sound-soc-ep93xx
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx +kmod-sound-core +kmod-sound-soc-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: EP93xx SoC sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_EP93XX_SOC
-Description:   EP93xx SoC sound support
-
-@@
-
-Package: kmod-sound-soc-ep93xx-ac97
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx +kmod-sound-soc-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: EP93xx SoC AC97 support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_EP93XX_SOC_AC97
-Description:   EP93xx SoC AC97 support
-
-@@
-
-Package: kmod-sound-soc-ep93xx-simone
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx +kmod-sound-soc-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Sim.One EP93xx Soc sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_EP93XX_SOC_SIMONE
-Description:   SimpleMachines Sim.One sound support
-
-@@
-
-Package: kmod-touchscreen-ep93xx
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ep93xx
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: EP93xx input touchscreen support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_TOUCHSCREEN_EP93XX
-Description:   EP93xx SoC input touchscreen support
-
-@@
-
-Package: kmod-rtc-stmp3xxx
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_mxs @RTC_SUPPORT 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: STMP3xxx SoC built-in RTC support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_RTC_CLASS=y CONFIG_RTC_DRV_STMP=m
-Description: STMP3xxx SoC built-in RTC support
-
-@@
-
-Package: kmod-wdt-stmp3xxx
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: kmod-rtc-stmp3xxx
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: STMP3xxx Watchdog timer
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_STMP3XXX_RTC_WATCHDOG
-Description:     Kernel module for STMP3xxx watchdog timer.
-
-@@
-
-Package: kmod-usb-chipidea-imx
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: +kmod-usb-chipidea @TARGET_mxs +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Support for ChipIdea controllers on Freescale i.MX SoCs
-Maintainer: 
-Source: 
-Type: ipkg
-Description:     Kernel support for USB ChipIdea controllers on Freescale i.MX SoCs
-
-@@
-
-Package: kmod-usb-mxs-phy
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: +kmod-usb-chipidea-imx +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Support for Freescale MXS USB PHY controllers
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_USB_MXS_PHY
-Description:     Kernel support for Freescale MXS USB PHY controllers
-
-@@
-
-Package: kmod-usb-net-smsc95xx
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_mxs kmod-usb-net 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: SMSC95xx USB/2.0 Ethernet driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_USB_NET_SMSC95XX
-Description:     Kernel support for SMSC95xx USB/2.0 Ethernet driver
-
-@@
-
-Package: kmod-sound-soc-mxs
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_mxs +kmod-sound-soc-core kmod-sound-core  @!TARGET_uml
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Freescale i.MX23/i.MX28 built-in SoC sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_SOC_MXS_BUILTIN_CODEC CONFIG_SND_MXS_SOC_BUILTIN
-Description:     Kernel support for Freescale i.MX23/i.MX28 built-in SoC audio
-
-@@
-
-Package: kmod-iio-mxs-lradc
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_mxs
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: LRADC driver for i.MX23/28
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_MXS_LRADC
-Description:     Kernel module for i.MX23/28 LRADC driver
-
-@@
-
-Package: kmod-crypto-hw-dcp
-Submenu: Cryptographic API modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_mxs +kmod-crypto-core +kmod-crypto-authenc +kmod-crypto-des
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: i.MX23/28 DCP hardware crypto module
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_CRYPTO_DEV_DCP
-Description:     Kernel support for the i.MX23/28 DCP crypto engine
-
-@@
-
-Package: kmod-ata-magicbox-cf
-Submenu: Block Devices
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ppc40x kmod-ata-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Magicbox v2/OpenRB Compact flash support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_PATA_MAGICBOX_CF
-Description:   Support for Magicbox v2/OpenRB on-board CF slot.
-
-@@
-
-Package: kmod-usb-isp116x-hcd
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_ppc40x +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Support for the ISP116x USB Host Controller
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_USB_ISP116X_HCD CONFIG_USB_ISP116X_HCD_OF=y CONFIG_USB_ISP116X_HCD_PLATFORM=n
-Description:   Kernel support for the ISP116X USB Host Controller
-
-@@
-
-Package: kmod-pcmcia-au1000
-Submenu: PCMCIA support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_au1000 kmod-pcmcia-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: RMI/AMD Au1000 PCMCIA support
-Maintainer: 
-Source: 
-Type: ipkg
-Description: RMI/AMD Au1000 PCMCIA support
-
-@@
-
-Package: kmod-ledtrig-adm5120-switch
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_adm5120
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: LED ADM5120 Switch Port Status Trigger
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_LEDS_TRIGGER_ADM5120_SWITCH
-Description:  Kernel module to allow LEDs to be controlled by the port states
- of the ADM5120 built-in ethernet switch.
-
-@@
-
-Package: kmod-pata-rb153-cf
-Submenu: Block Devices
-Version: <LINUX_VERSION>-
-Depends: @TARGET_adm5120_router_le kmod-ata-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: RouterBOARD 153 CF Slot support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_PATA_RB153_CF
-Description:   Kernel support for the RouterBoard 153 CF slot.
-
-@@
-
-Package: kmod-usb-adm5120
-Submenu: USB Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_adm5120 +kmod-usb-core 
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Support for the ADM5120 HCD controller
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_USB_ADM5120_HCD
-Description:  Kernel support for the ADM5120 HCD USB controller
-
-@@
-
-Package: kmod-sound-arm-bcm2835
-Submenu: Sound Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm2708 kmod-sound-core  @!TARGET_uml
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Broadcom 2708,2835 SoC sound support
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SND_ARM=y CONFIG_SND_BCM2835 CONFIG_SND_ARMAACI=n
-Description:   This package contains the Broadcom 2708/2835 sound driver
-
-@@
-
-Package: kmod-random-bcm2708
-Submenu: Other modules
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm2708 +kmod-random-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: BCM2708 H/W Random Number Generator
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_HW_RANDOM_BCM2708
-Description:   This package contains the Broadcom 2708 HW random number generator driver
-
-@@
-
-Package: kmod-spi-bcm2708
-Submenu: SPI Support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm2708
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: BCM2708 SPI controller driver (SPI0)
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_SPI_BCM2708 CONFIG_SPI=y CONFIG_SPI_MASTER=y CONFIG_BCM2708_SPIDEV=y
-Description:   This package contains the Broadcom 2708 SPI master controller driver
-
-@@
-
-Package: kmod-i2c-bcm2708
-Submenu: I2C support
-Version: <LINUX_VERSION>-
-Depends: @TARGET_brcm2708 +kmod-i2c-core
-Menu-Depends: 
-Provides: 
-Section: kernel
-Category: Kernel modules
-Title: Broadcom BCM2708 I2C master controller driver
-Maintainer: 
-Source: 
-Type: ipkg
-Kernel-Config: CONFIG_I2C_BCM2708 CONFIG_I2C_BCM2708_BAUDRATE=100000
-Description:   This package contains the Broadcom 2708 I2C master controller driver
-
-@@
-
 Package: kmod-fb-cobalt
 Submenu: Video Support
 Version: <LINUX_VERSION>-
@@ -19443,6 +19153,91 @@ Description:   Kernel module for RB532 button
 
 @@
 
+Package: kmod-sound-soc-jz4740
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: kmod-sound-soc-core @TARGET_xburst
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: JZ4740 SoC sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_JZ4740_SOC CONFIG_SND_JZ4740_SOC_I2S
+Description: JZ4740 SoC sound support
+
+@@
+
+Package: kmod-sound-soc-jz4740-codec
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: kmod-sound-soc-core @TARGET_xburst
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: JZ4740 SoC internal codec support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_SOC_JZ4740_CODEC
+Description: JZ4740 SoC internal codec support
+
+@@
+
+Package: kmod-sound-soc-qilb60
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_qi_lb60
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: QI NanoNote sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_JZ4740_SOC_QI_LB60
+Description: QI NanoNote sound support
+
+@@
+
+Package: kmod-sound-soc-n516
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_n516
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Hanvon N516 sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_JZ4740_SOC_N516
+Description: Hanvon N516 sound support
+
+@@
+
+Package: kmod-sound-soc-n526
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: kmod-sound-soc-jz4740 kmod-sound-soc-jz4740-codec @TARGET_xburst_n526
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Hanvon N526 sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_JZ4740_SOC_N526
+Description: Hanvon N526 sound support
+
+@@
+
 Package: kmod-atmel-wdt
 Submenu: Other modules
 Version: <LINUX_VERSION>-
@@ -19477,20 +19272,105 @@ Description:  Kernel support for  Atmel Multimedia Card Interface.
 
 @@
 
-Package: kmod-ata-rbppc-cf
-Submenu: Block Devices
+Package: kmod-fb-ep93xx
+Submenu: Video Support
 Version: <LINUX_VERSION>-
-Depends: @TARGET_mpc83xx kmod-ata-core 
+Depends: @TARGET_ep93xx +kmod-fb +kmod-fb-cfb-fillrect +kmod-fb-cfb-copyarea +kmod-fb-cfb-imgblt
 Menu-Depends: 
 Provides: 
 Section: kernel
 Category: Kernel modules
-Title: RB600 Compact Flash support
+Title: EP93xx framebuffer support
 Maintainer: 
 Source: 
 Type: ipkg
-Kernel-Config: CONFIG_PATA_PLATFORM CONFIG_PATA_RB_PPC
-Description:   RB600 Compact Flash support.
+Kernel-Config: CONFIG_FB_EP93XX
+Description:   EP93xx framebuffer support
+
+@@
+
+Package: kmod-input-keyboard-ep93xx
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ep93xx +!LINUX_3_3:kmod-input-matrixkmap +kmod-input-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: EP93xx Matrix Keypad support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_KEYBOARD_EP93XX CONFIG_INPUT_KEYBOARD=y
+Description:   EP93xx Matrix Keypad support
+
+@@
+
+Package: kmod-sound-soc-ep93xx
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ep93xx +kmod-sound-core +kmod-sound-soc-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: EP93xx SoC sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_EP93XX_SOC
+Description:   EP93xx SoC sound support
+
+@@
+
+Package: kmod-sound-soc-ep93xx-ac97
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ep93xx +kmod-sound-soc-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: EP93xx SoC AC97 support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_EP93XX_SOC_AC97
+Description:   EP93xx SoC AC97 support
+
+@@
+
+Package: kmod-sound-soc-ep93xx-simone
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ep93xx +kmod-sound-soc-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Sim.One EP93xx Soc sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_EP93XX_SOC_SIMONE
+Description:   SimpleMachines Sim.One sound support
+
+@@
+
+Package: kmod-touchscreen-ep93xx
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_ep93xx
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: EP93xx input touchscreen support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_TOUCHSCREEN_EP93XX
+Description:   EP93xx SoC input touchscreen support
 
 @@
 
@@ -19662,6 +19542,126 @@ Source:
 Type: ipkg
 Kernel-Config: CONFIG_PCMCIA_BCM63XX
 Description:   Kernel support for PCMCIA/CardBus controller on the BCM63xx SoC
+
+@@
+
+Package: kmod-sound-arm-bcm2835
+Submenu: Sound Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm2708 kmod-sound-core  @!TARGET_uml
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Broadcom 2708,2835 SoC sound support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SND_ARM=y CONFIG_SND_BCM2835 CONFIG_SND_ARMAACI=n
+Description:   This package contains the Broadcom 2708/2835 sound driver
+
+@@
+
+Package: kmod-random-bcm2708
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm2708 +kmod-random-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: BCM2708 H/W Random Number Generator
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_HW_RANDOM_BCM2708
+Description:   This package contains the Broadcom 2708 HW random number generator driver
+
+@@
+
+Package: kmod-spi-bcm2708
+Submenu: SPI Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm2708
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: BCM2708 SPI controller driver (SPI0)
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SPI_BCM2708 CONFIG_SPI=y CONFIG_SPI_MASTER=y CONFIG_BCM2708_SPIDEV=y
+Description:   This package contains the Broadcom 2708 SPI master controller driver
+
+@@
+
+Package: kmod-i2c-bcm2708
+Submenu: I2C support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_brcm2708 +kmod-i2c-core
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Broadcom BCM2708 I2C master controller driver
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_I2C_BCM2708 CONFIG_I2C_BCM2708_BAUDRATE=100000
+Description:   This package contains the Broadcom 2708 I2C master controller driver
+
+@@
+
+Package: kmod-ledtrig-adm5120-switch
+Submenu: Other modules
+Version: <LINUX_VERSION>-
+Depends: @TARGET_adm5120
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: LED ADM5120 Switch Port Status Trigger
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_LEDS_TRIGGER_ADM5120_SWITCH
+Description:  Kernel module to allow LEDs to be controlled by the port states
+ of the ADM5120 built-in ethernet switch.
+
+@@
+
+Package: kmod-pata-rb153-cf
+Submenu: Block Devices
+Version: <LINUX_VERSION>-
+Depends: @TARGET_adm5120_router_le kmod-ata-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: RouterBOARD 153 CF Slot support
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_PATA_RB153_CF
+Description:   Kernel support for the RouterBoard 153 CF slot.
+
+@@
+
+Package: kmod-usb-adm5120
+Submenu: USB Support
+Version: <LINUX_VERSION>-
+Depends: @TARGET_adm5120 +kmod-usb-core 
+Menu-Depends: 
+Provides: 
+Section: kernel
+Category: Kernel modules
+Title: Support for the ADM5120 HCD controller
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_USB_ADM5120_HCD
+Description:  Kernel support for the ADM5120 HCD USB controller
 
 @@
 
@@ -21579,7 +21579,7 @@ Jo-Philipp Wich <xm@subsignal.org>
 Source-Makefile: package/utils/busybox/Makefile
 Package: busybox
 Menu: 1
-Version: 1.22.1-2
+Version: 1.24.2-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUSYBOX_USE_LIBRPC:librpc +BUSYBOX_CONFIG_PAM:libpam
 Menu-Depends: 
 Provides: 
@@ -21587,13 +21587,13 @@ Build-Depends: BUSYBOX_USE_LIBRPC:librpc BUSYBOX_CONFIG_PAM:libpam
 Section: base
 Category: Base system
 Title: Core utilities for embedded Linux
-Maintainer: Felix Fietkau <nbd@openwrt.org>
-Source: busybox-1.22.1.tar.bz2
+Maintainer: Felix Fietkau <nbd@nbd.name>
+Source: busybox-1.24.2.tar.bz2
 Type: ipkg
 Description:  The Swiss Army Knife of embedded Linux.
  It slices, it dices, it makes Julian Fries.
 http://busybox.net/
-Felix Fietkau <nbd@openwrt.org>
+Felix Fietkau <nbd@nbd.name>
 @@
 Config:
 	source "package/utils/busybox/Config.in"
@@ -35970,7 +35970,7 @@ Description:   This script updates the freifunkmap (also known as the global map
 Source-Makefile: package/feeds/luci/luci/Makefile
 Package: luci-base
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lua +libuci-lua +libubus-lua
 Menu-Depends: 
 Provides: 
@@ -36008,7 +36008,7 @@ Config:
 
 Package: luci-lib-httpclient
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base +luci-base +luci-lib-nixio
 Menu-Depends: 
 Provides: 
@@ -36027,7 +36027,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-lib-json
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36046,7 +36046,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-lib-nixio
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base +PACKAGE_luci-lib-nixio_openssl:libopenssl +PACKAGE_luci-lib-nixio_cyassl:libcyassl
 Menu-Depends: 
 Provides: 
@@ -36085,7 +36085,7 @@ Config:
 
 Package: luci-lib-px5g
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base +luci-lib-nixio
 Menu-Depends: 
 Provides: 
@@ -36104,7 +36104,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-lib-luaneightbl
 Submenu: 8. Libraries
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base +luci-base
 Menu-Depends: 
 Provides: 
@@ -36123,7 +36123,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-proto-ppp
 Submenu: 6. Protocols
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36142,7 +36142,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-proto-ipv6
 Submenu: 6. Protocols
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36161,7 +36161,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-proto-3g
 Submenu: 6. Protocols
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-proto-3g:comgt
 Menu-Depends: 
 Provides: 
@@ -36180,7 +36180,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-proto-hso
 Submenu: 6. Protocols
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-proto-hso:comgt +PACKAGE_luci-proto-hso:kmod-usb-net +PACKAGE_luci-proto-hso:kmod-usb-net-hso
 Menu-Depends: 
 Provides: 
@@ -36199,7 +36199,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-proto-relay
 Submenu: 6. Protocols
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-proto-relay:relayd
 Menu-Depends: 
 Provides: 
@@ -36218,7 +36218,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-mod-admin-mini
 Submenu: 2. Modules
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base @BROKEN
 Menu-Depends: 
 Provides: 
@@ -36237,7 +36237,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-mod-admin-full
 Submenu: 2. Modules
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base
 Menu-Depends: 
 Provides: 
@@ -36256,7 +36256,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-mod-failsafe
 Submenu: 2. Modules
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base
 Menu-Depends: 
 Provides: 
@@ -36275,7 +36275,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-mod-rpc
 Submenu: 2. Modules
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-lib-json
 Menu-Depends: 
 Provides: 
@@ -36294,7 +36294,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-firewall
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-firewall:firewall
 Menu-Depends: 
 Provides: 
@@ -36313,7 +36313,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-qos
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-qos:qos-scripts
 Menu-Depends: 
 Provides: 
@@ -36332,7 +36332,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-commands
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36351,7 +36351,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-theme-openwrt
 Submenu: 4. Themes
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36370,7 +36370,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-theme-bootstrap
 Submenu: 4. Themes
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36389,7 +36389,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-german
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36408,7 +36408,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-english
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36427,7 +36427,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-french
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36446,7 +36446,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-italian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36465,7 +36465,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-russian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36484,7 +36484,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-portuguese-brazilian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36503,7 +36503,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-chinese
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36522,7 +36522,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-japanese
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36541,7 +36541,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-greek
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36560,7 +36560,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-catalan
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36579,7 +36579,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-portuguese
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36598,7 +36598,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-spanish
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36617,7 +36617,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-vietnamese
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36636,7 +36636,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-malay
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36655,7 +36655,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-norwegian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36674,7 +36674,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-hebrew
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36693,7 +36693,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-romanian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36712,7 +36712,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-ukrainian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36731,7 +36731,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-hungarian
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36750,7 +36750,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-i18n-polish
 Submenu: 5. Translations
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -36769,7 +36769,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci
 Submenu: 1. Collections
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +uhttpd +uhttpd-mod-ubus +luci-mod-admin-full +luci-theme-bootstrap +luci-app-firewall +luci-proto-ppp +libiwinfo-lua +luci-lib-nixio
 Menu-Depends: 
 Provides: 
@@ -36788,7 +36788,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-ssl
 Submenu: 1. Collections
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci +libustream-polarssl +px5g
 Menu-Depends: 
 Provides: 
@@ -36807,7 +36807,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-light
 Submenu: 1. Collections
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +uhttpd +luci-mod-admin-mini +luci-theme-openwrt @BROKEN
 Menu-Depends: 
 Provides: 
@@ -36946,7 +36946,7 @@ Description:   Simple Addon for Freifunk which use iptables layer7-, ipp2p- and 
 Source-Makefile: package/feeds/luci/luci-addons/Makefile
 Package: luci-mod-freifunk-community
 Submenu: 9. Freifunk
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-mod-freifunk-community:iptables-mod-nat-extra +PACKAGE_luci-mod-freifunk-community:iptables-mod-ipopt +luci-app-splash +luci-i18n-german +PACKAGE_luci-mod-freifunk-community:olsrd +PACKAGE_luci-mod-freifunk-community:olsrd-mod-dyn-gw-plain +PACKAGE_luci-mod-freifunk-community:olsrd-mod-jsoninfo +PACKAGE_luci-mod-freifunk-community:olsrd-mod-nameservice +PACKAGE_luci-mod-freifunk-community:olsrd-mod-watchdog +PACKAGE_luci-mod-freifunk-community:kmod-tun +PACKAGE_luci-mod-freifunk-community:ip +PACKAGE_luci-mod-freifunk-community:freifunk-watchdog +luci-app-olsr +luci-app-olsr-services +PACKAGE_luci-mod-freifunk-community:freifunk-gwcheck +PACKAGE_luci-mod-freifunk-community:freifunk-mapupdate
 Menu-Depends: 
 Provides: 
@@ -36965,7 +36965,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-mod-freifunk
 Submenu: 2. Modules
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-mod-admin-full +luci-lib-json +PACKAGE_luci-mod-freifunk:freifunk-firewall +freifunk-common
 Menu-Depends: 
 Provides: 
@@ -36984,7 +36984,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-siitwizard
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-siitwizard:kmod-siit
 Menu-Depends: 
 Provides: 
@@ -37003,7 +37003,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-freifunk-policyrouting
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-freifunk-policyrouting:freifunk-policyrouting
 Menu-Depends: 
 Provides: 
@@ -37022,7 +37022,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-freifunk-widgets
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-mod-freifunk
 Menu-Depends: 
 Provides: 
@@ -37041,7 +37041,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-meshwizard
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-meshwizard:meshwizard
 Menu-Depends: 
 Provides: 
@@ -37060,7 +37060,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-olsr
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-olsr:olsrd +PACKAGE_luci-app-olsr:olsrd-mod-jsoninfo +luci-lib-luaneightbl
 Menu-Depends: 
 Provides: 
@@ -37079,7 +37079,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-olsr-viz
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-olsr +PACKAGE_luci-app-olsr-viz:olsrd +PACKAGE_luci-app-olsr-viz:olsrd-mod-txtinfo
 Menu-Depends: 
 Provides: 
@@ -37098,7 +37098,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-freifunk-diagnostics
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -37117,7 +37117,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-olsr-services
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-olsr +PACKAGE_luci-app-olsr-services:olsrd +PACKAGE_luci-app-olsr-services:olsrd-mod-nameservice
 Menu-Depends: 
 Provides: 
@@ -37136,7 +37136,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-splash
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-lib-nixio +PACKAGE_luci-app-splash:tc +PACKAGE_luci-app-splash:kmod-sched +PACKAGE_luci-app-splash:iptables-mod-nat-extra +PACKAGE_luci-app-splash:iptables-mod-ipopt
 Menu-Depends: 
 Provides: 
@@ -37155,7 +37155,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-statistics
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-statistics:collectd +PACKAGE_luci-app-statistics:rrdtool1 +PACKAGE_luci-app-statistics:collectd-mod-rrdtool +PACKAGE_luci-app-statistics:collectd-mod-iwinfo +PACKAGE_luci-app-statistics:collectd-mod-interface +PACKAGE_luci-app-statistics:collectd-mod-load +PACKAGE_luci-app-statistics:collectd-mod-network
 Menu-Depends: 
 Provides: 
@@ -37174,7 +37174,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-diag-core
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -37193,7 +37193,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-diag-devinfo
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-diag-core +PACKAGE_luci-app-diag-devinfo:smap +PACKAGE_luci-app-diag-devinfo:netdiscover +PACKAGE_luci-app-diag-devinfo:mac-to-devinfo +PACKAGE_luci-app-diag-devinfo:httping +PACKAGE_luci-app-diag-devinfo:smap-to-devinfo +PACKAGE_luci-app-diag-devinfo:netdiscover-to-devinfo
 Menu-Depends: 
 Provides: 
@@ -37212,7 +37212,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-voice-core
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -37231,7 +37231,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-voice-diag
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-diag-devinfo
 Menu-Depends: 
 Provides: 
@@ -37250,7 +37250,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-upnp
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-upnp:miniupnpd
 Menu-Depends: 
 Provides: 
@@ -37269,7 +37269,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-ntpc
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-ntpc:ntpclient
 Menu-Depends: 
 Provides: 
@@ -37288,7 +37288,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-ddns
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-ddns:ddns-scripts
 Menu-Depends: 
 Provides: 
@@ -37307,7 +37307,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-samba
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-samba:samba36-server
 Menu-Depends: 
 Provides: 
@@ -37326,7 +37326,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-mmc-over-gpio
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-mmc-over-gpio:kmod-mmc-over-gpio
 Menu-Depends: 
 Provides: 
@@ -37345,7 +37345,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-p910nd
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-p910nd:p910nd
 Menu-Depends: 
 Provides: 
@@ -37364,7 +37364,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-ushare
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-ushare:ushare
 Menu-Depends: 
 Provides: 
@@ -37383,7 +37383,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-hd-idle
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-hd-idle:hd-idle
 Menu-Depends: 
 Provides: 
@@ -37402,7 +37402,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-tinyproxy
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-tinyproxy:tinyproxy
 Menu-Depends: 
 Provides: 
@@ -37421,7 +37421,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-polipo
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-polipo:polipo
 Menu-Depends: 
 Provides: 
@@ -37440,7 +37440,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-openvpn
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-openvpn:openvpn @BROKEN
 Menu-Depends: 
 Provides: 
@@ -37459,7 +37459,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-p2pblock
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-firewall +PACKAGE_luci-app-p2pblock:freifunk-p2pblock
 Menu-Depends: 
 Provides: 
@@ -37478,7 +37478,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-multiwan
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-firewall +PACKAGE_luci-app-multiwan:multiwan
 Menu-Depends: 
 Provides: 
@@ -37497,7 +37497,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-wol
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-wol:etherwake
 Menu-Depends: 
 Provides: 
@@ -37516,7 +37516,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-vnstat
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-vnstat:vnstat +PACKAGE_luci-app-vnstat:vnstati
 Menu-Depends: 
 Provides: 
@@ -37535,7 +37535,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-radvd
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-radvd:radvd
 Menu-Depends: 
 Provides: 
@@ -37554,7 +37554,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-ahcp
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-ahcp:ahcpd
 Menu-Depends: 
 Provides: 
@@ -37573,7 +37573,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-wshaper
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-wshaper:wshaper
 Menu-Depends: 
 Provides: 
@@ -37592,7 +37592,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-pbx
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-pbx:asterisk18 +PACKAGE_luci-app-pbx:asterisk18-app-authenticate +PACKAGE_luci-app-pbx:asterisk18-app-disa +PACKAGE_luci-app-pbx:asterisk18-app-setcallerid +PACKAGE_luci-app-pbx:asterisk18-app-system +PACKAGE_luci-app-pbx:asterisk18-chan-gtalk +PACKAGE_luci-app-pbx:asterisk18-codec-a-mu +PACKAGE_luci-app-pbx:asterisk18-codec-alaw +PACKAGE_luci-app-pbx:asterisk18-func-cut +PACKAGE_luci-app-pbx:asterisk18-res-clioriginate +PACKAGE_luci-app-pbx:asterisk18-func-channel +PACKAGE_luci-app-pbx:asterisk18-chan-local +PACKAGE_luci-app-pbx:asterisk18-app-record +PACKAGE_luci-app-pbx:asterisk18-app-senddtmf +PACKAGE_luci-app-pbx:asterisk18-res-crypto
 Menu-Depends: 
 Provides: 
@@ -37611,7 +37611,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-pbx-voicemail
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-app-pbx +PACKAGE_luci-app-pbx-voicemail:asterisk18 +PACKAGE_luci-app-pbx-voicemail:msmtp +PACKAGE_luci-app-pbx-voicemail:coreutils-base64
 Menu-Depends: 
 Provides: 
@@ -37630,7 +37630,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-ltqtapi
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -37649,7 +37649,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-minidlna
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-minidlna:minidlna
 Menu-Depends: 
 Provides: 
@@ -37668,7 +37668,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-transmission
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-transmission:transmission-daemon
 Menu-Depends: 
 Provides: 
@@ -37687,7 +37687,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-app-watchcat
 Submenu: 3. Applications
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_luci-app-watchcat:watchcat
 Menu-Depends: 
 Provides: 
@@ -37706,7 +37706,7 @@ LuCI Development Team <luci@lists.subsignal.org>
 
 Package: luci-theme-freifunk-bno
 Submenu: 4. Themes
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base
 Menu-Depends: 
 Provides: 
@@ -37725,7 +37725,7 @@ Stefan Pirwitz <stefan-at-freifunk-bno-dot-de>
 
 Package: luci-theme-freifunk-generic
 Submenu: 4. Themes
-Version: 0.12+git-16.038.38474-0d510b2-1
+Version: 0.12+git-19.328.28423-937b01c9b-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +luci-base
 Menu-Depends: 
 Provides: 
@@ -40294,20 +40294,20 @@ Config:
 Source-Makefile: package/feeds/oldpackages/smcroute/Makefile
 Package: smcroute
 Submenu: Routing and Redirection
-Version: 2.4.4-1
+Version: 0.92-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
 Section: net
 Category: Network
-Title: Static Multicast Routing Daemon
-Maintainer: Moritz Warning <moritzwarning@web.de>
-Source: smcroute-2.4.4.tar.xz
+Title: Static multicast routing daemon
+Maintainer: 
+Source: smcroute-0.92.tgz
 Type: ipkg
 Feed: oldpackages
-Description: 	SMCRoute is a command line tool to manipulate the multicast routes of the Linux kernel.
-http://troglobit.com/smcroute.html
-Moritz Warning <moritzwarning@web.de>
+Description:  SMCRoute is a command line tool to manipulate the multicast routes of the Linux kernel.
+http://www.cschill.de/smcroute/
+
 @@
 
 
@@ -51367,49 +51367,23 @@ http://www.ruby-lang.org/
 
 Source-Makefile: package/feeds/oldpackages/alpine/Makefile
 Package: alpine
-Version: 2.21.9999-2
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libopenssl +libncurses +libpthread +libpam +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +libopenssl
+Version: 2.11-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libopenssl +libncurses +libpthread +libpam
 Menu-Depends: 
 Provides: 
-Build-Variant: ssl
-Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
 Section: mail
 Category: Mail
-Title: Alternatively Licensed Program for Internet News and Email (with OpenSSL support)
-Maintainer: Antti Seppälä <a.seppala@gmail.com>
-Source: alpine-2.21.9999.tar.xz
+Title: Alternatively Licensed Program for Internet News and Email
+Maintainer: 
+Source: alpine-2.11.tar.xz
 Type: ipkg
 Feed: oldpackages
-Description:  Alpine (Alternatively Licensed Program for Internet News and Email) is a
+Description:  Alpine (Alternatively Licenced Program for Internet News and Email) is a
  free software email client developed at the University of Washington.
  It is suitable for both the inexperienced email user as well as for
  the most demanding power user.
- This package is built with OpenSSL support.
-http://alpine.x10host.com/alpine/
-Antti Seppälä <a.seppala@gmail.com>
-@@
+http://www.washington.edu/alpine
 
-Package: alpine-nossl
-Version: 2.21.9999-2
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libopenssl +libncurses +libpthread +libpam +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full
-Menu-Depends: 
-Provides: 
-Build-Variant: nossl
-Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
-Section: mail
-Category: Mail
-Title: Alternatively Licensed Program for Internet News and Email (without OpenSSL support)
-Maintainer: Antti Seppälä <a.seppala@gmail.com>
-Source: alpine-2.21.9999.tar.xz
-Type: ipkg
-Feed: oldpackages
-Description:  Alpine (Alternatively Licensed Program for Internet News and Email) is a
- free software email client developed at the University of Washington.
- It is suitable for both the inexperienced email user as well as for
- the most demanding power user.
- This package is built without OpenSSL support.
-http://alpine.x10host.com/alpine/
-Antti Seppälä <a.seppala@gmail.com>
 @@
 
 
@@ -64831,941 +64805,366 @@ http://www.gnu.org/software/gsl/
 
 
 Source-Makefile: package/feeds/oldpackages/boost/Makefile
-Package: boost-atomic
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system
+Package: boost
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (atomic)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (header-only)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
+Build-Only: 1
 Feed: oldpackages
-Description:    This package contains the Boost atomic library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (header-only)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-chrono
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (chrono)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (chrono)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost chrono library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-container
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (container)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost container library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-context
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-chrono +boost-system @!boost-context-exclude
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (context)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost context library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-contract
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (contract)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost contract library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-coroutine
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +boost-chrono +boost-context +boost-thread @!boost-coroutine-exclude
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (coroutine)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost coroutine library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (chrono)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-date_time
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (date_time)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (date_time)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost date_time library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-fiber
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-coroutine +boost-filesystem @!boost-fiber-exclude
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (fiber)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost fiber library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (date_time)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-filesystem
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (filesystem)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (filesystem)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost filesystem library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (filesystem)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-graph
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-regex
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (graph)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (graph)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost graph library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (graph)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-iostreams
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +zlib +liblzma +libbz2 +zstd
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +zlib
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (iostreams)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (iostreams)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost iostreams library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (iostreams)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-locale
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +BUILD_NLS:libiconv-full @BUILD_NLS
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (locale)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (locale)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost locale library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-log
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +boost-chrono +boost-date_time +boost-thread +boost-filesystem +boost-regex
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (log)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost log library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (locale)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-math
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (math)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (math)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost math library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (math)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-program_options
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (program_options)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (program_options)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost program_options library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-python
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt @PACKAGE_python
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (python)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost python library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-python3
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt @PACKAGE_python3
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (python3)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost python3 library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (program_options)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-random
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (random)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (random)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost random library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (random)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: boost-python
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +PACKAGE_boost-python:python
+Menu-Depends: 
+Provides: 
+Build-Depends: boost/host
+Build-Types: host
+Section: libs
+Category: Libraries
+Title: Boost C++ source libraries (python)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Boost C++ source libraries (python)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-regex
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (regex)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (regex)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost regex library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (regex)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-serialization
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (serialization)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (serialization)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost serialization library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (serialization)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
-Package: boost-wserialization
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-serialization
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (wserialization)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost wserialization library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-stacktrace
-Version: 1.71.0-4
+Package: boost-signals
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (stacktrace)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (signals)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost stacktrace library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (signals)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-system
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library (system)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (system)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
-Hidden: 1
 Feed: oldpackages
-Description:    This package contains the Boost system library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-thread
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +boost-chrono +boost-atomic
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (thread)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost thread library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-timer
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-chrono
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (timer)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost timer library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-type_erasure
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-chrono +boost-system +boost-thread
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (type_erasure)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost type_erasure library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-wave
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-date_time +boost-thread +boost-filesystem
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (wave)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:    This package contains the Boost wave library.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (system)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 Package: boost-test
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +boost-timer
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (test)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description: Boost C++ source library (test)
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost-libs
-Version: 1.71.0-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-atomic +boost-chrono +boost-container +!boost-context-exclude:boost-context +boost-contract +!boost-coroutine-exclude:boost-coroutine +boost-date_time +!boost-fiber-exclude:boost-fiber +boost-filesystem +boost-graph +boost-iostreams +BUILD_NLS:boost-locale +boost-log +boost-math +boost-program_options +PACKAGE_python:boost-python +PACKAGE_python3:boost-python3 +boost-random +boost-regex +boost-serialization +boost-wserialization +boost-stacktrace +boost-system +boost-thread +boost-timer +boost-type_erasure +boost-wave
-Menu-Depends: 
-Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
-Build-Types: host
-Section: libs
-Category: Libraries
-Title: Boost C++ source library (all libs)
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
-Type: ipkg
-Hidden: 1
-Feed: oldpackages
-Description:  This meta package contains only dependencies to the other libraries from
- the boost libraries collection.
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
-@@
-
-Package: boost
-Version: 1.71.0-4
+Version: 1_51_0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt
 Menu-Depends: 
 Provides: 
-Build-Depends: boost/host PACKAGE_python:python PACKAGE_python3:python3
+Build-Depends: boost/host
 Build-Types: host
 Section: libs
 Category: Libraries
-Title: Boost C++ source library packages
-Maintainer: Carlos M. Ferreira <carlosmf.pt@gmail.com>
-Source: boost_1_71_0.tar.bz2
+Title: Boost C++ source libraries (test)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
 Type: ipkg
 Feed: oldpackages
-Description: This package provides the Boost v1.71.0 libraries.
-Boost is a set of free, peer-reviewed, portable C++ source libraries.
-
-This package provides the following run-time libraries:
- - atomic
- - chrono
- - container
- - context
- - contract
- - coroutine and coroutine2 (Coroutine is deprecated - use Coroutine2)
- - date_time
- - exception
- - filesystem
- - fiber
- - graph
- - - graph-parallel
- - iostreams
- - locale (Requires kernel being compiled with full language support)
- - log
- - math
- - program_options
- - python
- - python3
- - random
- - regex
- - serialization and wserialization
- - stackstrace
- - system
- - thread
- - timer
- - type_erasure
- - wave
-
-There are many more header-only libraries supported by Boost.
-See more at http://www.boost.org/doc/libs/1_71_0/
-https://www.boost.org
-Carlos M. Ferreira <carlosmf.pt@gmail.com>
+Description: Boost C++ source libraries (test)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
-Config:
-	# Invisible config dependency
-	config boost-context-exclude
-		bool
-		default y if (TARGET_arc700 || TARGET_archs38 || TARGET_octeon || TARGET_octeontx)
-		default n
 
-	config boost-coroutine-exclude
-		bool
-		default y if boost-context-exclude
-		default n
+Package: boost-thread
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-system +boost-chrono
+Menu-Depends: 
+Provides: 
+Build-Depends: boost/host
+Build-Types: host
+Section: libs
+Category: Libraries
+Title: Boost C++ source libraries (thread)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Boost C++ source libraries (thread)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
+@@
 
-	config boost-fiber-exclude
-		bool
-		default y if (TARGET_ar7 || TARGET_brcm47xx_generic || TARGET_brcm47xx_legacy || TARGET_lantiq_ase || TARGET_rb532 || mips32 || mips64 || boost-coroutine-exclude)
-		default n
+Package: boost-timer
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt boost-chrono
+Menu-Depends: 
+Provides: 
+Build-Depends: boost/host
+Build-Types: host
+Section: libs
+Category: Libraries
+Title: Boost C++ source libraries (timer)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Boost C++ source libraries (timer)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
+@@
 
-	menu "Select Boost Options"
-		depends on PACKAGE_boost
-		comment "Boost compilation options."
-
-		choice
-			prompt "Compile Visibility."
-				default boost-compile-visibility-hidden
-				help
-					Choose Boost symbols compilation visibility.
-					-> Global:
-						- a.k.a. "default" in gcc documentation. Global symbols are considered public,
-						 they are exported from shared libraries and can be redefined by another
-						 shared library or executable.
-					-> Protected:
-						- a.k.a. "symbolic". Protected symbols are exported from shared libraries but
-						 cannot be redefined by another shared library or executable. This mode is
-						 not supported on some platforms, for example OS X.
-					-> Hidden:
-						- Hidden symbols are not exported from shared libraries and cannot be
-						 redefined by a different shared library or executable loaded in a process.
-						 In this mode, public symbols have to be explicitly marked in the source code
-						 to be exported from shared libraries. This is the recommended mode.
-
-			config boost-compile-visibility-global
-				bool "Global"
-
-			config boost-compile-visibility-protected
-				bool "Protected"
-
-			config boost-compile-visibility-hidden
-				bool "Hidden"
-		endchoice
-
-		choice
-			prompt "Compile Boost libraries."
-				default boost-static-and-shared-libs
-				help
-					Choose which version to compile.
-					-> Shared:
-						- Only Shared libs will be compiled.
-					-> Static:
-						- Only Static libs will be compiled.
-					-> Both:
-						- Both Static and Shared libs will be compiled.
-
-			config boost-shared-libs
-				bool "Shared"
-
-			config boost-static-libs
-				bool "Static"
-
-			config boost-static-and-shared-libs
-				bool "Both"
-		endchoice
-
-		choice
-			prompt "Selects Boost Runtime linkage."
-			default boost-runtime-shared
-			help
-				Choose which C and C++ runtimes to use:
-				-> Use Shared runtimes.
-				-> Use Static runtimes.
-					- Not available if Shared libs are to be built.
-				-> Use both runtimes.
-					- Not available if Shared libs are to be built.
-					- Two separate versions of Boost are built, linking each to a different runtime.
-					- This option requires "Use tagged names" option to be active.
-
-			config boost-runtime-shared
-				bool "Shared"
-
-			config boost-runtime-static
-				depends on (!boost-shared-libs && !boost-static-and-shared-libs)
-				bool "Static"
-
-			config boost-runtime-static-and-shared
-				depends on (boost-use-name-tags && !boost-shared-libs && !boost-static-and-shared-libs)
-				bool "Both"
-		endchoice
-
-		choice
-			prompt "Select a Variant."
-			default boost-variant-release
-			help
-				Chooses which boost variant should be selected:
-				-> Release: Optimizes Boost for release.
-					- Optimization: Speed;  Debug Symbols: Off; Inlining: Full; Runtime Debugging: Off.
-				-> Debug:
-					- Optimization: Off; Debug Symbols: On; Inlining: Off; Runtime Debugging: On.
-				-> Profile:
-					- Profiling: On;  Debug Symbols: On.
-
-			config boost-variant-release
-				bool "Release"
-
-			config boost-variant-debug
-				bool "Debug"
-
-			config boost-variant-profile
-				bool "Profile"
-		endchoice
-
-		config boost-use-name-tags
-			bool "Use tagged names."
-			help
-				Add name tags the lib files, to diferentiate each library version:
-				  "-mt" for multi-threading.
-				  "-d" for debugging.
-				  "-s" for runtime static link".
-				Might break compatibility with libraries that expect boost libs with default names.
-			default n
-
-		config boost-single-thread
-			depends on boost-use-name-tags
-			bool "Single thread Support."
-			help
-				Compile Boost libraries in single-thread mode.
-			default n
-
-		config boost-build-type-complete
-			depends on boost-use-name-tags
-			bool "Complete Boost Build."
-			help
-				Builds both release and debug libs. It will take much longer to compile.
-			default n
-	endmenu
-
-	menu "Select Boost libraries"
-		depends on PACKAGE_boost
-		comment "Libraries"
-
-		config boost-libs-all
-			bool "Include all Boost libraries."
-			default m if ALL
-			select PACKAGE_boost-libs
-			select boost-test-pkg
-			select boost-graph-parallel
-
-		config boost-test-pkg
-			bool "Boost test package."
-			default m if ALL
-			select PACKAGE_boost-test
-
-		config boost-graph-parallel
-			bool "Boost parallel graph support."
-			select PACKAGE_boost-graph
-			default m if ALL
-
-		 config PACKAGE_boost-atomic
-			prompt "Boost atomic library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-chrono
-			prompt "Boost chrono library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-container
-			prompt "Boost container library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-context
-			prompt "Boost context library."
-			default m if ALL
-			   depends on !boost-context-exclude
-			
-		  config PACKAGE_boost-contract
-			prompt "Boost contract library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-coroutine
-			prompt "Boost coroutine library."
-			default m if ALL
-			   
-			depends on !boost-coroutine-exclude
-		  config PACKAGE_boost-date_time
-			prompt "Boost date_time library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-fiber
-			prompt "Boost fiber library."
-			default m if ALL
-			  depends on !boost-fiber-exclude 
-			
-		  config PACKAGE_boost-filesystem
-			prompt "Boost filesystem library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-graph
-			prompt "Boost graph library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-iostreams
-			prompt "Boost iostreams library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-locale
-			prompt "Boost locale library."
-			default m if ALL
-			depends on BUILD_NLS   
-			
-		  config PACKAGE_boost-log
-			prompt "Boost log library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-math
-			prompt "Boost math library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-program_options
-			prompt "Boost program_options library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-python
-			prompt "Boost python v2.7 library."
-			default m if ALL
-			 depends on PACKAGE_python  
-			
-		  config PACKAGE_boost-python3
-			prompt "Boost python3 v3.7 library."
-			default m if ALL
-			 depends on PACKAGE_python3  
-			
-		  config PACKAGE_boost-random
-			prompt "Boost random library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-regex
-			prompt "Boost regex library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-serialization
-			prompt "Boost serialization library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-wserialization
-			prompt "Boost wserialization library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-stacktrace
-			prompt "Boost stacktrace library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-system
-			prompt "Boost system library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-thread
-			prompt "Boost thread library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-timer
-			prompt "Boost timer library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-type_erasure
-			prompt "Boost type_erasure library."
-			default m if ALL
-			   
-			
-		  config PACKAGE_boost-wave
-			prompt "Boost wave library."
-			default m if ALL
-			   
-			
-		
-	endmenu
+Package: boost-wave
+Version: 1_51_0-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libstdcpp +libpthread +librt +boost-date_time +boost-thread +boost-filesystem
+Menu-Depends: 
+Provides: 
+Build-Depends: boost/host
+Build-Types: host
+Section: libs
+Category: Libraries
+Title: Boost C++ source libraries (wave)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: boost_1_51_0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Boost C++ source libraries (wave)
+http://www.boost.org
+Mirko Vogt <mirko@openwrt.org>
 @@
 
 
@@ -86430,56 +85829,34 @@ Marcel Denia <naoir@gmx.net>
 
 Source-Makefile: package/feeds/packages/pulseaudio/Makefile
 Package: pulseaudio-daemon
-Version: 12.2-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsndfile +libltdl +libpthread +librt +alsa-lib +libopenssl +libwrap +libcap +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full
+Version: 5.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libspeexdsp +libsndfile +libltdl +libpthread +librt +alsa-lib +libjson +libopenssl +libwrap +libcap +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full
 Menu-Depends: 
 Provides: pulseaudio
-Build-Variant: noavahi
-Build-Depends: intltool/host glib2/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Build-Depends: intltool/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
 Section: sound
 Category: Sound
 Title: Network sound server
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: pulseaudio-12.2.tar.xz
+Source: pulseaudio-5.0.tar.xz
 Type: ipkg
 Feed: packages
 Description:     PulseAudio (formerly Polypaudio) is a cross-platform, networked sound server.
-http://www.pulseaudio.org
-Peter Wagner <tripolar@gmx.at>
-@@
-
-Package: pulseaudio-daemon-avahi
-Version: 12.2-4
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsndfile +libltdl +libpthread +librt +alsa-lib +libopenssl +libwrap +libcap +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +dbus +libavahi-client +sbc
-Menu-Depends: 
-Provides: pulseaudio
-Build-Variant: avahi
-Build-Depends: intltool/host glib2/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
-Section: sound
-Category: Sound
-Title: Network sound server (avahi/bluez)
-Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: pulseaudio-12.2.tar.xz
-Type: ipkg
-Feed: packages
-Description:     PulseAudio (formerly Polypaudio) is a cross-platform, networked sound server.
-  This package enables avahi,bluez and is compiled against dbus, sbc, and avahi.
 http://www.pulseaudio.org
 Peter Wagner <tripolar@gmx.at>
 @@
 
 Package: pulseaudio-tools
-Version: 12.2-4
+Version: 5.0-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libsndfile pulseaudio
 Menu-Depends: 
 Provides: 
-Build-Variant: noavahi
-Build-Depends: intltool/host glib2/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Build-Depends: intltool/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
 Section: sound
 Category: Sound
 Title: Tools for Pulseaudio
 Maintainer: 
-Source: pulseaudio-12.2.tar.xz
+Source: pulseaudio-5.0.tar.xz
 Type: ipkg
 Feed: packages
 Description: Tools for Pulseaudio
@@ -86488,16 +85865,16 @@ http://www.pulseaudio.org
 @@
 
 Package: pulseaudio-profiles
-Version: 12.2-4
+Version: 5.0-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread pulseaudio
 Menu-Depends: 
 Provides: 
-Build-Depends: intltool/host glib2/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Build-Depends: intltool/host !BUILD_NLS:libiconv !BUILD_NLS:libintl
 Section: sound
 Category: Sound
 Title: Profiles for Pulseaudio
 Maintainer: 
-Source: pulseaudio-12.2.tar.xz
+Source: pulseaudio-5.0.tar.xz
 Type: ipkg
 Feed: packages
 Description: Profiles for Pulseaudio
@@ -88365,7 +87742,7 @@ Ted Hess <thess@kitschensync.net>
 
 Source-Makefile: package/feeds/packages/libgcrypt/Makefile
 Package: libgcrypt
-Version: 1.8.5-1
+Version: 1.6.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libgpg-error
 Menu-Depends: 
 Provides: 
@@ -88373,7 +87750,7 @@ Section: libs
 Category: Libraries
 Title: GNU crypto library
 Maintainer: W. Michael Petullo <mike@flyn.org>
-Source: libgcrypt-1.8.5.tar.bz2
+Source: libgcrypt-1.6.1.tar.bz2
 Type: ipkg
 Feed: packages
 Description:  This is a general purpose cryptographic library based on the code from
@@ -88384,7 +87761,7 @@ Description:  This is a general purpose cryptographic library based on the code 
  random numbers and a lot of supporting functions. Some algorithms have
  been disabled to reduce size (Blowfish, Twofish, Serpent,
  RC2, SEED, Camellia, CRC, MD4, TIGER-192, Whirlpool, ElGamal, ECC).
-https://www.gnupg.org/related_software/libgcrypt/
+http://directory.fsf.org/security/libgcrypt.html
 W. Michael Petullo <mike@flyn.org>
 @@
 
@@ -89374,21 +88751,20 @@ Ondrej Caletka <ondrej@caletka.cz>
 
 Source-Makefile: package/feeds/packages/bash/Makefile
 Package: bash
-Submenu: Shells
-Version: 5.0-3
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libncurses +libreadline
+Version: 4.2-5
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libncurses
 Menu-Depends: 
 Provides: 
 Section: utils
 Category: Utilities
 Title: The GNU Bourne Again SHell
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: bash-5.0.tar.gz
+Source: bash-4.2.tar.gz
 Type: ipkg
 Feed: packages
-Description:   Bash is an sh-compatible command language interpreter that executes
-  commands read from the standard input or from a file. Bash also
-  incorporates useful features from the Korn and C shells (ksh and csh).
+Description: 	Bash is an sh-compatible command language interpreter that executes
+	commands read from the standard input or from a file. Bash also
+	incorporates useful features from the Korn and C shells (ksh and csh).
 http://www.gnu.org/software/bash/
 Marcel Denia <naoir@gmx.net>
 @@
@@ -89866,7 +89242,7 @@ Ted Hess <thess@kitschensync.net>
 
 Source-Makefile: package/feeds/packages/libffi/Makefile
 Package: libffi
-Version: 3.2.1-3
+Version: 3.0.13-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -89875,7 +89251,7 @@ Section: libs
 Category: Libraries
 Title: Foreign Function Interface (FFI) library
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: libffi-3.2.1.tar.gz
+Source: libffi-3.0.13.tar.gz
 Type: ipkg
 Feed: packages
 Description: The libffi library provides a portable, high level programming interface to

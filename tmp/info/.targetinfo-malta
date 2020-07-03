@@ -1,0 +1,91 @@
+Source-Makefile: target/linux/malta/Makefile
+Target: malta
+Target-Board: malta
+Target-Name: MIPS Malta CoreLV board (qemu)
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: 
+Target-Arch-Packages: malta
+Target-Features: pci rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe
+CPU-Type: 
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: 
+Target-Description:
+
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools  wpad-mini kmod-mac80211-hwsim kmod-pcnet32 iwinfo
+Target: malta/le
+Target-Board: malta
+Target-Name: Little Endian
+Target-Path: target/linux/malta
+Target-Arch: mipsel
+Target-Arch-Packages: malta_mipsel
+Target-Features: mips16 pci ramdisk rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32 -mtune=mips32
+CPU-Type: mips32
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build LE firmware images for MIPS Malta CoreLV board running in
+	little-endian mode
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools  wpad-mini kmod-mac80211-hwsim kmod-pcnet32 iwinfo
+Target: malta/be
+Target-Board: malta
+Target-Name: Big Endian
+Target-Path: target/linux/malta
+Target-Arch: mips
+Target-Arch-Packages: malta_mips
+Target-Features: mips16 pci ramdisk rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips32 -mtune=mips32
+CPU-Type: mips32
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build BE firmware images for MIPS Malta CoreLV board running in
+	big-endian mode
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools  wpad-mini kmod-mac80211-hwsim kmod-pcnet32 iwinfo
+Target: malta/le64
+Target-Board: malta
+Target-Name: Little Endian (64-bits)
+Target-Path: target/linux/malta
+Target-Arch: mips64el
+Target-Arch-Packages: malta_mipsel64
+Target-Features: pci ramdisk rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips64 -mtune=mips64 -mabi=64
+CPU-Type: mips64
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build LE firmware images for MIPS Malta CoreLV board running in
+	little-endian and 64-bits mode
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools  wpad-mini kmod-mac80211-hwsim kmod-pcnet32 iwinfo
+Target: malta/be64
+Target-Board: malta
+Target-Name: Big Endian (64-bits)
+Target-Path: target/linux/malta
+Target-Arch: mips64
+Target-Arch-Packages: malta_mips64
+Target-Features: pci ramdisk rtc usb
+Target-Depends: 
+Target-Optimization: -Os -pipe -mno-branch-likely -mips64 -mtune=mips64 -mabi=64
+CPU-Type: mips64
+Linux-Version: 3.10.24
+Linux-Release: 1
+Linux-Kernel-Arch: mips
+Target-Description:
+	Build BE firmware images for MIPS Malta CoreLV board running in
+	big-endian and 64-bits mode
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools  wpad-mini kmod-mac80211-hwsim kmod-pcnet32 iwinfo
+

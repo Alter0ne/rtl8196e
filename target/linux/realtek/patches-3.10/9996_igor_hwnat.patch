@@ -1,0 +1,1109 @@
+diff -crB ./linux-3.10.49_orig/drivers/net/rtl819x/common/rtl865x_netif.c linux-3.10.49/drivers/net/rtl819x/common/rtl865x_netif.c
+*** ./linux-3.10.49_orig/drivers/net/rtl819x/common/rtl865x_netif.c	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/drivers/net/rtl819x/common/rtl865x_netif.c	2017-12-11 17:14:03.996341370 +0200
+***************
+*** 1903,1909 ****
+  #else
+  	entry->asicIdx = i;
+  #endif
+! #if (defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) || defined(CONFIG_RTL_HARDWARE_MULTICAST)) && defined(CONFIG_OPENWRT_SDK)
+  	entry->enableRoute = (rtl8651_getAsicOperationLayer()>2)?(netif->enableRoute):0;
+  #else
+  	entry->enableRoute = netif->enableRoute;
+--- 1903,1909 ----
+  #else
+  	entry->asicIdx = i;
+  #endif
+! #if (defined(CONFIG_RTL_HARDWARE_NAT) || defined(CONFIG_RTL_HARDWARE_MULTICAST)) && defined(CONFIG_OPENWRT_SDK)
+  	entry->enableRoute = (rtl8651_getAsicOperationLayer()>2)?(netif->enableRoute):0;
+  #else
+  	entry->enableRoute = netif->enableRoute;
+***************
+*** 5162,5168 ****
+  	if(netif ->enableRoute == 1)
+  		return SUCCESS;
+  
+! #if (defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) || defined(CONFIG_RTL_HARDWARE_MULTICAST)) && defined(CONFIG_OPENWRT_SDK)
+  	netif->enableRoute = (rtl8651_getAsicOperationLayer()>2)? 1 :0;
+  #else
+  	netif->enableRoute = 1;
+--- 5162,5168 ----
+  	if(netif ->enableRoute == 1)
+  		return SUCCESS;
+  
+! #if (defined(CONFIG_RTL_HARDWARE_NAT) || defined(CONFIG_RTL_HARDWARE_MULTICAST)) && defined(CONFIG_OPENWRT_SDK)
+  	netif->enableRoute = (rtl8651_getAsicOperationLayer()>2)? 1 :0;
+  #else
+  	netif->enableRoute = 1;
+***************
+*** 5977,5983 ****
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) || defined(CONFIG_RTL_HARDWARE_MULTICAST)
+  int rtl_enable_netif_routing(void)
+  {
+  	int i;
+--- 5977,5983 ----
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT) || defined(CONFIG_RTL_HARDWARE_MULTICAST)
+  int rtl_enable_netif_routing(void)
+  {
+  	int i;
+diff -crB ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_arp.c linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_arp.c
+*** ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_arp.c	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_arp.c	2017-12-11 17:14:03.996341370 +0200
+***************
+*** 659,665 ****
+  		}
+  	}
+  	
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	else 
+  	{
+  		/*ip and mac of the new one is the same with the old one*/
+--- 659,665 ----
+  		}
+  	}
+  	
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	else 
+  	{
+  		/*ip and mac of the new one is the same with the old one*/
+***************
+*** 729,735 ****
+  		rtl865x_refleshHWL2Table(mac, FDB_DYNAMIC|FDB_STATIC,fid);
+  		/*update mapping table*/
+  		memcpy(&(arpTables.mappings[hash]),&newArpMapping,sizeof(rtl865x_arpMapping_entry_t));
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  		arpTables.mappings[hash].exist_in_ps 	= 1;
+  		arpTables.mappings[hash].valid 			= 1;
+  #endif
+--- 729,735 ----
+  		rtl865x_refleshHWL2Table(mac, FDB_DYNAMIC|FDB_STATIC,fid);
+  		/*update mapping table*/
+  		memcpy(&(arpTables.mappings[hash]),&newArpMapping,sizeof(rtl865x_arpMapping_entry_t));
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  		arpTables.mappings[hash].exist_in_ps 	= 1;
+  		arpTables.mappings[hash].valid 			= 1;
+  #endif
+***************
+*** 936,942 ****
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  static ipaddr_t arp_ip_entry[RTL8651_ARPTBL_SIZE];
+  
+  int rtl_clear_arp_exist_in_ps_flag(void)
+--- 936,942 ----
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  static ipaddr_t arp_ip_entry[RTL8651_ARPTBL_SIZE];
+  
+  int rtl_clear_arp_exist_in_ps_flag(void)
+diff -crB ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_route.c linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_route.c
+*** ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_route.c	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_route.c	2017-12-11 17:14:03.996341370 +0200
+***************
+*** 533,539 ****
+  	if(ipMask != 0 && (rt = _rtl865x_getRouteEntry(ipAddr, ipMask)) != NULL)
+  	{
+  		//rt->ref_count++;
+! 		#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  		rt->exist_in_ps = 1;
+  		#endif
+  		return RTL_EENTRYALREADYEXIST;
+--- 533,539 ----
+  	if(ipMask != 0 && (rt = _rtl865x_getRouteEntry(ipAddr, ipMask)) != NULL)
+  	{
+  		//rt->ref_count++;
+! 		#if defined(CONFIG_RTL_HARDWARE_NAT)
+  		rt->exist_in_ps = 1;
+  		#endif
+  		return RTL_EENTRYALREADYEXIST;
+***************
+*** 545,551 ****
+  		rt = _rtl865x_getDefaultRoute();
+  		/*deference rt's orginal netif*/
+  		if (rt && rt->dstNetif) {
+! 			#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  			if (rt->nextHop == nextHop) {
+  				if (ifName) {
+  					if (strncmp(rt->dstNetif->name, ifName, MAX_IFNAMESIZE) == 0) {
+--- 545,551 ----
+  		rt = _rtl865x_getDefaultRoute();
+  		/*deference rt's orginal netif*/
+  		if (rt && rt->dstNetif) {
+! 			#if defined(CONFIG_RTL_HARDWARE_NAT)
+  			if (rt->nextHop == nextHop) {
+  				if (ifName) {
+  					if (strncmp(rt->dstNetif->name, ifName, MAX_IFNAMESIZE) == 0) {
+***************
+*** 587,593 ****
+  	rt->nextHop	= nextHop;
+  	rt->srcIp		= srcIp;
+  	rt->dstNetif 	= netif;	
+! 	#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	rt->exist_in_ps = 1;
+  	#endif
+  #if defined(CONFIG_RTL_8198C) || defined(CONFIG_RTL_8197F)
+--- 587,593 ----
+  	rt->nextHop	= nextHop;
+  	rt->srcIp		= srcIp;
+  	rt->dstNetif 	= netif;	
+! 	#if defined(CONFIG_RTL_HARDWARE_NAT)
+  	rt->exist_in_ps = 1;
+  	#endif
+  #if defined(CONFIG_RTL_8198C) || defined(CONFIG_RTL_8197F)
+***************
+*** 1311,1317 ****
+  	return SUCCESS;
+  }
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  int rtl_clear_router_exist_in_ps_flag(void)
+  {
+  	unsigned long flags=0;	
+--- 1311,1317 ----
+  	return SUCCESS;
+  }
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  int rtl_clear_router_exist_in_ps_flag(void)
+  {
+  	unsigned long flags=0;	
+diff -crB ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_route.h linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_route.h
+*** ./linux-3.10.49_orig/drivers/net/rtl819x/l3Driver/rtl865x_route.h	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/drivers/net/rtl819x/l3Driver/rtl865x_route.h	2017-12-11 17:14:03.996341370 +0200
+***************
+*** 23,29 ****
+  				
+  	uint32            ref_count;                       /*referrence count*/
+  	rtl865x_netif_local_t *dstNetif;			/*destination network interface*/
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	int		exist_in_ps;
+  #endif
+  	/* nexthop informaiton */
+--- 23,29 ----
+  				
+  	uint32            ref_count;                       /*referrence count*/
+  	rtl865x_netif_local_t *dstNetif;			/*destination network interface*/
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	int		exist_in_ps;
+  #endif
+  	/* nexthop informaiton */
+***************
+*** 63,69 ****
+  
+  } rtl865x_route_t;
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  struct ip_mask_tuple {
+  	unsigned int ip;
+  	unsigned int mask;
+--- 63,69 ----
+  
+  } rtl865x_route_t;
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  struct ip_mask_tuple {
+  	unsigned int ip;
+  	unsigned int mask;
+diff -crB ./linux-3.10.49_orig/drivers/net/rtl819x/rtl_nic.c linux-3.10.49/drivers/net/rtl819x/rtl_nic.c
+*** ./linux-3.10.49_orig/drivers/net/rtl819x/rtl_nic.c	2016-08-12 16:19:22.000000000 +0300
+--- linux-3.10.49/drivers/net/rtl819x/rtl_nic.c	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 160,166 ****
+  #if defined (CONFIG_RTL_HARDWARE_MULTICAST)
+  extern struct net_bridge *bridge0;
+  extern uint32 br0SwFwdPortMask;
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) || defined(CONFIG_RTL_HARDWARE_MULTICAST)
+  int rtl_enable_netif_routing(void);
+  #endif
+  #if defined (CONFIG_RTL_HW_MCAST_WIFI)
+--- 160,166 ----
+  #if defined (CONFIG_RTL_HARDWARE_MULTICAST)
+  extern struct net_bridge *bridge0;
+  extern uint32 br0SwFwdPortMask;
+! #if defined(CONFIG_RTL_HARDWARE_NAT) || defined(CONFIG_RTL_HARDWARE_MULTICAST)
+  int rtl_enable_netif_routing(void);
+  #endif
+  #if defined (CONFIG_RTL_HW_MCAST_WIFI)
+***************
+*** 898,904 ****
+  static struct rtl865x_vlanConfig vlanconfig[] = {
+  	{ 	RTL_DRV_LAN_NETIF_NAME,	 0,   IF_ETHER, 	RTL_LANVLANID, 	   	RTL_LAN_FID, 	RTL_LANPORT_MASK, 		RTL_LANPORT_MASK,		1500, 	{ { 0x00, 0x12, 0x34, 0x56, 0x78, 0x96 } }, 0	},
+  	{	RTL_DRV_WAN0_NETIF_NAME,	 1,   IF_ETHER,	RTL_WANVLANID,		RTL_WAN_FID,	RTL_WANPORT_MASK,		RTL_WANPORT_MASK,		1500,	{ { 0x00, 0x12, 0x34, 0x56, 0x78, 0x99 } }, 0	},
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	{	RTL_DRV_PPP_NETIF_NAME, 1,   IF_PPPOE,    	RTL_WANVLANID,		RTL_WAN_FID,    	RTL_WANPORT_MASK,         	RTL_WANPORT_MASK,     	1500, { { 0x00, 0x12, 0x34, 0x56, 0x78, 0x91 } }, 1 },
+  #endif
+  	RTL865X_CONFIG_END,
+--- 898,904 ----
+  static struct rtl865x_vlanConfig vlanconfig[] = {
+  	{ 	RTL_DRV_LAN_NETIF_NAME,	 0,   IF_ETHER, 	RTL_LANVLANID, 	   	RTL_LAN_FID, 	RTL_LANPORT_MASK, 		RTL_LANPORT_MASK,		1500, 	{ { 0x00, 0x12, 0x34, 0x56, 0x78, 0x96 } }, 0	},
+  	{	RTL_DRV_WAN0_NETIF_NAME,	 1,   IF_ETHER,	RTL_WANVLANID,		RTL_WAN_FID,	RTL_WANPORT_MASK,		RTL_WANPORT_MASK,		1500,	{ { 0x00, 0x12, 0x34, 0x56, 0x78, 0x99 } }, 0	},
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	{	RTL_DRV_PPP_NETIF_NAME, 1,   IF_PPPOE,    	RTL_WANVLANID,		RTL_WAN_FID,    	RTL_WANPORT_MASK,         	RTL_WANPORT_MASK,     	1500, { { 0x00, 0x12, 0x34, 0x56, 0x78, 0x91 } }, 1 },
+  #endif
+  	RTL865X_CONFIG_END,
+***************
+*** 2487,2493 ****
+  	return SUCCESS;
+  }
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  int rtl_del_ps_drv_netif_mapping_by_name(const char *name)
+  {
+  	int i;
+--- 2487,2493 ----
+  	return SUCCESS;
+  }
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  int rtl_del_ps_drv_netif_mapping_by_name(const char *name)
+  {
+  	int i;
+***************
+*** 13523,13529 ****
+  	rtl_enable_netif_routing();
+  #endif
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	rtl_hw_nat_init_refine();
+  #endif
+  #if defined(CONFIG_NET_SCHED)
+--- 13523,13529 ----
+  	rtl_enable_netif_routing();
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	rtl_hw_nat_init_refine();
+  #endif
+  #if defined(CONFIG_NET_SCHED)
+***************
+*** 14138,14144 ****
+  		netif.vid = vlanconfig[i].vid;
+  		netif.is_wan = vlanconfig[i].isWan;
+  		netif.is_slave = vlanconfig[i].is_slave;
+! 		#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  		netif.enableRoute=1;
+  		#endif
+  
+--- 14138,14144 ----
+  		netif.vid = vlanconfig[i].vid;
+  		netif.is_wan = vlanconfig[i].isWan;
+  		netif.is_slave = vlanconfig[i].is_slave;
+! 		#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HARDWARE_NAT)
+  		netif.enableRoute=1;
+  		#endif
+  
+***************
+*** 15145,15151 ****
+  		netif.vid = pvlanconfig[i].vid;
+  		netif.is_wan = pvlanconfig[i].isWan;
+  		netif.is_slave = pvlanconfig[i].is_slave;
+! 		#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  		netif.enableRoute=1;
+  		#endif
+  
+--- 15145,15151 ----
+  		netif.vid = pvlanconfig[i].vid;
+  		netif.is_wan = pvlanconfig[i].isWan;
+  		netif.is_slave = pvlanconfig[i].is_slave;
+! 		#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HARDWARE_NAT)
+  		netif.enableRoute=1;
+  		#endif
+  
+***************
+*** 24109,24115 ****
+  			netif.if_type = vlanconfig[i].if_type;
+  			netif.is_wan = vlanconfig[i].isWan;
+  			netif.is_slave = vlanconfig[i].is_slave;
+! 			#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  			netif.enableRoute=1;
+  			#endif
+  	        	#if defined (CONFIG_RTL_8198C)
+--- 24109,24115 ----
+  			netif.if_type = vlanconfig[i].if_type;
+  			netif.is_wan = vlanconfig[i].isWan;
+  			netif.is_slave = vlanconfig[i].is_slave;
+! 			#if defined (CONFIG_RTL_HARDWARE_MULTICAST) ||defined(CONFIG_RTL_HARDWARE_NAT)
+  			netif.enableRoute=1;
+  			#endif
+  	        	#if defined (CONFIG_RTL_8198C)
+Только в linux-3.10.49: .image
+diff -crB ./linux-3.10.49_orig/include/net/ip_vs.h linux-3.10.49/include/net/ip_vs.h
+*** ./linux-3.10.49_orig/include/net/ip_vs.h	2014-07-18 01:58:15.000000000 +0300
+--- linux-3.10.49/include/net/ip_vs.h	2017-12-11 16:50:31.000000000 +0200
+***************
+*** 563,568 ****
+--- 563,572 ----
+  	struct net              *net;           /* Name space */
+  #endif
+  
++ #if defined(CONFIG_RTL_HARDWARE_NAT)
++ 	int hw_acc; /* 1: hardware acceleration, 0: software only */
++ #endif
++ 
+  	/* counter and timer */
+  	atomic_t		refcnt;		/* reference count */
+  	struct timer_list	timer;		/* Expiration timer */
+diff -crB ./linux-3.10.49_orig/include/net/rtl/fastpath/fastpath_core.h linux-3.10.49/include/net/rtl/fastpath/fastpath_core.h
+*** ./linux-3.10.49_orig/include/net/rtl/fastpath/fastpath_core.h	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/include/net/rtl/fastpath/fastpath_core.h	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 409,415 ****
+  	struct net	*ppp_net;	/* the net we belong to */
+  };
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  /*
+   * Private data structure for each channel.
+   * This includes the data structure used for multilink.
+--- 409,415 ----
+  	struct net	*ppp_net;	/* the net we belong to */
+  };
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  /*
+   * Private data structure for each channel.
+   * This includes the data structure used for multilink.
+diff -crB ./linux-3.10.49_orig/include/net/rtl/features/rtl_features.h linux-3.10.49/include/net/rtl/features/rtl_features.h
+*** ./linux-3.10.49_orig/include/net/rtl/features/rtl_features.h	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/include/net/rtl/features/rtl_features.h	2017-12-11 18:09:48.275215595 +0200
+***************
+*** 20,56 ****
+  #define IS_BROADCAST_ADDR(__ipv4addr__)			((((uint32)(__ipv4addr__)) & 0xffffffff) == 0xffffffff)
+  //#endif
+  
+! #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+  struct tcp_state_hash_head
+! {
+! 	enum tcp_conntrack state;
+  
+! 	struct list_head* state_hash;
+! };
+! struct udp_state_hash_head
+! {
+! 	uint8_t state;
+! 	struct list_head* state_hash;
+! };
+! 
+! #define UDP_UNREPLY (TCP_CONNTRACK_MAX+1)
+! #define UDP_ASSURED (TCP_CONNTRACK_MAX+2)
+! 
+! struct DROP_PRORITY{
+! 	u_int8_t state;
+! 	u_int16_t  threshold;
+! };
+! 
+! extern struct tcp_state_hash_head Tcp_State_Hash_Head[];
+  extern struct udp_state_hash_head Udp_State_Hash_Head[];
+  extern struct DROP_PRORITY drop_priority[];
+! 
+! enum {
+! 	PROT_ICMP,
+! 	PROT_TCP,
+! 	PROT_UDP,
+! 	PROT_MAX
+! };
+  #endif
+  
+  #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+--- 20,56 ----
+  #define IS_BROADCAST_ADDR(__ipv4addr__)			((((uint32)(__ipv4addr__)) & 0xffffffff) == 0xffffffff)
+  //#endif
+  
+! #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+  struct tcp_state_hash_head
+! {
+! 	enum tcp_conntrack state;
+! 
+! 	struct list_head* state_hash;
+! };
+! struct udp_state_hash_head
+! {
+! 	uint8_t state;
+! 	struct list_head* state_hash;
+! };
+! 
+! #define UDP_UNREPLY (TCP_CONNTRACK_MAX+1)
+! #define UDP_ASSURED (TCP_CONNTRACK_MAX+2)
+! 
+! struct DROP_PRORITY{
+! 	u_int8_t state;
+! 	u_int16_t  threshold;
+! };
+  
+! extern struct tcp_state_hash_head Tcp_State_Hash_Head[];
+  extern struct udp_state_hash_head Udp_State_Hash_Head[];
+  extern struct DROP_PRORITY drop_priority[];
+! 
+! enum {
+! 	PROT_ICMP,
+! 	PROT_TCP,
+! 	PROT_UDP,
+! 	PROT_MAX
+! };
+  #endif
+  
+  #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+***************
+*** 78,108 ****
+  #endif
+  
+  #if defined(CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_MULTIPLE_WAN)  ||defined(CONFIG_RTL_REDIRECT_ACL_SUPPORT_FOR_ISP_MULTI_WAN) || (defined(CONFIG_NET_SCHED)&&defined(CONFIG_RTL_IPTABLES_FAST_PATH)) || defined(CONFIG_RTL_HW_QOS_SUPPORT)
+! extern struct net_device *rtl865x_getWanDev(void );
+! extern struct net_device *rtl865x_getLanDev(void );
+! #endif
+  
+  #if defined (CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_HW_QOS_SUPPORT)
+! extern int rtl865x_attainDevType(unsigned char *devName, unsigned int *isLanDev, unsigned int *isWanDev);
+  #endif
+  
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH) || defined(CONFIG_RTL_HARDWARE_NAT)
+! /*2007-12-19*/
+! #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+! extern int	tcp_get_timeouts_by_state(u_int8_t state,void *ct_or_cp,int is_ct);
+! #else
+  extern int 	tcp_get_timeouts_by_state(u_int8_t state);
+! #endif
+! #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+  extern unsigned int	udp_get_timeouts_by_state(enum udp_conntrack state,void *ct_or_cp,int is_ct);
+! #else
+  #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0)
+  extern unsigned int	udp_get_timeouts_by_state(enum udp_conntrack state);
+  #else
+! extern unsigned int nf_ct_udp_timeout;
+  extern unsigned int nf_ct_udp_timeout_stream;
+  #endif
+! #endif
+  void rtl_check_for_acc(struct nf_conn *ct, unsigned long expires);
+  void rtl_delConnCache(struct nf_conn *ct);
+  int32 rtl_connCache_timer_update(struct nf_conn *ct);
+--- 78,108 ----
+  #endif
+  
+  #if defined(CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_MULTIPLE_WAN)  ||defined(CONFIG_RTL_REDIRECT_ACL_SUPPORT_FOR_ISP_MULTI_WAN) || (defined(CONFIG_NET_SCHED)&&defined(CONFIG_RTL_IPTABLES_FAST_PATH)) || defined(CONFIG_RTL_HW_QOS_SUPPORT)
+! extern struct net_device *rtl865x_getWanDev(void );
+! extern struct net_device *rtl865x_getLanDev(void );
+! #endif
+  
+  #if defined (CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_HW_QOS_SUPPORT)
+! extern int rtl865x_attainDevType(unsigned char *devName, unsigned int *isLanDev, unsigned int *isWanDev);
+  #endif
+  
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH) || defined(CONFIG_RTL_HARDWARE_NAT)
+! /*2007-12-19*/
+! #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+! extern int	tcp_get_timeouts_by_state(u_int8_t state,void *ct_or_cp,int is_ct);
+! #else
+  extern int 	tcp_get_timeouts_by_state(u_int8_t state);
+! #endif
+! #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+  extern unsigned int	udp_get_timeouts_by_state(enum udp_conntrack state,void *ct_or_cp,int is_ct);
+! #else
+  #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0)
+  extern unsigned int	udp_get_timeouts_by_state(enum udp_conntrack state);
+  #else
+! extern unsigned int nf_ct_udp_timeout;
+  extern unsigned int nf_ct_udp_timeout_stream;
+  #endif
+! #endif
+  void rtl_check_for_acc(struct nf_conn *ct, unsigned long expires);
+  void rtl_delConnCache(struct nf_conn *ct);
+  int32 rtl_connCache_timer_update(struct nf_conn *ct);
+***************
+*** 143,158 ****
+  #define RTL_MULTIPLE_WAN_NUM		2
+  #endif
+  
+! typedef struct _rtl_masq_if_struct
+! {
+! 	unsigned int valid;
+! 	unsigned int ipAddr;
+! 	//struct ipt_entry *masq_entry;
+! 	char ifName[IFNAMSIZ];
+  }rtl_masq_if;
+  
+! rtl_masq_if *rtl_get_masq_info_by_devName(const char* name);
+! #endif
+  
+  #if defined(CONFIG_RTL_HARDWARE_NAT) ||defined(CONFIG_RTL_HARDWARE_IPV6_SUPPORT)
+  int32 syn_asic_arp(struct neighbour *n, int add);
+--- 143,158 ----
+  #define RTL_MULTIPLE_WAN_NUM		2
+  #endif
+  
+! typedef struct _rtl_masq_if_struct
+! {
+! 	unsigned int valid;
+! 	unsigned int ipAddr;
+! 	//struct ipt_entry *masq_entry;
+! 	char ifName[IFNAMSIZ];
+  }rtl_masq_if;
+  
+! rtl_masq_if *rtl_get_masq_info_by_devName(const char* name);
+! #endif
+  
+  #if defined(CONFIG_RTL_HARDWARE_NAT) ||defined(CONFIG_RTL_HARDWARE_IPV6_SUPPORT)
+  int32 syn_asic_arp(struct neighbour *n, int add);
+***************
+*** 164,172 ****
+  #endif
+  #endif
+  
+  #if defined(FAST_PATH_SPI_ENABLED)
+  extern struct nf_conntrack_l4proto **nf_ct_protos[PF_MAX];
+! extern unsigned int
+  	rtl_nf_conntrack_in(struct net *net, unsigned int dataoff, unsigned int hooknum, struct sk_buff *skb);
+  #endif
+  
+--- 164,174 ----
+  #endif
+  #endif
+  
++ void rtl_get_extIp_router_timer_fn(unsigned long arg);
++ 
+  #if defined(FAST_PATH_SPI_ENABLED)
+  extern struct nf_conntrack_l4proto **nf_ct_protos[PF_MAX];
+! extern unsigned int
+  	rtl_nf_conntrack_in(struct net *net, unsigned int dataoff, unsigned int hooknum, struct sk_buff *skb);
+  #endif
+  
+***************
+*** 187,193 ****
+  		const unsigned int *underflows);
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  int32 rtl865x_handle_nat(struct nf_conn *ct, int act, struct sk_buff *skb);
+  int32 rtl_update_ip_tables(char *name,  unsigned long event, struct in_ifaddr *ina);
+  int32 rtl_fn_insert(struct fib_table *tb, struct fib_config *cfg, struct fib_info *fi);
+--- 189,195 ----
+  		const unsigned int *underflows);
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  int32 rtl865x_handle_nat(struct nf_conn *ct, int act, struct sk_buff *skb);
+  int32 rtl_update_ip_tables(char *name,  unsigned long event, struct in_ifaddr *ina);
+  int32 rtl_fn_insert(struct fib_table *tb, struct fib_config *cfg, struct fib_info *fi);
+***************
+*** 207,238 ****
+  int32 rtl8198c_ipv6_router_del(struct rt6_info *rt);
+  #endif
+  
+! #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+! extern int	rtl_newGC_session_status_flags;
+! extern unsigned long rtl_newGC_session_status_time;
+  
+! #if (HZ==100)
+! #define	RTL_FP_SESSION_LEVEL3_INTERVAL		(1)
+  #define	RTL_FP_SESSION_LEVEL1_INTERVAL		(200)	/* 2 second */
+! #elif (HZ==1000)
+! #define	RTL_FP_SESSION_LEVEL3_INTERVAL		(10)
+  #define	RTL_FP_SESSION_LEVEL1_INTERVAL		(2000)	/* 2 second */
+! #else
+! #error "Please adjust the parameter according to the HZ"
+! #endif
+! 
+  #if defined(CONFIG_RTL_8198)
+  #define	RTL_FP_SESSION_LEVEL3_ALLOW_COUNT	(40)
+  #else
+  #define	RTL_FP_SESSION_LEVEL3_ALLOW_COUNT	(16)
+  #endif
+! #define	RTL_FP_SESSION_LEVEL1_RX_WEIGHT		(8)
+! 
+! #define	RTL_FP_SESSION_LEVEL_IDLE				0
+! #define	RTL_FP_SESSION_LEVEL1					1
+! #define	RTL_FP_SESSION_LEVEL2					2
+! #define	RTL_FP_SESSION_LEVEL3					3
+! //void rtl_fp_mark_invalid(struct nf_conn *ct);
+  //enum LR_RESULT rtk_refreshOSConnectionTimer(void);
+  
+  #if 1 //defined(CONFIG_RTL_GC_INDEPENDENCE_ON_KERNEL)
+--- 209,240 ----
+  int32 rtl8198c_ipv6_router_del(struct rt6_info *rt);
+  #endif
+  
+! #if defined(CONFIG_RTL_NF_CONNTRACK_GARBAGE_NEW)
+! extern int	rtl_newGC_session_status_flags;
+! extern unsigned long rtl_newGC_session_status_time;
+  
+! #if (HZ==100)
+! #define	RTL_FP_SESSION_LEVEL3_INTERVAL		(1)
+  #define	RTL_FP_SESSION_LEVEL1_INTERVAL		(200)	/* 2 second */
+! #elif (HZ==1000)
+! #define	RTL_FP_SESSION_LEVEL3_INTERVAL		(10)
+  #define	RTL_FP_SESSION_LEVEL1_INTERVAL		(2000)	/* 2 second */
+! #else
+! #error "Please adjust the parameter according to the HZ"
+! #endif
+! 
+  #if defined(CONFIG_RTL_8198)
+  #define	RTL_FP_SESSION_LEVEL3_ALLOW_COUNT	(40)
+  #else
+  #define	RTL_FP_SESSION_LEVEL3_ALLOW_COUNT	(16)
+  #endif
+! #define	RTL_FP_SESSION_LEVEL1_RX_WEIGHT		(8)
+! 
+! #define	RTL_FP_SESSION_LEVEL_IDLE				0
+! #define	RTL_FP_SESSION_LEVEL1					1
+! #define	RTL_FP_SESSION_LEVEL2					2
+! #define	RTL_FP_SESSION_LEVEL3					3
+! //void rtl_fp_mark_invalid(struct nf_conn *ct);
+  //enum LR_RESULT rtk_refreshOSConnectionTimer(void);
+  
+  #if 1 //defined(CONFIG_RTL_GC_INDEPENDENCE_ON_KERNEL)
+***************
+*** 257,270 ****
+  __be16 rtl_new_gc_get_ct_port_by_dir(void *ct_ptr, enum ip_conntrack_dir dir, int flag);
+  #endif
+  
+! #endif
+  
+  #define CONFIG_RTL_URL_PATCH 1
+  #if defined(CONFIG_RTL_URL_PATCH)
+  #define URL_PROTO_PORT 80
+  #endif
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  extern int router_support_hw_nat;
+  #endif
+  #endif	/*	RTL_FEATURES_H	*/
+--- 259,272 ----
+  __be16 rtl_new_gc_get_ct_port_by_dir(void *ct_ptr, enum ip_conntrack_dir dir, int flag);
+  #endif
+  
+! #endif
+  
+  #define CONFIG_RTL_URL_PATCH 1
+  #if defined(CONFIG_RTL_URL_PATCH)
+  #define URL_PROTO_PORT 80
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  extern int router_support_hw_nat;
+  #endif
+  #endif	/*	RTL_FEATURES_H	*/
+diff -crB ./linux-3.10.49_orig/include/net/rtl/rtl865x_arp_api.h linux-3.10.49/include/net/rtl/rtl865x_arp_api.h
+*** ./linux-3.10.49_orig/include/net/rtl/rtl865x_arp_api.h	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/include/net/rtl/rtl865x_arp_api.h	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 1,13 ****
+  #ifndef RTL865X_ARP_API_H
+  #define RTL865X_ARP_API_H
+  
+! #define RTL865X_ARPTBL_SIZE 512
+  
+  typedef struct rtl865x_arpMapping_entry_s
+  {
+          ipaddr_t ip;
+          ether_addr_t mac;
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	 uint16	exist_in_ps;
+  	 uint16	valid;
+  #endif
+--- 1,13 ----
+  #ifndef RTL865X_ARP_API_H
+  #define RTL865X_ARP_API_H
+  
+! #define RTL865X_ARPTBL_SIZE 1024
+  
+  typedef struct rtl865x_arpMapping_entry_s
+  {
+          ipaddr_t ip;
+          ether_addr_t mac;
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	 uint16	exist_in_ps;
+  	 uint16	valid;
+  #endif
+***************
+*** 16,22 ****
+  
+  struct rtl865x_arp_table {
+          uint8                                           allocBitmap[64];
+!         rtl865x_arpMapping_entry_t      mappings[512];
+  };
+  
+  /*for linux protocol stack sync*/
+--- 16,22 ----
+  
+  struct rtl865x_arp_table {
+          uint8                                           allocBitmap[64];
+!         rtl865x_arpMapping_entry_t      mappings[1024];
+  };
+  
+  /*for linux protocol stack sync*/
+diff -crB ./linux-3.10.49_orig/include/net/rtl/rtl865x_netif.h linux-3.10.49/include/net/rtl/rtl865x_netif.h
+*** ./linux-3.10.49_orig/include/net/rtl/rtl865x_netif.h	2016-06-03 13:33:16.000000000 +0300
+--- linux-3.10.49/include/net/rtl/rtl865x_netif.h	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 505,511 ****
+  #define RTL_WLAN_NAME "wlan"
+  //flowing name in driver DO NOT duplicate
+  #if defined(CONFIG_BRIDGE)
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #define RTL_DRV_LAN_NETIF_NAME "br-lan"
+  #else
+  #define RTL_DRV_LAN_NETIF_NAME "br0"
+--- 505,511 ----
+  #define RTL_WLAN_NAME "wlan"
+  //flowing name in driver DO NOT duplicate
+  #if defined(CONFIG_BRIDGE)
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #define RTL_DRV_LAN_NETIF_NAME "br-lan"
+  #else
+  #define RTL_DRV_LAN_NETIF_NAME "br0"
+***************
+*** 524,530 ****
+  #if defined(CONFIG_RTL_MULTIPLE_WAN)
+  #define RTL_DRV_WAN1_NETIF_NAME "eth6"
+  #endif
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #define RTL_DRV_PPP_NETIF_NAME "pppoe-ppp0"
+  #else
+  #define RTL_DRV_PPP_NETIF_NAME "ppp0"
+--- 524,530 ----
+  #if defined(CONFIG_RTL_MULTIPLE_WAN)
+  #define RTL_DRV_WAN1_NETIF_NAME "eth6"
+  #endif
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #define RTL_DRV_PPP_NETIF_NAME "pppoe-ppp0"
+  #else
+  #define RTL_DRV_PPP_NETIF_NAME "ppp0"
+diff -crB ./linux-3.10.49_orig/net/bridge/br_fdb.c linux-3.10.49/net/bridge/br_fdb.c
+*** ./linux-3.10.49_orig/net/bridge/br_fdb.c	2017-12-11 17:03:02.000000000 +0200
+--- linux-3.10.49/net/bridge/br_fdb.c	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 26,32 ****
+  #include <linux/if_vlan.h>
+  #include "br_private.h"
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #endif
+  #if defined (CONFIG_RTL_IGMP_SNOOPING)
+--- 26,32 ----
+  #include <linux/if_vlan.h>
+  #include "br_private.h"
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #endif
+  #if defined (CONFIG_RTL_IGMP_SNOOPING)
+***************
+*** 199,205 ****
+  #endif
+  			if (f->is_static)
+  				continue;
+! 			#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  			rtl_br_fdb_cleanup_hooks(br,f, delay);
+  			#endif
+  			this_timer = f->updated + delay;
+--- 199,205 ----
+  #endif
+  			if (f->is_static)
+  				continue;
+! 			#if defined(CONFIG_RTL_HARDWARE_NAT)
+  			rtl_br_fdb_cleanup_hooks(br,f, delay);
+  			#endif
+  			this_timer = f->updated + delay;
+diff -crB ./linux-3.10.49_orig/net/core/neighbour.c linux-3.10.49/net/core/neighbour.c
+*** ./linux-3.10.49_orig/net/core/neighbour.c	2017-12-11 17:03:02.000000000 +0200
+--- linux-3.10.49/net/core/neighbour.c	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 39,45 ****
+  #include <linux/string.h>
+  #include <linux/log2.h>
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #endif
+  
+--- 39,45 ----
+  #include <linux/string.h>
+  #include <linux/log2.h>
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #endif
+  
+***************
+*** 804,810 ****
+  			if (atomic_read(&n->refcnt) == 1 &&
+  			    (state == NUD_FAILED ||
+  			     time_after(jiffies, n->used + n->parms->gc_staletime))) {
+! 			     	#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  				if (RTL_PS_HOOKS_BREAK==rtl_neigh_periodic_timer_hooks(n, 0)) {
+  					write_unlock(&n->lock);
+  					goto next_elt;
+--- 804,810 ----
+  			if (atomic_read(&n->refcnt) == 1 &&
+  			    (state == NUD_FAILED ||
+  			     time_after(jiffies, n->used + n->parms->gc_staletime))) {
+! 			     	#if defined(CONFIG_RTL_HARDWARE_NAT)
+  				if (RTL_PS_HOOKS_BREAK==rtl_neigh_periodic_timer_hooks(n, 0)) {
+  					write_unlock(&n->lock);
+  					goto next_elt;
+***************
+*** 912,918 ****
+  	if (!(state & NUD_IN_TIMER))
+  		goto out;
+  
+! 	#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	rtl_neigh_timer_handler_pre_update_hooks(neigh, state);
+  	#endif
+  
+--- 912,918 ----
+  	if (!(state & NUD_IN_TIMER))
+  		goto out;
+  
+! 	#if defined(CONFIG_RTL_HARDWARE_NAT)
+  	rtl_neigh_timer_handler_pre_update_hooks(neigh, state);
+  	#endif
+  
+diff -crB ./linux-3.10.49_orig/net/netfilter/nf_conntrack_core.c linux-3.10.49/net/netfilter/nf_conntrack_core.c
+*** ./linux-3.10.49_orig/net/netfilter/nf_conntrack_core.c	2017-12-11 17:03:02.000000000 +0200
+--- linux-3.10.49/net/netfilter/nf_conntrack_core.c	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 50,56 ****
+  #include <net/netfilter/nf_nat.h>
+  #include <net/netfilter/nf_nat_core.h>
+  #include <net/netfilter/nf_nat_helper.h>
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH)||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #include <net/rtl/features/rtl_ps_log.h>
+  #include <net/rtl/features/rtl_features.h>
+--- 50,56 ----
+  #include <net/netfilter/nf_nat.h>
+  #include <net/netfilter/nf_nat_core.h>
+  #include <net/netfilter/nf_nat_helper.h>
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH)||defined(CONFIG_RTL_HARDWARE_NAT)
+  #include <net/rtl/features/rtl_ps_hooks.h>
+  #include <net/rtl/features/rtl_ps_log.h>
+  #include <net/rtl/features/rtl_features.h>
+diff -crB ./linux-3.10.49_orig/net/netfilter/nf_nat_core.c linux-3.10.49/net/netfilter/nf_nat_core.c
+*** ./linux-3.10.49_orig/net/netfilter/nf_nat_core.c	2017-12-11 17:03:02.000000000 +0200
+--- linux-3.10.49/net/netfilter/nf_nat_core.c	2017-12-11 17:14:04.008341491 +0200
+***************
+*** 29,35 ****
+  #include <net/netfilter/nf_conntrack_zones.h>
+  #include <linux/netfilter/nf_nat.h>
+  
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH)||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #include <linux/inetdevice.h>
+  #include <net/rtl/rtl_types.h>
+  #include <net/rtl/rtl865x_netif.h>
+--- 29,35 ----
+  #include <net/netfilter/nf_conntrack_zones.h>
+  #include <linux/netfilter/nf_nat.h>
+  
+! #if defined(CONFIG_RTL_IPTABLES_FAST_PATH)||defined(CONFIG_RTL_HARDWARE_NAT)
+  #include <linux/inetdevice.h>
+  #include <net/rtl/rtl_types.h>
+  #include <net/rtl/rtl865x_netif.h>
+***************
+*** 360,372 ****
+  					      &range->max_proto) &&
+  			    (range->min_proto.all == range->max_proto.all ||
+  			     !nf_nat_used_tuple(tuple, ct))) {
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) && defined(CONFIG_RTL_INBOUND_COLLISION_AVOIDANCE)
+  			       if (rtl_check_pre_reserver_conn(tuple, orig_tuple, range, ct, maniptype) == SUCCESS)
+  #endif
+  					goto out;
+  			}
+  		} else if (!nf_nat_used_tuple(tuple, ct)) {
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS) && defined(CONFIG_RTL_INBOUND_COLLISION_AVOIDANCE)
+  			if (rtl_check_pre_reserver_conn(tuple, orig_tuple, range, ct, maniptype) == SUCCESS)
+  #endif
+  				goto out;
+--- 360,372 ----
+  					      &range->max_proto) &&
+  			    (range->min_proto.all == range->max_proto.all ||
+  			     !nf_nat_used_tuple(tuple, ct))) {
+! #if defined(CONFIG_RTL_HARDWARE_NAT) && defined(CONFIG_RTL_INBOUND_COLLISION_AVOIDANCE)
+  			       if (rtl_check_pre_reserver_conn(tuple, orig_tuple, range, ct, maniptype) == SUCCESS)
+  #endif
+  					goto out;
+  			}
+  		} else if (!nf_nat_used_tuple(tuple, ct)) {
+! #if defined(CONFIG_RTL_HARDWARE_NAT) && defined(CONFIG_RTL_INBOUND_COLLISION_AVOIDANCE)
+  			if (rtl_check_pre_reserver_conn(tuple, orig_tuple, range, ct, maniptype) == SUCCESS)
+  #endif
+  				goto out;
+diff -crB ./linux-3.10.49_orig/net/rtl/features/rtl_features.c linux-3.10.49/net/rtl/features/rtl_features.c
+*** ./linux-3.10.49_orig/net/rtl/features/rtl_features.c	2016-03-10 11:48:12.000000000 +0200
+--- linux-3.10.49/net/rtl/features/rtl_features.c	2017-12-11 18:08:05.746142883 +0200
+***************
+*** 461,467 ****
+  			{
+  				if (strcmp(name, ifap->ifa_label) == 0)
+  				{
+! 					#if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  					if (strncmp(landev->name, "ppp", strlen("ppp"))==0)
+  						*ip = ifap->ifa_local;
+  					else
+--- 461,467 ----
+  			{
+  				if (strcmp(name, ifap->ifa_label) == 0)
+  				{
+! 					#if defined(CONFIG_RTL_HARDWARE_NAT)
+  					if (strncmp(landev->name, "ppp", strlen("ppp"))==0)
+  						*ip = ifap->ifa_local;
+  					else
+***************
+*** 1365,1371 ****
+  static char gHwNatSetting[16];
+  //extern unsigned int ldst, lmask, wdst, wmask;
+  
+! static void rtl_get_extIp_router_timer_fn(unsigned long arg);
+  static int hw_nat_write_proc(struct file *file, const char *buffer,
+  		      unsigned long count, void *data)
+  {
+--- 1365,1371 ----
+  static char gHwNatSetting[16];
+  //extern unsigned int ldst, lmask, wdst, wmask;
+  
+! 
+  static int hw_nat_write_proc(struct file *file, const char *buffer,
+  		      unsigned long count, void *data)
+  {
+***************
+*** 1613,1619 ****
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_MULTIPLE_WAN) || (defined(CONFIG_NET_SCHED)&&defined(CONFIG_RTL_IPTABLES_FAST_PATH)) ||defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  extern int rtl865x_curOpMode;
+  struct net_device *rtl865x_getWanDev(void )
+  {
+--- 1613,1619 ----
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_LOCAL_PUBLIC) || defined(CONFIG_RTL_MULTIPLE_WAN) || (defined(CONFIG_NET_SCHED)&&defined(CONFIG_RTL_IPTABLES_FAST_PATH)) ||defined(CONFIG_RTL_HARDWARE_NAT)
+  extern int rtl865x_curOpMode;
+  struct net_device *rtl865x_getWanDev(void )
+  {
+***************
+*** 1625,1631 ****
+  		wanDev=dev_get_by_name(&init_net,RTL_GW_WAN_DEVICE_NAME);
+  #else
+  		//Try ppp0 first
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #if defined(CONFIG_SWCONFIG_SUPPORT_HW_NAT)
+  		if (swconfig_vlan_enable)
+  			wanDev=dev_get_by_name(&init_net, RTL_SWCONFIG_DRV_PPP_NETIF_NAME);
+--- 1625,1631 ----
+  		wanDev=dev_get_by_name(&init_net,RTL_GW_WAN_DEVICE_NAME);
+  #else
+  		//Try ppp0 first
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #if defined(CONFIG_SWCONFIG_SUPPORT_HW_NAT)
+  		if (swconfig_vlan_enable)
+  			wanDev=dev_get_by_name(&init_net, RTL_SWCONFIG_DRV_PPP_NETIF_NAME);
+***************
+*** 2310,2323 ****
+  int rtl_add_masq_info(const char *name, unsigned int ipAddr)
+  {
+  	int i;
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	int empty = -1;
+  #endif
+  
+  	if(strlen(name) >=IFNAMSIZ || ipAddr ==0)
+  		return FAILED;
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  	for (i=0; i<RTL_MULTIPLE_WAN_NUM; i++)
+  	{
+  		if (rtl_masq_info[i].valid == 1) {
+--- 2310,2323 ----
+  int rtl_add_masq_info(const char *name, unsigned int ipAddr)
+  {
+  	int i;
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	int empty = -1;
+  #endif
+  
+  	if(strlen(name) >=IFNAMSIZ || ipAddr ==0)
+  		return FAILED;
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  	for (i=0; i<RTL_MULTIPLE_WAN_NUM; i++)
+  	{
+  		if (rtl_masq_info[i].valid == 1) {
+***************
+*** 2626,2632 ****
+  	char *dev_t;
+  
+  	/*2007-12-19*/
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+      if ((tb->tb_id == RT_TABLE_MAIN) && (gHwNatEnabled ==1) && (router_support_hw_nat != 0))
+  #else
+  	if ((tb->tb_id == RT_TABLE_MAIN) && (gHwNatEnabled ==1)) 
+--- 2626,2632 ----
+  	char *dev_t;
+  
+  	/*2007-12-19*/
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+      if ((tb->tb_id == RT_TABLE_MAIN) && (gHwNatEnabled ==1) && (router_support_hw_nat != 0))
+  #else
+  	if ((tb->tb_id == RT_TABLE_MAIN) && (gHwNatEnabled ==1)) 
+***************
+*** 2736,2742 ****
+  	return SUCCESS;
+  }
+  
+! #if !defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  int32 rtl_ip_vs_conn_expire_check(struct ip_vs_conn *cp)
+  {
+  	int elapsed;
+--- 2736,2742 ----
+  	return SUCCESS;
+  }
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  int32 rtl_ip_vs_conn_expire_check(struct ip_vs_conn *cp)
+  {
+  	int elapsed;
+***************
+*** 3530,3536 ****
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HW_NAPT_REFINE_KERNEL_HOOKS)
+  #include "../../ipv4/fib_lookup.h"
+  #include <linux/inetdevice.h>
+  #include <linux/ppp_channel.h>
+--- 3530,3536 ----
+  }
+  #endif
+  
+! #if defined(CONFIG_RTL_HARDWARE_NAT)
+  #include "../../ipv4/fib_lookup.h"
+  #include <linux/inetdevice.h>
+  #include <linux/ppp_channel.h>
+***************
+*** 4194,4200 ****
+  }
+  
+  spinlock_t lock_hwnapt;
+! static void rtl_get_extIp_router_timer_fn(unsigned long arg)
+  {	
+  	/*===========================check extIp===========================*/
+      spin_lock_bh(&lock_hwnapt);
+--- 4194,4200 ----
+  }
+  
+  spinlock_t lock_hwnapt;
+! void rtl_get_extIp_router_timer_fn(unsigned long arg)
+  {	
+  	/*===========================check extIp===========================*/
+      spin_lock_bh(&lock_hwnapt);

@@ -1,0 +1,32 @@
+Source-Makefile: package/system/fstools/Makefile
+Package: fstools
+Version: 2014-06-22-e0430f5c62f367e5a8e02755412977b02c3fc45e
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +ubox +NAND_SUPPORT:ubi-utils
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: OpenWrt filesystem tools
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: fstools-2014-06-22-e0430f5c62f367e5a8e02755412977b02c3fc45e.tar.gz
+Type: ipkg
+Description: OpenWrt filesystem tools
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: block-mount
+Version: 2014-06-22-e0430f5c62f367e5a8e02755412977b02c3fc45e
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +ubox +libubox +libuci
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: Block device mounting and checking
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: fstools-2014-06-22-e0430f5c62f367e5a8e02755412977b02c3fc45e.tar.gz
+Type: ipkg
+Description: Block device mounting and checking
+John Crispin <blogic@openwrt.org>
+@@
+
+

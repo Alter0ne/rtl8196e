@@ -1,0 +1,94 @@
+Source-Makefile: package/utils/e2fsprogs/Makefile
+Package: e2fsprogs
+Submenu: Filesystem
+Version: 1.42.8-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libuuid +libext2fs
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux
+Section: utils
+Category: Utilities
+Title: Ext2/3/4 filesystem utilities
+Maintainer: 
+Source: e2fsprogs-1.42.8.tar.gz
+Type: ipkg
+Description:  This package contains essential ext2 filesystem utilities which consists of
+ e2fsck, mke2fs, tune2fs, and most of the other core ext2
+ filesystem utilities.
+http://e2fsprogs.sourceforge.net/
+
+@@
+
+Package: libext2fs
+Submenu: Filesystem
+Version: 1.42.8-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux
+Section: libs
+Category: Libraries
+Title: ext2/3/4 filesystem library
+Maintainer: 
+Source: e2fsprogs-1.42.8.tar.gz
+Type: ipkg
+Description:  libext2fs is a library which can access ext2, ext3 and ext4 filesystems.
+http://e2fsprogs.sourceforge.net/
+
+@@
+
+Package: tune2fs
+Submenu: Filesystem
+Version: 1.42.8-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +e2fsprogs
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux
+Section: utils
+Category: Utilities
+Title: Ext2 Filesystem tune utility
+Maintainer: 
+Source: e2fsprogs-1.42.8.tar.gz
+Type: ipkg
+Description: Ext2 Filesystem tune utility
+http://e2fsprogs.sourceforge.net/
+
+@@
+
+Package: resize2fs
+Submenu: Filesystem
+Version: 1.42.8-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +e2fsprogs
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux
+Section: utils
+Category: Utilities
+Title: Ext2 Filesystem resize utility
+Maintainer: 
+Source: e2fsprogs-1.42.8.tar.gz
+Type: ipkg
+Description: Ext2 Filesystem resize utility
+http://e2fsprogs.sourceforge.net/
+
+@@
+
+Package: badblocks
+Submenu: Filesystem
+Version: 1.42.8-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +e2fsprogs
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux
+Section: utils
+Category: Utilities
+Title: Ext2 Filesystem badblocks utility
+Maintainer: 
+Source: e2fsprogs-1.42.8.tar.gz
+Type: ipkg
+Description: Ext2 Filesystem badblocks utility
+http://e2fsprogs.sourceforge.net/
+
+@@
+
+

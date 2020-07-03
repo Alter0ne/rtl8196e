@@ -1,0 +1,19 @@
+Source-Makefile: package/feeds/packages/libaio/Makefile
+Package: libaio
+Version: 0.3.112-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: Linux kernel AIO interface access library
+Maintainer: Rosen Penev <rosenp@gmail.com>
+Source: libaio-0.3.112.tar.gz
+Type: ipkg
+Feed: packages
+Description: Linux kernel AIO interface access library
+http://lse.sourceforge.net/io/aio.html
+Rosen Penev <rosenp@gmail.com>
+@@
+
+

@@ -1,0 +1,18 @@
+Source-Makefile: package/kernel/lantiq/ltq-vdsl-mei/Makefile
+Package: kmod-ltq-vdsl-vr9-mei
+Submenu: Network Devices
+Version: <LINUX_VERSION>+1.2.0-1
+Depends: @TARGET_lantiq_xrx200 +kmod-ltq-ifxos
+Menu-Depends: 
+Provides: 
+Section: sys
+Category: Kernel modules
+Title: mei driver for vdsl
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: drv_mei_cpe-1.2.0.tar.gz
+Type: ipkg
+Description: 	Lantiq MEI CPE Kernel Module Driver
+John Crispin <blogic@openwrt.org>
+@@
+
+

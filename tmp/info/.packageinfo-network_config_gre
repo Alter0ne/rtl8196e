@@ -1,0 +1,47 @@
+Source-Makefile: package/network/config/gre/Makefile
+Package: gre
+Version: 1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Generic Routing Encapsulation config support
+Maintainer: Hans Dedecker <dedeckeh@gmail.com>
+Source: 
+Type: ipkg
+Description:  Generic Routing Encapsulation config support (IPv4 and IPv6) in /etc/config/network.
+Hans Dedecker <dedeckeh@gmail.com>
+@@
+
+Package: grev4
+Version: 1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(PACKAGE_gre) +kmod-gre
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Generic Routing Encapsulation (IPv4) config support
+Maintainer: Hans Dedecker <dedeckeh@gmail.com>
+Source: 
+Type: ipkg
+Description:  Generic Routing Encapsulation config support (IPv4) in /etc/config/network.
+Hans Dedecker <dedeckeh@gmail.com>
+@@
+
+Package: grev6
+Version: 1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @(PACKAGE_gre) +kmod-ipv6 +kmod-ip6-gre
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Generic Routing Encapsulation (IPv6) config support
+Maintainer: Hans Dedecker <dedeckeh@gmail.com>
+Source: 
+Type: ipkg
+Description:  Generic Routing Encapsulation config support (IPv6) in /etc/config/network.
+Hans Dedecker <dedeckeh@gmail.com>
+@@
+
+

@@ -1,0 +1,172 @@
+Source-Makefile: package/boot/uboot-sunxi/Makefile
+Package: uboot-sunxi-A10-OLinuXino-Lime
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: A10-OLinuXino-Lime
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for the A10 OLinuXino LIME
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for the A10 OLinuXino LIME
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-A13-OLinuXino
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: A13-OLinuXino
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for the A13 OlinuXino
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for the A13 OlinuXino
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-A20-OLinuXino_MICRO
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: A20-OLinuXino_MICRO
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for A20 OLinuXino MICRO
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for A20 OLinuXino MICRO
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-bananapi
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: bananapi
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for BananaPi
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for BananaPi
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-Cubieboard
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: Cubieboard
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for Cubieboard
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for Cubieboard
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-Cubieboard2
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: Cubieboard2
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for Cubieboard2
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for Cubieboard2
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-Cubietruck
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: Cubietruck
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for Cubietruck
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for Cubietruck
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-Hackberry
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: Hackberry
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for the Hackbeery
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for the Hackbeery
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-pcDuino
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: pcDuino
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for pcDuino
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for pcDuino
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+Package: uboot-sunxi-pcDuino3
+Version: 2014.01-rc1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_sunxi
+Menu-Depends: 
+Provides: 
+Build-Variant: pcDuino3
+Section: boot
+Category: Boot Loaders
+Title: U-Boot 2014.01-rc1 for pcDuino3
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Source: u-boot-2014.01-rc1.tar.bz2
+Type: ipkg
+Description: U-Boot 2014.01-rc1 for pcDuino3
+http://www.denx.de/wiki/U-Boot
+Zoltan HERPAI <wigyori@uid0.hu>
+@@
+
+

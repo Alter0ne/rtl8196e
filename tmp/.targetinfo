@@ -2,7 +2,7 @@ Source-Makefile: target/linux/x86/Makefile
 Target: x86
 Target-Board: x86
 Target-Name: x86
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: i386
 Target-Arch-Packages: x86
 Target-Features: ext4 pci pcmcia rtc squashfs targz vdi vmdk
@@ -295,7 +295,7 @@ Source-Makefile: target/linux/ep93xx/Makefile
 Target: ep93xx
 Target-Board: ep93xx
 Target-Name: Cirrus Logic EP93xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: ep93xx
 Target-Features: display ext4 gpio sound squashfs targz usb
@@ -334,7 +334,7 @@ Source-Makefile: target/linux/mpc85xx/Makefile
 Target: mpc85xx
 Target-Board: mpc85xx
 Target-Name: Freescale MPC85xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: powerpc
 Target-Arch-Packages: mpc85xx
 Target-Features: dt gpio pci pcie spe_fpu squashfs usb
@@ -447,7 +447,7 @@ Source-Makefile: target/linux/xburst/Makefile
 Target: xburst
 Target-Board: xburst
 Target-Name: Ingenic XBurst
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: xburst
 Target-Features: audio display gpio rtc targz ubifs usb
@@ -534,7 +534,7 @@ Source-Makefile: target/linux/realtek/Makefile
 Target: realtek
 Target-Board: realtek
 Target-Name: Realtek
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: rlx
 Target-Arch-Packages: realtek
 Target-Features: squashfs
@@ -591,7 +591,7 @@ Target-Name: rtl8196e
 Target-Path: target/linux/realtek
 Target-Arch: rlx
 Target-Arch-Packages: realtek
-Target-Features: gpio pcmcia squashfs
+Target-Features: gpio pcmcia squashfs usb
 Target-Depends: 
 Target-Optimization: -Os -pipe
 CPU-Type: 
@@ -664,7 +664,7 @@ Source-Makefile: target/linux/uml/Makefile
 Target: uml
 Target-Board: uml
 Target-Name: User Mode Linux
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: x86_64
 Target-Arch-Packages: uml
 Target-Features: audio ext4
@@ -683,7 +683,7 @@ Source-Makefile: target/linux/at91/Makefile
 Target: at91
 Target-Board: at91
 Target-Name: Atmel AT91
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: at91
 Target-Features: dt ext2 gpio rtc squashfs targz usb
@@ -812,7 +812,7 @@ Source-Makefile: target/linux/omap24xx/Makefile
 Target: omap24xx
 Target-Board: omap24xx
 Target-Name: TI OMAP24xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: omap24xx
 Target-Features: audio broken display gpio jffs2_nand squashfs targz usb usbgadget
@@ -851,7 +851,7 @@ Source-Makefile: target/linux/iop32x/Makefile
 Target: iop32x
 Target-Board: iop32x
 Target-Name: Intel IOP32x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: iop32x
 Target-Features: broken gpio pci rtc squashfs usb
@@ -870,7 +870,7 @@ Source-Makefile: target/linux/avr32/Makefile
 Target: avr32
 Target-Board: avr32
 Target-Name: Atmel AVR32
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: avr32
 Target-Arch-Packages: avr32
 Target-Features: gpio rtc squashfs
@@ -889,7 +889,7 @@ Source-Makefile: target/linux/cns21xx/Makefile
 Target: cns21xx
 Target-Board: cns21xx
 Target-Name: Cavium Networks Econa CNS21xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: cns21xx
 Target-Features: gpio squashfs usb
@@ -918,7 +918,7 @@ Source-Makefile: target/linux/sparc/Makefile
 Target: sparc
 Target-Board: sparc
 Target-Name: Sun UltraSPARC
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: sparc
 Target-Arch-Packages: sparc
 Target-Features: broken display dt ext4 fpu pci rtc squashfs tgz usb
@@ -937,7 +937,7 @@ Source-Makefile: target/linux/rtkmips/Makefile
 Target: rtkmips
 Target-Board: rtkmips
 Target-Name: Realtek mips SOC
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: rtkmips
 Target-Features: squashfs usb
@@ -1010,7 +1010,7 @@ Source-Makefile: target/linux/ar7/Makefile
 Target: ar7
 Target-Board: ar7
 Target-Name: TI AR7
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: ar7
 Target-Features: atm gpio squashfs
@@ -1114,7 +1114,7 @@ Source-Makefile: target/linux/ramips/Makefile
 Target: ramips
 Target-Board: ramips
 Target-Name: Ralink RT288x/RT3xxx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: ramips
 Target-Features: gpio squashfs
@@ -1665,7 +1665,7 @@ Source-Makefile: target/linux/sibyte/Makefile
 Target: sibyte
 Target-Board: sibyte
 Target-Name: Broadcom/SiByte SB-1
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: sibyte
 Target-Features: broken fpu pci ramdisk rtc
@@ -1684,7 +1684,7 @@ Source-Makefile: target/linux/brcm2708/Makefile
 Target: brcm2708
 Target-Board: brcm2708
 Target-Name: Broadcom BCM2708/BCM2835
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: brcm2708
 Target-Features: audio display ext4 gpio usb usbgadget
@@ -1714,7 +1714,7 @@ Source-Makefile: target/linux/atheros/Makefile
 Target: atheros
 Target-Board: atheros
 Target-Name: Atheros AR231x/AR5312
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: atheros
 Target-Features: gpio pci squashfs
@@ -1733,7 +1733,7 @@ Source-Makefile: target/linux/pxa/Makefile
 Target: pxa
 Target-Board: pxa
 Target-Name: Marvell/Intel PXA2xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: pxa
 Target-Features: gpio pcmcia squashfs
@@ -1772,7 +1772,7 @@ Source-Makefile: target/linux/mpc52xx/Makefile
 Target: mpc52xx
 Target-Board: mpc52xx
 Target-Name: Freescale MPC52xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: powerpc
 Target-Arch-Packages: mpc52xx
 Target-Features: dt ext4 gpio pci targz
@@ -1791,7 +1791,7 @@ Source-Makefile: target/linux/adm8668/Makefile
 Target: adm8668
 Target-Board: adm8668
 Target-Name: Infineon WildPass ADM8668
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: adm8668
 Target-Features: gpio pci squashfs usb
@@ -1821,7 +1821,7 @@ Source-Makefile: target/linux/octeon/Makefile
 Target: octeon
 Target-Board: octeon
 Target-Name: Cavium Networks Octeon
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: octeon
 Target-Features: dt jffs2 pci squashfs usb
@@ -1850,7 +1850,7 @@ Source-Makefile: target/linux/ixp4xx/Makefile
 Target: ixp4xx
 Target-Board: ixp4xx
 Target-Name: Intel IXP4xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: armeb
 Target-Arch-Packages: ixp4xx
 Target-Features: gpio pci rtc squashfs usb
@@ -1975,7 +1975,7 @@ Source-Makefile: target/linux/adm5120/Makefile
 Target: adm5120
 Target-Board: adm5120
 Target-Name: Infineon/ADMtek ADM5120
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: 
 Target-Arch-Packages: adm5120
 Target-Features: gpio pci usb
@@ -2347,7 +2347,7 @@ Source-Makefile: target/linux/sunxi/Makefile
 Target: sunxi
 Target-Board: sunxi
 Target-Name: Allwinner A1x/A20/A3x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: sunxi
 Target-Features: display dt ext4 fpu gpio rtc usb
@@ -2416,7 +2416,7 @@ Source-Makefile: target/linux/ar71xx/Makefile
 Target: ar71xx
 Target-Board: ar71xx
 Target-Name: Atheros AR7xxx/AR9xxx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: ar71xx
 Target-Features: gpio mips16 pci usb
@@ -3650,7 +3650,7 @@ Source-Makefile: target/linux/cns3xxx/Makefile
 Target: cns3xxx
 Target-Board: cns3xxx
 Target-Name: Cavium Networks Econa CNS3xxx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: cns3xxx
 Target-Features: fpu gpio pci pcie rtc squashfs usb usbgadget
@@ -3670,7 +3670,7 @@ Source-Makefile: target/linux/mcs814x/Makefile
 Target: mcs814x
 Target-Board: mcs814x
 Target-Name: Moschip MCS814x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: mcs814x
 Target-Features: dt gpio squashfs usb
@@ -3709,7 +3709,7 @@ Source-Makefile: target/linux/amazon/Makefile
 Target: amazon
 Target-Board: amazon
 Target-Name: Infineon Amazon
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: amazon
 Target-Features: broken pci squashfs
@@ -3728,7 +3728,7 @@ Source-Makefile: target/linux/rtkmipsel/Makefile
 Target: rtkmipsel
 Target-Board: rtkmipsel
 Target-Name: Realtek mipsel SOC
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: rtkmipsel
 Target-Features: squashfs usb
@@ -3774,7 +3774,7 @@ Source-Makefile: target/linux/ppc40x/Makefile
 Target: ppc40x
 Target-Board: ppc40x
 Target-Name: AMCC/IBM PPC40x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: powerpc
 Target-Arch-Packages: ppc40x
 Target-Features: dt gpio pci pcie squashfs usb
@@ -3793,7 +3793,7 @@ Source-Makefile: target/linux/brcm63xx/Makefile
 Target: brcm63xx
 Target-Board: brcm63xx
 Target-Name: Broadcom BCM63xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mips
 Target-Arch-Packages: brcm63xx
 Target-Features: atm gpio pci pcie pcmcia squashfs usb
@@ -3995,7 +3995,7 @@ Source-Makefile: target/linux/mvebu/Makefile
 Target: mvebu
 Target-Board: mvebu
 Target-Name: Marvell Armada XP/370
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: mvebu
 Target-Features: dt gpio pci pcie rtc targz usb
@@ -4024,7 +4024,7 @@ Source-Makefile: target/linux/rb532/Makefile
 Target: rb532
 Target-Board: rb532
 Target-Name: Mikrotik RouterBoard 532
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: rb532
 Target-Features: broken gpio pci targz
@@ -4043,7 +4043,7 @@ Source-Makefile: target/linux/omap/Makefile
 Target: omap
 Target-Board: omap
 Target-Name: TI OMAP3/4/AM33xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: omap
 Target-Features: audio display dt ext4 fpu gpio rtc targz usb usbgadget
@@ -4072,7 +4072,7 @@ Source-Makefile: target/linux/lantiq/Makefile
 Target: lantiq
 Target-Board: lantiq
 Target-Name: Lantiq GPON/XWAY/SVIP
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: 
 Target-Arch-Packages: lantiq
 Target-Features: dt gpio pci squashfs
@@ -4479,7 +4479,7 @@ Source-Makefile: target/linux/cobalt/Makefile
 Target: cobalt
 Target-Board: cobalt
 Target-Name: Cobalt Microservers
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: cobalt
 Target-Features: display ext4 pci rtc targz
@@ -4498,7 +4498,7 @@ Source-Makefile: target/linux/orion/Makefile
 Target: orion
 Target-Board: orion
 Target-Name: Marvell Orion
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: orion
 Target-Features: gpio pci
@@ -4553,7 +4553,7 @@ Source-Makefile: target/linux/bcm53xx/Makefile
 Target: bcm53xx
 Target-Board: bcm53xx
 Target-Name: Broadcom BCM47xx/53xx with ARM CPU
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: bcm53xx
 Target-Features: dt gpio pci pcie squashfs usb
@@ -4583,7 +4583,7 @@ Source-Makefile: target/linux/malta/Makefile
 Target: malta
 Target-Board: malta
 Target-Name: MIPS Malta CoreLV board (qemu)
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: 
 Target-Arch-Packages: malta
 Target-Features: pci rtc usb
@@ -4674,7 +4674,7 @@ Source-Makefile: target/linux/brcm47xx/Makefile
 Target: brcm47xx
 Target-Board: brcm47xx
 Target-Name: Broadcom BCM947xx/953xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: brcm47xx
 Target-Features: gpio pci pcmcia squashfs usb
@@ -4908,7 +4908,7 @@ Source-Makefile: target/linux/ppc44x/Makefile
 Target: ppc44x
 Target-Board: ppc44x
 Target-Name: AMCC/IBM PPC44x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: powerpc
 Target-Arch-Packages: ppc44x
 Target-Features: broken dt gpio pci pcie squashfs usb
@@ -4927,7 +4927,7 @@ Source-Makefile: target/linux/au1000/Makefile
 Target: au1000
 Target-Board: au1000
 Target-Name: RMI/AMD AU1x00
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: mipsel
 Target-Arch-Packages: au1000
 Target-Features: gpio pci squashfs usb
@@ -5023,7 +5023,7 @@ Source-Makefile: target/linux/imx6/Makefile
 Target: imx6
 Target-Board: imx6
 Target-Name: Freescale i.MX 6 Series
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: imx6
 Target-Features: audio display dt gpio pci pcie rtc squashfs targz ubifs usb usbgadget
@@ -5088,7 +5088,7 @@ Source-Makefile: target/linux/gemini/Makefile
 Target: gemini
 Target-Board: gemini
 Target-Name: Cortina Systems CS351x
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: gemini
 Target-Features: gpio pci squashfs
@@ -5107,7 +5107,7 @@ Source-Makefile: target/linux/mpc83xx/Makefile
 Target: mpc83xx
 Target-Board: mpc83xx
 Target-Name: Freescale MPC83xx
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: powerpc
 Target-Arch-Packages: mpc83xx
 Target-Features: dt gpio pci squashfs targz
@@ -5126,7 +5126,7 @@ Source-Makefile: target/linux/realview/Makefile
 Target: realview
 Target-Board: realview
 Target-Name: ARM Ltd. Realview board (qemu)
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: realview
 Target-Features: display fpu ramdisk
@@ -5145,7 +5145,7 @@ Source-Makefile: target/linux/mxs/Makefile
 Target: mxs
 Target-Board: mxs
 Target-Name: Freescale i.MX23/i.MX28 series
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: mxs
 Target-Features: dt ext4 gpio rtc usb
@@ -5194,7 +5194,7 @@ Source-Makefile: target/linux/kirkwood/Makefile
 Target: kirkwood
 Target-Board: kirkwood
 Target-Name: Marvell Kirkwood
-Target-Path: /home/igor/rtk_openwrtSDK_v2.5_20160905/rtk_openwrt_sdk_TMP/rtk_openwrt_sdk
+Target-Path: /home/alter0ne/rtl8196e
 Target-Arch: arm
 Target-Arch-Packages: kirkwood
 Target-Features: dt gpio jffs2_nand pci rtc targz ubifs usb

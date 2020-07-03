@@ -1,0 +1,41 @@
+Source-Makefile: package/feeds/oldpackages/python/python-decorator/Makefile
+Package: python3-decorator
+Submenu: Python
+Version: 4.3.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-decodator
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: python-decorator-4.3.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: python3-decodator
+https://github.com/micheles/decorator
+Karel Kočí <cynerd@email.cz>
+@@
+
+Package: python3-decorator-src
+Submenu: Python
+Version: 4.3.2-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: python3-decodator (sources)
+Maintainer: Karel Kočí <cynerd@email.cz>
+Source: python-decorator-4.3.2.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     .
+    (Contains the Python3 sources for this package).
+https://github.com/micheles/decorator
+Karel Kočí <cynerd@email.cz>
+@@
+
+

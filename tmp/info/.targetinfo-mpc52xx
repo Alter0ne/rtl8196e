@@ -1,0 +1,19 @@
+Source-Makefile: target/linux/mpc52xx/Makefile
+Target: mpc52xx
+Target-Board: mpc52xx
+Target-Name: Freescale MPC52xx
+Target-Path: /home/alter0ne/rtl8196e
+Target-Arch: powerpc
+Target-Arch-Packages: mpc52xx
+Target-Features: dt ext4 gpio pci targz
+Target-Depends: 
+Target-Optimization: -Os -pipe -mcpu=603e
+CPU-Type: 603e
+Linux-Version: 3.8.13
+Linux-Release: 1
+Linux-Kernel-Arch: powerpc
+Target-Description:
+	Build images for the Freescale MPC52xx based boards.
+@@
+Default-Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools dnsmasq iptables ip6tables ppp ppp-mod-pppoe kmod-ipt-nathelper firewall odhcpd odhcp6c 
+

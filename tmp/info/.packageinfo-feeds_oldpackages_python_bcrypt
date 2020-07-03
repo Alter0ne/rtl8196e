@@ -1,0 +1,88 @@
+Source-Makefile: package/feeds/oldpackages/python/bcrypt/Makefile
+Package: python-bcrypt
+Submenu: Python
+Version: 3.1.7-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-bcrypt:python +PACKAGE_python-bcrypt:python-cffi +PACKAGE_python-bcrypt:python-six
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Build-Depends: libffi/host
+Section: lang
+Category: Languages
+Title: Modern password hashing
+Maintainer: Daniel Dickinson <cshored@thecshore.com>
+Source: bcrypt-3.1.7.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Good password hashing for your software and your servers.
+https://github.com/pyca/bcrypt/
+Daniel Dickinson <cshored@thecshore.com>
+@@
+
+Package: python-bcrypt-src
+Submenu: Python
+Version: 3.1.7-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Build-Depends: libffi/host
+Section: lang
+Category: Languages
+Title: Modern password hashing (sources)
+Maintainer: Daniel Dickinson <cshored@thecshore.com>
+Source: bcrypt-3.1.7.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Good password hashing for your software and your servers..
+    (Contains the Python sources for this package).
+https://github.com/pyca/bcrypt/
+Daniel Dickinson <cshored@thecshore.com>
+@@
+
+Package: python3-bcrypt
+Submenu: Python
+Version: 3.1.7-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-bcrypt:python3 +PACKAGE_python3-bcrypt:python3-cffi +PACKAGE_python3-bcrypt:python3-six
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Build-Depends: libffi/host
+Section: lang
+Category: Languages
+Title: Modern password hashing
+Maintainer: Daniel Dickinson <cshored@thecshore.com>
+Source: bcrypt-3.1.7.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Good password hashing for your software and your servers.
+.
+(Variant for Python3)
+https://github.com/pyca/bcrypt/
+Daniel Dickinson <cshored@thecshore.com>
+@@
+
+Package: python3-bcrypt-src
+Submenu: Python
+Version: 3.1.7-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Build-Depends: libffi/host
+Section: lang
+Category: Languages
+Title: Modern password hashing (sources)
+Maintainer: Daniel Dickinson <cshored@thecshore.com>
+Source: bcrypt-3.1.7.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Good password hashing for your software and your servers.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/pyca/bcrypt/
+Daniel Dickinson <cshored@thecshore.com>
+@@
+
+

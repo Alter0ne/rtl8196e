@@ -1,0 +1,40 @@
+Source-Makefile: package/feeds/oldpackages/giflib/Makefile
+Package: giflib
+Version: 5.2.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Types: host
+Section: libs
+Category: Libraries
+Title: GIF libraries
+Maintainer: Ted Hess <thess@kitschensync.net>
+Source: giflib-5.2.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   giflib is a library for reading and writing gif images.
+  It is API and ABI compatible with libungif which was in wide use while
+  the LZW compression algorithm was patented.
+https://sourceforge.net/projects/giflib
+Ted Hess <thess@kitschensync.net>
+@@
+
+Package: giflib-utils
+Version: 5.2.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Types: host
+Section: utils
+Category: Utilities
+Title: GIF utilities
+Maintainer: Ted Hess <thess@kitschensync.net>
+Source: giflib-5.2.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   These are the utilities that come with giflib.
+https://sourceforge.net/projects/giflib
+Ted Hess <thess@kitschensync.net>
+@@
+
+

@@ -1,0 +1,22 @@
+Source-Makefile: package/feeds/oldpackages/ifstat/Makefile
+Package: ifstat
+Version: 1.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libnetsnmp
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: InterFace STATistics Monitoring
+Maintainer: Nikil Mehta <nikil.mehta@gmail.com>
+Source: ifstat-1.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: 	ifstat is a tool to report network interfaces bandwidth just like
+	vmstat/iostat do for other system counters. It can monitor local
+	interfaces by polling the kernel counters, or remote hosts
+	interfaces using SNMP.
+http://gael.roualland.free.fr/ifstat/
+Nikil Mehta <nikil.mehta@gmail.com>
+@@
+
+

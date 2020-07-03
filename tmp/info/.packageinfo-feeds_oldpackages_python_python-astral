@@ -1,0 +1,84 @@
+Source-Makefile: package/feeds/oldpackages/python/python-astral/Makefile
+Package: python-astral
+Submenu: Python
+Version: 1.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-astral:python-light +PACKAGE_python-astral:python-pytz
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Calculations for the position of the sun and moon
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: astral-1.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Astral is a python module for calculating the times of various aspects of the sun and moon.
+https://github.com/sffjunkie/astral
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python-astral-src
+Submenu: Python
+Version: 1.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Calculations for the position of the sun and moon (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: astral-1.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Astral is a python module for calculating the times of various aspects of the sun and moon..
+    (Contains the Python sources for this package).
+https://github.com/sffjunkie/astral
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-astral
+Submenu: Python
+Version: 1.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-astral:python3-light +PACKAGE_python3-astral:python3-pytz
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Calculations for the position of the sun and moon
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: astral-1.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Astral is a python module for calculating the times of various aspects of the sun and moon.
+.
+(Variant for Python3)
+https://github.com/sffjunkie/astral
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+Package: python3-astral-src
+Submenu: Python
+Version: 1.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Calculations for the position of the sun and moon (sources)
+Maintainer: Josef Schlehofer <josef.schlehofer@nic.cz>
+Source: astral-1.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Astral is a python module for calculating the times of various aspects of the sun and moon.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/sffjunkie/astral
+Josef Schlehofer <josef.schlehofer@nic.cz>
+@@
+
+

@@ -1,0 +1,47 @@
+Source-Makefile: package/feeds/oldpackages/python/python-egenix-mx-base/Makefile
+Package: python-egenix-mx-base
+Submenu: Python
+Version: 3.2.9-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Egenix mxBase
+Maintainer: Dmitry Trefilov <the-alien@live.ru>
+Source: egenix-mx-base-3.2.9.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  The eGenix.com mx Base Distribution for Python is a collection
+ of professional quality software tools which enhance Python's
+ usability in many important areas such as fast text searching,
+ date/time processing and high speed data types.
+https://www.egenix.com/products/python/mxBase/
+Dmitry Trefilov <the-alien@live.ru>
+@@
+
+Package: python-egenix-mx-base-src
+Submenu: Python
+Version: 3.2.9-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Egenix mxBase (sources)
+Maintainer: Dmitry Trefilov <the-alien@live.ru>
+Source: egenix-mx-base-3.2.9.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:      The eGenix.com mx Base Distribution for Python is a collection
+ of professional quality software tools which enhance Python's
+ usability in many important areas such as fast text searching,
+ date/time processing and high speed data types..
+    (Contains the Python sources for this package).
+https://www.egenix.com/products/python/mxBase/
+Dmitry Trefilov <the-alien@live.ru>
+@@
+
+

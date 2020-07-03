@@ -1,0 +1,32 @@
+Source-Makefile: package/system/procd/Makefile
+Package: procd
+Version: 2014-09-15-c1a558f7d0c1e6c1ffa5a47d557a7b45205eef1d
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +ubusd +ubus +libjson-script +ubox +libubox +libubus +NAND_SUPPORT:procd-nand
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: OpenWrt system process manager
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: procd-2014-09-15-c1a558f7d0c1e6c1ffa5a47d557a7b45205eef1d.tar.gz
+Type: ipkg
+Description: OpenWrt system process manager
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: procd-nand
+Version: 2014-09-15-c1a558f7d0c1e6c1ffa5a47d557a7b45205eef1d
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @NAND_SUPPORT +ubi-utils
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: OpenWrt sysupgrade nand helper
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: procd-2014-09-15-c1a558f7d0c1e6c1ffa5a47d557a7b45205eef1d.tar.gz
+Type: ipkg
+Description: OpenWrt sysupgrade nand helper
+John Crispin <blogic@openwrt.org>
+@@
+
+

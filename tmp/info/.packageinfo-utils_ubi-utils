@@ -1,0 +1,19 @@
+Source-Makefile: package/utils/ubi-utils/Makefile
+Package: ubi-utils
+Version: 1.5.1-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @NAND_SUPPORT
+Menu-Depends: 
+Provides: 
+Build-Depends: util-linux liblzo zlib
+Section: utils
+Category: Utilities
+Title: Utilities for ubi info/debug
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: ubi-utils-1.5.1.tar.gz
+Type: ipkg
+Description:   Utilities for manipulating memory technology devices.
+http://www.linux-mtd.infradead.org/
+John Crispin <blogic@openwrt.org>
+@@
+
+

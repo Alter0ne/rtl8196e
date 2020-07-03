@@ -1,0 +1,45 @@
+Source-Makefile: package/feeds/oldpackages/python/Jinja2/Makefile
+Package: python3-jinja2
+Submenu: Python
+Version: 2.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-markupsafe
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Jinja2
+Maintainer: Daniel Golle <daniel@makrotopia.org>
+Source: Jinja2-2.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: Jinja2 is a full featured template engine for Python. It has full
+unicode support, an optional integrated sandboxed execution
+environment, widely used and BSD licensed.
+http://jinja.pocoo.org/
+Daniel Golle <daniel@makrotopia.org>
+@@
+
+Package: python3-jinja2-src
+Submenu: Python
+Version: 2.10.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Jinja2 (sources)
+Maintainer: Daniel Golle <daniel@makrotopia.org>
+Source: Jinja2-2.10.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     Jinja2 is a full featured template engine for Python. It has full
+unicode support, an optional integrated sandboxed execution
+environment, widely used and BSD licensed..
+    (Contains the Python3 sources for this package).
+http://jinja.pocoo.org/
+Daniel Golle <daniel@makrotopia.org>
+@@
+
+

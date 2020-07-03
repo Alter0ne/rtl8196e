@@ -1,0 +1,57 @@
+Source-Makefile: package/network/services/dnsmasq/Makefile
+Package: dnsmasq
+Version: 2.71-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: nodhcpv6
+Section: net
+Category: Base system
+Title: DNS and DHCP server
+Maintainer: 
+Source: dnsmasq-2.71.tar.gz
+Type: ipkg
+Description:   It is intended to provide coupled DNS and DHCP service to a LAN.
+http://www.thekelleys.org.uk/dnsmasq/
+
+@@
+
+Package: dnsmasq-dhcpv6
+Version: 2.71-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @IPV6 +kmod-ipv6
+Menu-Depends: 
+Provides: 
+Build-Variant: dhcpv6
+Section: net
+Category: Base system
+Title: DNS and DHCP server (with DHCPv6 support)
+Maintainer: 
+Source: dnsmasq-2.71.tar.gz
+Type: ipkg
+Description:   It is intended to provide coupled DNS and DHCP service to a LAN.
+
+This is a variant with DHCPv6 support
+http://www.thekelleys.org.uk/dnsmasq/
+
+@@
+
+Package: dnsmasq-full
+Version: 2.71-4
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @IPV6 +kmod-ipv6 +libnettle
+Menu-Depends: 
+Provides: 
+Build-Variant: full
+Section: net
+Category: Base system
+Title: DNS and DHCP server (with DNSSEC, DHCPv6, Auth DNS, IPSET)
+Maintainer: 
+Source: dnsmasq-2.71.tar.gz
+Type: ipkg
+Description:   It is intended to provide coupled DNS and DHCP service to a LAN.
+
+This is a variant with DHCPv6, DNSSEC, Authroitative DNS and IPSET support
+http://www.thekelleys.org.uk/dnsmasq/
+
+@@
+
+

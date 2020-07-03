@@ -1,0 +1,74 @@
+Source-Makefile: package/boot/uboot-omap/Makefile
+Package: uboot-omap-omap4_panda
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_omap
+Menu-Depends: 
+Provides: 
+Build-Variant: omap4_panda
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for the Pandaboard
+Maintainer: 
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Hidden: 1
+Description: U-Boot for the Pandaboard
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-omap-am335x_evm
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_omap
+Menu-Depends: 
+Provides: 
+Build-Variant: am335x_evm
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for the AM335x EVM
+Maintainer: 
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Hidden: 1
+Description: U-Boot for the AM335x EVM
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-omap-omap3_overo
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_omap
+Menu-Depends: 
+Provides: 
+Build-Variant: omap3_overo
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for the Gumstix Overo
+Maintainer: 
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Hidden: 1
+Description: U-Boot for the Gumstix Overo
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+Package: uboot-omap-omap3_beagle
+Version: 2013.10-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @TARGET_omap
+Menu-Depends: 
+Provides: 
+Build-Variant: omap3_beagle
+Section: boot
+Category: Boot Loaders
+Title: U-Boot for the BeagleBoard
+Maintainer: 
+Source: u-boot-2013.10.tar.bz2
+Type: bin
+Hidden: 1
+Description: U-Boot for the BeagleBoard
+http://www.denx.de/wiki/U-Boot
+
+@@
+
+

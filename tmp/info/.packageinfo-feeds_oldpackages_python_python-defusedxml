@@ -1,0 +1,88 @@
+Source-Makefile: package/feeds/oldpackages/python/python-defusedxml/Makefile
+Package: python-defusedxml
+Submenu: Python
+Version: 0.6.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-defusedxml:python-light +PACKAGE_python-defusedxml:python-codecs +PACKAGE_python-defusedxml:python-xml
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: XML bomb protection for Python
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: defusedxml-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   The defusedxml package contains several Python-only workarounds and fixes for
+  denial of service and other vulnerabilities in Python’s XML libraries.
+https://github.com/tiran/defusedxml
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python-defusedxml-src
+Submenu: Python
+Version: 0.6.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: XML bomb protection for Python (sources)
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: defusedxml-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       The defusedxml package contains several Python-only workarounds and fixes for
+  denial of service and other vulnerabilities in Python’s XML libraries..
+    (Contains the Python sources for this package).
+https://github.com/tiran/defusedxml
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-defusedxml
+Submenu: Python
+Version: 0.6.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-defusedxml:python3-light +PACKAGE_python3-defusedxml:python3-xml
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: XML bomb protection for Python
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: defusedxml-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   The defusedxml package contains several Python-only workarounds and fixes for
+  denial of service and other vulnerabilities in Python’s XML libraries.
+.
+(Variant for Python3)
+https://github.com/tiran/defusedxml
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-defusedxml-src
+Submenu: Python
+Version: 0.6.0-2
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: XML bomb protection for Python (sources)
+Maintainer: Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: defusedxml-0.6.0.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       The defusedxml package contains several Python-only workarounds and fixes for
+  denial of service and other vulnerabilities in Python’s XML libraries.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/tiran/defusedxml
+Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+

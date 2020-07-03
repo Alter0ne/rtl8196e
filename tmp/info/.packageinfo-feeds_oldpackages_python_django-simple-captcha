@@ -1,0 +1,86 @@
+Source-Makefile: package/feeds/oldpackages/python/django-simple-captcha/Makefile
+Package: python-django-simple-captcha
+Submenu: Python
+Version: 0.5.12-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-django-simple-captcha:python +PACKAGE_python-django-simple-captcha:python-six python-django +PACKAGE_python-django-simple-captcha:python-pillow +PACKAGE_python-django-simple-captcha:python-django-ranged-response
+Menu-Depends: python-django
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Simple Django captcha application
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: django-simple-captcha-0.5.12.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   Django Simple Captcha is an extremely simple, yet highly customizable Django
+  application to add captcha images to any Django form.
+https://github.com/mbi/django-simple-captcha
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python-django-simple-captcha-src
+Submenu: Python
+Version: 0.5.12-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: python-django
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Simple Django captcha application (sources)
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: django-simple-captcha-0.5.12.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       Django Simple Captcha is an extremely simple, yet highly customizable Django
+  application to add captcha images to any Django form..
+    (Contains the Python sources for this package).
+https://github.com/mbi/django-simple-captcha
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python3-django-simple-captcha
+Submenu: Python
+Version: 0.5.12-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-django-simple-captcha:python3 +PACKAGE_python3-django-simple-captcha:python3-six python3-django +PACKAGE_python3-django-simple-captcha:python3-pillow +PACKAGE_python3-django-simple-captcha:python3-django-ranged-response
+Menu-Depends: python3-django
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Simple Django captcha application
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: django-simple-captcha-0.5.12.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: 
+.
+(Variant for Python3)
+https://github.com/mbi/django-simple-captcha
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+Package: python3-django-simple-captcha-src
+Submenu: Python
+Version: 0.5.12-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: python3-django
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Simple Django captcha application (sources)
+Maintainer: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Source: django-simple-captcha-0.5.12.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/mbi/django-simple-captcha
+Eneas U de Queiroz <cotequeiroz@gmail.com>
+@@
+
+

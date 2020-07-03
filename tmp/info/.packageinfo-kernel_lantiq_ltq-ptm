@@ -1,0 +1,74 @@
+Source-Makefile: package/kernel/lantiq/ltq-ptm/Makefile
+Package: kmod-ltq-ptm-danube
+Submenu: Network Devices
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xway
+Menu-Depends: 
+Provides: 
+Build-Variant: danube
+Section: sys
+Category: Kernel modules
+Title: ptm driver for danube
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: ptm driver for danube
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-ptm-ase
+Submenu: Network Devices
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_ase
+Menu-Depends: 
+Provides: 
+Build-Variant: ase
+Section: sys
+Category: Kernel modules
+Title: ptm driver for ase
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: ptm driver for ase
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-ptm-ar9
+Submenu: Network Devices
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xway
+Menu-Depends: 
+Provides: 
+Build-Variant: ar9
+Section: sys
+Category: Kernel modules
+Title: ptm driver for ar9
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: ptm driver for ar9
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+Package: kmod-ltq-ptm-vr9
+Submenu: Network Devices
+Version: <LINUX_VERSION>-1
+Depends: @TARGET_lantiq_xrx200
+Menu-Depends: 
+Provides: 
+Build-Variant: vr9
+Section: sys
+Category: Kernel modules
+Title: ptm driver for vr9
+Maintainer: John Crispin <blogic@openwrt.org>
+Source: 
+Type: ipkg
+Description: ptm driver for vr9
+http://www.lantiq.com/
+John Crispin <blogic@openwrt.org>
+@@
+
+

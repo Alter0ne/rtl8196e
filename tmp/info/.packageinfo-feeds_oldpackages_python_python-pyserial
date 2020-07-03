@@ -1,0 +1,96 @@
+Source-Makefile: package/feeds/oldpackages/python/python-pyserial/Makefile
+Package: python-pyserial
+Submenu: Python
+Version: 3.4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-pyserial:python-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang-python
+Category: Languages
+Title: python-pyserial
+Maintainer: Micke Prag <micke.prag@telldus.se>
+Source: pyserial-3.4.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: This module encapsulates the access for the serial port. It provides backends
+for Python running on Windows, OSX, Linux, BSD (possibly any POSIX compliant
+system) and IronPython. The module named "serial" automatically selects the
+appropriate backend.
+https://github.com/pyserial/pyserial
+Micke Prag <micke.prag@telldus.se>
+@@
+
+Package: python-pyserial-src
+Submenu: Python
+Version: 3.4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang-python
+Category: Languages
+Title: python-pyserial (sources)
+Maintainer: Micke Prag <micke.prag@telldus.se>
+Source: pyserial-3.4.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     This module encapsulates the access for the serial port. It provides backends
+for Python running on Windows, OSX, Linux, BSD (possibly any POSIX compliant
+system) and IronPython. The module named "serial" automatically selects the
+appropriate backend..
+    (Contains the Python sources for this package).
+https://github.com/pyserial/pyserial
+Micke Prag <micke.prag@telldus.se>
+@@
+
+Package: python3-pyserial
+Submenu: Python
+Version: 3.4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python3-pyserial:python3-light
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang-python
+Category: Languages
+Title: python3-pyserial
+Maintainer: Micke Prag <micke.prag@telldus.se>
+Source: pyserial-3.4.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description: This module encapsulates the access for the serial port. It provides backends
+for Python running on Windows, OSX, Linux, BSD (possibly any POSIX compliant
+system) and IronPython. The module named "serial" automatically selects the
+appropriate backend.
+.
+(Variant for Python3)
+https://github.com/pyserial/pyserial
+Micke Prag <micke.prag@telldus.se>
+@@
+
+Package: python3-pyserial-src
+Submenu: Python
+Version: 3.4-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang-python
+Category: Languages
+Title: python3-pyserial (sources)
+Maintainer: Micke Prag <micke.prag@telldus.se>
+Source: pyserial-3.4.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:     This module encapsulates the access for the serial port. It provides backends
+for Python running on Windows, OSX, Linux, BSD (possibly any POSIX compliant
+system) and IronPython. The module named "serial" automatically selects the
+appropriate backend.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://github.com/pyserial/pyserial
+Micke Prag <micke.prag@telldus.se>
+@@
+
+

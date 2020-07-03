@@ -1,0 +1,20 @@
+Source-Makefile: package/feeds/oldpackages/redir/Makefile
+Package: redir
+Submenu: Routing and Redirection
+Version: 2.2.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Redirect TCP connections
+Maintainer: 
+Source: redir-2.2.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:  A port redirector, used to forward incoming connections to somewhere else.
+http://sammy.net/~sammy/hacks
+
+@@
+
+

@@ -1,0 +1,92 @@
+Source-Makefile: package/feeds/oldpackages/python/python-et_xmlfile/Makefile
+Package: python-et_xmlfile
+Submenu: Python
+Version: 1.0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-et_xmlfile:python-light +PACKAGE_python-et_xmlfile:python-lxml
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Low memory library for creating large XML files.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: et_xmlfile-1.0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   An implementation of lxml.xmlfile for the standard library.
+  It is based upon the xmlfile module from lxml with the aim of
+  allowing code to be developed that will work with both libraries.
+https://bitbucket.org/openpyxl/et_xmlfile
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python-et_xmlfile-src
+Submenu: Python
+Version: 1.0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python
+Section: lang
+Category: Languages
+Title: Low memory library for creating large XML files. (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: et_xmlfile-1.0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       An implementation of lxml.xmlfile for the standard library.
+  It is based upon the xmlfile module from lxml with the aim of
+  allowing code to be developed that will work with both libraries..
+    (Contains the Python sources for this package).
+https://bitbucket.org/openpyxl/et_xmlfile
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-et_xmlfile
+Submenu: Python
+Version: 1.0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +python3-light +python3-lxml
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Low memory library for creating large XML files.
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: et_xmlfile-1.0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:   An implementation of lxml.xmlfile for the standard library.
+  It is based upon the xmlfile module from lxml with the aim of
+  allowing code to be developed that will work with both libraries.
+.
+(Variant for Python3)
+https://bitbucket.org/openpyxl/et_xmlfile
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+Package: python3-et_xmlfile-src
+Submenu: Python
+Version: 1.0.1-1
+Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
+Menu-Depends: 
+Provides: 
+Build-Variant: python3
+Section: lang
+Category: Languages
+Title: Low memory library for creating large XML files. (sources)
+Maintainer: Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+Source: et_xmlfile-1.0.1.tar.gz
+Type: ipkg
+Feed: oldpackages
+Description:       An implementation of lxml.xmlfile for the standard library.
+  It is based upon the xmlfile module from lxml with the aim of
+  allowing code to be developed that will work with both libraries.
+.
+(Variant for Python3).
+    (Contains the Python3 sources for this package).
+https://bitbucket.org/openpyxl/et_xmlfile
+Alexandru Ardelean <ardeleanalex@gmail.com>, Eneas U de Queiroz <cote2004-github@yahoo.com>
+@@
+
+
