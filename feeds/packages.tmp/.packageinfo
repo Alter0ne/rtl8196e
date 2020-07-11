@@ -16302,7 +16302,7 @@ Ted Hess <thess@kitschensync.net>
 
 Source-Makefile: feeds/packages/admin/muninlite/Makefile
 Package: muninlite
-Version: 1.0.4-5
+Version: 2.0.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +xinetd
 Menu-Depends: 
 Provides: 
@@ -16310,7 +16310,7 @@ Section: admin
 Category: Administration
 Title: Munin node implemented in shell
 Maintainer: Jonathan McCrohan <jmccrohan@gmail.com>
-Source: muninlite-1.0.4.tar.gz
+Source: muninlite-2.0.1.tar.gz
 Type: ipkg
 Description: Munin node implemented in shell
 http://sourceforge.net/projects/muninlite/
@@ -16320,7 +16320,7 @@ Jonathan McCrohan <jmccrohan@gmail.com>
 
 Source-Makefile: feeds/packages/admin/debootstrap/Makefile
 Package: debootstrap
-Version: 1.0.64~bpo70+1-1
+Version: 1.0.119~bpo10+1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +coreutils +coreutils-chroot +coreutils-sha1sum
 Menu-Depends: 
 Provides: 
@@ -16328,7 +16328,7 @@ Section: admin
 Category: Administration
 Title: Bootstrap a basic Debian system
 Maintainer: Daniel Golle <daniel@makrotopia.org>
-Source: debootstrap-udeb_1.0.64~bpo70+1_all.udeb
+Source: debootstrap-udeb_1.0.119~bpo10+1_all.udeb
 Type: ipkg
 Description:  debootstrap is used to create a Debian base system from scratch, without
  requiring the availability of dpkg or apt. It does this by downloading .deb
@@ -16511,7 +16511,7 @@ Etienne CHAMPETIER <champetier.etienne@gmail.com>
 
 Source-Makefile: feeds/packages/admin/htop/Makefile
 Package: htop
-Version: 1.0.3-1
+Version: 2.2.0-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libncurses
 Menu-Depends: 
 Provides: 
@@ -16519,7 +16519,7 @@ Section: admin
 Category: Administration
 Title: Interactive processes viewer
 Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
-Source: htop-1.0.3.tar.gz
+Source: htop-2.2.0.tar.gz
 Type: ipkg
 Description:  Htop is an ncursed-based process viewer similar to top, but
  it allows to scroll the list vertically and horizontally to
