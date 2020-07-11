@@ -8,17 +8,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libconfig
-PKG_VERSION:=1.4.9
-PKG_RELEASE:=1
+PKG_VERSION:=1.7.2
+PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://www.hyperrealm.com/libconfig
-PKG_MD5SUM:=b6ee0ce2b3ef844bad7cac2803a90634
+PKG_SOURCE_URL:=https://hyperrealm.github.io/libconfig/dist/
+PKG_HASH:=7c3c7a9c73ff3302084386e96f903eb62ce06953bb1666235fac74363a16fad9
 
-PKG_FIXUP:=autoreconf
+PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
+PKG_LICENSE:=LGPL-2.1-or-later
+PKG_LICENSE_FILES:=COPYING.LIB
+
 PKG_INSTALL:=1
-
-PKG_MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
+PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,7 +28,8 @@ define Package/libconfig
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE:=Configuration File Library
-  URL:=http://www.hyperrealm.com/libconfig/
+  URL:=https://hyperrealm.github.io/libconfig/
+  ABI_VERSION:=11
 endef
 
 define Package/libconfig/description
@@ -52,7 +55,7 @@ endef
 
 define Package/libconfig/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libconfig.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libconfig.so.* $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,libconfig))
