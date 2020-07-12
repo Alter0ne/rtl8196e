@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2013 OpenWrt.org
+# Copyright (C) 2006-2014 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -17,10 +17,11 @@ PKG_SOURCE_URL:=\
 	http://mysql.he.net/Downloads/MySQL-5.1/ \
 	http://www.linorg.usp.br/mysql/Downloads/MySQL-5.1/ \
 	http://www.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-5.1/ \
-	http://mirror.switch.ch/ftp/mirror/mysql/Downloads/MySQL-5.1/ \
-	http://downloads.mysql.com/archives/mysql-5.1/
+	http://mirror.switch.ch/ftp/mirror/mysql/Downloads/MySQL-5.1/
 
 PKG_MD5SUM:=887f869bcc757957067b9198f707f32f
+PKG_MAINTAINER:=Jo-Philipp Wich <jow@openwrt.org>
+PKG_LICENSE:=GPL-2.0
 
 PKG_BUILD_DEPENDS:=libncurses libreadline
 PKG_BUILD_PARALLEL:=1
