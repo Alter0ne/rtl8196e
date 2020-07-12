@@ -20,7 +20,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/luasocket/Makefile
 Package: luasocket
 Submenu: Lua
-Version: 3.0-rc1-20130909-2
+Version: 3.0-rc1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lua
 Menu-Depends: 
 Provides: 
@@ -28,7 +28,7 @@ Section: lang
 Category: Languages
 Title: LuaSocket
 Maintainer: W. Michael Petullo <mike@flyn.org>
-Source: luasocket-3.0-rc1-20130909.tar.bz2
+Source: luasocket.tar.bz2
 Type: ipkg
 Description:   LuaSocket is the most comprehensive networking support
   library for the Lua language. It provides easy access to
@@ -60,7 +60,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/luasec/Makefile
 Package: luasec
 Submenu: Lua
-Version: 0.4-1
+Version: 0.9-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lua +libopenssl +luasocket
 Menu-Depends: 
 Provides: 
@@ -68,7 +68,7 @@ Section: lang
 Category: Languages
 Title: LuaSec
 Maintainer: W. Michael Petullo <mike@flyn.org>
-Source: luasec-0.4.tar.gz
+Source: luasec-0.9.tar.gz
 Type: ipkg
 Description:   LuaSec is a binding for OpenSSL library to provide TLS/SSL communication.
 http://luasec.luaforge.net/
@@ -2452,7 +2452,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/luafilesystem/Makefile
 Package: luafilesystem
 Submenu: Lua
-Version: 1.6.2-1
+Version: 1.7.0.2-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +liblua
 Menu-Depends: 
 Provides: 
@@ -2460,7 +2460,7 @@ Section: lang
 Category: Languages
 Title: LuaFileSystem
 Maintainer: W. Michael Petullo <mike@flyn.org>
-Source: luafilesystem-1.6.2.tar.gz
+Source: luafilesystem-1.7.0.2.tar.gz
 Type: ipkg
 Description:  This package contains the LuaFileSystem library, a set of portable
  functions for directory creation, listing and deletion and for file
@@ -2473,7 +2473,7 @@ W. Michael Petullo <mike@flyn.org>
 Source-Makefile: feeds/packages/lang/luaexpat/Makefile
 Package: luaexpat
 Submenu: Lua
-Version: 1.2.0-1
+Version: 1.3.0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +lua +libexpat
 Menu-Depends: 
 Provides: 
@@ -2481,7 +2481,7 @@ Section: lang
 Category: Languages
 Title: LuaExpat 
 Maintainer: W. Michael Petullo <mike@flyn.org>
-Source: luaexpat-1.2.0.tar.gz
+Source: luaexpat-1.3.0.tar.gz
 Type: ipkg
 Description:   LuaExpat is a SAX XML parser based on the Expat library.
 http://www.keplerproject.org/luaexpat/
