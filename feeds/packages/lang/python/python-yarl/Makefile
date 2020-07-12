@@ -9,16 +9,16 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yarl
 PKG_VERSION:=1.3.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=yarl-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/y/yarl/
+PYPI_NAME:=$(PKG_NAME)
 PKG_HASH:=024ecdc12bc02b321bc66b41327f930d1c2c543fa9a561b39861da9388ba7aa9
 
 PKG_MAINTAINER:=Josef Schlehofer <pepe.schlehofer@gmail.com>
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -33,7 +33,6 @@ define Package/python3-yarl
   +python3-multidict \
   +python3-urllib \
   +python3-idna
-  VARIANT:=python3
 endef
 
 define Package/python3-yarl/description

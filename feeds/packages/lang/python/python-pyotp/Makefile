@@ -8,17 +8,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pyotp
-PKG_VERSION:=2.2.7
-PKG_RELEASE:=1
+PKG_VERSION:=2.3.0
+PKG_RELEASE:=2
 
-PKG_SOURCE:=pyotp-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/p/pyotp
-PKG_HASH:=be0ffeabddaa5ee53e7204e7740da842d070cf69168247a3d0c08541b84de602
+PYPI_NAME:=$(PKG_NAME)
+PKG_HASH:=fc537e8acd985c5cbf51e11b7d53c42276fee017a73aec7c07380695671ca1a1
 
 PKG_MAINTAINER:=Josef Schlehofer <josef.schlehofer@nic.cz>
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -29,7 +29,6 @@ define Package/python3-pyotp
   TITLE:=Python One-Time Password Library
   URL:=https://github.com/pyauth/pyotp
   DEPENDS:=+python3-light
-  VARIANT:=python3
 endef
 
 define Package/python3-pyotp/description

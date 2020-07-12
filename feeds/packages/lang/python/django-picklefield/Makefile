@@ -8,65 +8,38 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=django-picklefield
-PKG_VERSION:=1.1.0
-PKG_RELEASE:=3
+PKG_VERSION:=2.1.1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/d/$(PKG_NAME)/
-PKG_HASH:=ce7fee5c6558fe5dc8924993d994ccde75bb75b91cd82787cbd4c92b95a69f9c
+PYPI_NAME:=$(PKG_NAME)
+PKG_HASH:=67a5e156343e3b032cac2f65565f0faa81635a99c7da74b0f07a0f5db467b646
 
 PKG_MAINTAINER:=Alexandru Ardelean <ardeleanalex@gmail.com>
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(BUILD_VARIANT)-$(PKG_NAME)-$(PKG_VERSION)
-
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
-include ../python-package.mk
 include ../python3-package.mk
 
-PKG_UNPACK:=$(HOST_TAR) -C $(PKG_BUILD_DIR) --strip-components=1 -xzf $(DL_DIR)/$(PKG_SOURCE)
+PYTHON3_PKG_SETUP_VARS:= \
+  PKG_VERSION="$(PKG_VERSION)"
 
-define Package/$(PKG_NAME)/Default
+define Package/python3-django-picklefield
   SUBMENU:=Python
   SECTION:=lang
   CATEGORY:=Languages
   TITLE:=Pickled object field for Django
   URL:=https://github.com/gintas/django-picklefield/
-endef
-
-define Package/python-$(PKG_NAME)
-$(call Package/$(PKG_NAME)/Default)
   DEPENDS:= \
-	+PACKAGE_python-$(PKG_NAME):python \
-	python-django
-  VARIANT:=python
-  MDEPENDS:=python-django
+	+python3 \
+	+python3-django1
 endef
 
-define Package/python-$(PKG_NAME)/description
+define Package/python3-django-picklefield/description
   Pickled object field for Django
 endef
 
-define Package/python3-$(PKG_NAME)
-$(call Package/$(PKG_NAME)/Default)
-  DEPENDS:= \
-	+PACKAGE_python3-$(PKG_NAME):python3 \
-	python3-django
-  VARIANT:=python3
-  MDEPENDS:=python3-django
-endef
-
-define Package/python3-$(PKG_NAME)/description
-$(call define Package/python-$(PKG_NAME)/description)
-.
-(Variant for Python3)
-endef
-
-$(eval $(call PyPackage,python-$(PKG_NAME)))
-$(eval $(call BuildPackage,python-$(PKG_NAME)))
-$(eval $(call BuildPackage,python-$(PKG_NAME)-src))
-
-$(eval $(call Py3Package,python3-$(PKG_NAME)))
-$(eval $(call BuildPackage,python3-$(PKG_NAME)))
-$(eval $(call BuildPackage,python3-$(PKG_NAME)-src))
+$(eval $(call Py3Package,python3-django-picklefield))
+$(eval $(call BuildPackage,python3-django-picklefield))
+$(eval $(call BuildPackage,python3-django-picklefield-src))

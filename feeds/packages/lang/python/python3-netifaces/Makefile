@@ -9,18 +9,16 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python3-netifaces
 PKG_VERSION:=0.10.9
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=netifaces-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/n/netifaces/
+PYPI_NAME:=netifaces
 PKG_HASH:=2dee9ffdd16292878336a58d04a20f0ffe95555465fee7c9bd23b3490ef2abf3
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/netifaces-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Josef Schlehofer <pepe.schlehofer@gmail.com>
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -31,13 +29,12 @@ define Package/python3-netifaces
   TITLE:=Portable network interface information
   URL:=https://github.com/al45tair/netifaces
   DEPENDS:=+python3-light
-  VARIANT:=python3
 endef
 
 define Package/python3-netifaces/description
   Portable network interface information.
 endef
 
-$(eval $(call Py3Package,$(PKG_NAME)))
-$(eval $(call BuildPackage,$(PKG_NAME)))
-$(eval $(call BuildPackage,$(PKG_NAME)-src))
+$(eval $(call Py3Package,python3-netifaces))
+$(eval $(call BuildPackage,python3-netifaces))
+$(eval $(call BuildPackage,python3-netifaces-src))
