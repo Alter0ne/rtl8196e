@@ -1,7 +1,7 @@
 Source-Makefile: feeds/packages/lang/perl-html-tagset/Makefile
 Package: perl-html-tagset
 Submenu: Perl
-Version: 3.20-1
+Version: 3.20-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl
 Menu-Depends: 
 Provides: 
@@ -41,7 +41,7 @@ W. Michael Petullo <mike@flyn.org>
 Source-Makefile: feeds/packages/lang/perl-compress-bzip2/Makefile
 Package: perl-compress-bzip2
 Submenu: Perl
-Version: 2.18-1
+Version: 2.26-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +libbz2
 Menu-Depends: 
 Provides: 
@@ -49,7 +49,7 @@ Section: lang
 Category: Languages
 Title: Perl interface to bzip2 compression library
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: Compress-Bzip2-2.18.tar.gz
+Source: Compress-Bzip2-2.26.tar.gz
 Type: ipkg
 Description: Perl interface to bzip2 compression library
 http://search.cpan.org/dist/Compress-Bzip2/
@@ -98,7 +98,7 @@ Frank Edelhaeuser <fedel@users.sourceforge.net>
 Source-Makefile: feeds/packages/lang/perl-html-tree/Makefile
 Package: perl-html-tree
 Submenu: Perl
-Version: 3.23-2
+Version: 3.23-5
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +perl-html-parser +perl-html-tagset
 Menu-Depends: 
 Provides: 
@@ -117,7 +117,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-lockfile-simple/Makefile
 Package: perl-lockfile-simple
 Submenu: Perl
-Version: 0.208-1
+Version: 0.208-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl
 Menu-Depends: 
 Provides: 
@@ -136,7 +136,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-uri/Makefile
 Package: perl-uri
 Submenu: Perl
-Version: 1.64-1
+Version: 1.76-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl
 Menu-Depends: 
 Provides: 
@@ -144,7 +144,7 @@ Section: lang
 Category: Languages
 Title: Manipulates and accesses URI strings
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: URI-1.64.tar.gz
+Source: URI-1.76.tar.gz
 Type: ipkg
 Description: Manipulates and accesses URI strings
 http://search.cpan.org/dist/URI/
@@ -155,7 +155,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-www/Makefile
 Package: perl-www
 Submenu: Perl
-Version: 5.837-2
+Version: 6.43-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +perl-html-parser +perl-html-tagset +perl-uri
 Menu-Depends: 
 Provides: 
@@ -163,7 +163,7 @@ Section: lang
 Category: Languages
 Title: WWW client/server library for Perl (aka LWP)
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: libwww-perl-5.837.tar.gz
+Source: libwww-perl-6.43.tar.gz
 Type: ipkg
 Description: WWW client/server library for Perl (aka LWP)
 http://search.cpan.org/dist/libwww-perl/
@@ -174,7 +174,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-html-parser/Makefile
 Package: perl-html-parser
 Submenu: Perl
-Version: 3.71-1
+Version: 3.72-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +perl-html-tagset +perl-uri
 Menu-Depends: 
 Provides: 
@@ -182,7 +182,7 @@ Section: lang
 Category: Languages
 Title: A collection of modules that parse HTML text documents
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: HTML-Parser-3.71.tar.gz
+Source: HTML-Parser-3.72.tar.gz
 Type: ipkg
 Description: A collection of modules that parse HTML text documents
 http://search.cpan.org/dist/HTML-Parser/
@@ -2317,7 +2317,7 @@ Vladimir Malyutin <first-leon@yandex.ru>
 Source-Makefile: feeds/packages/lang/perl-www-curl/Makefile
 Package: perl-www-curl
 Submenu: Perl
-Version: 4.17-1
+Version: 4.17-7
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +libcurl
 Menu-Depends: 
 Provides: 
@@ -2336,7 +2336,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-net-telnet/Makefile
 Package: perl-net-telnet
 Submenu: Perl
-Version: 3.04-1
+Version: 3.04-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl
 Menu-Depends: 
 Provides: 
@@ -2355,7 +2355,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-www-mechanize/Makefile
 Package: perl-www-mechanize
 Submenu: Perl
-Version: 1.73-1
+Version: 1.96-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +perl-www
 Menu-Depends: 
 Provides: 
@@ -2363,7 +2363,7 @@ Section: lang
 Category: Languages
 Title: Perl WWW Mechanize
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: WWW-Mechanize-1.73.tar.gz
+Source: WWW-Mechanize-1.96.tar.gz
 Type: ipkg
 Description: Perl WWW Mechanize
 http://search.cpan.org/dist/WWW-Mechanize/
@@ -2414,7 +2414,7 @@ Maxim Storchak <m.storchak@gmail.com>
 Source-Makefile: feeds/packages/lang/perl-dbi/Makefile
 Package: perl-dbi
 Submenu: Perl
-Version: 1.631-1
+Version: 1.643-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl +perlbase-essential
 Menu-Depends: 
 Provides: 
@@ -2422,7 +2422,7 @@ Section: lang
 Category: Languages
 Title: Database independent interface for Perl
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: DBI-1.631.tar.gz
+Source: DBI-1.643.tar.gz
 Type: ipkg
 Description: Database independent interface for Perl
 http://search.cpan.org/dist/DBI/
@@ -2433,7 +2433,7 @@ Marcel Denia <naoir@gmx.net>
 Source-Makefile: feeds/packages/lang/perl-test-harness/Makefile
 Package: perl-test-harness
 Submenu: Perl
-Version: 3.32-1
+Version: 3.42-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread perl
 Menu-Depends: 
 Provides: 
@@ -2441,7 +2441,7 @@ Section: lang
 Category: Languages
 Title: Perl Test Harness
 Maintainer: Marcel Denia <naoir@gmx.net>
-Source: Test-Harness-3.32.tar.gz
+Source: Test-Harness-3.42.tar.gz
 Type: ipkg
 Description: Perl Test Harness
 http://search.cpan.org/dist/Test-Harness/
@@ -3658,7 +3658,7 @@ W. Michael Petullo <mike@flyn.org>
 
 Source-Makefile: feeds/packages/libs/alsa-lib/Makefile
 Package: alsa-lib
-Version: 1.0.27.2-1
+Version: 1.2.2-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @AUDIO_SUPPORT +kmod-sound-core +libpthread +librt
 Menu-Depends: 
 Provides: 
@@ -3666,7 +3666,7 @@ Section: libs
 Category: Libraries
 Title: ALSA (Advanced Linux Sound Architecture) library
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: alsa-lib-1.0.27.2.tar.bz2
+Source: alsa-lib-1.2.2.tar.bz2
 Type: ipkg
 Description:  This is the library package for alsa, needed by some userspace programs.
  You must have enabled the ALSA support in the kernel.
