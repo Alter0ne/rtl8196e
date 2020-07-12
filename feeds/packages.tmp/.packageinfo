@@ -2674,7 +2674,7 @@ Ted Hess <thess@kitschensync.net>
 
 Source-Makefile: feeds/packages/libs/c-ares/Makefile
 Package: libcares
-Version: 1.10.0-1
+Version: 1.16.1-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -2682,7 +2682,7 @@ Section: libs
 Category: Libraries
 Title: Library for asyncronous DNS Requests (including name resolves)
 Maintainer: Karl Palsson <karlp@remake.is>
-Source: c-ares-1.10.0.tar.gz
+Source: c-ares-1.16.1.tar.gz
 Type: ipkg
 Description:   c-ares is a C library for asynchronous DNS requests (including name resolves)
 
@@ -2716,7 +2716,7 @@ W. Michael Petullo <mike@flyn.org>
 
 Source-Makefile: feeds/packages/libs/avahi/Makefile
 Package: libavahi-client
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libavahi-dbus-support +avahi-daemon
 Menu-Depends: 
 Provides: 
@@ -2725,7 +2725,7 @@ Section: libs
 Category: Libraries
 Title: An mDNS/DNS-SD implementation (libavahi-client library)
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2747,7 +2747,7 @@ Ted Hess <thess@kitschensync.net>
 
 Package: avahi-utils
 Submenu: IP Addresses and Names
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libavahi-client +libgdbm
 Menu-Depends: 
 Provides: 
@@ -2756,7 +2756,7 @@ Section: net
 Category: Network
 Title: An mDNS/DNS-SD implementation (utilities)
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2777,7 +2777,7 @@ Ted Hess <thess@kitschensync.net>
 @@
 
 Package: libavahi-dbus-support
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +dbus +libavahi
 Menu-Depends: 
 Provides: 
@@ -2787,7 +2787,7 @@ Section: libs
 Category: Libraries
 Title: An mDNS/DNS-SD implementation (D-Bus support)
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2821,7 +2821,7 @@ Ted Hess <thess@kitschensync.net>
 @@
 
 Package: libavahi
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpthread +SSP_SUPPORT:libssp
 Menu-Depends: 
 Provides: 
@@ -2830,7 +2830,7 @@ Section: libs
 Category: Libraries
 Title: An mDNS/DNS-SD implementation (library)
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2855,7 +2855,7 @@ Ted Hess <thess@kitschensync.net>
 
 Package: avahi-autoipd
 Submenu: IP Addresses and Names
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libdaemon
 Menu-Depends: 
 Provides: 
@@ -2864,7 +2864,7 @@ Section: net
 Category: Network
 Title: IPv4LL network address configuration daemon
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2887,7 +2887,7 @@ Ted Hess <thess@kitschensync.net>
 
 Package: avahi-daemon
 Submenu: IP Addresses and Names
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libavahi +libexpat +librt +libdaemon
 Menu-Depends: 
 Provides: 
@@ -2896,7 +2896,7 @@ Section: net
 Category: Network
 Title: An mDNS/DNS-SD implementation (daemon)
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -2915,7 +2915,7 @@ Ted Hess <thess@kitschensync.net>
 
 Package: avahi-dnsconfd
 Submenu: IP Addresses and Names
-Version: 0.6.31-6
+Version: 0.8-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libavahi +libdaemon
 Menu-Depends: 
 Provides: 
@@ -2924,7 +2924,7 @@ Section: net
 Category: Network
 Title: A Unicast DNS server from mDNS/DNS-SD configuration daemon
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: avahi-0.6.31.tar.gz
+Source: avahi-0.8.tar.gz
 Type: ipkg
 Description:  Avahi is an mDNS/DNS-SD (aka RendezVous/Bonjour/ZeroConf)
  implementation (library). It facilitates
@@ -3785,7 +3785,7 @@ Thomas Heil <heil@terminal-consulting.de>
 
 Source-Makefile: feeds/packages/libs/faad2/Makefile
 Package: faad2
-Version: 2.7-3
+Version: 2.9.2-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libfaad2
 Menu-Depends: 
 Provides: 
@@ -3793,7 +3793,7 @@ Section: sound
 Category: Sound
 Title: Freeware Advanced Audio Decoder player
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: faad2-2.7.tar.bz2
+Source: faad2-2.9.2.tar.gz
 Type: ipkg
 Description: 	FAAD2 is the fastest ISO AAC audio decoder available.
 	FAAD2 correctly decodes all MPEG-4 and MPEG-2 MAIN,
@@ -3805,7 +3805,7 @@ Ted Hess <thess@kitschensync.net>
 
 Package: libfaad2
 Menu: 1
-Version: 2.7-3
+Version: 2.9.2-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread @BUILD_PATENTED
 Menu-Depends: 
 Provides: 
@@ -3813,7 +3813,7 @@ Section: libs
 Category: Libraries
 Title: Freeware Advanced Audio Decoder library
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: faad2-2.7.tar.bz2
+Source: faad2-2.9.2.tar.gz
 Type: ipkg
 Description: 	FAAD2 is the fastest ISO AAC audio decoder available.
 	FAAD2 correctly decodes all MPEG-4 and MPEG-2 MAIN,
@@ -3886,7 +3886,7 @@ Steven Barth <cyrus@openwrt.org>
 
 Source-Makefile: feeds/packages/libs/flac/Makefile
 Package: libflac
-Version: 1.2.1-1
+Version: 1.3.3-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -3894,7 +3894,7 @@ Section: libs
 Category: Libraries
 Title: Free Lossless Audio Codec library
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: flac-1.2.1.tar.gz
+Source: flac-1.3.3.tar.xz
 Type: ipkg
 Description: Free Lossless Audio Codec library
 http://flac.sourceforge.net/
@@ -4161,7 +4161,7 @@ Thomas Heil <heil@terminal-consulting.de>
 Source-Makefile: feeds/packages/libs/intltool/Makefile
 Package: intltool
 Prereq-Check: 1
-Version: 0.40.6-2
+Version: 0.51.0-3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -4170,7 +4170,7 @@ Section: libs
 Category: Libraries
 Title: set of tools to centralize translation using GNU gettext
 Maintainer: Ted Hess <thess@kitschensync.net>
-Source: intltool-0.40.6.tar.bz2
+Source: intltool-0.51.0.tar.gz
 Type: ipkg
 Build-Only: 1
 Description:   intltool is a set of tools to centralize translation of many different
@@ -4381,7 +4381,7 @@ Jacob Siverskog <jacob@teenageengineering.com>
 
 Source-Makefile: feeds/packages/libs/apr-util/Makefile
 Package: libaprutil
-Version: 1.5.3-1
+Version: 1.6.1-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libapr +libexpat +libsqlite3 +libuuid +BUILD_NLS:libiconv-full
 Menu-Depends: 
 Provides: 
@@ -4390,7 +4390,7 @@ Section: libs
 Category: Libraries
 Title: Apache Portable Runtime Utility Library
 Maintainer: Thomas Heil <heil@terminal-consulting.de>
-Source: apr-util-1.5.3.tar.bz2
+Source: apr-util-1.6.1.tar.bz2
 Type: ipkg
 Description: Apache Portable Runtime Utility Library
 http://apr.apache.org/
@@ -4512,7 +4512,7 @@ Thomas Heil <heil@terminal-consulting.de>
 
 Source-Makefile: feeds/packages/mail/dovecot/Makefile
 Package: dovecot
-Version: 2.2.13-1
+Version: 2.3.10.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libopenssl +librt +zlib +libbz2 +libcap
 Menu-Depends: 
 Provides: 
@@ -4521,7 +4521,7 @@ Section: mail
 Category: Mail
 Title: An IMAP and POP3 daemon
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: dovecot-2.2.13.tar.gz
+Source: dovecot-2.3.10.1.tar.gz
 Type: ipkg
 Description:  Dovecot is a program which provides POP3 and IMAP services.
 http://www.dovecot.org/

@@ -8,20 +8,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nettle
-PKG_VERSION:=2.7.1
+PKG_VERSION:=3.4
 PKG_RELEASE:=1
 PKG_USE_MIPS16:=0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@GNU/nettle
-PKG_MD5SUM:=003d5147911317931dd453520eb234a5
-PKG_MAINTAINER:=Nikos Mavrogiannopoulos <nmav@gnutls.org>
+PKG_HASH:=ae7a42df026550b85daca8389b6a60ba6313b0567f374392e54918588a411e94
 
-PKG_LICENSE:=LGPLv2
+PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
-
-PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=0
+
+PKG_CONFIG_DEPENDS := CONFIG_LIBNETTLE_MINI
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -41,6 +40,7 @@ TARGET_CFLAGS += $(FPIC)
 
 CONFIGURE_ARGS += \
 	--enable-shared \
+	--enable-fat \
 	--disable-openssl \
 	--disable-documentation \
 	--enable-static

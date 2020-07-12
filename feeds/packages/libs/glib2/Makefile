@@ -60,7 +60,7 @@ CONFIGURE_VARS += \
 	ac_cv_func_posix_getgrgid_r=yes
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include
+z	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/include/glib-2.0 \
 		$(1)/usr/include/

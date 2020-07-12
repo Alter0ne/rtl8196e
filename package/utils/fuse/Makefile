@@ -1,5 +1,5 @@
-# 
-# Copyright (C) 2006-2010 OpenWrt.org
+#
+# Copyright (C) 2006-2015 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -9,23 +9,24 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=fuse
-PKG_VERSION:=2.9.0
-PKG_RELEASE:=2
+PKG_VERSION:=2.9.9
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=@SF/$(PKG_NAME)
-PKG_MD5SUM:=894ee11674f89a915ae87524aed55bc4
+PKG_SOURCE_URL:=https://github.com/libfuse/libfuse/releases/download/$(PKG_NAME)-$(PKG_VERSION)
+PKG_HASH:=d0e69d5d608cc22ff4843791ad097f554dd32540ddc9bed7638cc6fea7c1b4b5
 
-PKG_LICENSE:=LGPLv2.1 GPLv2
-PKG_LICENSE_FILES:=COPYING.LIB COPYING
+PKG_MAINTAINER:=
+PKG_CPE_ID:=cpe:/a:fuse_project:fuse
 
 PKG_INSTALL:=1
+PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/fuse/Default
   TITLE:=FUSE
-  URL:=http://fuse.sourceforge.net/
+  URL:=https://github.com/libfuse/libfuse
 endef
 
 define Package/fuse/Default/description
@@ -39,6 +40,8 @@ $(call Package/fuse/Default)
   DEPENDS:=+libfuse
   TITLE+= (utilities)
   SUBMENU:=Filesystem
+  LICENSE:=GPL-2.0-only
+  LICENSE_FILES:=COPYING
 endef
 
 define Package/fuse-utils/description
@@ -55,6 +58,9 @@ $(call Package/fuse/Default)
   TITLE+= (library)
   DEPENDS:=+kmod-fuse +libpthread
   SUBMENU:=Filesystem
+  ABI_VERSION:=1
+  LICENSE:=LGPL-2.1-only
+  LICENSE_FILES:=COPYING.LIB
 endef
 
 define Package/libfuse/description
@@ -68,43 +74,33 @@ endef
 CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-static \
+	--enable-lib \
+	--enable-util \
 	--disable-rpath \
 	--disable-example \
 	--disable-mtab
 
-# generic package uses lib & utils
-CONFIGURE_ARGS += --enable-lib --enable-util
-
 define Build/InstallDev
-	@echo "--> Build/InstallDev enter"
-	mkdir -p $(1)/usr/include
-	$(CP)	$(PKG_INSTALL_DIR)/usr/include/{fuse,*.h} $(1)/usr/include/
-	mkdir -p $(1)/usr/lib
-	$(CP)	$(PKG_INSTALL_DIR)/usr/lib/*.{a,so*} $(1)/usr/lib/
-	mkdir -p $(1)/usr/lib/pkgconfig
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP)	$(PKG_INSTALL_DIR)/usr/include/{fuse,fuse.h,ulockmgr.h} $(1)/usr/include/
+	$(INSTALL_DIR)  $(1)/usr/lib
+	$(CP)	$(PKG_INSTALL_DIR)/usr/lib/lib{fuse,ulockmgr}.{a,so*} $(1)/usr/lib/
+	$(INSTALL_DIR)  $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/fuse.pc $(1)/usr/lib/pkgconfig/
 	$(SED) 's,-I$$$${includedir}/fuse,,g' $(1)/usr/lib/pkgconfig/fuse.pc
 	$(SED) 's,-L$$$${libdir},,g' $(1)/usr/lib/pkgconfig/fuse.pc
-	@echo "--> Build/InstallDev leave"
 endef
 
 define Package/fuse-utils/install
-	@echo "--> Package/fuse-utils/install enter"
+	$(INSTALL_DIR) $(1)/sbin
+	$(CP) $(PKG_INSTALL_DIR)/sbin/mount.fuse $(1)/sbin/
 	$(INSTALL_DIR) $(1)/usr/bin
-	# use cp and keep fusermount sticky bit
-	$(FIND) $(PKG_INSTALL_DIR)/usr/bin/ -type f -exec $(CP) -a {} $(1)/usr/bin/ \;
-	@echo "--> Package/fuse-utils/install leave"
+	$(CP) $(PKG_INSTALL_DIR)/usr/bin/{fusermount,ulockmgr_server} $(1)/usr/bin/
 endef
 
 define Package/libfuse/install
-	@echo "--> Package/libfuse/install enter"
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so.* $(1)/usr/lib/
-	@echo "--> Package/libfuse/install leave"
-endef
-
-define Package/kmod-fuse/install
-	@echo "--> Package/kmod-fuse/install enter/leave"
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib{fuse,ulockmgr}.so.* $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,fuse-utils))
