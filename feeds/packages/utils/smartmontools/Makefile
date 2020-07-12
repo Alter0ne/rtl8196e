@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2012 OpenWrt.org
+# Copyright (C) 2006-2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -9,26 +9,32 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/uclibc++.mk
 
 PKG_NAME:=smartmontools
-PKG_VERSION:=6.2
-PKG_RELEASE:=1
+PKG_VERSION:=7.1
+PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/smartmontools
-PKG_MD5SUM:=d44f84081a12cef79cd17f78044351fc
+PKG_HASH:=3f734d2c99deb1e4af62b25d944c6252de70ca64d766c4c7294545a2e659b846
+
 PKG_MAINTAINER:=Maxim Storchak <m.storchak@gmail.com>
+PKG_LICENSE:=GPL-2.0-or-later
+PKG_LICENSE_FILES:=COPYING
+
+PKG_BUILD_PARALLEL:=1
+PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/smartmontools/Default
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=$(CXX_DEPENDS)
   TITLE:=S.M.A.R.T Monitoring
-  URL:=http://smartmontools.sourceforge.net/
+  URL:=https://www.smartmontools.org/
 endef
 
 define Package/smartmontools
   $(call Package/smartmontools/Default)
+  DEPENDS:=$(CXX_DEPENDS)
   TITLE+= Tool
 endef
 
@@ -41,6 +47,7 @@ endef
 
 define Package/smartd
   $(call Package/smartmontools/Default)
+  DEPENDS:=$(CXX_DEPENDS)
   TITLE+= Daemon
 endef
 
@@ -51,39 +58,73 @@ define Package/smartd/description
   ATA and SCSI disks. It is derived from smartsuite.
 endef
 
-# uses GNU configure
+define Package/smartmontools-drivedb
+  $(call Package/smartmontools/Default)
+  TITLE+= Drive database
+  PKGARCH=all
+endef
 
+define Package/smartmontools-drivedb/description
+  Database of known drives and USB bridges for smartctl and smartd.
+endef
+
+define Package/smartd-mail
+  $(call Package/smartmontools/Default)
+  TITLE+= Email notifications
+  PKGARCH=all
+  DEPENDS+= +smartd +nail +msmtp-mta
+endef
+
+define Package/smartd-mail/description
+  A script for mailing about SMART issues
+endef
+
+ifeq ($(CONFIG_USE_UCLIBCXX),y)
+TARGET_LDFLAGS +=-nodefaultlibs
+else
+CONFIGURE_VARS += with_cxx11_regex=yes
+endif
+TARGET_LDFLAGS += -flto
+
+TARGET_CXXFLAGS +=-fno-rtti -flto
+MAKE_FLAGS +=BUILD_INFO='"(localbuild)"'
+
+CONFIGURE_ARGS += \
+	--disable-fast-lebe \
+	--without-gnupg \
+	--without-libcap-ng \
+	--without-cxx11-option \
+	--without-libsystemd
+
+#lower file size vs. CONFIGURE_ARGS
 CONFIGURE_VARS += \
-	CXXFLAGS="$$$$CXXFLAGS -fno-builtin -fno-rtti -nostdinc++" \
-	CPPFLAGS="$$$$CPPFLAGS -I$(STAGING_DIR)/usr/include/uClibc++ -I$(LINUX_DIR)/include" \
-	LDFLAGS="$$$$LDFLAGS" \
-	LIBS="-nodefaultlibs -lc -luClibc++ -lm $(LIBGCC_S) -lc" \
-
-define Build/Configure
-	(cd $(PKG_BUILD_DIR); rm -rf config.{cache,status} ; \
-		./autogen.sh \
-	);
-	$(call Build/Configure/Default)
-endef
-
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		BUILD_INFO='"(localbuild)"' \
-		LD="$(TARGET_CXX)"
-endef
+	with_smartdplugindir=no \
+	with_systemdenvfile=no \
+	with_systemdsystemunitdir=no \
+	with_update_smart_drivedb=no
 
 define Package/smartmontools/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/smartctl $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/smartctl $(1)/usr/sbin/
 endef
 
 define Package/smartd/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/smartd $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/smartd $(1)/usr/sbin/
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_DATA) ./files/smartd.conf $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/smartd.init $(1)/etc/init.d/smartd
+endef
+
+define Package/smartmontools-drivedb/install
+	$(INSTALL_DIR) $(1)/usr/share/smartmontools/
+	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/share/smartmontools/drivedb.h $(1)/usr/share/smartmontools/
+endef
+
+define Package/smartd-mail/install
+	$(INSTALL_DIR) $(1)/etc
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/etc/smartd_warning.sh $(1)/etc
 endef
 
 define Package/smartd/conffiles
@@ -92,3 +133,5 @@ endef
 
 $(eval $(call BuildPackage,smartmontools))
 $(eval $(call BuildPackage,smartd))
+$(eval $(call BuildPackage,smartmontools-drivedb))
+$(eval $(call BuildPackage,smartd-mail))

@@ -4531,7 +4531,7 @@ Peter Wagner <tripolar@gmx.at>
 
 Source-Makefile: feeds/packages/devel/patch/Makefile
 Package: patch
-Version: 2.7.1-1
+Version: 2.7.6-6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -4539,7 +4539,7 @@ Section: devel
 Category: Development
 Title: patch
 Maintainer: Russell Senior <russell@personaltelco.net>
-Source: patch-2.7.1.tar.gz
+Source: patch-2.7.6.tar.gz
 Type: ipkg
 Description:   The Patch package contains a program for modifying or creating files
   by applying a "patch" file typically created by the diff program.
@@ -9931,7 +9931,7 @@ Ted Hess <thess@kitschensync.net>
 
 Source-Makefile: feeds/packages/utils/smartmontools/Makefile
 Package: smartmontools
-Version: 6.2-1
+Version: 7.1-3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +USE_UCLIBCXX:uclibcxx +USE_LIBSTDCXX:libstdcpp
 Menu-Depends: 
 Provides: 
@@ -9939,7 +9939,7 @@ Section: utils
 Category: Utilities
 Title: S.M.A.R.T Monitoring Tool
 Maintainer: Maxim Storchak <m.storchak@gmail.com>
-Source: smartmontools-6.2.tar.gz
+Source: smartmontools-7.1.tar.gz
 Type: ipkg
 Description:   smartmontools contains utility programs (smartctl) to
   control/monitor storage systems using the Self-Monitoring, Analysis

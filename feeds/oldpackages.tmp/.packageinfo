@@ -7029,25 +7029,6 @@ Description:  A micro sized XML library
 @@
 
 
-Source-Makefile: feeds/oldpackages/libs/libvncserver/Makefile
-Package: libvncserver
-Version: 0.9.7-1
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zlib +libjpeg +libpthread +BUILD_NLS:libiconv-full
-Menu-Depends: 
-Provides: 
-Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
-Section: libs
-Category: Libraries
-Title: VNC Server Library
-Maintainer: 
-Source: LibVNCServer-0.9.7.tar.gz
-Type: ipkg
-Description: VNC Server Library
-http://libvncserver.sourceforge.net/
-
-@@
-
-
 Source-Makefile: feeds/oldpackages/libs/glib/Makefile
 Package: glib1
 Version: 1.2.10-1
@@ -24224,28 +24205,6 @@ http://dansguardian.org
 @@
 
 
-Source-Makefile: feeds/oldpackages/net/ettercap/Makefile
-Package: ettercap
-Version: NG-0.7.3-2
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpcap +libnet1 +libopenssl +libpcre +libncurses +libltdl +libpthread +zlib
-Menu-Depends: 
-Provides: 
-Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
-Section: net
-Category: Network
-Title: Ettercap is a suite for man in the middle attacks on LAN.
-Maintainer: 
-Source: ettercap-NG-0.7.3.tar.gz
-Type: ipkg
-Description: 	It features sniffing of live connections, content filtering on the fly
-	and many other interesting tricks.
-	It supports active and passive dissection of many protocols (even
-	ciphered ones) and includes many feature for network and host analysis.
-http://ettercap.sourceforge.net
-
-@@
-
-
 Source-Makefile: feeds/oldpackages/net/openslp/Makefile
 Package: openslp
 Version: 1.2.1-4
@@ -29224,28 +29183,6 @@ http://gstreamer.freedesktop.org/
 @@
 
 
-Source-Makefile: feeds/oldpackages/multimedia/gmediaserver/Makefile
-Package: gmediaserver
-Version: 0.13.0-3
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +id3lib +libmagic +file +libupnp +libuuid +zlib +BUILD_NLS:libiconv-full
-Menu-Depends: 
-Provides: 
-Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
-Section: multimedia
-Category: Multimedia
-Title: An UPnP music media server
-Maintainer: 
-Source: gmediaserver-0.13.0.tar.gz
-Type: ipkg
-Description:  GMediaServer is a server for UPnP media players like the
- Netgear MP101, Linksys WMLS11B etc. It exports one or more
- directories using the UPnP protocol so the mediaserver can
- browse through them and play audio or video files.
-http://www.nongnu.org/gmediaserver/
-
-@@
-
-
 Source-Makefile: feeds/oldpackages/multimedia/puppy/Makefile
 Package: puppy
 Version: 1.14-1
@@ -30167,24 +30104,6 @@ Description:   ices is a command line source client for Icecast media streaming 
   It began as the successor of the old "shout" utility, and has since gained a
   lot of useful features.
 http://xiph.org/
-
-@@
-
-
-Source-Makefile: feeds/oldpackages/sound/streamripper/Makefile
-Package: streamripper
-Version: 1.62.0-3
-Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libmad +libfaad2 +libpthread
-Menu-Depends: 
-Provides: 
-Section: multimedia
-Category: Multimedia
-Title: streamripper
-Maintainer: 
-Source: streamripper-1.62.0.tar.gz
-Type: ipkg
-Description: 	Streamripper is an Open Source application that lets you record streaming mp3 to your hard drive.
-http://streamripper.sourceforge.net/
 
 @@
 
