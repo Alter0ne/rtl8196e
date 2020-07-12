@@ -71,7 +71,7 @@ unsigned int extractStartAddr(char *filename)
     int fh;
     Elf32_Ehdr hdr;
     char *buf;
-    
+
     buf = (char *)&hdr;
     fh = open(filename, O_RDONLY);
 	if ( fh == -1 ) {
@@ -85,7 +85,7 @@ unsigned int extractStartAddr(char *filename)
 		exit(1);
 	}
 	close(fh);
-	
+
 	return(hdr.e_entry);
 }
 
@@ -107,14 +107,14 @@ static int rtk_fix_4k_chk(char *inputFile,char *outFile)
 	IMG_HEADER_Tp pHeader;
 	unsigned short checksum=0;
 	int old_linx_len=0;
-	
+
 	if ( stat(inputFile, &status) < 0 ) {
 		printf("Can't stat file! [%s]\n", inputFile );
 		exit(1);
 	}
-	
-	//decide output size , current , stat+(checksum)	
-	size= status.st_size ;	
+
+	//decide output size , current , stat+(checksum)
+	size= status.st_size ;
 
 	buf = malloc(size);
 	if (buf == NULL) {
@@ -124,7 +124,7 @@ static int rtk_fix_4k_chk(char *inputFile,char *outFile)
 	memset(buf, '\0', size);
 
 	pHeader = (IMG_HEADER_Tp)buf;
-	
+
 	fh = open(inputFile, O_RDONLY);
 	if ( fh == -1 ) {
 		printf("Open input file error!\n");
@@ -150,12 +150,12 @@ static int rtk_fix_4k_chk(char *inputFile,char *outFile)
 	//printf("old_cksum = %8x\n !!",*((unsigned short *)&buf[sizeof(IMG_HEADER_T)+old_linx_len-sizeof(checksum)]));
 	*((unsigned short *)&buf[sizeof(IMG_HEADER_T)+old_linx_len-sizeof(checksum)]) = 0;
 
-	//add new chksum		
+	//add new chksum
 	checksum = WORD_SWAP(calculateChecksum(buf+sizeof(IMG_HEADER_T), (size-sizeof(IMG_HEADER_T)-JFFS2_ENDMARK_LEN)));
 	//*((unsigned short *)&buf[status.st_size]) = checksum;
 	*((unsigned short *)&buf[sizeof(IMG_HEADER_T)+old_linx_len-sizeof(checksum)]) = checksum;
 
-	//write to new file	
+	//write to new file
 	fh = open(outFile, O_RDWR|O_CREAT|O_TRUNC,S_IRWXU); //mark_88
 	if ( fh == -1 ) {
 		printf("Create output file error! [%s]\n", outFile);
@@ -164,13 +164,13 @@ static int rtk_fix_4k_chk(char *inputFile,char *outFile)
 	}
 	write(fh, pHeader, size);
 	close(fh);
-	chmod(outFile, DEFFILEMODE);	
-	
+	chmod(outFile, DEFFILEMODE);
+
 	printf("Generate 4k alignment image(with jffs2 end mark)successfully, length=%d, checksum=0x%x\n", (int)DWORD_SWAP(pHeader->len), checksum);
 
 	free(pHeader);
 
-	return 0;	
+	return 0;
 }
 #endif
 
@@ -192,7 +192,7 @@ int main(int argc, char** argv)
 	int is_vmlinuxhdr = 0;
     int is_signature = 0;
 	unsigned int lchecksum, padding_len=0;
-	unsigned int start_addr=0;		
+	unsigned int start_addr=0;
 
 	if (argc == 4 && !strcmp(argv[1], "size_chk")) {
 		unsigned int total_size;
@@ -286,7 +286,7 @@ int main(int argc, char** argv)
 		    exit(1);
 		}
 	}
-		
+
 	// parse input arguments
 	if ( argc != 6 && !is_vmlinux && !is_vmlinuxhdr && !is_signature) {
 	    printf_usage();
@@ -315,7 +315,7 @@ int main(int argc, char** argv)
 
 	if (is_vmlinuxhdr) {
 		size = status.st_size + sizeof(padding_len) + sizeof(lchecksum) + sizeof(start_addr);
-		padding_len = 4 - (size%4);	
+		padding_len = 4 - (size%4);
 		size += padding_len;
 	}
 	else if (!is_vmlinux) {
@@ -325,7 +325,7 @@ int main(int argc, char** argv)
 	}
 	else {
 		size = status.st_size + sizeof(padding_len) + sizeof(lchecksum);
-		padding_len = 4 - (size%4);	
+		padding_len = 4 - (size%4);
 		size += padding_len;
 	}
 
@@ -364,7 +364,7 @@ int main(int argc, char** argv)
 		*((unsigned int *)pHeader) = DWORD_SWAP(padding_len);
 		*((unsigned int *)((char *)pHeader+4)) = start_addr;
 		lchecksum = DWORD_SWAP(calculate_long_checksum((unsigned int *)buf, size-12));
-		memcpy(&buf[size-12], &lchecksum, 4);		
+		memcpy(&buf[size-12], &lchecksum, 4);
 	}
 	else if (!is_vmlinux) {
 		if( !strcmp("root", argv[1]))
@@ -386,21 +386,21 @@ int main(int argc, char** argv)
 		pHeader->burnAddr = DWORD_SWAP(burnAddr);
 
 		if( !strcmp("root", argv[1])) {
-			#define SIZE_OF_SQFS_SUPER_BLOCK 640		
+			#define SIZE_OF_SQFS_SUPER_BLOCK 640
 			unsigned int fs_len;
 			fs_len = DWORD_SWAP((size-sizeof(IMG_HEADER_T) - sizeof(checksum)- SIZE_OF_SQFS_SUPER_BLOCK));
-			memcpy(buf + 8, &fs_len, 4);	
-		}		
-		
+			memcpy(buf + 8, &fs_len, 4);
+		}
+
 		checksum = WORD_SWAP(calculateChecksum(buf, status.st_size));
 		*((unsigned short *)&buf[size-sizeof(IMG_HEADER_T)-sizeof(checksum)]) = checksum;
 	}
 	else { // is_vmlinux=1
 		*((unsigned int *)pHeader) = DWORD_SWAP(padding_len);
 		lchecksum = DWORD_SWAP(calculate_long_checksum((unsigned int *)buf, size-8));
-		memcpy(&buf[size-8], &lchecksum, 4);		
+		memcpy(&buf[size-8], &lchecksum, 4);
 	}
-	
+
 	// Write image to output file
 	fh = open(outFile, O_RDWR|O_CREAT|O_TRUNC,S_IRWXU); //mark_88
 	if ( fh == -1 ) {
@@ -411,7 +411,7 @@ int main(int argc, char** argv)
 	write(fh, pHeader, size);
 	close(fh);
 	chmod(outFile, DEFFILEMODE);
-	
+
 	if (is_vmlinuxhdr)
 	    printf("Generate image successfully, length=%d, checksum=0x%x, padding=%d, start address=0x%08x\n", size-12-padding_len, lchecksum, padding_len, DWORD_SWAP(start_addr));
 	else if (!is_vmlinux)

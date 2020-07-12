@@ -78,18 +78,18 @@ static TYPE_T checkInputFile(char *filename, int *pWith_header)
 	else if ( !memcmp(signature, WEB_HEADER, 3) )
 		return WEB_PAGES;
 
-	else if ( !memcmp(signature, FW_HEADER, 4) || 
+	else if ( !memcmp(signature, FW_HEADER, 4) ||
 			!memcmp(signature, FW_HEADER_WITH_ROOT, 4))
 		return SYS;
 
 	else if ( !memcmp(signature, ROOT_HEADER, 4) )
 		return ROOT;
-	
+
 	else if ( !memcmp(signature, "h", 1) || !memcmp(signature, "COMPHS", 6))
 		return CONFIG;
 	else if ( !memcmp(signature, "6G", 2) || !memcmp(signature, "6A", 2) || !memcmp(signature, "6g", 2) || !memcmp(signature, "6a", 2) || !memcmp(signature, "COMPDS", 6)) {
 		no_hw_config = 1;
-		return CONFIG;	
+		return CONFIG;
 	}
 	else if ( !memcmp(signature, "\x0b\xf0\x00\x02", 4)) {
 		*pWith_header = 0;
@@ -107,7 +107,7 @@ static void showHelp(void)
 	printf("	-s : do byte swap\n");
 	printf("	-c : cascade. May use this option to merge image for web upload\n");
 	printf("	-a : add all tag in header\n");
-	
+
 }
 
 
@@ -164,7 +164,7 @@ int main(int argc, char** argv)
 	unsigned long burnAddr=0;
 	IMG_HEADER_T allHeader;
 	unsigned short checksum=0;
-		
+
 	memset(&sector, 0, sizeof(sector));
 
 	while (argNum < argc) {
@@ -186,25 +186,25 @@ int main(int argc, char** argv)
 		else if ( !strcmp(argv[argNum], "-a") ) {
 			is_all = 1;
 			memset(&allHeader, '\0', sizeof(IMG_HEADER_T));
-			memcpy(allHeader.signature, ALL_HEADER, SIGNATURE_LEN);			
+			memcpy(allHeader.signature, ALL_HEADER, SIGNATURE_LEN);
 		}
 #if 0
 		else if ( !strcmp(argv[argNum], "-a2") ) {
 			is_all = 1;
 			memset(&allHeader, '\0', sizeof(IMG_HEADER_T));
-			memcpy(allHeader.signature, ALL_HEADER2, SIGNATURE_LEN);			
-		}						
+			memcpy(allHeader.signature, ALL_HEADER2, SIGNATURE_LEN);
+		}
 #endif
 		else {
 			if (is_all) {
 				if ((argNum+1) < argc) {
 					printf("argument error, only input file could be specified!\n");
-					return -1;					
-				}				
+					return -1;
+				}
 #ifdef COMPACT_FILENAME_BUFFER
 				sector[0].filename = argv[argNum];
 #else
-				strcpy(sector[0].filename,argv[argNum]);				
+				strcpy(sector[0].filename,argv[argNum]);
 #endif
 				sector[0].type=ALL;
 				sector[0].with_header=0;
@@ -212,7 +212,7 @@ int main(int argc, char** argv)
 		}
 		else {
 			type=checkInputFile(argv[argNum], &with_header);
-			DEBUG_PRINT("filename=%s, type=%d\n", argv[argNum], type);			
+			DEBUG_PRINT("filename=%s, type=%d\n", argv[argNum], type);
 			if (type == INVALID_FILE) {
 				printf("\nInvalid input file %s!!\n", argv[argNum]);
 				showHelp();
@@ -234,7 +234,7 @@ int main(int argc, char** argv)
 #ifdef COMPACT_FILENAME_BUFFER
 	if( outFile == NULL )
 #else
-	if (!outFile[0]) 
+	if (!outFile[0])
 #endif
 	{
 		printf("No output file specified!\n");
@@ -270,9 +270,9 @@ int main(int argc, char** argv)
 
 	for (i=BOOT_CODE; i<=ROOT ; i++) {
 #ifdef COMPACT_FILENAME_BUFFER
-		if (sector[i].filename) 
+		if (sector[i].filename)
 #else
-		if (sector[i].filename[0]) 
+		if (sector[i].filename[0])
 #endif
 		{
 			if ( stat(sector[i].filename, &sbuf) != 0 ) {
@@ -313,7 +313,7 @@ int main(int argc, char** argv)
 				break;
 			case ALL:
 				printf("ALL ");
-				break;				
+				break;
 			case INVALID_FILE:
 				break;
 			}
@@ -326,8 +326,8 @@ int main(int argc, char** argv)
 				exit(1);
 			}
 
-			if (is_all) 
-				checksum = calculateChecksum((char *)buf, sbuf.st_size, checksum);			
+			if (is_all)
+				checksum = calculateChecksum((char *)buf, sbuf.st_size, checksum);
 			else {
 			if (sector[i].with_header) {
 				if (sector[i].type == CONFIG) {
@@ -341,8 +341,8 @@ int main(int argc, char** argv)
 					burnAddr = DWORD_SWAP(pHeader->burnAddr);
 				}
 			}
-			else 
-				burnAddr = 0;			
+			else
+				burnAddr = 0;
 
 			if (byteswap) {
 				if (sbuf.st_size % 2) {
@@ -351,7 +351,7 @@ int main(int argc, char** argv)
 				}
 				do_byteswap(buf, sbuf.st_size);
 			}
-			
+
 			// try to append 0 if necessary
 			if (!cascade && last_idx!=-1 && sector[i].with_header) {
 				if ((sector[last_idx].offset+sector[last_idx].size) < burnAddr) {
@@ -362,12 +362,12 @@ int main(int argc, char** argv)
 						exit(1);
 					}
 					write(fh_out, buf1, len);	// pad 0
-					
+
 					free(buf1);
 					total += len;
-//				printf("pad size=%d, last_idx=%d, burnAddr=%d\n", len, last_idx, burnAddr);			
-				}				
-			}			
+//				printf("pad size=%d, last_idx=%d, burnAddr=%d\n", len, last_idx, burnAddr);
+				}
+			}
 
 			// skip header if necessary
 			if (!cascade && sector[i].with_header &&
@@ -377,7 +377,7 @@ int main(int argc, char** argv)
 			}
 			else
 				offset = 0;
-			}			
+			}
 
 //		printf("write offset=%d, size=%d\n", offset, 	sbuf.st_size);
 			if ( write(fh_out, buf + offset , sbuf.st_size-offset) != sbuf.st_size-offset) {
@@ -395,24 +395,24 @@ int main(int argc, char** argv)
 			sector[i].size = sbuf.st_size-offset;
 
 //	printf("section[%d], offset=%d, size=%d\n", i, sector[i].offset, sector[i].size);
-			
+
 			total += sbuf.st_size;
 			free(buf);
 			last_idx = i;
 			if (is_all)
-				break;			
+				break;
 		}
 	}
 
 	if (is_all) {
 		allHeader.len = DWORD_SWAP((total+2));
-		checksum = calculateChecksum((char *)&allHeader, sizeof(allHeader), checksum);		
+		checksum = calculateChecksum((char *)&allHeader, sizeof(allHeader), checksum);
 		checksum = WORD_SWAP((~checksum+1));
 		write(fh_out, &checksum, 2);
 		lseek(fh_out, 0, SEEK_SET);
 		allHeader.len = DWORD_SWAP((total+2));
 //		allHeader.startAddr = DWORD_SWAP(image_num);
-		write(fh_out, &allHeader, sizeof(allHeader));		
+		write(fh_out, &allHeader, sizeof(allHeader));
 		total += (2 + sizeof(allHeader));
 	}
 	close(fh_out);
@@ -426,4 +426,3 @@ int main(int argc, char** argv)
 	printf("=> %s ok, size=%d.\n", outFile, total);
 	exit(0);
 }
-
