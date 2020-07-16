@@ -1,105 +1,72 @@
-#
-# Copyright (C) 2006-2012 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=miredo
-PKG_VERSION:=1.2.4
-PKG_RELEASE:=3
+PKG_VERSION:=1.2.6
+PKG_RELEASE:=1
 
-PKG_SOURCE_URL:=http://www.remlab.net/files/miredo
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_MD5SUM:=1281e7e75bddbde244cd778d99fa22d4
+PKG_SOURCE:=miredo-$(PKG_VERSION).tar.xz
+PKG_SOURCE_URL:=https://www.remlab.net/files/miredo/
+PKG_HASH:=fa26d2f4a405415833669e2e2e22677b225d8f83600844645d5683535ea43149
 
-PKG_FIXUP:=autoreconf
+PKG_CONFIG_DEPENDS:= \
+	CONFIG_IPV6 \
+	CONFIG_TUN
+PKG_BUILD_PARALLEL:=1
+PKG_CHECK_FORMAT_SECURITY:=0
 PKG_INSTALL:=1
 
-include $(INCLUDE_DIR)/uclibc++.mk
+PKG_MAINTAINER:=
+PKG_LICENSE:=GPL-2.0-or-later
+PKG_LICENSE_FILES:=COPYING
+
 include $(INCLUDE_DIR)/package.mk
 
-define Package/miredo/Default
-  SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=miredo: Teredo (IPv6 tunneling over UDP through NAT)
-  URL:=http://www.remlab.net/miredo/
+define Package/miredo
+	SECTION:=net
+	CATEGORY:=Network
+	TITLE:=Teredo IPv6 tunneling utility
+	URL:=https://www.remlab.net/miredo/
+	DEPENDS:=@IPV6 +libpthread +librt +kmod-tun
 endef
 
-define Package/miredo-common
-$(call Package/miredo/Default)
-  TITLE:=Teredo (IPv6 tunneling over UDP through NAT) shared libraries
-  DEPENDS+= +ip +libpthread +librt $(CXX_DEPENDS) +kmod-ipv6 +kmod-tun
+define Package/miredo/description
+ Miredo is an open-source Teredo IPv6 tunneling software, for Linux and the BSD
+ operating systems. It includes functional implementations of all components of
+ the Teredo specification (client, relay and server). It is meant to provide
+ IPv6 connectivity even from behind NAT devices.
 endef
 
-define Package/miredo-server
-$(call Package/miredo/Default)
-  TITLE:=Teredo (IPv6 tunneling over UDP through NAT) server daemon
-  DEPENDS+= +miredo-common
-endef
-
-define Package/miredo-server/conffiles
-/etc/miredo/miredo-server.conf
-endef
-
-define Package/miredo-client
-$(call Package/miredo/Default)
-  TITLE:=Teredo (IPv6 tunneling over UDP through NAT) client and relay daemon
-  DEPENDS+= +miredo-common
-endef
-
-define Package/miredo-client/conffiles
-/etc/miredo/miredo.conf
-endef
-
-CONFIGURE_ARGS += \
+CONFIGURE_ARGS+= \
 	--enable-shared \
 	--enable-static \
-	--with-gnu-ld \
-	--disable-rpath \
-	--disable-chroot \
-	--enable-teredo-client \
-	--enable-miredo-user=root \
-	--without-Judy
-
-EXTRA_CXXFLAGS=-fno-rtti
+	--disable-binreloc \
+	--with-pic \
+	--without-libiconv-prefix \
+	--without-libintl-prefix
 
 CONFIGURE_VARS += \
-	LIBS="-lm" \
-	ac_cv_file__proc_self_maps=yes \
 	ac_cv_header_sys_capability_h=no
 
-MAKE_FLAGS := CXXLINK="$(TARGET_CXX)"
+TARGET_CFLAGS+= \
+	$(FPIC) \
+	-ffunction-sections \
+	-fdata-sections
 
-define Package/miredo-common/install
+TARGET_LDFLAGS += -Wl,--gc-sections
+
+define Package/miredo/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/lib{teredo,tun6}.so.* $(1)/usr/lib/
-	$(INSTALL_DIR) $(1)/usr/lib/miredo
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/miredo/miredo-privproc $(1)/usr/lib/miredo
-endef
-
-define Package/miredo-server/install
-	$(INSTALL_DIR) $(1)/etc/miredo
-	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/miredo/examples/miredo-server.conf $(1)/etc/miredo/miredo-server.conf
-	$(INSTALL_BIN) ./files/client-hook $(1)/etc/miredo/
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/miredo-server.init $(1)/etc/init.d/miredo-server
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/miredo-server $(1)/usr/sbin/
-endef
-
-define Package/miredo-client/install
-	$(INSTALL_DIR) $(1)/etc/miredo
-	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/miredo/examples/miredo.conf $(1)/etc/miredo/miredo.conf
-	$(INSTALL_BIN) ./files/client-hook $(1)/etc/miredo/
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/miredo.init $(1)/etc/init.d/miredo
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/miredo $(1)/usr/sbin/
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/sbin/miredo-checkconf $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/usr/lib/miredo
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/miredo/miredo-privproc $(1)/usr/lib/miredo
+	$(INSTALL_DIR) $(1)/etc/miredo
+	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/etc/miredo/miredo.conf $(1)/etc/miredo
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/etc/miredo/client-hook $(1)/etc/miredo
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) ./files/miredo.init $(1)/etc/init.d/miredo
 endef
 
-$(eval $(call BuildPackage,miredo-common))
-$(eval $(call BuildPackage,miredo-server))
-$(eval $(call BuildPackage,miredo-client))
+$(eval $(call BuildPackage,miredo))

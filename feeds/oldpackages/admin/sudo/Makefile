@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2011 OpenWrt.org
+# Copyright (C) 2006-2017 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,14 +8,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sudo
-PKG_VERSION:=1.7.10p8
+PKG_VERSION:=1.8.31
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://www.sudo.ws/sudo/dist
-PKG_MD5SUM:=4620e31c28b387dd9582dfd42e930cfb
+PKG_SOURCE_URL:=https://www.sudo.ws/dist
+PKG_HASH:=7ea8d97a3cee4c844e0887ea7a1bd80eb54cc98fd77966776cb1a80653ad454f
 
+PKG_MAINTAINER:=
+PKG_LICENSE:=ISC
+PKG_LICENSE_FILES:=doc/LICENSE
+PKG_CPE_ID:=cpe:/a:todd_miller:sudo
+
+PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
+
+PKG_BUILD_DEPENDS:=sudo/host
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -23,7 +31,7 @@ define Package/sudo
   SECTION:=admin
   CATEGORY:=Administration
   TITLE:=Delegate authority to run commands
-  URL:=http://www.sudo.ws/
+  URL:=https://www.sudo.ws/
 endef
 
 define Package/sudo/description
@@ -35,6 +43,7 @@ endef
 
 define Package/sudo/conffiles
 /etc/sudoers
+/etc/sudoers.d/
 endef
 
 CONFIGURE_ARGS+= \
@@ -42,11 +51,27 @@ CONFIGURE_ARGS+= \
 	--disable-pam-session \
 	--with-editor=/bin/vi \
 	--without-lecture \
-	--disable-zlib
+	--disable-zlib \
+	--with-rundir=/var/lib/sudo \
+	--with-vardir=/var/lib/sudo
 
 CONFIGURE_VARS+= \
 	sudo_cv_uid_t_len=10 \
 	sudo_cv_func_unsetenv_void=no
+
+include $(INCLUDE_DIR)/host-build.mk
+
+define Host/Compile
+	cd $(HOST_BUILD_DIR)/lib/util; \
+	    $(MAKE) mksiglist; $(MAKE) mksigname
+endef
+
+define Host/Install
+	$(INSTALL_DIR) $(STAGING_DIR_HOSTPKG)/bin
+	$(CP) $(HOST_BUILD_DIR)/lib/util/mksig{list,name} $(STAGING_DIR_HOSTPKG)/bin/
+endef
+
+$(eval $(call HostBuild))
 
 define Package/sudo/install
 	$(INSTALL_DIR) $(1)/usr/bin
@@ -58,8 +83,8 @@ define Package/sudo/install
 	$(CP) $(PKG_INSTALL_DIR)/etc/sudoers $(1)/etc/
 	chmod 0440 $(1)/etc/sudoers
 	$(INSTALL_DIR) $(1)/etc/sudoers.d
-	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/sudo_noexec.so $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/sudo
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/sudo/*.so* $(1)/usr/lib/sudo/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/sudo.init $(1)/etc/init.d/sudo
 endef

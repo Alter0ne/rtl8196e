@@ -1,15 +1,17 @@
 #!/bin/sh /etc/rc.common
-# Copyright (C) 2006-2011 OpenWrt.org
 
-START=50
+USE_PROCD=1
+START=41
 
-# XXX: miredo create a pid file but using it doesn't seem to work
-#SERVICE_USE_PID=1
+PROG=/usr/sbin/miredo
+CONFFILE=/etc/miredo/miredo.conf
 
-start() {
-	service_start /usr/sbin/miredo
-}
-
-stop() {
-	service_stop /usr/sbin/miredo
+start_service() {
+  procd_open_instance
+  procd_set_param command $PROG -f -c $CONFFILE
+  procd_set_param respawn
+  procd_set_param file $CONFFILE
+  procd_set_param stdout 1 # forward stdout of the command to logd
+  procd_set_param stderr 1 # same for stderr
+  procd_close_instance
 }

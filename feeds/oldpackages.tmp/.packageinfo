@@ -2444,7 +2444,7 @@ http://chardet.feedparser.org/
 Source-Makefile: feeds/oldpackages/lang/erlang/Makefile
 Package: erlang
 Submenu: Erlang
-Version: R16B02-1
+Version: 23.0-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libncurses +librt +zlib
 Menu-Depends: 
 Provides: erlang-erts=5.10.3 erlang-kernel=2.16.3 erlang-sasl=2.3.3 erlang-stdlib=1.19.3
@@ -2454,7 +2454,7 @@ Section: lang
 Category: Languages
 Title: Erlang/OTP programming language
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2468,7 +2468,7 @@ http://www.erlang.org/
 
 Package: erlang-asn1
 Submenu: Erlang
-Version: 2.0.3
+Version: 5.0.6
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +erlang-syntax-tools
 Menu-Depends: 
 Provides: 
@@ -2478,7 +2478,7 @@ Section: lang
 Category: Languages
 Title: Abstract Syntax Notation One (ASN.1) support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2492,7 +2492,7 @@ http://www.erlang.org/
 
 Package: erlang-compiler
 Submenu: Erlang
-Version: 4.9.3
+Version: 7.2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +erlang-hipe
 Menu-Depends: 
 Provides: 
@@ -2502,7 +2502,7 @@ Section: lang
 Category: Languages
 Title: Byte code compiler
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2516,7 +2516,7 @@ http://www.erlang.org/
 
 Package: erlang-crypto
 Submenu: Erlang
-Version: 3.1
+Version: 4.3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +libopenssl
 Menu-Depends: 
 Provides: 
@@ -2526,7 +2526,7 @@ Section: lang
 Category: Languages
 Title: Cryptography support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2540,7 +2540,7 @@ http://www.erlang.org/
 
 Package: erlang-hipe
 Submenu: Erlang
-Version: 3.10.2.1
+Version: 3.18
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang
 Menu-Depends: 
 Provides: 
@@ -2550,7 +2550,7 @@ Section: lang
 Category: Languages
 Title: High Performance Erlang
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2564,7 +2564,7 @@ http://www.erlang.org/
 
 Package: erlang-inets
 Submenu: Erlang
-Version: 5.9.6
+Version: 7.0
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang
 Menu-Depends: 
 Provides: 
@@ -2574,7 +2574,7 @@ Section: lang
 Category: Languages
 Title: Internet clients and servers
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2589,7 +2589,7 @@ http://www.erlang.org/
 
 Package: erlang-mnesia
 Submenu: Erlang
-Version: 4.10
+Version: 4.15.4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang
 Menu-Depends: 
 Provides: 
@@ -2599,7 +2599,7 @@ Section: lang
 Category: Languages
 Title: Distributed database
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2615,7 +2615,7 @@ http://www.erlang.org/
 
 Package: erlang-runtime-tools
 Submenu: Erlang
-Version: 1.8.12
+Version: 1.13
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang
 Menu-Depends: 
 Provides: 
@@ -2625,7 +2625,7 @@ Section: lang
 Category: Languages
 Title: Low-profile debugging/tracing tools
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2639,7 +2639,7 @@ http://www.erlang.org/
 
 Package: erlang-snmp
 Submenu: Erlang
-Version: 4.24.2
+Version: 5.2.11
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +erlang-asn1
 Menu-Depends: 
 Provides: 
@@ -2649,7 +2649,7 @@ Section: lang
 Category: Languages
 Title: Simple Network Management Protocol (SNMP) support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2664,7 +2664,7 @@ http://www.erlang.org/
 
 Package: erlang-ssh
 Submenu: Erlang
-Version: 2.1.8
+Version: 4.7
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +erlang-crypto
 Menu-Depends: 
 Provides: 
@@ -2674,7 +2674,7 @@ Section: lang
 Category: Languages
 Title: Secure Shell (SSH) support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2688,7 +2688,7 @@ http://www.erlang.org/
 
 Package: erlang-ssl
 Submenu: Erlang
-Version: 5.3.1
+Version: 9.0
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang +erlang-crypto
 Menu-Depends: 
 Provides: 
@@ -2698,7 +2698,7 @@ Section: lang
 Category: Languages
 Title: Secure Sockets Layer (SSL) support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2712,7 +2712,7 @@ http://www.erlang.org/
 
 Package: erlang-syntax-tools
 Submenu: Erlang
-Version: 1.6.11
+Version: 2.1.5
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +erlang
 Menu-Depends: 
 Provides: 
@@ -2722,7 +2722,7 @@ Section: lang
 Category: Languages
 Title: Abstract Erlang syntax trees handling support
 Maintainer: 
-Source: otp_src_R16B02.tar.gz
+Source: otp_src_23.0.tar.gz
 Type: ipkg
 Description:  Erlang/OTP is a general-purpose programming language and runtime
  environment. Erlang has built-in support for concurrency, distribution
@@ -2784,7 +2784,7 @@ http://pear.php.net/package/DB
 
 Source-Makefile: feeds/oldpackages/lang/vala/Makefile
 Package: vala
-Version: 0.16.0-1
+Version: 0.48.6-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -2795,7 +2795,7 @@ Section: lang
 Category: Languages
 Title: C-sharp like language for the GObject system
 Maintainer: 
-Source: vala-0.16.0.tar.xz
+Source: vala-0.48.6.tar.xz
 Type: ipkg
 Description: Vala is a C-sharp like language for the GObject system. This package contains
 the Vala-to-C compiler.
@@ -2890,7 +2890,7 @@ http://yapsnmp.sourceforge.net/
 Source-Makefile: feeds/oldpackages/lang/ruby/Makefile
 Package: ruby
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libruby
 Menu-Depends: 
 Provides: 
@@ -2900,7 +2900,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (interpreter)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description:  Ruby is the interpreted scripting language for quick and  easy
  object-oriented programming.  It has many features to process text files
@@ -2911,7 +2911,7 @@ http://www.ruby-lang.org/
 @@
 
 Package: libruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libpthread +librt
 Menu-Depends: 
 Provides: 
@@ -2921,7 +2921,7 @@ Section: libs
 Category: Libraries
 Title: Ruby scripting language (shared library)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (shared library)
 http://www.ruby-lang.org/
@@ -2930,7 +2930,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-core
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +libdb47 +libffi
 Menu-Depends: 
 Provides: 
@@ -2940,7 +2940,7 @@ Section: lang
 Category: Languages
 Title: Ruby standard libraries
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby standard libraries
 http://www.ruby-lang.org/
@@ -2949,7 +2949,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-cgi
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -2959,7 +2959,7 @@ Section: lang
 Category: Languages
 Title: Ruby CGI support toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby CGI support toolkit
 http://www.ruby-lang.org/
@@ -2968,7 +2968,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-dl
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -2978,7 +2978,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (dynamic linker support) (adds 5MB+)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (dynamic linker support) (adds 5MB+)
 http://www.ruby-lang.org/
@@ -2987,7 +2987,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-enc
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -2997,7 +2997,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (character re-coding library) (adds 2MB+)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (character re-coding library) (adds 2MB+)
 http://www.ruby-lang.org/
@@ -3006,7 +3006,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-erb
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3016,7 +3016,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (embedded interpreter)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (embedded interpreter)
 http://www.ruby-lang.org/
@@ -3025,7 +3025,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-gdbm
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +libgdbm
 Menu-Depends: 
 Provides: 
@@ -3035,7 +3035,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for gdbm
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby support for gdbm
 http://www.ruby-lang.org/
@@ -3044,7 +3044,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-gems
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +ruby-yaml +ruby-zlib +ruby-openssl +ruby-webrick +ruby-erb
 Menu-Depends: 
 Provides: 
@@ -3054,7 +3054,7 @@ Section: lang
 Category: Languages
 Title: Ruby gems packet management
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby gems packet management
 http://www.ruby-lang.org/
@@ -3063,7 +3063,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-json
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3073,7 +3073,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for JSON
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby support for JSON
 http://www.ruby-lang.org/
@@ -3082,7 +3082,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-irb
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +ruby-core
 Menu-Depends: 
 Provides: 
@@ -3092,7 +3092,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (interactive shell)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (interactive shell)
 http://www.ruby-lang.org/
@@ -3101,7 +3101,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-ncurses
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +libncurses +libncursesw
 Menu-Depends: 
 Provides: 
@@ -3111,7 +3111,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for ncurses
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby support for ncurses
 http://www.ruby-lang.org/
@@ -3120,7 +3120,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-nkf
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3130,7 +3130,7 @@ Section: lang
 Category: Languages
 Title: Ruby Network Kanji Filter
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby Network Kanji Filter
 http://www.ruby-lang.org/
@@ -3139,7 +3139,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-openssl
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +libopenssl
 Menu-Depends: 
 Provides: 
@@ -3149,7 +3149,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for openssl
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby support for openssl
 http://www.ruby-lang.org/
@@ -3158,7 +3158,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-rake
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3168,7 +3168,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language Ruby Rake (make replacement)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language Ruby Rake (make replacement)
 http://www.ruby-lang.org/
@@ -3177,7 +3177,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-rdoc
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3187,7 +3187,7 @@ Section: lang
 Category: Languages
 Title: Ruby scripting language (documentation generator)
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby scripting language (documentation generator)
 http://www.ruby-lang.org/
@@ -3196,7 +3196,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-readline
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +libncurses +libreadline
 Menu-Depends: 
 Provides: 
@@ -3206,7 +3206,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for readline
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.bxz
 Type: ipkg
 Description: Ruby support for readline
 http://www.ruby-lang.org/
@@ -3215,7 +3215,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-rexml
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3225,7 +3225,7 @@ Section: lang
 Category: Languages
 Title: Ruby XML toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby XML toolkit
 http://www.ruby-lang.org/
@@ -3234,7 +3234,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-rss
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3244,7 +3244,7 @@ Section: lang
 Category: Languages
 Title: Ruby RSS toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby RSS toolkit
 http://www.ruby-lang.org/
@@ -3253,7 +3253,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-unit
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3263,7 +3263,7 @@ Section: lang
 Category: Languages
 Title: Ruby unit testing toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby unit testing toolkit
 http://www.ruby-lang.org/
@@ -3272,7 +3272,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-webrick
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3282,7 +3282,7 @@ Section: lang
 Category: Languages
 Title: Ruby Web server toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby Web server toolkit
 http://www.ruby-lang.org/
@@ -3291,7 +3291,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-xmlrpc
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3301,7 +3301,7 @@ Section: lang
 Category: Languages
 Title: Ruby XML-RPC toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby XML-RPC toolkit
 http://www.ruby-lang.org/
@@ -3310,7 +3310,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-yaml
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby
 Menu-Depends: 
 Provides: 
@@ -3320,7 +3320,7 @@ Section: lang
 Category: Languages
 Title: Ruby YAML toolkit
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby YAML toolkit
 http://www.ruby-lang.org/
@@ -3329,7 +3329,7 @@ http://www.ruby-lang.org/
 
 Package: ruby-zlib
 Submenu: Ruby
-Version: 1.9.3-p545-1
+Version: 2.7.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread ruby +zlib
 Menu-Depends: 
 Provides: 
@@ -3339,7 +3339,7 @@ Section: lang
 Category: Languages
 Title: Ruby support for zlib
 Maintainer: 
-Source: ruby-1.9.3-p545.tar.bz2
+Source: ruby-2.7.1.tar.xz
 Type: ipkg
 Description: Ruby support for zlib
 http://www.ruby-lang.org/
@@ -8027,7 +8027,7 @@ http://www.procmail.org
 
 Source-Makefile: feeds/oldpackages/devel/diffutils/Makefile
 Package: diffutils
-Version: 3.0-3
+Version: 3.7-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -8035,7 +8035,7 @@ Section: devel
 Category: Development
 Title: diffutils
 Maintainer: 
-Source: diffutils-3.0.tar.gz
+Source: diffutils-3.7.tar.xz
 Type: ipkg
 Description:   The Diffutils package contains programs that show the differences between
   files or directories.
@@ -8209,7 +8209,7 @@ http://www.dmalloc.com/
 
 Source-Makefile: feeds/oldpackages/devel/make/Makefile
 Package: make
-Version: 3.81-1
+Version: 4.3-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libelf1
 Menu-Depends: 
 Provides: 
@@ -8217,7 +8217,7 @@ Section: devel
 Category: Development
 Title: make
 Maintainer: 
-Source: make-3.81.tar.bz2
+Source: make-4.3.tar.gz
 Type: ipkg
 Description: 	The Make package contains a program for compiling packages
 http://www.gnu.org/software/make/
@@ -30778,7 +30778,7 @@ http://www.nagios.org/
 
 Source-Makefile: feeds/oldpackages/admin/sudo/Makefile
 Package: sudo
-Version: 1.7.10p8-1
+Version: 1.8.31-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -30786,7 +30786,7 @@ Section: admin
 Category: Administration
 Title: Delegate authority to run commands
 Maintainer: 
-Source: sudo-1.7.10p8.tar.gz
+Source: sudo-1.8.31.tar.gz
 Type: ipkg
 Description:  Sudo (su "do") allows a system administrator to delegate authority to
  give certain users (or groups of users) the ability to run some (or
