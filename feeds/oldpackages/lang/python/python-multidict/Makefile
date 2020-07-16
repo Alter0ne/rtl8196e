@@ -9,16 +9,16 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=multidict
 PKG_VERSION:=4.5.2
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=multidict-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/m/multidict/
+PYPI_NAME:=$(PKG_NAME)
 PKG_HASH:=024b8129695a952ebd93373e45b5d341dbb87c17ce49637b34000093f243dd4f
 
 PKG_MAINTAINER:=Josef Schlehofer <pepe.schlehofer@gmail.com>
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -31,7 +31,6 @@ define Package/python3-multidict
   DEPENDS:= \
       +python3-light \
       +python3-attrs
-  VARIANT:=python3
 endef
 
 define Package/python3-multidict/description

@@ -5,17 +5,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=Werkzeug
-PKG_VERSION:=0.16.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/W/Werkzeug
-PKG_HASH:=7280924747b5733b246fe23972186c6b348f9ae29724135a6dfc1e53cea433e7
+PYPI_NAME:=$(PKG_NAME)
+PKG_HASH:=6c80b1e5ad3665290ea39320b91e1be1e0d5f60652b964a3070216de83d2e47c
 
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE.rst
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -26,7 +26,6 @@ define Package/python3-werkzeug
   TITLE:=Werkzeug
   URL:=https://palletsprojects.com/p/werkzeug/
   DEPENDS:=+python3-light +python3-email
-  VARIANT:=python3
 endef
 
 define Package/python3-werkzeug/description

@@ -9,16 +9,17 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=aiohttp-cors
 PKG_VERSION:=0.7.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=aiohttp-cors-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://files.pythonhosted.org/packages/source/a/aiohttp_cors/
+PYPI_NAME:=aiohttp_cors
+PYPI_SOURCE_NAME:=aiohttp-cors
 PKG_HASH:=4d39c6d7100fd9764ed1caf8cebf0eb01bf5e3f24e2e073fda6234bc48b19f5d
 
 PKG_MAINTAINER:=Josef Schlehofer <pepe.schlehofer@gmail.com>
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
+include ../pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include ../python3-package.mk
 
@@ -31,7 +32,6 @@ define Package/python3-aiohttp-cors
   DEPENDS:= \
 	+python3-aiohttp \
 	+python3-light
-  VARIANT:=python3
 endef
 
 define Package/python3-aiohttp-cors/description
