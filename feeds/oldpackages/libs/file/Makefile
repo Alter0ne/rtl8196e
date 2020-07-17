@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2007-2012 OpenWrt.org
+# Copyright (C) 2007-2014 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,30 +8,31 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=file
-PKG_VERSION:=5.11
+PKG_VERSION:=5.39
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=ftp://ftp.astron.com/pub/file/
-PKG_MD5SUM:=16a407bd66d6c7a832f3a5c0d609c27b
+PKG_SOURCE_URL:=http://download.openpkg.org/components/cache/file/ \
+	ftp://ftp.astron.com/pub/file/
+PKG_HASH:=f05d286a76d9556243d0cb05814929c2ecf3a5ba07963f8f70bfaaa70517fad1
 
-PKG_LICENSE:=BSD-2c
+PKG_MAINTAINER:=Marko Ratkaj <marko.ratkaj@sartura.hr>
+PKG_LICENSE:=BSD-2-Clause
 PKG_LICENSE_FILES:=COPYING
 
-PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
+TARGET_CFLAGS+=--std=gnu99
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/file/Default
   TITLE:=File type determination
-  URL:=ftp://ftp.astron.com/pub/file/
-  MAINTAINER:=Luka Perkov <openwrt@lukaperkov.net>
+  URL:=https://darwinsys.com/file/
 endef
 
 define Package/file
-$(call package/file/Default)
+$(call Package/file/Default)
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE+= utility
@@ -39,20 +40,28 @@ $(call package/file/Default)
 endef
 
 define Package/libmagic
-$(call package/file/Default)
+$(call Package/file/Default)
   SECTION:=libs
   CATEGORY:=Libraries
   TITLE+= library
-  DEPENDS:=+zlib
+  DEPENDS:=+zlib +liblzma +libbz2
 endef
+
+TARGET_CFLAGS += $(FPIC)
+TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed
 
 CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-static \
+	--enable-bzlib \
+	--enable-xzlib \
+	--enable-zlib \
+	--disable-libseccomp \
+	--disable-rpath \
+	--disable-warnings \
+	--without-pic
 
 MAKE_PATH := src
-
-TARGET_CFLAGS += $(FPIC)
 
 define Build/Compile/magic
 	( cd $(PKG_BUILD_DIR)/magic/Magdir; \
@@ -87,7 +96,7 @@ endef
 
 define Package/libmagic/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/libmagic.so.* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libmagic.so.* $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,file))
