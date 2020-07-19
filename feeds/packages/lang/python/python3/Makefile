@@ -288,7 +288,7 @@ define Py3Package/python3/filespec
 endef
 
 HOST_LDFLAGS += \
-	-Wl$(comma)-rpath$(comma)$(STAGING_DIR_HOSTPKG)/lib
+	-Wl$(comma)-rpath$(comma)$(STAGING_DIR_HOST)/lib
 
 ifeq ($(HOST_OS),Linux)
 HOST_LDFLAGS += \
@@ -303,7 +303,7 @@ endif
 HOST_CONFIGURE_ARGS+= \
 	--enable-optimizations \
 	--with-ensurepip=upgrade \
-	--with-system-expat=$(STAGING_DIR_HOSTPKG) \
+	--with-system-expat=$(STAGING_DIR_HOST) \
 	--without-cxx-main \
 	--without-pymalloc \
 	CONFIG_SITE=

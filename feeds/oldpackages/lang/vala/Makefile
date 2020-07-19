@@ -46,7 +46,7 @@ HOST_CONFIGURE_ARGS += \
 	--without-cgraph
 
 HOST_LDFLAGS += \
-	-Wl,--rpath-link=$(STAGING_DIR_HOSTPKG)/lib
+	-Wl,--rpath-link=$(STAGING_DIR_HOST)/lib
 
 $(eval $(call HostBuild))
 $(eval $(call BuildPackage,vala))

@@ -12,7 +12,7 @@
 python3_mk_path:=$(dir $(lastword $(MAKEFILE_LIST)))
 include $(python3_mk_path)python3-version.mk
 
-HOST_PYTHON3_DIR:=$(STAGING_DIR_HOSTPKG)
+HOST_PYTHON3_DIR:=$(STAGING_DIR_HOST)
 HOST_PYTHON3_INC_DIR:=$(HOST_PYTHON3_DIR)/include/python$(PYTHON3_VERSION)
 HOST_PYTHON3_LIB_DIR:=$(HOST_PYTHON3_DIR)/lib/python$(PYTHON3_VERSION)
 
@@ -31,7 +31,7 @@ HOST_PYTHON3_VARS = \
 	LDSHARED="$(HOSTCC) -shared" \
 	CFLAGS="$(HOST_CFLAGS)" \
 	CPPFLAGS="$(HOST_CPPFLAGS) -I$(HOST_PYTHON3_INC_DIR)" \
-	LDFLAGS="$(HOST_LDFLAGS) -lpython$(PYTHON3_VERSION) -Wl$(comma)-rpath=$(STAGING_DIR_HOSTPKG)/lib" \
+	LDFLAGS="$(HOST_LDFLAGS) -lpython$(PYTHON3_VERSION) -Wl$(comma)-rpath=$(STAGING_DIR_HOST)/lib" \
 	PYTHONPATH="$(HOST_PYTHON3PATH)" \
 	PYTHONDONTWRITEBYTECODE=0 \
 	PYTHONOPTIMIZE=""
@@ -47,7 +47,7 @@ define HostPython3/Run
 endef
 
 # Note: I shamelessly copied this from Yousong's logic (from python-packages);
-HOST_PYTHON3_PIP:=$(STAGING_DIR_HOSTPKG)/bin/pip$(PYTHON3_VERSION)
+HOST_PYTHON3_PIP:=$(STAGING_DIR_HOST)/bin/pip$(PYTHON3_VERSION)
 
 # $(1) => packages to install
 define HostPython3/PipInstall

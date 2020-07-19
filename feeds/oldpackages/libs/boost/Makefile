@@ -361,7 +361,7 @@ define Host/Compile
 	( cd $(HOST_BUILD_DIR)/tools/build/src/engine ; ./build.sh gcc )
 
 	( cd $(HOST_BUILD_DIR) ; \
-		./bootstrap.sh --prefix=$(STAGING_DIR_HOSTPKG) \
+		./bootstrap.sh --prefix=$(STAGING_DIR_HOST) \
 			--with-libraries=context,filesystem,program_options,regex,system ;\
 		./b2 --ignore-site-config install )
 endef
@@ -476,8 +476,8 @@ define Build/InstallDev
 endef
 
 define Host/Install
-	$(INSTALL_DIR) $(STAGING_DIR_HOSTPKG)/bin
-	$(CP) $(HOST_BUILD_DIR)/tools/build/src/engine/b2 $(STAGING_DIR_HOSTPKG)/bin/
+	$(INSTALL_DIR) $(STAGING_DIR_HOST)/bin
+	$(CP) $(HOST_BUILD_DIR)/tools/build/src/engine/b2 $(STAGING_DIR_HOST)/bin/
 endef
 
 define Package/boost/Default/install
