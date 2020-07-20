@@ -3142,7 +3142,7 @@ Peter Wagner <tripolar@gmx.at>
 
 Source-Makefile: feeds/packages/libs/libffi/Makefile
 Package: libffi
-Version: 3.0.13-1
+Version: 3.3-2
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -3151,7 +3151,7 @@ Section: libs
 Category: Libraries
 Title: Foreign Function Interface (FFI) library
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: libffi-3.0.13.tar.gz
+Source: libffi-3.3.tar.gz
 Type: ipkg
 Description: The libffi library provides a portable, high level programming interface to
 various calling conventions. This allows a programmer to call any function
@@ -3991,7 +3991,7 @@ Jo-Philipp Wich <jow@openwrt.org>
 
 Source-Makefile: feeds/packages/libs/glib2/Makefile
 Package: glib2
-Version: 2.41.1-2
+Version: 2.58.3-5
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +zlib +libpthread +libffi +libattr
 Menu-Depends: 
 Provides: 
@@ -4002,7 +4002,7 @@ Section: libs
 Category: Libraries
 Title: glib 2.0
 Maintainer: Peter Wagner <tripolar@gmx.at>
-Source: glib-2.41.1.tar.xz
+Source: glib-2.58.3.tar.xz
 Type: ipkg
 Description:   The GLib library of C routines
 http://www.gtk.org/

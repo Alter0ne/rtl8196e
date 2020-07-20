@@ -19,6 +19,8 @@ PKG_INSTALL:=1
 PKG_CONFIG_DEPENDS:= \
 	CONFIG_IPV6 \
 
+TARGET_CFLAGS += -std=gnu99
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
@@ -27,7 +29,7 @@ define Package/syslog-ng
   CATEGORY:=Administration
   TITLE:=A powerful syslog daemon
   URL:=https://www.syslog-ng.com/products/open-source-log-management/
-  DEPENDS:=+libpcre +glib2 +libopenssl +libpthread +librt +zlib +libdbi +libjson-c +libcurl +libuuid
+  DEPENDS:=+libpcre +glib2 +libopenssl +libeventlog +libpthread +librt +zlib +libdbi +libjson-c +libcurl +libuuid
 endef
 
 define Package/syslog-ng/description

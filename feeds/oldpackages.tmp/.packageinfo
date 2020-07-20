@@ -11252,7 +11252,7 @@ Config:
 
 Source-Makefile: feeds/oldpackages/utils/i2c-tools/Makefile
 Package: libi2c
-Version: 2013-12-15-1
+Version: 4.1-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread 
 Menu-Depends: 
 Provides: 
@@ -11261,7 +11261,7 @@ Section: libs
 Category: Libraries
 Title: I2C library
 Maintainer: 
-Source: i2c-tools-2013-12-15-r6204.tar.gz
+Source: i2c-tools-4.1.tar.xz
 Type: ipkg
 Description: I2C library
 http://lm-sensors.org/wiki/I2CTools
@@ -11269,7 +11269,7 @@ http://lm-sensors.org/wiki/I2CTools
 @@
 
 Package: i2c-tools
-Version: 2013-12-15-1
+Version: 4.1-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libi2c
 Menu-Depends: 
 Provides: 
@@ -11278,7 +11278,7 @@ Section: utils
 Category: Utilities
 Title: I2C tools for Linux
 Maintainer: 
-Source: i2c-tools-2013-12-15-r6204.tar.gz
+Source: i2c-tools-4.1.tar.xz
 Type: ipkg
 Description:  This package contains an heterogeneous set of I2C tools for Linux. These tools
  were originally part of the lm-sensors package.
@@ -11288,7 +11288,7 @@ http://lm-sensors.org/wiki/I2CTools
 
 Package: python-smbus
 Submenu: Python
-Version: 2013-12-15-1
+Version: 4.1-4
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +PACKAGE_python-smbus:python-mini +i2c-tools
 Menu-Depends: 
 Provides: 
@@ -11297,7 +11297,7 @@ Section: lang
 Category: Languages
 Title: Python bindings for the SMBUS
 Maintainer: 
-Source: i2c-tools-2013-12-15-r6204.tar.gz
+Source: i2c-tools-4.1.tar.xz
 Type: ipkg
 Description:  This package contain the python bindings for Linux SMBus access through i2c-dev.
 http://lm-sensors.org/wiki/I2CTools
@@ -20388,7 +20388,7 @@ http://gael.roualland.free.fr/ifstat/
 Source-Makefile: feeds/oldpackages/net/subversion/Makefile
 Package: subversion-libs
 Submenu: Version Control Systems
-Version: 1.6.23-1
+Version: 1.13.0-3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zlib +libneon +libaprutil +unixodbc
 Menu-Depends: 
 Provides: 
@@ -20396,7 +20396,7 @@ Section: net
 Category: Network
 Title: subversion libs
 Maintainer: 
-Source: subversion-1.6.23.tar.bz2
+Source: subversion-1.13.0.tar.bz2
 Type: ipkg
 Description:   	Subversion is a free/open-source version control system. That is,
 	Subversion manages files and directories, and the changes made to them,
@@ -20410,7 +20410,7 @@ http://subversion.apache.org/
 
 Package: subversion-client
 Submenu: Version Control Systems
-Version: 1.6.23-1
+Version: 1.13.0-3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zlib +libneon +libaprutil subversion-libs
 Menu-Depends: 
 Provides: 
@@ -20418,7 +20418,7 @@ Section: net
 Category: Network
 Title: subversion client tools
 Maintainer: 
-Source: subversion-1.6.23.tar.bz2
+Source: subversion-1.13.0.tar.bz2
 Type: ipkg
 Description:   	Subversion is a free/open-source version control system. That is,
 	Subversion manages files and directories, and the changes made to them,
@@ -20432,7 +20432,7 @@ http://subversion.apache.org/
 
 Package: subversion-server
 Submenu: Version Control Systems
-Version: 1.6.23-1
+Version: 1.13.0-3
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +zlib +libneon +libaprutil subversion-libs
 Menu-Depends: 
 Provides: 
@@ -20440,7 +20440,7 @@ Section: net
 Category: Network
 Title: subversion server
 Maintainer: 
-Source: subversion-1.6.23.tar.bz2
+Source: subversion-1.13.0.tar.bz2
 Type: ipkg
 Description:   	Subversion is a free/open-source version control system. That is,
 	Subversion manages files and directories, and the changes made to them,
@@ -30884,7 +30884,7 @@ http://www.nagios.org/download
 
 Source-Makefile: feeds/oldpackages/admin/syslog-ng/Makefile
 Package: syslog-ng
-Version: 1.6.12-6
+Version: 3.27.1-1
 Depends: +libc +USE_EGLIBC:librt +USE_EGLIBC:libpthread +libol +librt
 Menu-Depends: 
 Provides: 
@@ -30892,7 +30892,7 @@ Section: admin
 Category: Administration
 Title: A powerful syslog daemon
 Maintainer: 
-Source: syslog-ng-1.6.12.tar.gz
+Source: syslog-ng-3.27.1.tar.gz
 Type: ipkg
 Description: 	syslog-ng reads and logs messages to the system console, log
 	files, other machines and/or users as specified by its
