@@ -6,11 +6,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=subversion
-PKG_RELEASE:=2
-PKG_VERSION:=1.12.2
+PKG_RELEASE:=3
+PKG_VERSION:=1.13.0
 PKG_SOURCE_URL:=@APACHE/subversion
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_HASH:=3bd0b5c8e4c5175263dc9a92fd9aef94ce917e80af034f26fe5c45fde7e0f771
+PKG_HASH:=bc50ce2c3faa7b1ae9103c432017df98dfd989c4239f9f8270bb3a314ed9e5bd
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Val Kulkov <val.kulkov@gmail.com>
@@ -31,7 +31,7 @@ define Package/subversion/Default
   CATEGORY:=Network
   SUBMENU:=Version Control Systems
   TITLE:=A compelling replacement for CVS
-  DEPENDS:=+PACKAGE_unixodbc:unixodbc +libaprutil +libmagic $(ICONV_DEPENDS) $(INTL_DEPENDS)
+  DEPENDS:=+PACKAGE_unixodbc:unixodbc +libaprutil +libmagic +libsqlite3 $(ICONV_DEPENDS) $(INTL_DEPENDS)
   URL:=https://subversion.apache.org/
 endef
 
@@ -78,10 +78,6 @@ endef
 define Package/subversion-server/conffiles
 /etc/config/subversion
 endef
-
-TARGET_CFLAGS += $(FPIC)
-APU_LIBS=$(shell $(STAGING_DIR)/usr/bin/apu-1-config --link-libtool --libs)
-TARGET_LDFLAGS += $(APU_LIBS)
 
 CONFIGURE_ARGS += \
 	--with-apr="$(STAGING_DIR)/usr/bin/apr-1-config" \
