@@ -11,6 +11,8 @@ COMPILATION
 4. After error   ynyynyyyyynnynyyyynnyyyynnyynnnyyyy' failed
    change: /staging_dir/host/bin/automake and automake-1.11 line
    ${([^ \t=:+{}]+)}/ to $\{([^ \t=:+{}]+)}/
+4.1  fix chaosvpn:
+   cp staging_dir/rsdk-4.6.4-4181-EB-3.10-0.9.33-m32u-20141001/include/errno.h staging_dir/target-mips-rlx4181-linux/include/
 5. Run "make" or "make V=99" again.
 
 6. To build a single package: "make package/<Your_Package>/compile"
