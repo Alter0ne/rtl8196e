@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2007-2012 OpenWrt.org
+# Copyright (C) 2007-2019 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,18 +8,23 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=glib2
-PKG_VERSION:=2.41.1
-PKG_RELEASE:=2
+PKG_VERSION:=2.58.3
+PKG_RELEASE:=5
 
 PKG_SOURCE:=glib-$(PKG_VERSION).tar.xz
 PKG_BUILD_DIR:=$(BUILD_DIR)/glib-$(PKG_VERSION)
-PKG_SOURCE_URL:=@GNOME/glib/2.41
-PKG_MD5SUM:=bae557c87323e8df7ac30fb484b5cba9
+PKG_SOURCE_URL:=@GNOME/glib/2.58
+PKG_HASH:=8f43c31767e88a25da72b52a40f3301fefc49a665b56dc10ee7cc9565cbe7481
 
-PKG_BUILD_DEPENDS:=glib2/host libpthread zlib libintl libffi
-HOST_BUILD_DEPENDS:=libintl/host libiconv/host libffi/host
+PKG_BUILD_PARALLEL:=1
+HOST_BUILD_PARALLEL:=1
+PKG_BUILD_DEPENDS:=gettext
+HOST_BUILD_DEPENDS:=gettext-full/host libiconv/host libffi/host
 PKG_INSTALL:=1
-PKG_USE_MIPS16:=0
+
+PKG_CPE_ID:=cpe:/a:gnome:glib
+
+PKG_FIXUP:=autoreconf
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/glib-$(PKG_VERSION)
 
@@ -40,15 +45,26 @@ define Package/glib2/description
   The GLib library of C routines
 endef
 
+TARGET_CFLAGS += $(FPIC) -ffunction-sections -fdata-sections -flto
+
 HOST_CONFIGURE_ARGS += \
-	--disable-selinux
+	--disable-libelf \
+	--disable-selinux \
+	--with-pcre=internal \
+	--disable-libmount \
+	$(if $(ICONV_FULL),--with-libiconv=gnu)
 
 CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-static \
-	--enable-debug=no \
+	--disable-debug \
 	--disable-selinux \
+	--disable-libmount \
 	--disable-fam \
+	--disable-gtk-doc-html \
+	--disable-man \
+	--disable-compile-warnings \
+	--with-pcre=internal \
 	$(if $(ICONV_FULL),--with-libiconv=gnu)
 
 CONFIGURE_VARS += \
@@ -60,7 +76,12 @@ CONFIGURE_VARS += \
 	ac_cv_func_posix_getgrgid_r=yes
 
 define Build/InstallDev
-z	$(INSTALL_DIR) $(1)/usr/include
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/bin/* \
+		$(1)/usr/bin/
+
+	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/include/glib-2.0 \
 		$(1)/usr/include/
