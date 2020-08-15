@@ -4,6 +4,9 @@ Now it has fully working USB for rtl8196e! Yes, you can setup extroot, dlna and 
 
 COMPILATION
 
+WARNING!!! It is currently not possible to build firmware on Ubuntu 20.04 (and similar dists). Existing mtd_utils breaks xz decompressor.
+Use 18.04 or earlier for https://github.com/Alter0ne/rtl8196e/commit/937b01c9b6e5363f4887f6951962c91d6a6c8dfb.
+
 1. You need to have installed gcc, binutils, bzip2, flex, python, perl, make,
    find, grep, diff, unzip, gawk, getopt, subversion, libz-dev and libc headers.
 2. Run "make menuconfig" , change configuration as you want. Save it.
